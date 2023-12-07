@@ -20,7 +20,7 @@ export const HoverTrigger: React.FC<HoverTypes> = ({ children }) => {
 
 export const HoverContent: React.FC<HoverTypes> = ({ children }) => {
     return (
-        <div className="hidden transition-all flex-col absolute group-hover:flex shadow-md px-3 py-3 group-hover:border rounded-md bg-white dark:bg-white/10 top-[102%]  w-fit min-w-[320px] -right-10">
+        <div className="hidden  z-20 transition-all flex-col absolute group-hover:flex shadow-md px-3 py-3 group-hover:border rounded-md bg-white dark:bg-black top-[102%]  w-fit min-w-[320px] -right-10">
             {children}
         </div>
     );

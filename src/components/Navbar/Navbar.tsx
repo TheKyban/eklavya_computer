@@ -184,7 +184,6 @@ const Navbar = () => {
                             </Link>
                         </HoverContent>
                     </Hover>
-
                     {/* Theme */}
                     <ModeToggle />
                 </div>
