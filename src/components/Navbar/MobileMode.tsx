@@ -43,7 +43,7 @@ const MobileMode = ({ isAuth }: { isAuth: boolean }) => {
     }, []);
     if (!mounted) return null;
     return (
-        <div className="lg:hidden flex justify-around py-5">
+        <div className="lg:hidden w-full flex justify-around py-5">
             <div>
                 <Image
                     priority
@@ -191,7 +191,7 @@ const MobileMode = ({ isAuth }: { isAuth: boolean }) => {
                                     <AccordionTrigger>
                                         <div className="flex items-center gap-3 text-lg">
                                             <Files className="w-4 h-4" />
-                                            <span>Projects</span>
+                                            <span>Syllabus</span>
                                         </div>
                                     </AccordionTrigger>
                                     <AccordionContent>

@@ -30,9 +30,9 @@ import { DownloadFiles, LinkStyle, LinkStyle2 } from "@/lib/constants";
 const Navbar = () => {
     const isAuth = true;
     return (
-        <>
+        <div className="flex justify-center items-center bg-lime-100/100 dark:bg-white/10">
             {/* PC */}
-            <div className="hidden lg:flex justify-around py-5">
+            <div className="hidden lg:flex justify-around py-2 w-full max-w-[1700px]">
                 {/* Logo */}
                 <Image
                     priority
@@ -131,7 +131,7 @@ const Navbar = () => {
                                     </AccordionContent>
                                 </AccordionItem>
 
-                                {/* Projects */}
+                                {/* Syllabus */}
 
                                 <AccordionItem
                                     value="Projects"
@@ -140,7 +140,7 @@ const Navbar = () => {
                                     <AccordionTrigger>
                                         <div className="flex items-center gap-4">
                                             <Files className="w-4 h-4" />
-                                            <span>Projects</span>
+                                            <span>Syllabus</span>
                                         </div>
                                     </AccordionTrigger>
                                     <AccordionContent>
@@ -190,7 +190,7 @@ const Navbar = () => {
             </div>
             {/* MOBILE */}
             <MobileMode isAuth />
-        </>
+        </div>
     );
 };
 
