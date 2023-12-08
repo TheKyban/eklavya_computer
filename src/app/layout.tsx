@@ -18,7 +18,7 @@ export default function RootLayout({
             <body className={open_sans.className}>
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="system"
+                    defaultTheme="light"
                     enableSystem
                     storageKey="theme"
                 >

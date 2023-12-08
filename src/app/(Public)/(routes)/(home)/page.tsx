@@ -1,3 +1,4 @@
+import { Footer } from "@/components/Home/footer";
 import { FirstPage, SecondPage, ThridPage } from "@/components/Home/home-pages";
 
 export default function Home() {
@@ -27,6 +28,14 @@ export default function Home() {
                  */}
 
                 <ThridPage />
+
+                {/*
+                 *
+                 * FOOTER
+                 *
+                 */}
+
+                <Footer />
             </div>
         </div>
     );
