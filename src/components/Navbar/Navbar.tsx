@@ -30,7 +30,7 @@ import { DownloadFiles, LinkStyle, LinkStyle2 } from "@/lib/constants";
 const Navbar = () => {
     const isAuth = true;
     return (
-        <div className="flex justify-center items-center bg-lime-100/100 dark:bg-white/10">
+        <div className="flex justify-center items-center bg-[#e0f1bc1c] dark:bg-transparent">
             {/* PC */}
             <div className="hidden lg:flex justify-around py-2 w-full max-w-[1700px]">
                 {/* Logo */}
