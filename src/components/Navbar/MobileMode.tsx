@@ -86,11 +86,11 @@ const MobileMode = ({ isAuth }: { isAuth: boolean }) => {
                                 {isAuth ? (
                                     <Link
                                         className={LinkStyle3}
-                                        href={"/dasboard"}
+                                        href={"/dashboard"}
                                         onClick={() => setOpen(!open)}
                                     >
                                         <LayoutDashboard className="w-4 h-4" />
-                                        <span>Dasbord</span>
+                                        <span>Dashbord</span>
                                     </Link>
                                 ) : (
                                     <Link

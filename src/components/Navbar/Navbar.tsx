@@ -26,9 +26,10 @@ import MobileMode from "@/components/Navbar/MobileMode";
 import { ModeToggle } from "@/components/ThemeTogggle";
 import { Hover, HoverContent, HoverTrigger } from "@/components/hover";
 import { DownloadFiles, LinkStyle, LinkStyle2 } from "@/lib/constants";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
-    const isAuth = true;
+    const { status } = useSession();
     return (
         <div className="flex justify-center items-center bg-[#e0f1bc1c] dark:bg-transparent">
             {/* PC */}
@@ -44,10 +45,10 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-4">
                     {/* Login  & Dasboard*/}
-                    {isAuth ? (
-                        <Link href="/dasboard" className={LinkStyle}>
+                    {status === "authenticated" ? (
+                        <Link href="/dashboard" className={LinkStyle}>
                             <LayoutDashboard className="w-6 h-6" />
-                            <span>Dasbord</span>
+                            <span>Dashbord</span>
                         </Link>
                     ) : (
                         <Link href="/login" className={LinkStyle}>
@@ -189,7 +190,7 @@ const Navbar = () => {
                 </div>
             </div>
             {/* MOBILE */}
-            <MobileMode isAuth />
+            <MobileMode isAuth={status === "authenticated" ? true : false} />
         </div>
     );
 };
