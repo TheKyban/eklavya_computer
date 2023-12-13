@@ -9,6 +9,10 @@ import {
     Table,
 } from "lucide-react";
 
+/**
+ * DOWNLOADABLE FILES
+ */
+
 export const DownloadFiles = [
     {
         title: "Prospectus",
@@ -42,7 +46,10 @@ export const DownloadFiles = [
     },
 ];
 
-// Classes
+/**
+ * STYLES
+ */
+
 export const LinkStyle =
     "flex gap-2 items-center hover:bg-primary/10 px-3 py-2 rounded transition hover:underline";
 export const LinkStyle2 = "text-base font-medium gap-4 py-4 px-3";

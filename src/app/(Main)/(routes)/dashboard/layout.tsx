@@ -11,7 +11,7 @@ export default async function Dasboard({
             <Sidebar className="hidden lg:flex sticky" />
             <div className="h-full w-full">
                 <MobileMenu className="lg:hidden fixed top-0 z-50 bg-white dark:bg-black" />
-                <main className="w-full h-[calc(100vh-90px)] mt-[90px] lg:mt-0 lg:h-screen bg-neutral-100 dark:bg-black">
+                <main className="w-full h-[calc(100vh-90px)] mt-[90px] lg:mt-0 lg:h-screen  dark:bg-black">
                     {children}
                 </main>
             </div>

@@ -27,6 +27,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CircleUser, Loader, Loader2, Smile, User, Users } from "lucide-react";
 
 const phoneRegex = new RegExp(
     /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
@@ -73,7 +74,9 @@ const formSchema = z
             .string({ required_error: "Please Enter password" })
             .trim()
             .min(8, { message: "password must be atleast 8 characters" }),
-        confirmPassword: z.string().min(8),
+        confirmPassword: z
+            .string({ required_error: "Please Enter Confirm Password." })
+            .min(8),
     })
     .refine(
         (values) => {
@@ -123,19 +126,19 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
     };
     return (
         <ScrollArea className="w-full flex h-full flex-col gap-5 px-5 pt-3">
-            <h1 className="uppercase text-xl lg:text-2xl font-medium mb-3">
-                Register Franchise
+            <h1 className="text-zinc-600 flex items-center gap-2 uppercase text-xl lg:text-2xl font-medium mb-3">
+                <Users className="" /> Franchise Registration
             </h1>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="w-full flex flex-col gap-10 py-3"
+                    className="w-full flex flex-col gap-10 py-3 px-2"
                 >
                     <div className="w-full flex flex-col lg:flex-row gap-5 ">
                         {/* PERSONAL DETAILS */}
                         <div className="flex flex-col gap-4 flex-1 ">
-                            <h1 className="uppercase text-lg">
-                                Personal Details
+                            <h1 className="text-indigo-600 flex items-center gap-2 uppercase text-lg">
+                                <Smile className=""/> Personal Details
                             </h1>
 
                             {/* PICTURE */}
@@ -341,8 +344,8 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
 
                         {/* ACCOUNT INFORMATION */}
                         <div className="flex flex-col gap-4 flex-1">
-                            <h1 className="uppercase text-lg">
-                                Account Information
+                            <h1 className="flex gap-2 text-teal-600 items-center uppercase text-lg">
+                            <CircleUser/>    Account Information
                             </h1>
 
                             {/* Branch Name */}
@@ -419,8 +422,16 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                             />
                         </div>
                     </div>
-                    <Button variant={"destructive"} type="submit">
-                        Submit
+                    <Button
+                        variant={"primary"}
+                        disabled={form.formState.isSubmitting}
+                        type="submit"
+                    >
+                        {form.formState.isSubmitting ? (
+                            <Loader className="animate-spin" />
+                        ) : (
+                            "Submit"
+                        )}
                     </Button>
                 </form>
             </Form>
