@@ -1,4 +1,13 @@
-import { Album, BookUser, Contact, GraduationCap, Table } from "lucide-react";
+import {
+    Album,
+    BookUser,
+    Contact,
+    GraduationCap,
+    Mail,
+    MapPin,
+    Phone,
+    Table,
+} from "lucide-react";
 
 export const DownloadFiles = [
     {
@@ -39,3 +48,25 @@ export const LinkStyle =
 export const LinkStyle2 = "text-base font-medium gap-4 py-4 px-3";
 export const LinkStyle3 =
     "text-lg font-medium flex items-center gap-3 hover:bg-primary/10 px-3 py-3 rounded-md hover:underline";
+
+/**
+ * INFO
+ */
+
+export const info = [
+    {
+        title: "Address",
+        icon: MapPin,
+        details: ["Patahi Chowk, Rewa Road", "Muzaffarpur, Bihar, 842001"],
+    },
+    {
+        title: "Contact No.",
+        icon: Phone,
+        details: ["+91 95769 86658", "+91 94302 25815"],
+    },
+    {
+        title: "Email",
+        icon: Mail,
+        details: ["aaditya1392@gmail.com", "aaditya1392@gmail.com"],
+    },
+];

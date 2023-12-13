@@ -1,12 +1,5 @@
-"use client";
-import { signOut } from "next-auth/react";
 const Dasboard = () => {
-    return (
-        <div>
-            Dasboard
-            <button onClick={() => signOut()}>Logout</button>
-        </div>
-    );
+    return <div>Dasboard</div>;
 };
 
 export default Dasboard;

@@ -1,9 +1,8 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 
 const Login = () => {
     const [userId, setUserId] = useState("");
@@ -14,7 +13,7 @@ const Login = () => {
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            signIn("credentials", { userId, password });
+            // signIn("credentials", { userId, password });
         } catch (error) {
             console.log(error);
         }

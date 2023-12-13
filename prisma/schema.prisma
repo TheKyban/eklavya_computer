@@ -7,33 +7,44 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model Account {
-    id                String  @id @default(auto()) @map("_id") @db.ObjectId
-    userId            String  @db.ObjectId
-    type              String
-    provider          String  @unique
-    providerAccountId String  @unique
-    refresh_token     String?
-    access_token      String?
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String?
-    session_state     String?
-
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+model User {
+    id       String    @id @default(auto()) @map("_id") @db.ObjectId
+    userId   String    @unique
+    name     String
+    email    String?   @unique
+    image    String?
+    password String
+    phone    String
+    address  Json
+    role     role      @default(FRANCHISE)
+    isActive Boolean   @default(false)
+    branch   String
+    Students Student[]
 }
 
-model User {
-    id          String    @id @default(auto()) @map("_id") @db.ObjectId
-    name        String?
-    email       String?   @unique
-    image       String?
-    userId      String    @unique
-    password    String
-    isSuspended Boolean   @default(false)
-    role        role      @default(FRANCHISE)
-    accounts    Account[]
+model Student {
+    id            String  @id @default(auto()) @map("_id") @db.ObjectId
+    name          String
+    img           String
+    fatherName    String
+    motherName    String
+    gender        gender
+    formNumber    String
+    registrantion String
+    dob           String
+    mobile        String
+    email         String?
+    doa           String
+    course        String
+    address       Json
+    branch        String
+    Branch        User    @relation(fields: [branch], references: [userId])
+}
+
+enum gender {
+    MALE
+    FEMALE
+    TRANSGENDER
 }
 
 enum role {

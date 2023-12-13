@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { info } from "@/lib/constants";
 import Image from "next/image";
 
 export const Footer = () => {
@@ -34,45 +34,28 @@ export const Footer = () => {
                  */}
 
                 <div className="px-10 py-6 xl:flex-auto w-full xl:max-w-4xl  grid grid-cols-1 gap-14  sm:grid-cols-2 lg:grid-cols-3 lg:gap-5 place-content-center place-items-center m-auto text-zinc-800">
-                    {/* Address */}
-                    <div className="flex flex-col items-center gap-2 min-w-[300px] w-full">
-                        <MapPin className="w-10 text-red-700 h-10" />
-                        <span className="text-xl font-medium">Address</span>
-                        <div className="flex flex-col gap-2 items-center justify-center text-xl">
-                            <span>Patahi Chowk, Rewa Road</span>
-                            <span>Muzaffarpur, Bihar, 842001</span>
+                    {info.map((info, i) => (
+                        <div
+                            key={i}
+                            className="flex flex-col items-center gap-2 min-w-[300px] w-full"
+                        >
+                            <info.icon className="w-10 text-red-700 h-10" />
+                            <span className="text-xl font-medium">
+                                {info.title}
+                            </span>
+                            <div className="flex flex-col gap-2 items-center justify-center text-xl">
+                                {info.details.map((detail, idx) => (
+                                    <span key={idx}>{detail}</span>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-
-                    {/* Contact */}
-
-                    <div className="flex flex-col items-center gap-2 min-w-[300px] w-full">
-                        <Phone className="w-10 h-10 text-indigo-600" />
-                        <span className="text-xl font-medium">Contact No.</span>
-
-                        <div className="flex flex-col gap-2 items-center justify-center text-xl">
-                            <span>+91 95769 86658</span>
-                            <span>+91 94302 25815</span>
-                        </div>
-                    </div>
-
-                    {/* Email */}
-
-                    <div className="flex flex-col items-center gap-2 min-w-[300px] w-full">
-                        <Mail className="w-10 h-10 text-amber-600" />
-                        <span className="text-xl font-medium">Email</span>
-
-                        <div className="flex flex-col gap-2 items-center justify-center text-xl">
-                            <span>aaditya1392@gmail.com</span>
-                            <span>aaditya1392@gmail.com</span>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
             {/* Copyright */}
             <p className="text-center">
-                Copyright © 2016 - {year}{" "}
-                <span>Eklavy Computer Academy Pvt. Ltd.</span>
+                Copyright © {year}{" "}
+                <span>Eklavaya Global Computer Pvt. Ltd.</span>
             </p>
         </div>
     );

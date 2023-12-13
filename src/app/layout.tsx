@@ -2,7 +2,6 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import type { Metadata } from "next";
 import { open_sans } from "@/lib/fonts";
 import "./globals.css";
-import AuthProvider from "@/components/providers/AuthProvider";
 
 export const metadata: Metadata = {
     title: "Eklavya",
@@ -23,7 +22,7 @@ export default function RootLayout({
                     enableSystem
                     storageKey="theme"
                 >
-                    <AuthProvider>{children}</AuthProvider>
+                    {children}
                 </ThemeProvider>
             </body>
         </html>

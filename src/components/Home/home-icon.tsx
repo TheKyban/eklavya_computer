@@ -13,11 +13,11 @@ interface IconProp extends HTMLAttributes<HTMLDivElement> {
 }
 export const Icon: FC<IconProp> = ({ text, number, Icon, color, ...props }) => {
     return (
-        <div className="flex flex-col items-center" {...props}>
+        <div className="flex flex-col items-center select-none " {...props}>
             <div className="flex flex-col items-center">
                 <Icon
                     className={cn(
-                        "w-16 h-16",
+                        "w-16 h-16 select-none",
                         color === "zinc"
                             ? "text-zinc-600 dark:text-yellow-500"
                             : "text-orange-600 dark:text-cyan-400"
