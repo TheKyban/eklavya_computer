@@ -22,89 +22,48 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CircleUser, Loader, Loader2, Smile, User, Users } from "lucide-react";
-
-const phoneRegex = new RegExp(
-    /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
-);
-const formSchema = z
-    .object({
-        img: z.string({ required_error: "Please select a picture" }),
-        name: z
-            .string({ required_error: "Please Enter email id" })
-            .trim()
-            .min(2, { message: "Name must be atleast 2 characters." }),
-        email: z
-            .string({ required_error: "Please Enter email id" })
-            .trim()
-            .email({ message: "Invalid Email id" })
-            .min(4, { message: "Please Enter Valid Email id" }),
-        phone: z
-            .string({ required_error: "Please Enter phone number" })
-            .trim()
-            .regex(phoneRegex, "Invalid phone number")
-            .min(10, { message: "Invalid phone number" })
-            .max(10, { message: "Invalid phone number" }),
-        state: z.string({ required_error: "Please Select State" }),
-        district: z.string({ required_error: "Please Select District" }),
-        pincode: z
-            .string({ required_error: "Please Enter pin code" })
-            .trim()
-            .min(6, { message: "Enter valid pin code" }),
-        address: z
-            .string({ required_error: "Please Enter address" })
-            .trim()
-            .min(10, { message: "Please enter valid address" }),
-        branch: z
-            .string({ required_error: "Please Enter branch name" })
-            .trim()
-            .min(5, { message: "Enter valid branch name" }),
-        userid: z
-            .string({ required_error: "Please Enter User id" })
-            .trim()
-            .regex(phoneRegex, "Invalid User id")
-            .min(5, { message: "Userid must be 5 characters" })
-            .max(5, { message: "Userid must be 5 characters" }),
-        password: z
-            .string({ required_error: "Please Enter password" })
-            .trim()
-            .min(8, { message: "password must be atleast 8 characters" }),
-        confirmPassword: z
-            .string({ required_error: "Please Enter Confirm Password." })
-            .min(8),
-    })
-    .refine(
-        (values) => {
-            return values.password === values.confirmPassword;
+import { CircleUser, Loader, Smile, Users } from "lucide-react";
+import { franchiseSchema } from "@/lib/utils";
+import axios from "axios";
+import { toast } from "@/components/ui/use-toast";
+const FranchiseRegistration = ({}) => {
+    const form = useForm<z.infer<typeof franchiseSchema>>({
+        resolver: zodResolver(franchiseSchema),
+        defaultValues: {
+            address: "",
+            branch: "",
+            confirmPassword: "",
+            district: "",
+            email: "",
+            img: "",
+            name: "",
+            password: "",
+            phone: "",
+            pincode: "",
+            state: "",
+            userId: "",
         },
-        { message: "Password must match!", path: ["confirmPassword"] }
-    );
-
-interface pageProps {}
-/**
- *  userId   String    @unique
-    name     String
-    email    String?   @unique
-    image    String?
-    password String
-    phone    String
-    address  Json
-    role     role      @default(FRANCHISE)
-    isActive Boolean   @default(false)
-    branch   String
- */
-const FranchiseRegistration: FC<pageProps> = ({}) => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
     });
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+    const onSubmit = async (values: z.infer<typeof franchiseSchema>) => {
+        try {
+            const { data } = await axios.post("/api/user", values);
+            console.log(data);
+            if (data) {
+                toast({ description: data.message });
+            }
+
+            if (data.success) {
+                form.reset();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -124,6 +83,7 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
             };
         }
     };
+
     return (
         <ScrollArea className="w-full flex h-full flex-col gap-5 px-5 pt-3">
             <h1 className="text-zinc-600 flex items-center gap-2 uppercase text-xl lg:text-2xl font-medium mb-3">
@@ -138,7 +98,7 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                         {/* PERSONAL DETAILS */}
                         <div className="flex flex-col gap-4 flex-1 ">
                             <h1 className="text-indigo-600 flex items-center gap-2 uppercase text-lg">
-                                <Smile className=""/> Personal Details
+                                <Smile className="" /> Personal Details
                             </h1>
 
                             {/* PICTURE */}
@@ -147,7 +107,10 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem className="w-fit">
-                                        <Label htmlFor="img">
+                                        <Label
+                                            htmlFor="img"
+                                            className="cursor-pointer"
+                                        >
                                             <Image
                                                 src={
                                                     field.value ||
@@ -165,6 +128,7 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                                                 className="hidden max-w-0 w-0 h-0"
                                                 type="file"
                                                 id="img"
+                                                value={field.value}
                                                 onChange={(e) => handleImage(e)}
                                             />
                                         </FormControl>
@@ -233,6 +197,7 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                                         <FormLabel>State</FormLabel>
                                         <FormControl>
                                             <Select
+                                                value={field.value}
                                                 onValueChange={field.onChange}
                                                 defaultValue={field.value}
                                             >
@@ -275,6 +240,7 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                                         <FormLabel>District</FormLabel>
                                         <FormControl>
                                             <Select
+                                                value={field.value}
                                                 onValueChange={field.onChange}
                                                 defaultValue={field.value}
                                             >
@@ -345,7 +311,7 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                         {/* ACCOUNT INFORMATION */}
                         <div className="flex flex-col gap-4 flex-1">
                             <h1 className="flex gap-2 text-teal-600 items-center uppercase text-lg">
-                            <CircleUser/>    Account Information
+                                <CircleUser /> Account Information
                             </h1>
 
                             {/* Branch Name */}
@@ -369,7 +335,7 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                             {/* USER ID */}
                             <FormField
                                 control={form.control}
-                                name="userid"
+                                name="userId"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="uppercase">
@@ -422,17 +388,23 @@ const FranchiseRegistration: FC<pageProps> = ({}) => {
                             />
                         </div>
                     </div>
-                    <Button
-                        variant={"primary"}
-                        disabled={form.formState.isSubmitting}
-                        type="submit"
-                    >
-                        {form.formState.isSubmitting ? (
-                            <Loader className="animate-spin" />
-                        ) : (
-                            "Submit"
-                        )}
-                    </Button>
+                    {/* BTNS */}
+                    <div className="flex flex-col gap-3">
+                        <Button
+                            variant={"primary"}
+                            disabled={form.formState.isSubmitting}
+                            type="submit"
+                        >
+                            {form.formState.isSubmitting ? (
+                                <Loader className="animate-spin" />
+                            ) : (
+                                "Submit"
+                            )}
+                        </Button>
+                        <Button variant={"outline"} type="reset">
+                            Reset
+                        </Button>
+                    </div>
                 </form>
             </Form>
         </ScrollArea>
