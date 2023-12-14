@@ -77,3 +77,6 @@ export const info = [
         details: ["aaditya1392@gmail.com", "aaditya1392@gmail.com"],
     },
 ];
+
+
+export const per_page = 2;
