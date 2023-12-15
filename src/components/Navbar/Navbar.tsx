@@ -26,9 +26,10 @@ import MobileMode from "@/components/Navbar/MobileMode";
 import { ModeToggle } from "@/components/ThemeTogggle";
 import { Hover, HoverContent, HoverTrigger } from "@/components/hover";
 import { DownloadFiles, LinkStyle, LinkStyle2 } from "@/lib/constants";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
-    const status = "authenticated";
+    const { status } = useSession();
     return (
         <div className="flex justify-center items-center bg-[#e0f1bc1c] dark:bg-transparent">
             {/* PC */}

@@ -22,15 +22,15 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { CircleUser, Loader, Smile, Users } from "lucide-react";
 import { franchiseSchema } from "@/lib/utils";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
+
 const FranchiseRegistration = ({}) => {
     const form = useForm<z.infer<typeof franchiseSchema>>({
         resolver: zodResolver(franchiseSchema),
@@ -85,7 +85,7 @@ const FranchiseRegistration = ({}) => {
     };
 
     return (
-        <ScrollArea className="w-full flex h-full flex-col gap-5 px-5 pt-3">
+        <div className="w-full flex h-full flex-col gap-5 px-5 pt-3">
             <h1 className="text-zinc-600 flex items-center gap-2 uppercase text-xl lg:text-2xl font-medium mb-3">
                 <Users className="" /> Franchise Registration
             </h1>
@@ -128,7 +128,7 @@ const FranchiseRegistration = ({}) => {
                                                 className="hidden max-w-0 w-0 h-0"
                                                 type="file"
                                                 id="img"
-                                                value={field.value}
+                                                // value={field.value}
                                                 onChange={(e) => handleImage(e)}
                                             />
                                         </FormControl>
@@ -407,7 +407,7 @@ const FranchiseRegistration = ({}) => {
                     </div>
                 </form>
             </Form>
-        </ScrollArea>
+        </div>
     );
 };
 

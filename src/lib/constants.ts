@@ -79,4 +79,4 @@ export const info = [
 ];
 
 
-export const per_page = 2;
+export const per_page = 12;

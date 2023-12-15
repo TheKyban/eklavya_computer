@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { open_sans } from "@/lib/fonts";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import AuthProvider from "@/components/providers/auth-provider";
 
 export const metadata: Metadata = {
     title: "Eklavya",
@@ -23,8 +24,10 @@ export default function RootLayout({
                     enableSystem
                     storageKey="theme"
                 >
-                    {children}
-                    <Toaster />
+                    <AuthProvider>
+                        {children}
+                        <Toaster />
+                    </AuthProvider>
                 </ThemeProvider>
             </body>
         </html>

@@ -13,137 +13,30 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import {
-    FileSpreadsheet,
-    FormInput,
-    GraduationCap,
     Home,
-    IndianRupee,
-    Layers3,
     LayoutDashboard,
     LogOut,
-    Medal,
-    PlusCircle,
-    Ribbon,
-    ShieldAlert,
     ShieldCheck,
     ShieldPlus,
-    TextCursorInput,
-    UserRoundCog,
-    Users,
     Menu,
 } from "lucide-react";
 import Link from "next/link";
 
-import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
+import { FC, HTMLAttributes, useEffect, useState } from "react";
 import {
     Sheet,
     SheetContent,
     SheetHeader,
     SheetTrigger,
 } from "@/components/ui/sheet";
-
-interface LinkType {
-    title: string;
-    icon: ReactNode;
-    link: string;
-    role?: ROLE;
-}
-
-const links: LinkType[] = [
-    {
-        title: "Marks Entry",
-        icon: <FileSpreadsheet className="text-green-400" />,
-        link: "/dashboard/marks",
-    },
-    {
-        title: "Typing Entry",
-        icon: <TextCursorInput className="text-orange-400" />,
-        link: "/dashboard/typing",
-    },
-    {
-        title: "Issued Certificate",
-        icon: <Medal className="text-blue-400" />,
-        link: "/dashboard/certificate/issued",
-    },
-    {
-        title: "Pending Certificate",
-        icon: <Ribbon className="text-red-400" />,
-        link: "/dashboard/certificate/pending",
-    },
-    {
-        title: "Manage Certificate",
-        icon: <Layers3 className="text-cyan-400" />,
-        link: "/dashboard/certificate",
-        role: "ADMIN",
-    },
-    {
-        title: "Payment",
-        icon: <IndianRupee className="text-rose-400" />,
-        link: "/dashboard/payment",
-    },
-    {
-        title: "Password",
-        icon: <FormInput className="text-fuchsia-400" />,
-        link: "/dashboard/password",
-    },
-];
-
-interface accordianLinks {
-    title: string;
-    icon: ReactNode;
-    role?: ROLE;
-    links: LinkType[];
-}
-const accordianLinks: accordianLinks[] = [
-    {
-        title: "Franchise",
-        icon: <Users className="text-gray-600" />,
-        role: "ADMIN",
-        links: [
-            {
-                title: "Registration",
-                icon: <PlusCircle className="text-orange-500" />,
-                link: "/dashboard/franchise/registration",
-            },
-            {
-                title: "Manage Franchise",
-                icon: <UserRoundCog className="text-red-600" />,
-                link: "/dashboard/franchise",
-            },
-        ],
-    },
-    {
-        title: "Student",
-        icon: <GraduationCap className="text-indigo-600" />,
-        links: [
-            {
-                title: "Registration",
-                icon: <PlusCircle className="text-orange-500" />,
-                link: "/dashboard/student/registration",
-            },
-            {
-                title: "Pending List",
-                icon: <ShieldAlert className="text-red-600" />,
-                link: "/dashboard/student/pending",
-            },
-            {
-                title: "Verified List",
-                icon: <ShieldCheck className="text-indigo-600" />,
-                link: "/dashboard/student/verified",
-            },
-            {
-                title: "Student Verification",
-                icon: <UserRoundCog className="text-pink-600" />,
-                link: "/dashboard/student/verification",
-                role: "ADMIN",
-            },
-        ],
-    },
-];
+import { signOut, useSession } from "next-auth/react";
+import { accordianLinks, links } from "./url";
 
 interface mobileMenu extends HTMLAttributes<HTMLDivElement> {}
 const MobileMenu: FC<mobileMenu> = ({ className }) => {
-    const role: ROLE = ROLE.ADMIN;
+    const { data } = useSession();
+    const role = data?.user.role;
+
     const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
@@ -275,7 +168,11 @@ const MobileMenu: FC<mobileMenu> = ({ className }) => {
                             </ScrollArea>
                             <div className="mt-auto flex gap-4">
                                 <ModeToggle />
-                                <Button variant={"outline"} className="flex-1">
+                                <Button
+                                    variant={"outline"}
+                                    className="flex-1"
+                                    onClick={() => signOut()}
+                                >
                                     <LogOut />
                                 </Button>
                             </div>

@@ -21,9 +21,9 @@ const Franchise = async ({
     searchParams: { page: string; userId: string };
 }) => {
     try {
-        const url = `${process.env.NEXTAUTH_URL}/api/user?page=${
-            searchParams.page
-        }${!!searchParams.userId ? "&userId=" + searchParams.userId : ""}`;
+        const url = `http://localhost:3000/api/user?page=${searchParams.page}${
+            !!searchParams.userId ? "&userId=" + searchParams.userId : ""
+        }`;
         const {
             data: { users, total },
         } = await axios.get(url);
@@ -43,7 +43,7 @@ const Franchise = async ({
                             <TableRow>
                                 <TableHead>User ID</TableHead>
                                 <TableHead>Branch</TableHead>
-                                <TableHead className="hidden md:block">
+                                <TableHead className="hidden md:table-cell">
                                     Owner
                                 </TableHead>
                                 <TableHead>Active</TableHead>
@@ -62,7 +62,7 @@ const Franchise = async ({
                                         {user.userId}
                                     </TableCell>
                                     <TableCell>{user.branch}</TableCell>
-                                    <TableCell className="hidden md:block">
+                                    <TableCell className="hidden md:table-cell">
                                         {user.name}
                                     </TableCell>
                                     <TableCell>

@@ -1,19 +1,27 @@
 "use client";
 
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, useLayoutEffect, useState } from "react";
 
 const Login = () => {
-    const [userId, setUserId] = useState("");
-    const [password, setPassword] = useState("");
+    const [userId, setUserId] = useState("55555");
+    const [password, setPassword] = useState("12345678");
     const params = useSearchParams();
     const error = params.get("error");
+    const router = useRouter();
+    const { status } = useSession();
 
+    useLayoutEffect(() => {
+        if (status === "authenticated") {
+            router.push("/dashboard");
+        }
+    }, [status, router]);
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            // signIn("credentials", { userId, password });
+            signIn("credentials", { userId, password });
         } catch (error) {
             console.log(error);
         }
