@@ -1,25 +1,34 @@
-import { franchiseSchema } from "@/lib/utils";
+import { franchiseEditSchema, franchiseSchema } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import { Prisma } from "../../../../prisma/prisma";
 import { z } from "zod";
 import { per_page } from "@/lib/constants";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
+import { role as ROLE } from "@prisma/client";
 /**
  * CREATE USER
  */
+
 export const POST = async (req: Request) => {
     try {
         /**
-         * TODO 1
          * CHECK ADMIN IS LOGIN
          */
+        const session = await getServerSession(authOptions);
+        if (!session?.user || session?.user.role !== "ADMIN") {
+            return NextResponse.json({
+                message: "You are not allowed",
+            });
+        }
 
         const data: z.infer<typeof franchiseSchema> = await req.json();
-        const { success } = franchiseSchema.safeParse(data);
 
         /**
          * VALIDATE DATA
          */
+
+        const { success } = franchiseSchema.safeParse(data);
 
         if (!success) {
             return NextResponse.json({
@@ -106,11 +115,22 @@ export const POST = async (req: Request) => {
     }
 };
 
+/**
+ * GET ALL DATA
+ */
+
 export const GET = async (req: Request) => {
     try {
         /**
          * VERIFY THAT ADMIN IS LOGIN
          */
+
+        const session = await getServerSession(authOptions);
+        if (!session?.user || session?.user.role !== "ADMIN") {
+            return NextResponse.json({
+                message: "You are not allowed",
+            });
+        }
         const { searchParams } = new URL(req.url);
         const page = Number(searchParams.get("page")) || 1;
         const userId = searchParams.get("userId");
@@ -125,11 +145,12 @@ export const GET = async (req: Request) => {
             where: {
                 userId: {
                     contains: userId ? userId : "",
+                    not: session.user.userId,
                 },
             },
-            orderBy:{
-                id:"desc"
-            }
+            orderBy: {
+                id: "desc",
+            },
         });
 
         /**
@@ -140,6 +161,7 @@ export const GET = async (req: Request) => {
             where: {
                 userId: {
                     contains: userId ? userId : "",
+                    not: session.user.userId,
                 },
             },
         });
@@ -149,4 +171,144 @@ export const GET = async (req: Request) => {
         console.log("[GET USERS]", error);
         return new NextResponse("Internal Error");
     }
+};
+
+/**
+ * UPDATE USER DETAILS
+ */
+
+export const PUT = async (req: Request) => {
+    try {
+        /**
+         * CHECK ADMIN IS LOGIN
+         */
+
+        const session = await getServerSession(authOptions);
+
+        if (!session?.user || session?.user.role !== "ADMIN") {
+            return NextResponse.json({
+                message: "You are not allowed",
+                success: false,
+            });
+        }
+
+        const data: z.infer<typeof franchiseEditSchema> = await req.json();
+
+        /**
+         * VALIDATE DATA
+         */
+
+        const { success } = franchiseEditSchema.safeParse(data);
+
+        if (!success) {
+            return NextResponse.json({
+                message: "Please fill all requirements",
+                success: false,
+            });
+        }
+
+        /**
+         * FIND USER BY ID
+         */
+
+        const {
+            id,
+            name,
+            email,
+            img,
+            phone,
+            address,
+            branch,
+            district,
+            password,
+            pincode,
+            state,
+            userId,
+            isActive,
+            role,
+        } = data;
+        const user = await Prisma.user.update({
+            where: { id },
+            data: {
+                name,
+                email,
+                img,
+                phone,
+                branch,
+                userId,
+                password,
+                isActive: isActive === "true" ? true : false,
+                role: role === "ADMIN" ? ROLE.ADMIN : ROLE.FRANCHISE,
+                address: {
+                    state,
+                    district,
+                    pincode,
+                    street: address,
+                },
+            },
+        });
+
+        if (!user) {
+            return NextResponse.json({
+                message: "Invalid details",
+                success: false,
+            });
+        }
+
+        return NextResponse.json({
+            message: "Successfully updated",
+            success: true,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+/**
+ * DELETE USER
+ */
+
+export const DELETE = async (req: Request) => {
+    try {
+        /**
+         * CHECK ADMIN IS LOGIN
+         */
+
+        const session = await getServerSession(authOptions);
+
+        if (!session?.user || session?.user.role !== "ADMIN") {
+            return NextResponse.json({
+                message: "You are not allowed",
+                success: false,
+            });
+        }
+
+        const { userId } = await req.json();
+
+        if (!userId) {
+            return NextResponse.json({
+                message: "Required userId",
+                success: false,
+            });
+        }
+
+        const user = await Prisma.user.delete({
+            where: {
+                userId: userId,
+            },
+        });
+
+        if (!user) {
+            return NextResponse.json({
+                message: "Invalid userId",
+                success: false,
+            });
+        }
+
+        console.log(user);
+        return NextResponse.json({
+            message: "User Deleted successfully",
+            success: true,
+        });
+    } catch (error) {}
 };

@@ -64,3 +64,49 @@ export const franchiseSchema = z
         },
         { message: "Password must match!", path: ["confirmPassword"] }
     );
+
+export const franchiseEditSchema = z.object({
+    img: z.string({ required_error: "Please select a picture" }),
+    name: z
+        .string({ required_error: "Please Enter email id" })
+        .trim()
+        .min(2, { message: "Name must be atleast 2 characters." }),
+    email: z
+        .string({ required_error: "Please Enter email id" })
+        .trim()
+        .email({ message: "Invalid Email id" })
+        .min(4, { message: "Please Enter Valid Email id" }),
+    phone: z
+        .string({ required_error: "Please Enter phone number" })
+        .trim()
+        .regex(phoneRegex, "Invalid phone number")
+        .min(10, { message: "Invalid phone number" })
+        .max(10, { message: "Invalid phone number" }),
+    state: z.string({ required_error: "Please Select State" }),
+    district: z.string({ required_error: "Please Select District" }),
+    pincode: z
+        .string({ required_error: "Please Enter pin code" })
+        .trim()
+        .min(6, { message: "Enter valid pin code" }),
+    address: z
+        .string({ required_error: "Please Enter address" })
+        .trim()
+        .min(10, { message: "Please enter valid address" }),
+    branch: z
+        .string({ required_error: "Please Enter branch name" })
+        .trim()
+        .min(5, { message: "Enter valid branch name" }),
+    userId: z
+        .string({ required_error: "Please Enter User id" })
+        .trim()
+        .regex(phoneRegex, "Invalid User id")
+        .min(5, { message: "Userid must be 5 characters" })
+        .max(5, { message: "Userid must be 5 characters" }),
+    password: z
+        .string({ required_error: "Please Enter password" })
+        .trim()
+        .min(8, { message: "password must be atleast 8 characters" }),
+    isActive: z.string(),
+    role: z.string(),
+    id: z.string(),
+});

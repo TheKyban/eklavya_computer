@@ -7,9 +7,10 @@ import React, { FC } from "react";
 
 interface prop {
     total: number;
+    isLoading: boolean;
 }
 
-const Pagination: FC<prop> = ({ total }) => {
+const Pagination: FC<prop> = ({ total, isLoading }) => {
     const { replace } = useRouter();
     const path = usePathname();
     const searchParams = useSearchParams();
@@ -32,14 +33,14 @@ const Pagination: FC<prop> = ({ total }) => {
         <div className="flex justify-around">
             <Button
                 variant={"outline"}
-                disabled={!hasPrev}
+                disabled={!hasPrev || isLoading}
                 onClick={() => pageHandler("prev")}
             >
                 <ArrowLeft />
             </Button>
             <Button
                 variant={"outline"}
-                disabled={!hasNext}
+                disabled={!hasNext || isLoading}
                 onClick={() => pageHandler("next")}
             >
                 <ArrowRight />

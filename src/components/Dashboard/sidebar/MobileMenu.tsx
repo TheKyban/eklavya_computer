@@ -29,14 +29,11 @@ import {
     SheetHeader,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { accordianLinks, links } from "./url";
 
 interface mobileMenu extends HTMLAttributes<HTMLDivElement> {}
-const MobileMenu: FC<mobileMenu> = ({ className }) => {
-    const { data } = useSession();
-    const role = data?.user.role;
-
+const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
     const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     useEffect(() => {

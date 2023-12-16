@@ -11,7 +11,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { role as ROLE } from "@prisma/client";
 import {
     Home,
     LayoutDashboard,
@@ -19,18 +18,16 @@ import {
     ShieldCheck,
     ShieldPlus,
 } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC, HTMLAttributes } from "react";
 import { accordianLinks, links } from "./url";
 
 interface sidebar extends HTMLAttributes<HTMLDivElement> {}
-const Sidebar: FC<sidebar> = ({ className, ...props }) => {
+const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
     const pathname = usePathname();
     const path = pathname.split("/").pop();
-    const { data } = useSession();
-    const role = data?.user.role;
     return (
         <div
             {...props}

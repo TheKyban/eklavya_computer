@@ -4,6 +4,7 @@ import { open_sans } from "@/lib/fonts";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import AuthProvider from "@/components/providers/auth-provider";
+import ModalProvider from "@/components/providers/modal-provider";
 
 export const metadata: Metadata = {
     title: "Eklavya",
@@ -27,6 +28,7 @@ export default function RootLayout({
                     <AuthProvider>
                         {children}
                         <Toaster />
+                        <ModalProvider />
                     </AuthProvider>
                 </ThemeProvider>
             </body>

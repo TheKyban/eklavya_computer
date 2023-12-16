@@ -1,5 +1,11 @@
+import { UserModal } from "@/components/modals/user-modal";
+
 const ModalProvider = () => {
-    return <></>;
+    return (
+        <>
+            <UserModal />
+        </>
+    );
 };
 
 export default ModalProvider;
