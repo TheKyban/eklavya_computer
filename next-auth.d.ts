@@ -8,10 +8,14 @@ declare module "next-auth" {
             role: role;
             email: string;
             userId: string;
+            isActive: boolean;
+            students: number;
         };
     }
 }
 
 declare module "next-auth/jwt" {
-    interface JWT extends User {}
+    interface JWT extends User {
+        students: number;
+    }
 }

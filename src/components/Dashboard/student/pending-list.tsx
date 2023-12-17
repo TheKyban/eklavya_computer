@@ -10,7 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { poppins } from "@/lib/fonts";
-import { User } from "@prisma/client";
+import { Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Pen, Trash } from "lucide-react";
 import { UserCog } from "lucide-react";
@@ -18,18 +18,23 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
+import { format } from "date-fns";
 
-const Franchise = ({
+const StudentPendingList = ({
     searchParams,
 }: {
-    searchParams: { page: string; userId: string };
+    searchParams: { page: string; registration: string };
 }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [users, setUsers] = useState<User[]>([]);
+    const [students, setStudents] = useState<Student[]>([]);
     const [total, setTotal] = useState(0);
     const { onOpen } = useModal();
-    const url = `http://localhost:3000/api/user?page=${searchParams.page}${
-        !!searchParams.userId ? "&userId=" + searchParams.userId : ""
+    const url = `http://localhost:3000/api/student?&pending=true&page=${
+        searchParams.page
+    }${
+        !!searchParams.registration
+            ? "&registration=" + searchParams.registration
+            : ""
     }`;
 
     useEffect(() => {
@@ -37,10 +42,9 @@ const Franchise = ({
             try {
                 setIsLoading(true);
                 const {
-                    data: { users, total },
+                    data: { total, students },
                 } = await axios.get(url);
-
-                setUsers(users);
+                setStudents(students);
                 setTotal(total);
             } catch (error) {
                 console.log(error);
@@ -55,21 +59,27 @@ const Franchise = ({
             <div className="flex justify-between">
                 <h1 className="flex items-center gap-3 lg:text-xl uppercase font-semibold text-teal-700">
                     <UserCog className="text-red-600 w-5 h-5" />
-                    Users
+                    Pending Student
                 </h1>
-                <Search placeholder="UserId" queryName="userId" />
+                <Search
+                    className="w-44"
+                    placeholder="Registration"
+                    queryName="registration"
+                />
             </div>
 
             <div>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>User ID</TableHead>
-                            <TableHead>Branch</TableHead>
+                            <TableHead>Registration</TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Father Name</TableHead>
+                            <TableHead>Mother Name</TableHead>
                             <TableHead className="hidden md:table-cell">
-                                Owner
+                                Date of Addmission
                             </TableHead>
-                            <TableHead>Active</TableHead>
+                            <TableHead>Course</TableHead>
                             <TableHead className="text-right">Tool</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -77,26 +87,28 @@ const Franchise = ({
                         {isLoading && <LoadingCells />}
 
                         {!isLoading &&
-                            users?.map((user: User) => (
+                            students?.map((student: Student) => (
                                 <TableRow
-                                    key={user.userId}
+                                    key={student.registration}
                                     className={poppins.className}
                                 >
                                     <TableCell className="font-medium">
-                                        {user.userId}
+                                        {student.registration}
                                     </TableCell>
-                                    <TableCell>{user.branch}</TableCell>
+                                    <TableCell>{student.name}</TableCell>
+                                    <TableCell>{student.fatherName}</TableCell>
+                                    <TableCell>{student.motherName}</TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                        {user.name}
+                                        {format(new Date(student.dor), "PP")}
                                     </TableCell>
-                                    <TableCell>
-                                        {user.isActive ? "Yes" : "No"}
-                                    </TableCell>
+                                    <TableCell>{student.course}</TableCell>
                                     <TableCell className="text-right">
                                         <Button
                                             variant={"outline"}
                                             onClick={() =>
-                                                onOpen("User", { user })
+                                                onOpen("editStudent", {
+                                                    student,
+                                                })
                                             }
                                             className="px-2 py-0"
                                         >
@@ -105,7 +117,9 @@ const Franchise = ({
                                         <Button
                                             variant={"outline"}
                                             onClick={() =>
-                                                onOpen("deleteUser", { user })
+                                                onOpen("deleteStudent", {
+                                                    student,
+                                                })
                                             }
                                             className="ml-2 px-2 py-0"
                                         >
@@ -122,4 +136,4 @@ const Franchise = ({
     );
 };
 
-export default Franchise;
+export default StudentPendingList;

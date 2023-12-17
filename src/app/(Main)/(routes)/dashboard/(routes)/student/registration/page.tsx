@@ -26,7 +26,15 @@ import { ChangeEvent, useEffect } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CalendarIcon, CircleUser, GraduationCap, Loader, PlusCircle, Smile, Users } from "lucide-react";
+import {
+    CalendarIcon,
+    CircleUser,
+    GraduationCap,
+    Loader,
+    PlusCircle,
+    Smile,
+    Users,
+} from "lucide-react";
 import { studentSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
@@ -43,6 +51,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const StudentRegistration = ({}) => {
+    const currentYear = new Date().getFullYear();
     const { data } = useSession();
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
@@ -60,9 +69,10 @@ const StudentRegistration = ({}) => {
             dor: new Date(),
             fatherName: "",
             motherName: "",
-            dob: undefined,
+            dob: new Date(),
             formNumber: "",
             gender: "",
+            qualification: "",
         },
     });
 
@@ -77,12 +87,12 @@ const StudentRegistration = ({}) => {
 
     const onSubmit = async (values: z.infer<typeof studentSchema>) => {
         try {
+            console.log(values);
             const { data } = await axios.post("/api/student", values);
             console.log(data);
             if (data) {
                 toast({ description: data.message });
             }
-
             if (data.success) {
                 form.reset();
             }
@@ -305,7 +315,7 @@ const StudentRegistration = ({}) => {
                                                     selected={field.value}
                                                     onSelect={field.onChange}
                                                     fromYear={1960}
-                                                    toYear={2030}
+                                                    toYear={currentYear}
                                                 />
                                             </PopoverContent>
                                         </Popover>
@@ -473,7 +483,7 @@ const StudentRegistration = ({}) => {
                             name="qualification"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Pin Code</FormLabel>
+                                    <FormLabel>Qualification</FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder="Enter Qualification"
@@ -566,7 +576,7 @@ const StudentRegistration = ({}) => {
                                                     selected={field.value}
                                                     onSelect={field.onChange}
                                                     fromYear={1960}
-                                                    toYear={2030}
+                                                    toYear={currentYear}
                                                 />
                                             </PopoverContent>
                                         </Popover>
@@ -589,7 +599,11 @@ const StudentRegistration = ({}) => {
                                 "Submit"
                             )}
                         </Button>
-                        <Button variant={"outline"} type="reset">
+                        <Button
+                            variant={"outline"}
+                            type="reset"
+                            onClick={() => form.reset()}
+                        >
                             Reset
                         </Button>
                     </div>

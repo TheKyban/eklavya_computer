@@ -1,9 +1,19 @@
-import { FC } from "react";
+import StudentPendingList from "@/components/Dashboard/student/pending-list";
+import { Loader2 } from "lucide-react";
+import { FC, Suspense } from "react";
 
-interface pageProps {}
-
-const PendingStudents: FC<pageProps> = ({}) => {
-    return <div>PendingStudents</div>;
+const PendingStudents = ({
+    searchParams,
+}: {
+    searchParams: { page: string; userId: string };
+}) => {
+    return (
+        <Suspense
+            fallback={<Loader2 className="animate-spin m-auto mt-[25%]" />}
+        >
+            <StudentPendingList searchParams={searchParams} />
+        </Suspense>
+    );
 };
 
 export default PendingStudents;

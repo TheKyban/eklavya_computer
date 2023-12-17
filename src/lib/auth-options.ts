@@ -1,6 +1,7 @@
 import { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { Prisma } from "../../prisma/prisma";
+import { role } from "@prisma/client";
 
 export const authOptions: AuthOptions = {
     pages: {
@@ -29,6 +30,9 @@ export const authOptions: AuthOptions = {
                             userId: credentials?.userId,
                             password: credentials?.password,
                         },
+                        include: {
+                            _count: true,
+                        },
                     });
                     if (!user) {
                         throw new Error("Wrong credentials");
@@ -39,6 +43,8 @@ export const authOptions: AuthOptions = {
                         email: user.email,
                         userId: user.userId,
                         role: user.role,
+                        isActive: user.isActive,
+                        students: user._count.Students,
                     };
                 } catch (error) {
                     console.log(error);
@@ -49,12 +55,30 @@ export const authOptions: AuthOptions = {
     ],
 
     callbacks: {
+        async signIn({ user }) {
+            //@ts-ignore
+            if (user?.role === role.ADMIN) {
+                return true;
+            } else if (
+                //@ts-ignore
+                user?.role === role.FRANCHISE &&
+                //@ts-ignore
+                user?.isActive === true
+            ) {
+                return true;
+            }
+            return false;
+        },
         async jwt({ token, user }) {
             if (user) {
                 // @ts-ignore
                 token.role = user?.role;
                 // @ts-ignore
                 token.userId = user?.userId;
+                // @ts-ignore
+                token.isActive = user?.isActive;
+                // @ts-ignore
+                token.students = user?.students;
             }
             return token;
         },
@@ -62,6 +86,8 @@ export const authOptions: AuthOptions = {
             if (token) {
                 session.user.role = token?.role;
                 session.user.userId = token?.userId;
+                session.user.isActive = token?.isActive;
+                session.user.students = token?.students;
             }
             return session;
         },

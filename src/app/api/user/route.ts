@@ -18,7 +18,7 @@ export const POST = async (req: Request) => {
         const session = await getServerSession(authOptions);
         if (!session?.user || session?.user.role !== "ADMIN") {
             return NextResponse.json({
-                message: "You are not allowed",
+                message: "Unauthorized",
             });
         }
 
@@ -128,7 +128,7 @@ export const GET = async (req: Request) => {
         const session = await getServerSession(authOptions);
         if (!session?.user || session?.user.role !== "ADMIN") {
             return NextResponse.json({
-                message: "You are not allowed",
+                message: "Unauthorized",
             });
         }
         const { searchParams } = new URL(req.url);
@@ -187,7 +187,7 @@ export const PUT = async (req: Request) => {
 
         if (!session?.user || session?.user.role !== "ADMIN") {
             return NextResponse.json({
-                message: "You are not allowed",
+                message: "Unauthorized",
                 success: false,
             });
         }
@@ -278,7 +278,7 @@ export const DELETE = async (req: Request) => {
 
         if (!session?.user || session?.user.role !== "ADMIN") {
             return NextResponse.json({
-                message: "You are not allowed",
+                message: "Unauthorized",
                 success: false,
             });
         }

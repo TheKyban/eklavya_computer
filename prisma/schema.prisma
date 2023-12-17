@@ -25,7 +25,7 @@ model User {
 }
 
 model Student {
-    id            String  @id @default(auto()) @map("_id") @db.ObjectId
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
     name          String
     img           String
     fatherName    String
@@ -33,16 +33,16 @@ model Student {
     gender        gender
     qualification String?
     formNumber    String
-    registrantion String
-    dob           String
+    registration  String   @unique
+    dob           DateTime
     phone         String
     email         String?
-    dor           String
+    dor           DateTime
     course        String
-    address       Json
+    address       Address
     branch        String
-    Branch        User    @relation(fields: [branch], references: [userId])
-    isVerified    Boolean @default(false)
+    Branch        User     @relation(fields: [branch], references: [userId])
+    isVerified    Boolean  @default(false)
 }
 
 type Address {

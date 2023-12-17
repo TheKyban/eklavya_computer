@@ -1,4 +1,5 @@
 "use client";
+import { useModal } from "@/hooks/use-modal-store";
 import {
     Dialog,
     DialogContent,
@@ -7,6 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,26 +21,27 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
+
 import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
+import { useState } from "react";
 import { CircleUser, Loader, Smile } from "lucide-react";
 import axios from "axios";
-import { useState } from "react";
-import Image from "next/image";
+import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
 
-export const DeleteUserModal = () => {
+export const DeleteStudentModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const router = useRouter();
-    const isModalOpen = isOpen && type === "deleteUser";
-    const { user } = data;
+    const isModalOpen = isOpen && type === "deleteStudent";
+    const { student } = data;
     const [isLoading, setIsLoading] = useState(false);
+
     const onDelete = async () => {
         try {
             setIsLoading(true);
             const { data } = await axios.delete(
-                `/api/user?userId=${user?.userId}`
+                `/api/student?registration=${student?.registration}`
             );
             if (data) {
                 toast({ description: data.message });
@@ -46,7 +49,6 @@ export const DeleteUserModal = () => {
             if (data.success) {
                 onClose();
                 router.refresh();
-                router.push("/dashboard/franchise");
             }
         } catch (error) {
             console.log(error);
@@ -60,12 +62,12 @@ export const DeleteUserModal = () => {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Delete User
+                        Delete Student
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
                         Are you sure you want to do this? <br />
                         <span className="font-semibold text-indigo-500">
-                            {user?.branch}
+                            {student?.name}
                         </span>{" "}
                     </DialogDescription>
                 </DialogHeader>
