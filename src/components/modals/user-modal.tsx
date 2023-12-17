@@ -37,7 +37,7 @@ import { useForm } from "react-hook-form";
 import { CircleUser, Loader, Smile, Users } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { franchiseEditSchema } from "@/lib/utils";
+import { franchiseEditSchema } from "@/lib/schema";
 import { useRouter } from "next/navigation";
 
 export const UserModal = () => {
@@ -98,8 +98,8 @@ export const UserModal = () => {
             if (data.success) {
                 form.reset();
                 onClose();
-                // router.refresh();
-                window.location.reload()
+                router.refresh();
+                window.location.reload();
             }
         } catch (error) {
             console.log(error);

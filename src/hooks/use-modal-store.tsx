@@ -1,7 +1,7 @@
 import { Student, User } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "User";
+export type ModalType = "User" | "deleteUser";
 
 interface ModalData {
     user?: User;

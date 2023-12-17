@@ -12,7 +12,7 @@ import {
 import { poppins } from "@/lib/fonts";
 import { User } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { Pen } from "lucide-react";
+import { Pen, Trash } from "lucide-react";
 import { UserCog } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -99,8 +99,18 @@ const Franchise = ({
                                             onClick={() =>
                                                 onOpen("User", { user })
                                             }
+                                            className="px-2 py-0"
                                         >
                                             <Pen className="w-5 h-5" />
+                                        </Button>
+                                        <Button
+                                            variant={"outline"}
+                                            onClick={() =>
+                                                onOpen("deleteUser", { user })
+                                            }
+                                            className="ml-2 px-2 py-0"
+                                        >
+                                            <Trash className="w-5 h-5" />
                                         </Button>
                                     </TableCell>
                                 </TableRow>

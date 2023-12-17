@@ -57,7 +57,7 @@ export const LinkStyle3 =
     "text-lg font-medium flex items-center gap-3 hover:bg-primary/10 px-3 py-3 rounded-md hover:underline";
 
 /**
- * INFO
+ * ADDRESS INFO
  */
 
 export const info = [
@@ -78,5 +78,41 @@ export const info = [
     },
 ];
 
-
+/**
+ * RESULTS PER PAGE
+ */
 export const per_page = 10;
+
+/**
+ * COURSE
+ */
+export const Courses = [
+    "C",
+    "ADCA",
+    "ADCA Plus",
+    "ADCTT",
+    "ADHN",
+    "ADIT",
+    "ADIT+",
+    "Advance Excel",
+    "CCA",
+    "CFA",
+    "CFA Plus",
+    "Computer Typing ",
+    "DAA",
+    "DCA",
+    "DCP",
+    "DCTT",
+    "DDEO",
+    "DFA",
+    "DHN",
+    "DHT",
+    "DOA",
+    "DTP",
+    "DWD",
+    "HDCA",
+    "HDIT",
+    "Java",
+    "MRC",
+    "PDDTP",
+];

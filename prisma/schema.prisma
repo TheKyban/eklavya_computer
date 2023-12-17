@@ -24,13 +24,6 @@ model User {
     updatedAt DateTime  @updatedAt
 }
 
-type Address {
-    state    String
-    district String
-    pincode  String
-    street   String
-}
-
 model Student {
     id            String  @id @default(auto()) @map("_id") @db.ObjectId
     name          String
@@ -38,16 +31,25 @@ model Student {
     fatherName    String
     motherName    String
     gender        gender
+    qualification String?
     formNumber    String
     registrantion String
     dob           String
-    mobile        String
+    phone         String
     email         String?
-    doa           String
+    dor           String
     course        String
     address       Json
     branch        String
     Branch        User    @relation(fields: [branch], references: [userId])
+    isVerified    Boolean @default(false)
+}
+
+type Address {
+    state    String
+    district String
+    pincode  String
+    street   String
 }
 
 enum gender {

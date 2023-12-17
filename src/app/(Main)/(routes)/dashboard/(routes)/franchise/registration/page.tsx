@@ -27,7 +27,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CircleUser, Loader, Smile, Users } from "lucide-react";
-import { franchiseSchema } from "@/lib/utils";
+import { franchiseSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 

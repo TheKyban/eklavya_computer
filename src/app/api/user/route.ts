@@ -1,4 +1,4 @@
-import { franchiseEditSchema, franchiseSchema } from "@/lib/utils";
+import { franchiseEditSchema, franchiseSchema } from "@/lib/schema";
 import { NextResponse } from "next/server";
 import { Prisma } from "../../../../prisma/prisma";
 import { z } from "zod";
@@ -282,8 +282,9 @@ export const DELETE = async (req: Request) => {
                 success: false,
             });
         }
-
-        const { userId } = await req.json();
+        const url = req.url;
+        const { searchParams } = new URL(url);
+        const userId = searchParams.get("userId");
 
         if (!userId) {
             return NextResponse.json({
@@ -305,7 +306,6 @@ export const DELETE = async (req: Request) => {
             });
         }
 
-        console.log(user);
         return NextResponse.json({
             message: "User Deleted successfully",
             success: true,
