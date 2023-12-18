@@ -61,12 +61,12 @@ const VerifiedStudentList = ({
     return (
         <div className="px-5 py-4 flex flex-col gap-4">
             <div className="flex justify-between">
-                <h1 className="flex items-center gap-3 lg:text-xl uppercase font-semibold text-teal-700">
+                <h1 className="flex items-center gap-2 md:gap-3 lg:text-xl uppercase font-semibold text-teal-700">
                     <UserRoundCheck className="text-red-600 w-5 h-5" />
                     Verified Students
                 </h1>
                 <Search
-                    className="w-36 md:w-44"
+                    className="w-32 md:w-44"
                     placeholder="Registration"
                     queryName="registration"
                 />
@@ -102,21 +102,25 @@ const VerifiedStudentList = ({
                                     key={student.formNumber}
                                     className={poppins.className}
                                 >
-                                    <TableCell className="font-medium">
+                                    <TableCell className="font-medium text-xs md:text-sm">
                                         {student.formNumber}
                                     </TableCell>
-                                    <TableCell>{student.name}</TableCell>
-                                    <TableCell className="hidden md:table-cell">
+                                    <TableCell className="text-xs md:text-sm">
+                                        {student.name}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell text-xs md:text-sm">
                                         {student.fatherName}
                                     </TableCell>
-                                    <TableCell className="hidden xl:table-cell">
+                                    <TableCell className="hidden xl:table-cell text-xs md:text-sm">
                                         {student.motherName}
                                     </TableCell>
-                                    <TableCell className="hidden sm:table-cell">
+                                    <TableCell className="hidden sm:table-cell text-xs md:text-sm">
                                         {format(new Date(student.dor), "PP")}
                                     </TableCell>
-                                    <TableCell>{student.course}</TableCell>
-                                    <TableCell className="text-left sm:text-right">
+                                    <TableCell className="text-xs md:text-sm">
+                                        {student.course}
+                                    </TableCell>
+                                    <TableCell className="text-left sm:text-right text-xs md:text-sm">
                                         <Button
                                             variant={"outline"}
                                             onClick={() =>
