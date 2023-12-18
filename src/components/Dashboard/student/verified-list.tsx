@@ -12,7 +12,7 @@ import {
 import { poppins } from "@/lib/fonts";
 import { Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { Pen, Trash, UserRoundX } from "lucide-react";
+import { Pen, Trash, UserRoundCheck } from "lucide-react";
 import { UserCog } from "lucide-react";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
@@ -22,7 +22,7 @@ import { format } from "date-fns";
 import { useStudent } from "@/hooks/use-students";
 import { URL } from "@/lib/constants";
 
-const StudentPendingList = ({
+const VerifiedStudentList = ({
     searchParams,
 }: {
     searchParams: { page: string; registration: string };
@@ -38,9 +38,7 @@ const StudentPendingList = ({
     const fetchData = useCallback(async () => {
         try {
             setIsLoading(true);
-            const url = `${URL}/api/student?&pending=true&page=${
-                searchParams.page
-            }${
+            const url = `${URL}/api/student?page=${searchParams.page}${
                 !!searchParams.registration
                     ? "&formNumber=" + searchParams.registration
                     : ""
@@ -64,8 +62,8 @@ const StudentPendingList = ({
         <div className="px-5 py-4 flex flex-col gap-4">
             <div className="flex justify-between">
                 <h1 className="flex items-center gap-3 lg:text-xl uppercase font-semibold text-teal-700">
-                    <UserRoundX className="text-red-600 w-5 h-5" />
-                    Pending Student
+                    <UserRoundCheck className="text-red-600 w-5 h-5" />
+                    Verified Students
                 </h1>
                 <Search
                     className="w-36 md:w-44"
@@ -152,4 +150,4 @@ const StudentPendingList = ({
     );
 };
 
-export default StudentPendingList;
+export default VerifiedStudentList;

@@ -1,9 +1,11 @@
-import { FC } from "react";
+import StudentVerification from "@/components/Dashboard/student/verification";
 
-interface pageProps {}
-
-const StudentVerification: FC<pageProps> = ({}) => {
-    return <div>StudentVerification</div>;
+const StudentVerificationPage = () => {
+    return (
+        <div>
+            <StudentVerification />
+        </div>
+    );
 };
 
-export default StudentVerification;
+export default StudentVerificationPage;

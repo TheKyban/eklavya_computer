@@ -126,8 +126,126 @@ export const POST = async (req: Request) => {
     } catch (error) {
         console.log("[STUDENT]", error);
         return NextResponse.json({ message: "INTERNAL ERROR", success: false });
-    } finally {
-        await Prisma.$disconnect();
+    }
+};
+/**
+ * UPDATE STUDENTS
+ */
+export const PUT = async (req: Request) => {
+    try {
+        /**
+         * CHECK ADMIN OR FRENCHISE IS LOGIN
+         */
+
+        const session = await getServerSession(authOptions);
+
+        if (!session?.user) {
+            return NextResponse.json({
+                message: "Unauthorized",
+                success: false,
+            });
+        }
+
+        /**
+         * CHECK FRANCHISE IS ACTIVE OR NOT
+         */
+
+        if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
+            return NextResponse.json({
+                message: "Unauthorized",
+                success: false,
+            });
+        }
+
+        /**
+         * VALIDATE DATA
+         */
+
+        const data: z.infer<typeof studentSchema> = await req.json();
+        const { success } = studentSchema.safeParse({
+            ...data,
+            dob: new Date(data.dob),
+            dor: new Date(data.dor),
+        });
+        if (!success) {
+            return NextResponse.json({
+                message: "Invalid data",
+                success: false,
+            });
+        }
+
+        /**
+         * Validate Student form
+         */
+
+        // form number and branch id should not to be same
+        if (data.formNumber === data.branch) {
+            return NextResponse.json({
+                message: "Invalid form number",
+                success: false,
+            });
+        }
+
+        // from number should be followed by branch userId
+        if (!data.formNumber.startsWith(data.branch)) {
+            return NextResponse.json({
+                message: "Invalid form number",
+                success: false,
+            });
+        }
+
+        const isFormNumberExist = await Prisma.student.findUnique({
+            where: {
+                formNumber: data.formNumber,
+            },
+        });
+
+        /**
+         * UPDATE STUDENT
+         */
+
+        const student = await Prisma.student.update({
+            where: {
+                formNumber: data.formNumber,
+                branch: data.branch,
+            },
+            data: {
+                img: data.img,
+                name: data.name,
+                fatherName: data.fatherName,
+                motherName: data.motherName,
+                gender: data.gender as gender,
+                phone: data.phone,
+                email: data.email,
+                address: {
+                    district: data.district,
+                    pincode: data.pincode,
+                    state: data.state,
+                    street: data.address,
+                },
+                dob: new Date(data.dob),
+                dor: new Date(data.dor),
+                qualification: data.qualification,
+                course: data.course,
+            },
+        });
+
+        if (!student) {
+            return NextResponse.json({
+                message: "Invalid details",
+                success: false,
+                student,
+            });
+        }
+
+        return NextResponse.json({
+            message: "Student Updated Successfully",
+            success: true,
+            student,
+        });
+    } catch (error) {
+        console.log("[STUDENT UPDATE]", error);
+        return NextResponse.json({ message: "INTERNAL ERROR", success: false });
     }
 };
 
@@ -177,7 +295,7 @@ export const GET = async (req: Request) => {
                 formNumber: {
                     contains: formNumber,
                 },
-                isVerified: false,
+                isVerified: pending,
             },
             orderBy: {
                 id: "desc",

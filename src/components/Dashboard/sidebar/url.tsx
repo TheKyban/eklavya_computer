@@ -107,7 +107,7 @@ export const accordianLinks: accordianLinks[] = [
             {
                 title: "Verified List",
                 icon: <ShieldCheck className="text-indigo-600" />,
-                link: "/dashboard/student/verified",
+                link: "/dashboard/student",
             },
             {
                 title: "Student Verification",

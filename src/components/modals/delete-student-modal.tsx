@@ -29,6 +29,7 @@ import { CircleUser, Loader, Smile } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { useStudent } from "@/hooks/use-students";
 
 export const DeleteStudentModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -36,19 +37,19 @@ export const DeleteStudentModal = () => {
     const isModalOpen = isOpen && type === "deleteStudent";
     const { student } = data;
     const [isLoading, setIsLoading] = useState(false);
-
+    const deleteStudent = useStudent((state) => state.removeStudent);
     const onDelete = async () => {
         try {
             setIsLoading(true);
             const { data } = await axios.delete(
-                `/api/student?registration=${student?.registration}`
+                `/api/student?formNumber=${student?.formNumber}`
             );
             if (data) {
                 toast({ description: data.message });
             }
             if (data.success) {
                 onClose();
-                router.refresh();
+                deleteStudent(student?.formNumber!);
             }
         } catch (error) {
             console.log(error);

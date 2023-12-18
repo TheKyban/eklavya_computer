@@ -1,9 +1,19 @@
-import { FC } from 'react';
+import VerifiedStudentList from "@/components/Dashboard/student/verified-list";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
 
-interface pageProps {}
-
-const Student: FC<pageProps> = ({}) => {
-    return <div>Student</div>;
+const VerifiedStudent = ({
+    searchParams,
+}: {
+    searchParams: { page: string; registration: string };
+}) => {
+    return (
+        <Suspense
+            fallback={<Loader2 className="animate-spin m-auto mt-[25%]" />}
+        >
+            <VerifiedStudentList searchParams={searchParams} />
+        </Suspense>
+    );
 };
 
-export default Student;
+export default VerifiedStudent;

@@ -84,6 +84,11 @@ export const info = [
 export const per_page = 10;
 
 /**
+ * URL
+ */
+export const URL = "http://localhost:3000";
+
+/**
  * COURSE
  */
 export const Courses = [

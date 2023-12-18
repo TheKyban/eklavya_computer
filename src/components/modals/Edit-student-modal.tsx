@@ -23,6 +23,7 @@ import {
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -34,72 +35,77 @@ import { ChangeEvent, useEffect } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CircleUser, Loader, Smile, Users } from "lucide-react";
+import {
+    CalendarIcon,
+    CircleUser,
+    GraduationCap,
+    Loader,
+    Smile,
+    Users,
+} from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { franchiseEditSchema } from "@/lib/schema";
+import { studentSchema } from "@/lib/schema";
 import { useRouter } from "next/navigation";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Calendar } from "../ui/calendar";
+import { Courses } from "@/lib/constants";
+import { useStudent } from "@/hooks/use-students";
 
 export const EditStudentModal = () => {
+    const currentYear = new Date().getFullYear();
     const { isOpen, onClose, type, data } = useModal();
     const router = useRouter();
     const isModalOpen = isOpen && type === "editStudent";
-    const { user } = data;
-    const form = useForm<z.infer<typeof franchiseEditSchema>>({
-        resolver: zodResolver(franchiseEditSchema),
-        defaultValues: {
-            address: "",
-            branch: "",
-            district: "",
-            email: "",
-            img: "",
-            name: "",
-            password: "",
-            phone: "",
-            pincode: "",
-            state: "",
-            userId: "",
-            role: "",
-            id: "",
-            isActive: "",
-        },
+    const { student } = data;
+    const form = useForm<z.infer<typeof studentSchema>>({
+        resolver: zodResolver(studentSchema),
     });
+    const updatePendingStudent = useStudent((state) => state.updateStudent);
 
     useEffect(() => {
-        if (user?.name && user?.email && user?.img) {
+        if (student?.name && student?.email && student?.img) {
             // personal information
-            form.setValue("name", user?.name);
-            form.setValue("email", user?.email);
-            form.setValue("img", user?.img);
-            form.setValue("phone", user?.phone);
+            form.setValue("formNumber", student.formNumber);
+            form.setValue("name", student?.name);
+            form.setValue("fatherName", student.fatherName);
+            form.setValue("motherName", student.motherName);
+            form.setValue("email", student?.email);
+            form.setValue("img", student?.img);
+            form.setValue("phone", student?.phone);
+            form.setValue("gender", student?.gender);
+
+            // dates
+            form.setValue("dob", new Date(student?.dob));
+            form.setValue("dor", new Date(student?.dor));
+
+            form.setValue("qualification", student?.qualification!);
+            form.setValue("course", student?.course);
 
             // address
-            form.setValue("address", user?.address?.street);
-            form.setValue("pincode", user?.address?.pincode);
-            form.setValue("district", user?.address.district);
-            form.setValue("state", user?.address.state);
+            form.setValue("address", student?.address?.street);
+            form.setValue("pincode", student?.address?.pincode);
+            form.setValue("district", student?.address.district);
+            form.setValue("state", student?.address.state);
 
-            // user
-            form.setValue("id", user?.id);
-            form.setValue("branch", user?.branch);
-            form.setValue("userId", user?.userId);
-            form.setValue("password", user?.password);
-            form.setValue("isActive", `${user?.isActive}`);
-            form.setValue("role", user?.role);
+            // Franchise
+            form.setValue("branch", student.branch);
         }
-    }, [data, form, user]);
+    }, [data, form, student]);
 
-    const onSubmit = async (values: z.infer<typeof franchiseEditSchema>) => {
+    const onSubmit = async (values: z.infer<typeof studentSchema>) => {
         try {
-            const { data } = await axios.put("/api/user", values);
+            const { data } = await axios.put("/api/student", values);
             if (data) {
                 toast({ description: data.message });
             }
             if (data.success) {
                 form.reset();
                 onClose();
-                router.refresh();
-                window.location.reload();
+                updatePendingStudent(data.student);
             }
         } catch (error) {
             console.log(error);
@@ -134,43 +140,59 @@ export const EditStudentModal = () => {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="w-full overflow-y-auto flex flex-col gap-10 py-3 px-2 no-scrollbar"
+                        className="w-full flex flex-col gap-5 py-3 px-2 overflow-y-auto no-scrollbar"
                     >
-                        {/* PERSONAL DETAILS */}
-                        <div className="flex flex-col gap-4 flex-1 ">
-                            <h1 className="text-indigo-600 flex items-center gap-2 uppercase text-lg">
-                                <Smile className="" /> Personal Details
-                            </h1>
+                        <h1 className="text-indigo-600 flex items-center gap-2 uppercase text-lg">
+                            <GraduationCap className="" /> Student Details
+                        </h1>
 
-                            {/* PICTURE */}
+                        {/* PICTURE */}
+                        <FormField
+                            name="img"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem className="w-fit">
+                                    <Label
+                                        htmlFor="img"
+                                        className="cursor-pointer"
+                                    >
+                                        <Image
+                                            src={field.value || "/noavatar.png"}
+                                            priority
+                                            width={100}
+                                            height={100}
+                                            alt="picture"
+                                            className="rounded-full w-[100px] h-[100px]"
+                                        />
+                                    </Label>
+                                    <FormControl>
+                                        <Input
+                                            className="hidden max-w-0 w-0 h-0"
+                                            type="file"
+                                            id="img"
+                                            value={""}
+                                            onChange={(e) => handleImage(e)}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                            {/* FORM NUMBER */}
                             <FormField
-                                name="img"
                                 control={form.control}
+                                name="formNumber"
                                 render={({ field }) => (
-                                    <FormItem className="w-fit">
-                                        <Label
-                                            htmlFor="img"
-                                            className="cursor-pointer"
-                                        >
-                                            <Image
-                                                src={
-                                                    field.value ||
-                                                    "/noavatar.png"
-                                                }
-                                                priority
-                                                width={100}
-                                                height={100}
-                                                alt="picture"
-                                                className="rounded-full w-[100px] h-[100px]"
-                                            />
-                                        </Label>
+                                    <FormItem>
+                                        <FormLabel>Registration Id</FormLabel>
+
                                         <FormControl>
                                             <Input
-                                                className="hidden max-w-0 w-0 h-0"
-                                                type="file"
-                                                id="img"
-                                                // value={field.value}
-                                                onChange={(e) => handleImage(e)}
+                                                placeholder="Enter Form number"
+                                                {...field}
+                                                readOnly
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -194,6 +216,138 @@ export const EditStudentModal = () => {
                                     </FormItem>
                                 )}
                             />
+                            {/* FNAME */}
+                            <FormField
+                                control={form.control}
+                                name="fatherName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Father Name</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Enter father name"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            {/* MNAME */}
+                            <FormField
+                                control={form.control}
+                                name="motherName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Mother Name</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Enter mother name"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Gender */}
+                            <FormField
+                                control={form.control}
+                                name="gender"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Gender</FormLabel>
+                                        <FormControl>
+                                            <RadioGroup
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value}
+                                                value={field.value}
+                                                className="flex flex-col space-y-1"
+                                            >
+                                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                                    <FormControl>
+                                                        <RadioGroupItem value="MALE" />
+                                                    </FormControl>
+                                                    <FormLabel className="font-normal">
+                                                        MALE
+                                                    </FormLabel>
+                                                </FormItem>
+                                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                                    <FormControl>
+                                                        <RadioGroupItem value="FEMALE" />
+                                                    </FormControl>
+                                                    <FormLabel className="font-normal">
+                                                        FEMALE
+                                                    </FormLabel>
+                                                </FormItem>
+                                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                                    <FormControl>
+                                                        <RadioGroupItem value="TRANSGENDER" />
+                                                    </FormControl>
+                                                    <FormLabel className="font-normal">
+                                                        TRANSGENDER
+                                                    </FormLabel>
+                                                </FormItem>
+                                            </RadioGroup>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            {/* DOB */}
+                            <FormField
+                                control={form.control}
+                                name="dob"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col gap-1">
+                                        <FormLabel>Date Of Birth</FormLabel>
+                                        <FormControl>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                        variant={"outline"}
+                                                        className={cn(
+                                                            "w-[240px] justify-start text-left font-normal",
+                                                            !field.value &&
+                                                                "text-muted-foreground"
+                                                        )}
+                                                    >
+                                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                                        {field.value ? (
+                                                            format(
+                                                                field.value,
+                                                                "PPP"
+                                                            )
+                                                        ) : (
+                                                            <span>
+                                                                Pick a date
+                                                            </span>
+                                                        )}
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent
+                                                    align="start"
+                                                    className=" w-auto p-0"
+                                                >
+                                                    <Calendar
+                                                        mode="single"
+                                                        captionLayout="dropdown-buttons"
+                                                        selected={field.value}
+                                                        onSelect={
+                                                            field.onChange
+                                                        }
+                                                        fromYear={1960}
+                                                        toYear={currentYear}
+                                                    />
+                                                </PopoverContent>
+                                            </Popover>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
                             {/* Email */}
                             <FormField
                                 control={form.control}
@@ -347,24 +501,17 @@ export const EditStudentModal = () => {
                                     </FormItem>
                                 )}
                             />
-                        </div>
 
-                        {/* ACCOUNT INFORMATION */}
-                        <div className="flex flex-col gap-4 flex-1">
-                            <h1 className="flex gap-2 text-teal-600 items-center uppercase text-lg">
-                                <CircleUser /> Account Information
-                            </h1>
-
-                            {/* Branch Name */}
+                            {/* Qualification */}
                             <FormField
                                 control={form.control}
-                                name="branch"
+                                name="qualification"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Branch Name</FormLabel>
+                                        <FormLabel>Qualification</FormLabel>
                                         <FormControl>
                                             <Input
-                                                placeholder="Enter Branch Name"
+                                                placeholder="Enter Qualification"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -373,67 +520,13 @@ export const EditStudentModal = () => {
                                 )}
                             />
 
-                            {/* USER ID */}
+                            {/* COURSE */}
                             <FormField
                                 control={form.control}
-                                name="userId"
+                                name="course"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="uppercase">
-                                            User Id
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder="Enter User id"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
-                            {/* Role */}
-                            <FormField
-                                control={form.control}
-                                name="role"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Role</FormLabel>
-                                        <FormControl>
-                                            <Select
-                                                value={field.value}
-                                                onValueChange={field.onChange}
-                                                defaultValue={field.value}
-                                            >
-                                                <SelectTrigger>
-                                                    <SelectValue
-                                                        placeholder={"Role"}
-                                                    />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectGroup>
-                                                        <SelectItem value="ADMIN">
-                                                            ADMIN
-                                                        </SelectItem>
-                                                        <SelectItem value="FRANCHISE">
-                                                            FRANCHISE
-                                                        </SelectItem>
-                                                    </SelectGroup>
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            {/* Is Active */}
-                            <FormField
-                                control={form.control}
-                                name="isActive"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Is Active</FormLabel>
+                                        <FormLabel>Course</FormLabel>
                                         <FormControl>
                                             <Select
                                                 value={field.value}
@@ -443,18 +536,27 @@ export const EditStudentModal = () => {
                                                 <SelectTrigger>
                                                     <SelectValue
                                                         placeholder={
-                                                            "Is Active"
+                                                            "Select Course"
                                                         }
                                                     />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectGroup>
-                                                        <SelectItem value="true">
-                                                            YES
-                                                        </SelectItem>
-                                                        <SelectItem value="false">
-                                                            No
-                                                        </SelectItem>
+                                                        <SelectLabel>
+                                                            Courses
+                                                        </SelectLabel>
+                                                        {Courses.map(
+                                                            (course) => (
+                                                                <SelectItem
+                                                                    key={course}
+                                                                    value={
+                                                                        course
+                                                                    }
+                                                                >
+                                                                    {course}
+                                                                </SelectItem>
+                                                            )
+                                                        )}
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>
@@ -464,24 +566,61 @@ export const EditStudentModal = () => {
                                 )}
                             />
 
-                            {/* Password */}
+                            {/* DOR */}
                             <FormField
                                 control={form.control}
-                                name="password"
+                                name="dor"
                                 render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Password</FormLabel>
+                                    <FormItem className="flex flex-col gap-1">
+                                        <FormLabel>
+                                            Date Of Registration
+                                        </FormLabel>
                                         <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="Enter password"
-                                            />
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                        variant={"outline"}
+                                                        className={cn(
+                                                            "w-[240px] justify-start text-left font-normal",
+                                                            !field.value &&
+                                                                "text-muted-foreground"
+                                                        )}
+                                                    >
+                                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                                        {field.value ? (
+                                                            format(
+                                                                field.value,
+                                                                "PPP"
+                                                            )
+                                                        ) : (
+                                                            <span>
+                                                                Pick a date
+                                                            </span>
+                                                        )}
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent
+                                                    align="start"
+                                                    className=" w-auto p-0"
+                                                >
+                                                    <Calendar
+                                                        mode="single"
+                                                        captionLayout="dropdown-buttons"
+                                                        selected={field.value}
+                                                        onSelect={
+                                                            field.onChange
+                                                        }
+                                                        fromYear={1960}
+                                                        toYear={currentYear}
+                                                    />
+                                                </PopoverContent>
+                                            </Popover>
                                         </FormControl>
-                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
                         </div>
+
                         {/* BTNS */}
                         <div className="flex flex-col gap-3">
                             <Button
@@ -509,7 +648,7 @@ const back = () => {
         <Dialog>
             <DialogContent className="max-h-[90vh] h-[90vh]">
                 <DialogHeader>
-                    <DialogTitle>Edit User</DialogTitle>
+                    <DialogTitle>Edit Ststudent</DialogTitle>
                 </DialogHeader>
                 <div className="overflow-y-auto no-scrollbar">
                     <div className="w-full flex flex-col gap-5 py-3 px-2">
@@ -633,9 +772,9 @@ const back = () => {
                                 <Input />
                             </div>
 
-                            {/* USER ID */}
+                            {/* STstudent ID */}
                             <div>
-                                <Label>User ID</Label>
+                                <Label>Ststudent ID</Label>
                                 <Input />
                             </div>
 

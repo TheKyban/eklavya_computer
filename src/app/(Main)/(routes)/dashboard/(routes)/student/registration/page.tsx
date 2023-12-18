@@ -27,15 +27,7 @@ import { ChangeEvent, useEffect } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-    CalendarIcon,
-    CircleUser,
-    GraduationCap,
-    Loader,
-    PlusCircle,
-    Smile,
-    Users,
-} from "lucide-react";
+import { CalendarIcon, GraduationCap, Loader, PlusCircle } from "lucide-react";
 import { studentSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";

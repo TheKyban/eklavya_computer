@@ -1,6 +1,6 @@
 import StudentPendingList from "@/components/Dashboard/student/pending-list";
 import { Loader2 } from "lucide-react";
-import { FC, Suspense } from "react";
+import { Suspense } from "react";
 
 const PendingStudents = ({
     searchParams,
