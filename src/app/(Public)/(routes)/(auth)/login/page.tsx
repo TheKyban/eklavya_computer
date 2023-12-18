@@ -6,8 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useLayoutEffect, useState } from "react";
 
 const Login = () => {
-    const [userId, setUserId] = useState("55555");
-    const [password, setPassword] = useState("12345678");
+    const [userId, setUserId] = useState("");
+    const [password, setPassword] = useState("");
     const params = useSearchParams();
     const error = params.get("error");
     const router = useRouter();

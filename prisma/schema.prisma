@@ -32,8 +32,7 @@ model Student {
     motherName    String
     gender        gender
     qualification String?
-    formNumber    String
-    registration  String   @unique
+    formNumber    String   @unique
     dob           DateTime
     phone         String
     email         String?

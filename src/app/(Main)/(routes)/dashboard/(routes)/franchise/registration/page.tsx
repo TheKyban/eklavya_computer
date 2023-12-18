@@ -65,7 +65,6 @@ const FranchiseRegistration = ({}) => {
             console.log(error);
         }
     };
-
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -128,7 +127,7 @@ const FranchiseRegistration = ({}) => {
                                                 className="hidden max-w-0 w-0 h-0"
                                                 type="file"
                                                 id="img"
-                                                // value={field.value}
+                                                value={""}
                                                 onChange={(e) => handleImage(e)}
                                             />
                                         </FormControl>
@@ -401,7 +400,11 @@ const FranchiseRegistration = ({}) => {
                                 "Submit"
                             )}
                         </Button>
-                        <Button variant={"outline"} type="reset">
+                        <Button
+                            variant={"outline"}
+                            type="reset"
+                            onClick={() => form.reset()}
+                        >
                             Reset
                         </Button>
                     </div>

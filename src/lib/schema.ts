@@ -113,7 +113,9 @@ export const franchiseEditSchema = z.object({
  */
 
 export const studentSchema = z.object({
-    img: z.string({ required_error: "Please select a picture" }),
+    img: z
+        .string({ required_error: "Please select a picture" })
+        .min(50, { message: "Please select a picture" }),
     name: z
         .string({ required_error: "Please Enter Name" })
         .trim()
@@ -151,10 +153,12 @@ export const studentSchema = z.object({
         .string({ required_error: "Please Enter address" })
         .trim()
         .min(10, { message: "Please enter valid address" }),
-    branch: z.string(),
+    branch: z.string().min(5, { message: "Branch id is required" }),
     dob: z.date({ required_error: "Please select dob" }),
     dor: z.date(),
-    gender: z.string({ required_error: "Gender is required." }),
+    gender: z
+        .string({ required_error: "Gender is required." })
+        .min(4, { message: "Please select gender" }),
     course: z.string({ required_error: "Course is required." }),
     formNumber: z
         .string({ required_error: "Form number is required." })

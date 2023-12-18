@@ -89,11 +89,11 @@ const StudentPendingList = ({
                         {!isLoading &&
                             students?.map((student: Student) => (
                                 <TableRow
-                                    key={student.registration}
+                                    key={student.formNumber}
                                     className={poppins.className}
                                 >
                                     <TableCell className="font-medium">
-                                        {student.registration}
+                                        {student.formNumber}
                                     </TableCell>
                                     <TableCell>{student.name}</TableCell>
                                     <TableCell>{student.fatherName}</TableCell>

@@ -44,7 +44,6 @@ export const authOptions: AuthOptions = {
                         userId: user.userId,
                         role: user.role,
                         isActive: user.isActive,
-                        students: user._count.Students,
                     };
                 } catch (error) {
                     console.log(error);
@@ -77,8 +76,6 @@ export const authOptions: AuthOptions = {
                 token.userId = user?.userId;
                 // @ts-ignore
                 token.isActive = user?.isActive;
-                // @ts-ignore
-                token.students = user?.students;
             }
             return token;
         },
@@ -87,7 +84,6 @@ export const authOptions: AuthOptions = {
                 session.user.role = token?.role;
                 session.user.userId = token?.userId;
                 session.user.isActive = token?.isActive;
-                session.user.students = token?.students;
             }
             return session;
         },

@@ -1,6 +1,6 @@
 import { authOptions } from "@/lib/auth-options";
 import { gender, role } from "@prisma/client";
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { Prisma } from "../../../../prisma/prisma";
 import { studentSchema } from "@/lib/schema";
@@ -54,22 +54,36 @@ export const POST = async (req: Request) => {
         }
 
         /**
-         * CREATING REGISTRATION NUMBER
+         * Validate Student form
          */
 
-        let registrationNumber: string;
+        // form number and branch id should not to be same
+        if (data.formNumber === data.branch) {
+            return NextResponse.json({
+                message: "Form number must be unique",
+                success: false,
+            });
+        }
 
-        if (session.user.students < 100) {
-            if (session.user.students < 10) {
-                registrationNumber =
-                    session.user.userId + "00" + session.user.students + 1;
-            } else {
-                registrationNumber =
-                    session.user.userId + "0" + session.user.students + 1;
-            }
-        } else {
-            registrationNumber =
-                session.user.userId + session.user.students + 1;
+        // from number should be followed by branch userId
+        if (!data.formNumber.startsWith(data.branch)) {
+            return NextResponse.json({
+                message: "Form number must be follow by branch id",
+                success: false,
+            });
+        }
+
+        const isFormNumberExist = await Prisma.student.findUnique({
+            where: {
+                formNumber: data.formNumber,
+            },
+        });
+
+        if (!!isFormNumberExist) {
+            return NextResponse.json({
+                message: "Form number must be unique",
+                success: false,
+            });
         }
 
         /**
@@ -95,11 +109,14 @@ export const POST = async (req: Request) => {
                 dor: new Date(data.dor),
                 qualification: data.qualification,
                 course: data.course,
-                registration: registrationNumber,
                 branch: data.branch,
                 formNumber: data.formNumber,
             },
         });
+
+        /**
+         * Disconnect Db
+         */
 
         return NextResponse.json({
             message: "Student Registered Successfully",
@@ -109,6 +126,8 @@ export const POST = async (req: Request) => {
     } catch (error) {
         console.log("[STUDENT]", error);
         return NextResponse.json({ message: "INTERNAL ERROR", success: false });
+    } finally {
+        await Prisma.$disconnect();
     }
 };
 
@@ -144,7 +163,8 @@ export const GET = async (req: Request) => {
         const { searchParams } = new URL(req.url);
         const page = Number(searchParams.get("page")) || 1;
         const pending = !!searchParams.get("pending") ? false : true;
-        const registration = searchParams.get("registration");
+        const formNumber = searchParams.get("formNumber") || "";
+
         /**
          * FINDING STUDENTS
          */
@@ -154,8 +174,8 @@ export const GET = async (req: Request) => {
             skip: per_page * (page - 1),
             where: {
                 branch: session.user.userId,
-                registration: {
-                    contains: registration ? registration : "",
+                formNumber: {
+                    contains: formNumber,
                 },
                 isVerified: false,
             },
@@ -171,8 +191,8 @@ export const GET = async (req: Request) => {
         const total = await Prisma.student.count({
             where: {
                 branch: session.user.userId,
-                registration: {
-                    contains: registration ? registration : "",
+                formNumber: {
+                    contains: formNumber,
                 },
                 isVerified: pending,
             },
@@ -217,18 +237,18 @@ export const DELETE = async (req: Request) => {
 
         const url = req.url;
         const { searchParams } = new URL(url);
-        const registration = searchParams.get("registration");
+        const formNumber = searchParams.get("formNumber");
 
-        if (!registration) {
+        if (!formNumber) {
             return NextResponse.json({
-                message: "Required registration",
+                message: "Required formNumber",
                 success: false,
             });
         }
 
         const student = await Prisma.student.delete({
             where: {
-                registration,
+                formNumber,
             },
         });
 
@@ -243,5 +263,8 @@ export const DELETE = async (req: Request) => {
             message: "Student Deleted successfully",
             success: true,
         });
-    } catch (error) {}
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ message: "Internal Error" });
+    }
 };

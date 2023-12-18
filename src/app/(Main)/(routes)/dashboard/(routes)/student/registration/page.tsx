@@ -15,6 +15,7 @@ import {
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -52,12 +53,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const StudentRegistration = ({}) => {
     const currentYear = new Date().getFullYear();
-    const { data } = useSession();
+    const { data: session } = useSession();
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
         defaultValues: {
             address: "",
-            branch: "",
+            branch: session?.user?.userId,
             district: "",
             email: "",
             img: "",
@@ -71,7 +72,7 @@ const StudentRegistration = ({}) => {
             motherName: "",
             dob: new Date(),
             formNumber: "",
-            gender: "",
+            gender: "MALE",
             qualification: "",
         },
     });
@@ -79,22 +80,22 @@ const StudentRegistration = ({}) => {
     /**
      * SETTING USER ID
      */
+
     useEffect(() => {
-        if (data?.user?.userId) {
-            form.setValue("branch", data?.user.userId);
+        if (session?.user?.userId) {
+            form.setValue("branch", session?.user?.userId);
         }
-    }, [data, form]);
+    }, [session, form]);
 
     const onSubmit = async (values: z.infer<typeof studentSchema>) => {
         try {
-            console.log(values);
             const { data } = await axios.post("/api/student", values);
-            console.log(data);
             if (data) {
                 toast({ description: data.message });
             }
             if (data.success) {
                 form.reset();
+                form.setValue("branch", session?.user?.userId as string);
             }
         } catch (error) {
             console.log(error);
@@ -154,7 +155,7 @@ const StudentRegistration = ({}) => {
                                         className="hidden max-w-0 w-0 h-0"
                                         type="file"
                                         id="img"
-                                        // value={field.value}
+                                        value={""}
                                         onChange={(e) => handleImage(e)}
                                     />
                                 </FormControl>
@@ -171,12 +172,17 @@ const StudentRegistration = ({}) => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Form Number</FormLabel>
+
                                     <FormControl>
                                         <Input
                                             placeholder="Enter Form number"
                                             {...field}
                                         />
                                     </FormControl>
+                                    <FormDescription>
+                                        Must be followed by{" "}
+                                        {session?.user.userId}
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -244,6 +250,7 @@ const StudentRegistration = ({}) => {
                                         <RadioGroup
                                             onValueChange={field.onChange}
                                             defaultValue={field.value}
+                                            value={field.value}
                                             className="flex flex-col space-y-1"
                                         >
                                             <FormItem className="flex items-center space-x-3 space-y-0">

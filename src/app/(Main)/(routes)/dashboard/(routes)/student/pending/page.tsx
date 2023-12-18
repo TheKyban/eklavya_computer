@@ -5,7 +5,7 @@ import { FC, Suspense } from "react";
 const PendingStudents = ({
     searchParams,
 }: {
-    searchParams: { page: string; userId: string };
+    searchParams: { page: string; registration: string };
 }) => {
     return (
         <Suspense
