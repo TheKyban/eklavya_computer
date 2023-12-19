@@ -159,7 +159,7 @@ export const studentSchema = z.object({
     gender: z
         .string({ required_error: "Gender is required." })
         .min(4, { message: "Please select gender" }),
-    course: z.string({ required_error: "Course is required." }),
+    course: z.string({ required_error: "Course is required." }).min(2,{message:"Please select course"}),
     formNumber: z
         .string({ required_error: "Form number is required." })
         .min(4, { message: "Enter valid form number" }),

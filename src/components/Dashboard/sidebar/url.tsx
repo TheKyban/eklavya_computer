@@ -81,12 +81,12 @@ export const accordianLinks: accordianLinks[] = [
             {
                 title: "Registration",
                 icon: <PlusCircle className="text-orange-500" />,
-                link: "/dashboard/franchise/registration",
+                link: "/dashboard/user/registration",
             },
             {
                 title: "Manage Franchise",
                 icon: <UserRoundCog className="text-red-600" />,
-                link: "/dashboard/franchise",
+                link: "/dashboard/user",
             },
         ],
     },
@@ -102,7 +102,7 @@ export const accordianLinks: accordianLinks[] = [
             {
                 title: "Pending List",
                 icon: <ShieldAlert className="text-red-600" />,
-                link: "/dashboard/student/pending",
+                link: "/dashboard/student?pending=true",
             },
             {
                 title: "Verified List",
@@ -110,9 +110,15 @@ export const accordianLinks: accordianLinks[] = [
                 link: "/dashboard/student",
             },
             {
-                title: "Student Verification",
+                title: "Verification",
                 icon: <UserRoundCog className="text-pink-600" />,
                 link: "/dashboard/student/verification",
+                role: "ADMIN",
+            },
+            {
+                title: "All Student Verification",
+                icon: <UserRoundCog className="text-pink-600" />,
+                link: "/dashboard/user?ToVerification=true",
                 role: "ADMIN",
             },
         ],

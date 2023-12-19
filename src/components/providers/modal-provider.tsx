@@ -1,4 +1,4 @@
-import { UserModal } from "@/components/modals/user-modal";
+import { UserModal } from "@/components/modals/edit-user-modal";
 import { DeleteUserModal } from "@/components/modals/delete-user-modal";
 import { DeleteStudentModal } from "@/components/modals/delete-student-modal";
 import { EditStudentModal } from "@/components/modals/Edit-student-modal";

@@ -39,12 +39,14 @@ import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { franchiseEditSchema } from "@/lib/schema";
 import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { User } from "@prisma/client";
 
 export const UserModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const router = useRouter();
     const isModalOpen = isOpen && type === "User";
-    const { user } = data;
+    const { user, searchParams } = data;
     const form = useForm<z.infer<typeof franchiseEditSchema>>({
         resolver: zodResolver(franchiseEditSchema),
         defaultValues: {
@@ -88,23 +90,36 @@ export const UserModal = () => {
             form.setValue("role", user?.role);
         }
     }, [data, form, user]);
-
-    const onSubmit = async (values: z.infer<typeof franchiseEditSchema>) => {
-        try {
+    const queryClient = useQueryClient();
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (values: z.infer<typeof franchiseEditSchema>) => {
             const { data } = await axios.put("/api/user", values);
+            return data;
+        },
+
+        onSuccess(data, variables, context) {
             if (data) {
                 toast({ description: data.message });
             }
             if (data.success) {
+                queryClient.setQueryData(
+                    ["users", searchParams?.page, searchParams?.userId],
+                    (old: { total: number; users: User[] }) => {
+                        const users = old.users.map((user) =>
+                            user.id === variables.id ? variables : user
+                        );
+
+                        return {
+                            total: old.total,
+                            users,
+                        };
+                    }
+                );
                 form.reset();
                 onClose();
-                router.refresh();
-                window.location.reload();
             }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+        },
+    });
 
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -133,7 +148,7 @@ export const UserModal = () => {
 
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(onSubmit)}
+                        onSubmit={form.handleSubmit((value) => mutate(value))}
                         className="w-full overflow-y-auto flex flex-col gap-10 py-3 px-2 no-scrollbar"
                     >
                         {/* PERSONAL DETAILS */}
@@ -486,10 +501,10 @@ export const UserModal = () => {
                         <div className="flex flex-col gap-3">
                             <Button
                                 variant={"primary"}
-                                disabled={form.formState.isSubmitting}
+                                disabled={isPending}
                                 type="submit"
                             >
-                                {form.formState.isSubmitting ? (
+                                {isPending ? (
                                     <Loader className="animate-spin" />
                                 ) : (
                                     "Update"

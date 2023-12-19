@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import AuthProvider from "@/components/providers/auth-provider";
 import ModalProvider from "@/components/providers/modal-provider";
+import QueryProvider from "@/components/providers/react-query-provider";
 
 export const metadata: Metadata = {
     title: "Eklavaya",
@@ -26,9 +27,13 @@ export default function RootLayout({
                     storageKey="theme"
                 >
                     <AuthProvider>
-                        {children}
-                        <Toaster />
-                        <ModalProvider />
+                        <QueryProvider>
+                            <>
+                                {children}
+                                <Toaster />
+                                <ModalProvider />
+                            </>
+                        </QueryProvider>
                     </AuthProvider>
                 </ThemeProvider>
             </body>

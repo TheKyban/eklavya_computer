@@ -109,7 +109,7 @@ export const PUT = async (
             return NextResponse.json({ messagae: "Invalid data" });
         }
 
-        return NextResponse.json({ message: "Updated successfully" });
+        return NextResponse.json({ message: "Updated successfully", student });
     } catch (error) {
         console.log("[GET USERS]", error);
         return new NextResponse("Internal Error");

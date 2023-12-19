@@ -7,7 +7,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,7 +22,6 @@ import {
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -41,30 +39,26 @@ import {
     GraduationCap,
     Loader,
     Smile,
-    Users,
 } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { studentSchema } from "@/lib/schema";
-import { useRouter } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
 import { Courses } from "@/lib/constants";
-import { useStudent } from "@/hooks/use-students";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const EditStudentModal = () => {
     const currentYear = new Date().getFullYear();
     const { isOpen, onClose, type, data } = useModal();
-    const router = useRouter();
     const isModalOpen = isOpen && type === "editStudent";
-    const { student } = data;
+    const { student, searchParams } = data;
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
     });
-    const updatePendingStudent = useStudent((state) => state.updateStudent);
 
     useEffect(() => {
         if (student?.name && student?.email && student?.img) {
@@ -96,21 +90,64 @@ export const EditStudentModal = () => {
         }
     }, [data, form, student]);
 
-    const onSubmit = async (values: z.infer<typeof studentSchema>) => {
-        try {
+    const queryClient = useQueryClient();
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (values: z.infer<typeof studentSchema>) => {
             const { data } = await axios.put("/api/student", values);
+            return data;
+        },
+
+        onSuccess(data, variables) {
             if (data) {
                 toast({ description: data.message });
-            }
-            if (data.success) {
                 form.reset();
                 onClose();
-                updatePendingStudent(data.student);
             }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+            if (data.success) {
+                queryClient.setQueryData(
+                    [
+                        searchParams?.type,
+                        searchParams?.page,
+                        searchParams?.registration,
+                    ],
+                    (old: {
+                        total: number;
+                        students: z.infer<typeof studentSchema>[];
+                    }) => {
+                        const students = old.students.map((student) =>
+                            student.formNumber === variables.formNumber
+                                ? {
+                                      img: variables.img,
+                                      name: variables.name,
+                                      fatherName: variables.fatherName,
+                                      formNumber: variables.formNumber,
+                                      branch: variables.branch,
+                                      course: variables.course,
+                                      dob: variables.dob,
+                                      dor: variables.dor,
+                                      email: variables.email,
+                                      phone: variables.phone,
+                                      gender: variables.gender,
+                                      motherName: variables.motherName,
+                                      qualification: variables.qualification,
+                                      address: {
+                                          state: variables.state,
+                                          district: variables.district,
+                                          pincode: variables.pincode,
+                                          street: variables.address,
+                                      },
+                                  }
+                                : student
+                        );
+                        return {
+                            total: old.total,
+                            students,
+                        };
+                    }
+                );
+            }
+        },
+    });
 
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -139,7 +176,7 @@ export const EditStudentModal = () => {
 
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(onSubmit)}
+                        onSubmit={form.handleSubmit((values) => mutate(values))}
                         className="w-full flex flex-col gap-5 py-3 px-2 overflow-y-auto no-scrollbar"
                     >
                         <h1 className="text-indigo-600 flex items-center gap-2 uppercase text-lg">
@@ -625,10 +662,10 @@ export const EditStudentModal = () => {
                         <div className="flex flex-col gap-3">
                             <Button
                                 variant={"primary"}
-                                disabled={form.formState.isSubmitting}
+                                disabled={isPending}
                                 type="submit"
                             >
-                                {form.formState.isSubmitting ? (
+                                {isPending ? (
                                     <Loader className="animate-spin" />
                                 ) : (
                                     "Update"

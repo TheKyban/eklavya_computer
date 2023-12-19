@@ -6,6 +6,12 @@ export type ModalType = "User" | "deleteUser" | "editStudent" | "deleteStudent";
 interface ModalData {
     user?: User;
     student?: Student;
+    searchParams?: {
+        page?: string;
+        userId?: string | null;
+        registration: string;
+        type: string;
+    };
 }
 
 interface modalStore {

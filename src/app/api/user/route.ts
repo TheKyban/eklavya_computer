@@ -295,7 +295,7 @@ export const DELETE = async (req: Request) => {
 
         const user = await Prisma.user.delete({
             where: {
-                userId: userId,
+                userId,
             },
         });
 
@@ -310,5 +310,11 @@ export const DELETE = async (req: Request) => {
             message: "User Deleted successfully",
             success: true,
         });
-    } catch (error) {}
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({
+            message: "Invalid data",
+            success: false,
+        });
+    }
 };

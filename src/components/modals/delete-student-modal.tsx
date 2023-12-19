@@ -10,53 +10,57 @@ import {
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 
-import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
-import { useState } from "react";
-import { CircleUser, Loader, Smile } from "lucide-react";
+import { Loader } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
-import { useStudent } from "@/hooks/use-students";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { studentSchema } from "@/lib/schema";
+import { z } from "zod";
 
 export const DeleteStudentModal = () => {
     const { isOpen, onClose, type, data } = useModal();
-    const router = useRouter();
     const isModalOpen = isOpen && type === "deleteStudent";
-    const { student } = data;
-    const [isLoading, setIsLoading] = useState(false);
-    const deleteStudent = useStudent((state) => state.removeStudent);
-    const onDelete = async () => {
-        try {
-            setIsLoading(true);
+    const { student, searchParams } = data;
+
+    const queryClient = useQueryClient();
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: async () => {
             const { data } = await axios.delete(
                 `/api/student?formNumber=${student?.formNumber}`
             );
+            return data;
+        },
+        onSuccess(data) {
             if (data) {
-                toast({ description: data.message });
-            }
-            if (data.success) {
+                toast({ description: data?.message });
                 onClose();
-                deleteStudent(student?.formNumber!);
             }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+            if (!!data?.success) {
+                queryClient.setQueryData(
+                    [
+                        searchParams?.type,
+                        searchParams?.page,
+                        searchParams?.registration,
+                    ],
+                    (old: {
+                        total: number;
+                        students: z.infer<typeof studentSchema>[];
+                    }) => {
+                        const students = old.students.filter(
+                            (oldStudent) =>
+                                oldStudent.formNumber !== student?.formNumber
+                        );
+                        return {
+                            total: old.total,
+                            students,
+                        };
+                    }
+                );
+            }
+        },
+    });
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -76,7 +80,7 @@ export const DeleteStudentModal = () => {
                 <DialogFooter className="bg-gray-100 px-6 py-4">
                     <div className="flex items-center justify-between w-full">
                         <Button
-                            disabled={isLoading}
+                            disabled={isPending}
                             variant={"ghost"}
                             onClick={onClose}
                         >
@@ -84,10 +88,14 @@ export const DeleteStudentModal = () => {
                         </Button>
                         <Button
                             variant={"primary"}
-                            disabled={isLoading}
-                            onClick={onDelete}
+                            disabled={isPending}
+                            onClick={() => mutate()}
                         >
-                            Confirm
+                            {isPending ? (
+                                <Loader className="animate-spin" />
+                            ) : (
+                                "Confirm"
+                            )}
                         </Button>
                     </div>
                 </DialogFooter>

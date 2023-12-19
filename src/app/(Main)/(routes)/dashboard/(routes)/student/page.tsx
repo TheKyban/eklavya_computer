@@ -1,19 +1,19 @@
-import VerifiedStudentList from "@/components/Dashboard/student/verified-list";
+import StudentList from "@/components/Dashboard/student/list";
 import { Loader2 } from "lucide-react";
 import { Suspense } from "react";
 
-const VerifiedStudent = ({
+const Lists = ({
     searchParams,
 }: {
-    searchParams: { page: string; registration: string };
+    searchParams: { page: string; registration: string; pending: boolean };
 }) => {
     return (
         <Suspense
             fallback={<Loader2 className="animate-spin m-auto mt-[25%]" />}
         >
-            <VerifiedStudentList searchParams={searchParams} />
+            <StudentList searchParams={searchParams} />
         </Suspense>
     );
 };
 
-export default VerifiedStudent;
+export default Lists;

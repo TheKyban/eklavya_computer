@@ -13,57 +13,48 @@ import { poppins } from "@/lib/fonts";
 import { Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Pen, Trash, UserRoundCheck } from "lucide-react";
-import { UserCog } from "lucide-react";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
 import { format } from "date-fns";
-import { useStudent } from "@/hooks/use-students";
 import { URL } from "@/lib/constants";
+import { useQuery } from "@tanstack/react-query";
 
-const VerifiedStudentList = ({
+const StudentList = ({
     searchParams,
 }: {
-    searchParams: { page: string; registration: string };
+    searchParams: { page: string; registration: string; pending?: boolean };
 }) => {
-    const [isLoading, setIsLoading] = useState(true);
-    const { students, setStudents } = useStudent((state) => ({
-        students: state.students,
-        setStudents: state.setStudents,
-    }));
-    const [total, setTotal] = useState(0);
     const { onOpen } = useModal();
 
-    const fetchData = useCallback(async () => {
-        try {
-            setIsLoading(true);
-            const url = `${URL}/api/student?page=${searchParams.page}${
-                !!searchParams.registration
-                    ? "&formNumber=" + searchParams.registration
-                    : ""
-            }`;
-            const {
-                data: { total, students },
-            } = await axios.get(url);
-            setStudents(students);
-            setTotal(total);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [setStudents, searchParams]);
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+    const url = `${URL}/api/student?${
+        searchParams.pending ? "pending=true&" : ""
+    }page=${searchParams.page}${
+        !!searchParams.registration
+            ? "&formNumber=" + searchParams.registration
+            : ""
+    }`;
+    const { data, isLoading } = useQuery({
+        queryKey: [
+            searchParams?.pending ? "pending_list" : "verified_list",
+
+            searchParams.page || "1",
+            searchParams.registration ? searchParams.registration : "none",
+        ],
+        queryFn: async () => {
+            const { data } = await axios.get(url);
+            return data;
+        },
+    });
 
     return (
         <div className="px-5 py-4 flex flex-col gap-4">
             <div className="flex justify-between">
                 <h1 className="flex items-center gap-2 md:gap-3 lg:text-xl uppercase font-semibold text-teal-700">
                     <UserRoundCheck className="text-red-600 w-5 h-5" />
-                    Verified Students
+                    {searchParams?.pending
+                        ? "Pending Students"
+                        : "Verified Students"}
                 </h1>
                 <Search
                     className="w-32 md:w-44"
@@ -74,6 +65,7 @@ const VerifiedStudentList = ({
 
             <div>
                 <Table>
+                    {/* TABLE HEADING */}
                     <TableHeader>
                         <TableRow>
                             <TableHead>Registration</TableHead>
@@ -93,11 +85,11 @@ const VerifiedStudentList = ({
                             </TableHead>
                         </TableRow>
                     </TableHeader>
+                    {/* TABLE BODY */}
                     <TableBody>
                         {isLoading && <LoadingCells />}
-
                         {!isLoading &&
-                            students?.map((student: Student) => (
+                            data?.students?.map((student: Student) => (
                                 <TableRow
                                     key={student.formNumber}
                                     className={poppins.className}
@@ -121,22 +113,50 @@ const VerifiedStudentList = ({
                                         {student.course}
                                     </TableCell>
                                     <TableCell className="text-left sm:text-right text-xs md:text-sm">
+                                        {/* EDIT BTN */}
                                         <Button
                                             variant={"outline"}
                                             onClick={() =>
                                                 onOpen("editStudent", {
                                                     student,
+                                                    searchParams: {
+                                                        type: searchParams?.pending
+                                                            ? "pending_list"
+                                                            : "verified_list",
+
+                                                        page:
+                                                            searchParams.page ||
+                                                            "1",
+                                                        registration:
+                                                            searchParams.registration
+                                                                ? searchParams.registration
+                                                                : "none",
+                                                    },
                                                 })
                                             }
                                             className="px-2 py-0"
                                         >
                                             <Pen className="w-5 h-5" />
                                         </Button>
+                                        {/* DELETE BTN */}
                                         <Button
                                             variant={"outline"}
                                             onClick={() =>
                                                 onOpen("deleteStudent", {
                                                     student,
+                                                    searchParams: {
+                                                        type: searchParams?.pending
+                                                            ? "pending_list"
+                                                            : "verified_list",
+
+                                                        page:
+                                                            searchParams.page ||
+                                                            "1",
+                                                        registration:
+                                                            searchParams.registration
+                                                                ? searchParams.registration
+                                                                : "none",
+                                                    },
                                                 })
                                             }
                                             className="sm:ml-2 px-2 py-0"
@@ -148,10 +168,11 @@ const VerifiedStudentList = ({
                             ))}
                     </TableBody>
                 </Table>
-                <Pagination total={total} isLoading={isLoading} />
+                {/* PAGINATION */}
+                <Pagination total={data?.total} isLoading={isLoading} />
             </div>
         </div>
     );
 };
 
-export default VerifiedStudentList;
+export default StudentList;

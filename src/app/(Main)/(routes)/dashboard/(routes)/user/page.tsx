@@ -1,11 +1,11 @@
-import Franchise from "@/components/Dashboard/franchise/franchise-list";
+import Franchise from "@/components/Dashboard/user/user-list";
 import { Loader2 } from "lucide-react";
 import { Suspense } from "react";
 
 const FranchiseList = ({
     searchParams,
 }: {
-    searchParams: { page: string; userId: string };
+    searchParams: { page: string; userId: string; toVerification: boolean };
 }) => {
     return (
         <Suspense

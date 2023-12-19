@@ -8,52 +8,49 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+
 import { toast } from "@/components/ui/use-toast";
-import { Textarea } from "@/components/ui/textarea";
-import { CircleUser, Loader, Smile } from "lucide-react";
+import { Loader } from "lucide-react";
 import axios from "axios";
-import { useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
+import { User } from "@prisma/client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const DeleteUserModal = () => {
     const { isOpen, onClose, type, data } = useModal();
-    const router = useRouter();
     const isModalOpen = isOpen && type === "deleteUser";
-    const { user } = data;
-    const [isLoading, setIsLoading] = useState(false);
-    const onDelete = async () => {
-        try {
-            setIsLoading(true);
+    const { user, searchParams } = data;
+    const queryClient = useQueryClient();
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: async () => {
             const { data } = await axios.delete(
                 `/api/user?userId=${user?.userId}`
             );
+            return data;
+        },
+        onSuccess(data) {
             if (data) {
-                toast({ description: data.message });
-            }
-            if (data.success) {
+                toast({ description: data?.message });
                 onClose();
-                router.refresh();
-                router.push("/dashboard/franchise");
             }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+            if (!!data?.success) {
+                queryClient.setQueryData(
+                    ["users", searchParams?.page, searchParams?.userId],
+                    (old: { total: number; users: User[] }) => {
+                        const users = old.users.filter(
+                            (Singaluser) => Singaluser.id !== user?.id
+                        );
+
+                        return {
+                            total: old.total,
+                            users,
+                        };
+                    }
+                );
+            }
+        },
+    });
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -73,7 +70,7 @@ export const DeleteUserModal = () => {
                 <DialogFooter className="bg-gray-100 px-6 py-4">
                     <div className="flex items-center justify-between w-full">
                         <Button
-                            disabled={isLoading}
+                            disabled={isPending}
                             variant={"ghost"}
                             onClick={onClose}
                         >
@@ -81,10 +78,14 @@ export const DeleteUserModal = () => {
                         </Button>
                         <Button
                             variant={"primary"}
-                            disabled={isLoading}
-                            onClick={onDelete}
+                            disabled={isPending}
+                            onClick={() => mutate()}
                         >
-                            Confirm
+                            {isPending ? (
+                                <Loader className="animate-spin" />
+                            ) : (
+                                "Confirm"
+                            )}
                         </Button>
                     </div>
                 </DialogFooter>
