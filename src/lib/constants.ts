@@ -103,7 +103,7 @@ export const Courses = [
     "CCA",
     "CFA",
     "CFA Plus",
-    "Computer Typing ",
+    "Computer Typing",
     "DAA",
     "DCA",
     "DCP",

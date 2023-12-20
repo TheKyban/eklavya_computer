@@ -1,11 +1,15 @@
 import * as z from "zod";
 
 /**
- * USER REGISTRATION SCHEMA
+ * PHONE NUMBER VALIDATOR
  */
 export const phoneRegex = new RegExp(
     /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
 );
+
+/**
+ * USER REGISTRATION SCHEMA
+ */
 export const franchiseSchema = z
     .object({
         img: z.string({ required_error: "Please select a picture" }),
@@ -164,4 +168,40 @@ export const studentSchema = z.object({
         .string({ required_error: "Form number is required." })
         .min(4, { message: "Enter valid form number" }),
     qualification: z.string(),
+});
+
+export const typingSpeedMarkSchema = z.object({
+    formNumber: z
+        .string({ required_error: "Select Registration Number" })
+        .min(5, { message: "Select registration number" }),
+    english: z
+        .number({ required_error: "Enter marks for English" })
+        .min(0, { message: "marks cannot less than 0" })
+        .max(100, { message: "marks cannot be greater than 100" }),
+    hindi: z
+        .number({ required_error: "Enter marks for Hindi" })
+        .min(0, { message: "marks cannot less than 0" })
+        .max(100, { message: "marks cannot be greater than 100" }),
+});
+
+export const generalMarksSchema = z.object({
+    formNumber: z
+        .string({ required_error: "Select Registration Number" })
+        .min(5, { message: "Select registration number" }),
+    written: z
+        .number({ required_error: "Enter marks for English" })
+        .min(1, { message: "marks cannot less than 0" })
+        .max(100, { message: "marks cannot be greater than 100" }),
+    practical: z
+        .number({ required_error: "Enter marks for Practical" })
+        .min(0, { message: "marks cannot less than 0" })
+        .max(100, { message: "marks cannot be greater than 100" }),
+    viva: z
+        .number({ required_error: "Enter marks for Viva" })
+        .min(0, { message: "marks cannot less than 0" })
+        .max(100, { message: "marks cannot be greater than 100" }),
+    project: z
+        .number({ required_error: "Enter marks for Project" })
+        .min(0, { message: "marks cannot less than 0" })
+        .max(100, { message: "marks cannot be greater than 100" }),
 });

@@ -42,6 +42,13 @@ model Student {
     branch        String
     Branch        User     @relation(fields: [branch], references: [userId], onDelete: Cascade)
     isVerified    Boolean  @default(false)
+    certificate   Boolean  @default(false)
+    written       Int?
+    practical     Int?
+    project       Int?
+    viva          Int?
+    englishTyping Int?
+    hindiTyping   Int?
 }
 
 type Address {

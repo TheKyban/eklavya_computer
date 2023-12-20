@@ -9,8 +9,8 @@ interface ModalData {
     searchParams?: {
         page?: string;
         userId?: string | null;
-        registration: string;
-        type: string;
+        registration?: string;
+        type?: string;
     };
 }
 

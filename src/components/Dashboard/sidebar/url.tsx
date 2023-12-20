@@ -36,7 +36,7 @@ export const links: LinkType[] = [
     {
         title: "Typing Entry",
         icon: <TextCursorInput className="text-orange-400" />,
-        link: "/dashboard/typing",
+        link: "/dashboard/marks?typing=true",
     },
     {
         title: "Issued Certificate",
