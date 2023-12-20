@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -42,10 +42,13 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { states } from "@/lib/stateAndDistrict";
 
-const StudentRegistration = ({}) => {
+
+const StudentRegistration = () => {
     const currentYear = new Date().getFullYear();
     const { data: session } = useSession();
+    const [state, setState] = useState("");
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
         defaultValues: {
@@ -369,7 +372,11 @@ const StudentRegistration = ({}) => {
                                     <FormControl>
                                         <Select
                                             value={field.value}
-                                            onValueChange={field.onChange}
+                                            onValueChange={(e) => {
+                                                form.setValue("district", "");
+                                                setState(e);
+                                                field.onChange(e);
+                                            }}
                                             defaultValue={field.value}
                                         >
                                             <SelectTrigger>
@@ -382,15 +389,14 @@ const StudentRegistration = ({}) => {
                                                     <SelectLabel>
                                                         States
                                                     </SelectLabel>
-                                                    <SelectItem value="bihar">
-                                                        Bihar
-                                                    </SelectItem>
-                                                    <SelectItem value="delhi">
-                                                        Delhi
-                                                    </SelectItem>
-                                                    <SelectItem value="jharkhand">
-                                                        Jharkhand
-                                                    </SelectItem>
+                                                    {states.map((state) => (
+                                                        <SelectItem
+                                                            key={state.state}
+                                                            value={state.state}
+                                                        >
+                                                            {state.state}
+                                                        </SelectItem>
+                                                    ))}
                                                 </SelectGroup>
                                             </SelectContent>
                                         </Select>
@@ -425,12 +431,29 @@ const StudentRegistration = ({}) => {
                                                     <SelectLabel>
                                                         Districts
                                                     </SelectLabel>
-                                                    <SelectItem value="bihar">
-                                                        Muzaffarpur
-                                                    </SelectItem>
-                                                    <SelectItem value="delhi">
-                                                        Patna
-                                                    </SelectItem>
+
+                                                    {states.map((s) => {
+                                                        if (s.state === state) {
+                                                            return s.districts?.map(
+                                                                (
+                                                                    district: string
+                                                                ) => (
+                                                                    <SelectItem
+                                                                        key={
+                                                                            district
+                                                                        }
+                                                                        value={
+                                                                            district
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            district
+                                                                        }
+                                                                    </SelectItem>
+                                                                )
+                                                            );
+                                                        }
+                                                    })}
                                                 </SelectGroup>
                                             </SelectContent>
                                         </Select>

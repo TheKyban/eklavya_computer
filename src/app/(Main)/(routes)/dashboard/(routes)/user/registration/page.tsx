@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,8 +30,10 @@ import { CircleUser, Loader, Smile, Users } from "lucide-react";
 import { franchiseSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
+import { states } from "@/lib/stateAndDistrict";
 
 const FranchiseRegistration = ({}) => {
+    const [state, setState] = useState("");
     const form = useForm<z.infer<typeof franchiseSchema>>({
         resolver: zodResolver(franchiseSchema),
         defaultValues: {
@@ -197,7 +199,14 @@ const FranchiseRegistration = ({}) => {
                                         <FormControl>
                                             <Select
                                                 value={field.value}
-                                                onValueChange={field.onChange}
+                                                onValueChange={(e) => {
+                                                    form.setValue(
+                                                        "district",
+                                                        ""
+                                                    );
+                                                    setState(e);
+                                                    field.onChange(e);
+                                                }}
                                                 defaultValue={field.value}
                                             >
                                                 <SelectTrigger>
@@ -212,15 +221,18 @@ const FranchiseRegistration = ({}) => {
                                                         <SelectLabel>
                                                             States
                                                         </SelectLabel>
-                                                        <SelectItem value="bihar">
-                                                            Bihar
-                                                        </SelectItem>
-                                                        <SelectItem value="delhi">
-                                                            Delhi
-                                                        </SelectItem>
-                                                        <SelectItem value="jharkhand">
-                                                            Jharkhand
-                                                        </SelectItem>
+                                                        {states.map((state) => (
+                                                            <SelectItem
+                                                                key={
+                                                                    state.state
+                                                                }
+                                                                value={
+                                                                    state.state
+                                                                }
+                                                            >
+                                                                {state.state}
+                                                            </SelectItem>
+                                                        ))}
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>
@@ -255,12 +267,32 @@ const FranchiseRegistration = ({}) => {
                                                         <SelectLabel>
                                                             Districts
                                                         </SelectLabel>
-                                                        <SelectItem value="bihar">
-                                                            Muzaffarpur
-                                                        </SelectItem>
-                                                        <SelectItem value="delhi">
-                                                            Patna
-                                                        </SelectItem>
+
+                                                        {states.map((s) => {
+                                                            if (
+                                                                s.state ===
+                                                                state
+                                                            ) {
+                                                                return s.districts?.map(
+                                                                    (
+                                                                        district: string
+                                                                    ) => (
+                                                                        <SelectItem
+                                                                            key={
+                                                                                district
+                                                                            }
+                                                                            value={
+                                                                                district
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                district
+                                                                            }
+                                                                        </SelectItem>
+                                                                    )
+                                                                );
+                                                            }
+                                                        })}
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>

@@ -42,8 +42,7 @@ export const franchiseSchema = z
             .string({ required_error: "Please Enter User id" })
             .trim()
             .regex(phoneRegex, "Invalid User id")
-            .min(5, { message: "Userid must be 5 characters" })
-            .max(5, { message: "Userid must be 5 characters" }),
+            .min(5, { message: "Userid must be 5 characters" }),
         password: z
             .string({ required_error: "Please Enter password" })
             .trim()
@@ -97,8 +96,7 @@ export const franchiseEditSchema = z.object({
         .string({ required_error: "Please Enter User id" })
         .trim()
         .regex(phoneRegex, "Invalid User id")
-        .min(5, { message: "Userid must be 5 characters" })
-        .max(5, { message: "Userid must be 5 characters" }),
+        .min(5, { message: "Userid must be 5 characters" }),
     password: z
         .string({ required_error: "Please Enter password" })
         .trim()
@@ -159,7 +157,9 @@ export const studentSchema = z.object({
     gender: z
         .string({ required_error: "Gender is required." })
         .min(4, { message: "Please select gender" }),
-    course: z.string({ required_error: "Course is required." }).min(2,{message:"Please select course"}),
+    course: z
+        .string({ required_error: "Course is required." })
+        .min(2, { message: "Please select course" }),
     formNumber: z
         .string({ required_error: "Form number is required." })
         .min(4, { message: "Enter valid form number" }),

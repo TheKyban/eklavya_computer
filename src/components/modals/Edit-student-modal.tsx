@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -50,12 +50,14 @@ import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
 import { Courses } from "@/lib/constants";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { states } from "@/lib/stateAndDistrict";
 
 export const EditStudentModal = () => {
     const currentYear = new Date().getFullYear();
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "editStudent";
     const { student, searchParams } = data;
+    const [state, setState] = useState("");
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
     });
@@ -84,6 +86,7 @@ export const EditStudentModal = () => {
             form.setValue("pincode", student?.address?.pincode);
             form.setValue("district", student?.address.district);
             form.setValue("state", student?.address.state);
+            setState(student.address.state);
 
             // Franchise
             form.setValue("branch", student.branch);
@@ -430,7 +433,14 @@ export const EditStudentModal = () => {
                                         <FormControl>
                                             <Select
                                                 value={field.value}
-                                                onValueChange={field.onChange}
+                                                onValueChange={(e) => {
+                                                    form.setValue(
+                                                        "district",
+                                                        ""
+                                                    );
+                                                    setState(e);
+                                                    field.onChange(e);
+                                                }}
                                                 defaultValue={field.value}
                                             >
                                                 <SelectTrigger>
@@ -445,15 +455,18 @@ export const EditStudentModal = () => {
                                                         <SelectLabel>
                                                             States
                                                         </SelectLabel>
-                                                        <SelectItem value="bihar">
-                                                            Bihar
-                                                        </SelectItem>
-                                                        <SelectItem value="delhi">
-                                                            Delhi
-                                                        </SelectItem>
-                                                        <SelectItem value="jharkhand">
-                                                            Jharkhand
-                                                        </SelectItem>
+                                                        {states.map((state) => (
+                                                            <SelectItem
+                                                                key={
+                                                                    state.state
+                                                                }
+                                                                value={
+                                                                    state.state
+                                                                }
+                                                            >
+                                                                {state.state}
+                                                            </SelectItem>
+                                                        ))}
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>
@@ -488,12 +501,32 @@ export const EditStudentModal = () => {
                                                         <SelectLabel>
                                                             Districts
                                                         </SelectLabel>
-                                                        <SelectItem value="bihar">
-                                                            Muzaffarpur
-                                                        </SelectItem>
-                                                        <SelectItem value="delhi">
-                                                            Patna
-                                                        </SelectItem>
+
+                                                        {states.map((s) => {
+                                                            if (
+                                                                s.state ===
+                                                                state
+                                                            ) {
+                                                                return s.districts?.map(
+                                                                    (
+                                                                        district: string
+                                                                    ) => (
+                                                                        <SelectItem
+                                                                            key={
+                                                                                district
+                                                                            }
+                                                                            value={
+                                                                                district
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                district
+                                                                            }
+                                                                        </SelectItem>
+                                                                    )
+                                                                );
+                                                            }
+                                                        })}
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>

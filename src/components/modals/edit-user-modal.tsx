@@ -30,23 +30,23 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CircleUser, Loader, Smile, Users } from "lucide-react";
+import { CircleUser, Loader, Smile } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { franchiseEditSchema } from "@/lib/schema";
-import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { User } from "@prisma/client";
+import { states } from "@/lib/stateAndDistrict";
 
 export const UserModal = () => {
     const { isOpen, onClose, type, data } = useModal();
-    const router = useRouter();
     const isModalOpen = isOpen && type === "User";
     const { user, searchParams } = data;
+    const [state, setState] = useState("");
     const form = useForm<z.infer<typeof franchiseEditSchema>>({
         resolver: zodResolver(franchiseEditSchema),
         defaultValues: {
@@ -80,6 +80,7 @@ export const UserModal = () => {
             form.setValue("pincode", user?.address?.pincode);
             form.setValue("district", user?.address.district);
             form.setValue("state", user?.address.state);
+            setState(user?.address.state);
 
             // user
             form.setValue("id", user?.id);
@@ -97,16 +98,38 @@ export const UserModal = () => {
             return data;
         },
 
-        onSuccess(data, variables, context) {
+        onSuccess(data, variables) {
             if (data) {
                 toast({ description: data.message });
             }
             if (data.success) {
                 queryClient.setQueryData(
                     ["users", searchParams?.page, searchParams?.userId],
-                    (old: { total: number; users: User[] }) => {
+                    (old: {
+                        total: number;
+                        users: z.infer<typeof franchiseEditSchema>[];
+                    }) => {
                         const users = old.users.map((user) =>
-                            user.id === variables.id ? variables : user
+                            user.id === variables.id
+                                ? {
+                                      img: variables.img,
+                                      id: variables.id,
+                                      isActive: variables.isActive,
+                                      password: variables.password,
+                                      role: variables.role,
+                                      userId: variables.userId,
+                                      name: variables.name,
+                                      branch: variables.branch,
+                                      email: variables.email,
+                                      phone: variables.phone,
+                                      address: {
+                                          state: variables.state,
+                                          district: variables.district,
+                                          pincode: variables.pincode,
+                                          street: variables.address,
+                                      },
+                                  }
+                                : user
                         );
 
                         return {
@@ -254,7 +277,14 @@ export const UserModal = () => {
                                         <FormControl>
                                             <Select
                                                 value={field.value}
-                                                onValueChange={field.onChange}
+                                                onValueChange={(e) => {
+                                                    form.setValue(
+                                                        "district",
+                                                        ""
+                                                    );
+                                                    setState(e);
+                                                    field.onChange(e);
+                                                }}
                                                 defaultValue={field.value}
                                             >
                                                 <SelectTrigger>
@@ -269,15 +299,18 @@ export const UserModal = () => {
                                                         <SelectLabel>
                                                             States
                                                         </SelectLabel>
-                                                        <SelectItem value="bihar">
-                                                            Bihar
-                                                        </SelectItem>
-                                                        <SelectItem value="delhi">
-                                                            Delhi
-                                                        </SelectItem>
-                                                        <SelectItem value="jharkhand">
-                                                            Jharkhand
-                                                        </SelectItem>
+                                                        {states.map((state) => (
+                                                            <SelectItem
+                                                                key={
+                                                                    state.state
+                                                                }
+                                                                value={
+                                                                    state.state
+                                                                }
+                                                            >
+                                                                {state.state}
+                                                            </SelectItem>
+                                                        ))}
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>
@@ -312,12 +345,32 @@ export const UserModal = () => {
                                                         <SelectLabel>
                                                             Districts
                                                         </SelectLabel>
-                                                        <SelectItem value="bihar">
-                                                            Muzaffarpur
-                                                        </SelectItem>
-                                                        <SelectItem value="delhi">
-                                                            Patna
-                                                        </SelectItem>
+
+                                                        {states.map((s) => {
+                                                            if (
+                                                                s.state ===
+                                                                state
+                                                            ) {
+                                                                return s.districts?.map(
+                                                                    (
+                                                                        district: string
+                                                                    ) => (
+                                                                        <SelectItem
+                                                                            key={
+                                                                                district
+                                                                            }
+                                                                            value={
+                                                                                district
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                district
+                                                                            }
+                                                                        </SelectItem>
+                                                                    )
+                                                                );
+                                                            }
+                                                        })}
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>
