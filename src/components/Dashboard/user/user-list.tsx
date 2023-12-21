@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Pen, Trash } from "lucide-react";
 import { UserCog } from "lucide-react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
 import { URL } from "@/lib/constants";

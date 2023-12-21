@@ -38,34 +38,22 @@ export const GET = async (req: Request) => {
                 },
 
                 englishTyping: {
-                    not: {
-                        isSet: true,
-                    },
+                    isSet: false,
                 },
                 hindiTyping: {
-                    not: {
-                        isSet: true,
-                    },
+                    isSet: false,
                 },
                 written: {
-                    not: {
-                        isSet: true,
-                    },
+                    isSet: false,
                 },
                 viva: {
-                    not: {
-                        isSet: true,
-                    },
+                    isSet: false,
                 },
                 practical: {
-                    not: {
-                        isSet: true,
-                    },
+                    isSet: false,
                 },
                 project: {
-                    not: {
-                        isSet: true,
-                    },
+                    isSet: false,
                 },
             },
             select: {
@@ -117,8 +105,8 @@ export const POST = async (req: Request) => {
              */
             const { success } = typingSpeedMarkSchema.safeParse({
                 formNumber: data.formNumber,
-                english: Number(data.english),
-                hindi: Number(data.hindi),
+                englishTyping: Number(data.englishTyping),
+                hindiTyping: Number(data.hindiTyping),
             });
 
             if (!success) {
@@ -152,8 +140,8 @@ export const POST = async (req: Request) => {
             },
             data: computerTyping
                 ? {
-                      hindiTyping: data?.hindi,
-                      englishTyping: data?.english,
+                      hindiTyping: data?.hindiTyping,
+                      englishTyping: data?.englishTyping,
                   }
                 : {
                       practical: data?.practical,

@@ -174,11 +174,11 @@ export const typingSpeedMarkSchema = z.object({
     formNumber: z
         .string({ required_error: "Select Registration Number" })
         .min(5, { message: "Select registration number" }),
-    english: z
+    englishTyping: z
         .number({ required_error: "Enter marks for English" })
         .min(0, { message: "marks cannot less than 0" })
         .max(100, { message: "marks cannot be greater than 100" }),
-    hindi: z
+    hindiTyping: z
         .number({ required_error: "Enter marks for Hindi" })
         .min(0, { message: "marks cannot less than 0" })
         .max(100, { message: "marks cannot be greater than 100" }),

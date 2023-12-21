@@ -30,13 +30,12 @@ import { generalMarksSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { FileSpreadsheet, GraduationCap, Loader2 } from "lucide-react";
-import { FC } from "react";
+import { FileSpreadsheet, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 type queryType = { formNumber: string };
-const GeneralMarksEntry = ({}) => {
+const GeneralMarksEntry = () => {
     const form = useForm<z.infer<typeof generalMarksSchema>>({
         resolver: zodResolver(generalMarksSchema),
         defaultValues: {
@@ -50,7 +49,6 @@ const GeneralMarksEntry = ({}) => {
         queryKey: ["general-students"],
         queryFn: async () => {
             const { data } = await axios("/api/marks");
-            console.log(data);
             return data;
         },
     });
@@ -71,12 +69,27 @@ const GeneralMarksEntry = ({}) => {
             queryClient.setQueryData(
                 ["general-students"],
                 (oldData: queryType[]) => {
-                    console.log(oldData);
                     return oldData.filter(
                         (data) =>
                             Number(data?.formNumber) !==
                             Number(variables.formNumber)
                     );
+                }
+            );
+
+            queryClient.setQueryData(
+                ["general-students-entered"],
+                (oldData: {
+                    total: number;
+                    studentsWithMarks: z.infer<typeof generalMarksSchema>[];
+                }) => {
+                    return {
+                        total: oldData.total + 1,
+                        studentsWithMarks: [
+                            variables,
+                            ...oldData.studentsWithMarks,
+                        ],
+                    };
                 }
             );
         },

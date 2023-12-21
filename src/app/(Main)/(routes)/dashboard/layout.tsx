@@ -14,7 +14,7 @@ export default async function Dasboard({
     return (
         <div className="flex min-h-screen h-screen min-w-full">
             <Sidebar
-                className="hidden lg:flex sticky top-0 left-0"
+                className="hidden lg:flex z-50 sticky top-0 left-0"
                 role={role}
             />
             <div className="h-full w-full">

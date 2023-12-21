@@ -25,7 +25,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2, TextCursorInput } from "lucide-react";
-import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -35,15 +34,14 @@ const TypingMarksEntry = () => {
     const form = useForm<z.infer<typeof typingSpeedMarkSchema>>({
         resolver: zodResolver(typingSpeedMarkSchema),
         defaultValues: {
-            hindi: 0,
-            english: 0,
+            hindiTyping: 0,
+            englishTyping: 0,
         },
     });
     const { data, isLoading } = useQuery<queryType[]>({
         queryKey: ["computer-typing-students"],
         queryFn: async () => {
             const { data } = await axios("/api/marks?computerTyping=true");
-            console.log(data);
             return data;
         },
     });
@@ -73,6 +71,26 @@ const TypingMarksEntry = () => {
                             Number(data?.formNumber) !==
                             Number(variables.formNumber)
                     );
+                }
+            );
+
+            queryClient.setQueryData(
+                ["computer-typing-students-entered"],
+                (oldData: {
+                    total: number;
+                    studentsWithMarks: {
+                        formNumber: string;
+                        englishTyping: number;
+                        hindiTyping: number;
+                    }[];
+                }) => {
+                    return {
+                        total: oldData.total + 1,
+                        studentsWithMarks: [
+                            variables,
+                            ...oldData.studentsWithMarks,
+                        ],
+                    };
                 }
             );
         },
@@ -141,7 +159,7 @@ const TypingMarksEntry = () => {
                         {/* ENGLISH */}
                         <FormField
                             control={form.control}
-                            name="english"
+                            name="englishTyping"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>English Typing Marks</FormLabel>
@@ -164,7 +182,7 @@ const TypingMarksEntry = () => {
                         {/* HINDI */}
                         <FormField
                             control={form.control}
-                            name="hindi"
+                            name="hindiTyping"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Hindi Typing Marks</FormLabel>
