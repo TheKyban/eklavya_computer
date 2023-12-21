@@ -3,7 +3,7 @@
 import ComputerTypingEnteredMarks from "@/components/Dashboard/marks/computer-typing-students-marks-list";
 import GeneralEntredMarks from "@/components/Dashboard/marks/general-mark-list";
 import GeneralMarksEntry from "@/components/Dashboard/marks/general-marks-entry";
-import TypingMarksEntry from "@/components/Dashboard/marks/typing-marks-entry";
+import TypingMarksEntry from "@/components/Dashboard/marks/computer-typing-marks-entry";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileSpreadsheet, TextCursorInput } from "lucide-react";
 import { useSearchParams } from "next/navigation";

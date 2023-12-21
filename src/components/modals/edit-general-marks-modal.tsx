@@ -1,0 +1,245 @@
+"use client";
+import { useModal } from "@/hooks/use-modal-store";
+import {
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
+import { ChangeEvent, useEffect, useState } from "react";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { CircleUser, Loader, Loader2, Smile } from "lucide-react";
+import axios from "axios";
+import { toast } from "@/components/ui/use-toast";
+import { generalMarksSchema } from "@/lib/schema";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+export const EditGeneralMarks = () => {
+    const { isOpen, onClose, type, data } = useModal();
+    const isModalOpen = isOpen && type === "editGeneralMarks";
+    const { generalMarks } = data;
+    const [state, setState] = useState("");
+    const form = useForm<z.infer<typeof generalMarksSchema>>({
+        resolver: zodResolver(generalMarksSchema),
+        defaultValues: {
+            practical: 0,
+            project: 0,
+            viva: 0,
+            written: 0,
+        },
+    });
+
+    useEffect(() => {
+        if (generalMarks) {
+            form.setValue("formNumber", generalMarks.formNumber);
+            form.setValue("practical", generalMarks.practical);
+            form.setValue("written", generalMarks.written);
+            form.setValue("viva", generalMarks.viva);
+            form.setValue("project", generalMarks.project);
+        }
+    }, [form, generalMarks]);
+    const queryClient = useQueryClient();
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (values: z.infer<typeof generalMarksSchema>) => {
+            const { data } = await axios.put("/api/marks", values);
+            return data;
+        },
+
+        onSuccess(data, variables) {
+            if (data) {
+                toast({ description: data.message });
+            }
+            if (data.success) {
+                form.reset();
+                onClose();
+            }
+
+            queryClient.setQueryData(
+                ["general-students-entered"],
+                (oldMarks: {
+                    total: number;
+                    studentsWithMarks: z.infer<typeof generalMarksSchema>[];
+                }) => {
+                    const studentsWithMarks = oldMarks.studentsWithMarks.map(
+                        (mark) => {
+                            return mark.formNumber === variables.formNumber
+                                ? variables
+                                : mark;
+                        }
+                    );
+
+                    return {
+                        total: oldMarks.total,
+                        studentsWithMarks,
+                    };
+                }
+            );
+        },
+    });
+
+    return (
+        <Dialog open={isModalOpen} onOpenChange={onClose}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Edit Marks</DialogTitle>
+                </DialogHeader>
+
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit((values) => mutate(values))}
+                        className="flex flex-col gap-3"
+                    >
+                        {/* REGISTRATION NUMBER */}
+                        <FormField
+                            control={form.control}
+                            name="formNumber"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Registration Number</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            readOnly
+                                            placeholder="Written marks"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {/* WRITTEN */}
+                        <FormField
+                            control={form.control}
+                            name="written"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Written Marks</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            onChange={(e) =>
+                                                field.onChange(
+                                                    Number(e.target.value)
+                                                )
+                                            }
+                                            placeholder="Written marks"
+                                            type="number"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Practical */}
+                        <FormField
+                            control={form.control}
+                            name="practical"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Practical Marks</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            onChange={(e) =>
+                                                field.onChange(
+                                                    Number(e.target.value)
+                                                )
+                                            }
+                                            placeholder="Practical marks"
+                                            type="number"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Viva */}
+                        <FormField
+                            control={form.control}
+                            name="viva"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Viva Marks</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            onChange={(e) =>
+                                                field.onChange(
+                                                    Number(e.target.value)
+                                                )
+                                            }
+                                            placeholder="Viva marks"
+                                            type="number"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Projects */}
+                        <FormField
+                            control={form.control}
+                            name="project"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Project Marks</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            onChange={(e) =>
+                                                field.onChange(
+                                                    Number(e.target.value)
+                                                )
+                                            }
+                                            placeholder="Project marks"
+                                            type="number"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <Button
+                            variant={"primary"}
+                            className="w-full"
+                            disabled={isPending}
+                        >
+                            {isPending ? (
+                                <Loader2 className="animate-spin" />
+                            ) : (
+                                "Update"
+                            )}
+                        </Button>
+                    </form>
+                </Form>
+            </DialogContent>
+        </Dialog>
+    );
+};

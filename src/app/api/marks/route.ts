@@ -178,3 +178,110 @@ export const POST = async (req: Request) => {
         });
     }
 };
+/**
+ * UPDATE MARKS
+ */
+
+export const PUT = async (req: Request) => {
+    try {
+        /**
+         * CHECK SESSION IS AVAILABLE
+         */
+
+        const session = await getServerSession(authOptions);
+
+        if (!session) {
+            return NextResponse.json({ message: "Unauthorized" });
+        }
+
+        const data: z.infer<
+            typeof typingSpeedMarkSchema & typeof generalMarksSchema
+        > = await req.json();
+
+        const { searchParams } = new URL(req.url);
+        const computerTyping =
+            Boolean(searchParams.get("computerTyping")) || false;
+
+        /**
+         * VALIDATING DATA ACCORDINGLY COURSE
+         * COMPUTER TYPING OR OTHER
+         */
+
+        if (computerTyping) {
+            /**
+             * COMPUTER TYPING
+             */
+            const { success } = typingSpeedMarkSchema.safeParse({
+                formNumber: data.formNumber,
+                englishTyping: Number(data.englishTyping),
+                hindiTyping: Number(data.hindiTyping),
+            });
+
+            if (!success) {
+                return NextResponse.json({ message: "Invalid data" });
+            }
+        } else {
+            /**
+             * OTHER COURSE
+             */
+            const { success } = generalMarksSchema.safeParse({
+                formNumber: data.formNumber,
+                written: Number(data?.practical),
+                practical: Number(data?.practical),
+                viva: Number(data?.viva),
+                project: Number(data?.project),
+            });
+
+            if (!success) {
+                return NextResponse.json({ message: "Invalid data" });
+            }
+        }
+
+        /**
+         * UPDATE MARKS
+         */
+
+        const marks = await Prisma.student.update({
+            where: {
+                formNumber: data.formNumber,
+                branch: session.user.userId,
+            },
+            data: computerTyping
+                ? {
+                      hindiTyping: data?.hindiTyping,
+                      englishTyping: data?.englishTyping,
+                  }
+                : {
+                      practical: data?.practical,
+                      viva: data?.viva,
+                      written: data?.written,
+                      project: data?.project,
+                  },
+            select: computerTyping
+                ? {
+                      hindiTyping: true,
+                      englishTyping: true,
+                      branch: true,
+                      formNumber: true,
+                  }
+                : {
+                      branch: true,
+                      formNumber: true,
+                      viva: true,
+                      project: true,
+                      written: true,
+                      practical: true,
+                  },
+        });
+
+        return NextResponse.json({
+            message: "Marks Updated",
+            success: true,
+        });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({
+            message: "Internal Error",
+        });
+    }
+};

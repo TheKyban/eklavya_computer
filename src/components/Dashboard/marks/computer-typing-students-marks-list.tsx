@@ -10,22 +10,21 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { useModal } from "@/hooks/use-modal-store";
 import { poppins } from "@/lib/fonts";
+import { typingSpeedMarkSchema } from "@/lib/schema";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Pen, Trash, UserCog } from "lucide-react";
+import { Pen, TextCursorInput, Trash } from "lucide-react";
+import { z } from "zod";
 
-interface studentType {
-    formNumber: number;
-    englishTyping: number;
-    hindiTyping: number;
-}
 interface queryType {
     total: number;
-    studentsWithMarks: studentType[];
+    studentsWithMarks: z.infer<typeof typingSpeedMarkSchema>[];
 }
 
 const ComputerTypingEnteredMarks = ({}) => {
+    const { onOpen } = useModal();
     const { data, isLoading } = useQuery<queryType>({
         queryKey: ["computer-typing-students-entered"],
         queryFn: async () => {
@@ -40,10 +39,14 @@ const ComputerTypingEnteredMarks = ({}) => {
         <div className="px-5 py-4 flex flex-col gap-4">
             <div className="flex justify-between">
                 <h1 className="flex items-center gap-3 lg:text-xl uppercase font-semibold text-teal-700">
-                    <UserCog className="text-red-600 w-5 h-5" />
-                    Users
+                    <TextCursorInput className="text-red-600 w-5 h-5" />
+                    Computer Typing
                 </h1>
-                <Search placeholder="UserId" queryName="userId" />
+                <Search
+                    className="w-32 md:w-44"
+                    placeholder="Registration"
+                    queryName="registration"
+                />
             </div>
 
             <div>
@@ -82,17 +85,21 @@ const ComputerTypingEnteredMarks = ({}) => {
                                         <Button
                                             variant={"outline"}
                                             size={"sm"}
-                                            // onClick={() =>
-                                            //     onOpen("User", {
-                                            //         user,
-                                            //         searchParams: {
-                                            //             page:
-                                            //                 searchParams.page ||
-                                            //                 "1",
-                                            //             userId: searchParams?.userId,
-                                            //         },
-                                            //     })
-                                            // }
+                                            onClick={() => {
+                                                onOpen(
+                                                    "editComputerTypingMarks",
+                                                    {
+                                                        computerTypingMarks: {
+                                                            formNumber:
+                                                                student.formNumber,
+                                                            hindiTyping:
+                                                                student.hindiTyping,
+                                                            englishTyping:
+                                                                student.englishTyping,
+                                                        },
+                                                    }
+                                                );
+                                            }}
                                             className="px-2 py-0"
                                         >
                                             <Pen className="w-4 h-4" />

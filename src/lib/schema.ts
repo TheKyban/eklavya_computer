@@ -176,11 +176,11 @@ export const typingSpeedMarkSchema = z.object({
         .min(5, { message: "Select registration number" }),
     englishTyping: z
         .number({ required_error: "Enter marks for English" })
-        .min(0, { message: "marks cannot less than 0" })
+        .min(1, { message: "marks cannot less than 1" })
         .max(100, { message: "marks cannot be greater than 100" }),
     hindiTyping: z
         .number({ required_error: "Enter marks for Hindi" })
-        .min(0, { message: "marks cannot less than 0" })
+        .min(1, { message: "marks cannot less than 1" })
         .max(100, { message: "marks cannot be greater than 100" }),
 });
 
@@ -190,18 +190,18 @@ export const generalMarksSchema = z.object({
         .min(5, { message: "Select registration number" }),
     written: z
         .number({ required_error: "Enter marks for English" })
-        .min(1, { message: "marks cannot less than 0" })
+        .min(1, { message: "marks cannot less than 1" })
         .max(100, { message: "marks cannot be greater than 100" }),
     practical: z
         .number({ required_error: "Enter marks for Practical" })
-        .min(0, { message: "marks cannot less than 0" })
+        .min(1, { message: "marks cannot less than 1" })
         .max(100, { message: "marks cannot be greater than 100" }),
     viva: z
         .number({ required_error: "Enter marks for Viva" })
-        .min(0, { message: "marks cannot less than 0" })
+        .min(1, { message: "marks cannot less than 1" })
         .max(100, { message: "marks cannot be greater than 100" }),
     project: z
         .number({ required_error: "Enter marks for Project" })
-        .min(0, { message: "marks cannot less than 0" })
+        .min(1, { message: "marks cannot less than 1" })
         .max(100, { message: "marks cannot be greater than 100" }),
 });

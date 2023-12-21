@@ -10,11 +10,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { useModal } from "@/hooks/use-modal-store";
 import { poppins } from "@/lib/fonts";
 import { generalMarksSchema } from "@/lib/schema";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Pen, Trash, UserCog } from "lucide-react";
+import { FileSpreadsheet, Pen, Trash, UserCog } from "lucide-react";
 import { z } from "zod";
 
 interface queryType {
@@ -23,6 +24,7 @@ interface queryType {
 }
 
 const GeneralEntredMarks = ({}) => {
+    const { onOpen } = useModal();
     const { data, isLoading } = useQuery<queryType>({
         queryKey: ["general-students-entered"],
         queryFn: async () => {
@@ -35,10 +37,14 @@ const GeneralEntredMarks = ({}) => {
         <div className="px-5 py-4 flex flex-col gap-4">
             <div className="flex justify-between">
                 <h1 className="flex items-center gap-3 lg:text-xl uppercase font-semibold text-teal-700">
-                    <UserCog className="text-red-600 w-5 h-5" />
-                    Users
+                    <FileSpreadsheet className="text-red-600 w-5 h-5" />
+                    General Students
                 </h1>
-                <Search placeholder="UserId" queryName="userId" />
+                <Search
+                    className="w-32 md:w-44"
+                    placeholder="Registration"
+                    queryName="registration"
+                />
             </div>
 
             <div>
@@ -85,17 +91,21 @@ const GeneralEntredMarks = ({}) => {
                                         <Button
                                             variant={"outline"}
                                             size={"sm"}
-                                            // onClick={() =>
-                                            //     onOpen("User", {
-                                            //         user,
-                                            //         searchParams: {
-                                            //             page:
-                                            //                 searchParams.page ||
-                                            //                 "1",
-                                            //             userId: searchParams?.userId,
-                                            //         },
-                                            //     })
-                                            // }
+                                            onClick={() =>
+                                                onOpen("editGeneralMarks", {
+                                                    generalMarks: {
+                                                        formNumber:
+                                                            student.formNumber,
+                                                        practical:
+                                                            student.practical,
+                                                        project:
+                                                            student.project,
+                                                        viva: student.viva,
+                                                        written:
+                                                            student.written,
+                                                    },
+                                                })
+                                            }
                                             className="px-2 py-0"
                                         >
                                             <Pen className="w-4 h-4" />
