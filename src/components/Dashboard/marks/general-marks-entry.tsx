@@ -29,7 +29,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 type queryType = { formNumber: string };
-const GeneralMarksEntry = () => {
+const GeneralMarksEntry = ({
+    page,
+    registration,
+}: {
+    registration: string | null;
+    page: string | null;
+}) => {
     const form = useForm<z.infer<typeof generalMarksSchema>>({
         resolver: zodResolver(generalMarksSchema),
         defaultValues: {
@@ -78,7 +84,11 @@ const GeneralMarksEntry = () => {
              * Adding registration and marks to entered list
              */
             queryClient.setQueryData(
-                ["general-students-entered"],
+                [
+                    "general-students-entered",
+                    page ? page : "1",
+                    registration ? registration : "none",
+                ],
                 (oldData: {
                     total: number;
                     studentsWithMarks: z.infer<typeof generalMarksSchema>[];

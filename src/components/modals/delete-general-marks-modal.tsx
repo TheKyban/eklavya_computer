@@ -20,7 +20,7 @@ import { z } from "zod";
 export const DeleteGeneralMarksModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "deleteGeneralMarks";
-    const { generalMarks } = data;
+    const { generalMarks, searchParams } = data;
     const queryClient = useQueryClient();
 
     const { mutate, isPending } = useMutation({
@@ -43,7 +43,11 @@ export const DeleteGeneralMarksModal = () => {
              * REMOVING MARKS FROM ENTERED LIST
              */
             queryClient.setQueryData(
-                ["general-students-entered"],
+                [
+                    "general-students-entered",
+                    searchParams?.page,
+                    searchParams?.registration,
+                ],
                 (oldData: {
                     total: number;
                     studentsWithMarks: z.infer<typeof generalMarksSchema>[];

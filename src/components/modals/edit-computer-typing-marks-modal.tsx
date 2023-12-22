@@ -35,7 +35,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export const EditComputerTypingMarksModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "editComputerTypingMarks";
-    const { computerTypingMarks } = data;
+    const { computerTypingMarks, searchParams } = data;
     const form = useForm<z.infer<typeof typingSpeedMarkSchema>>({
         resolver: zodResolver(typingSpeedMarkSchema),
         defaultValues: {
@@ -71,8 +71,15 @@ export const EditComputerTypingMarksModal = () => {
                 onClose();
             }
 
+            /**
+             * Replacing marks with updated marks
+             */
             queryClient.setQueryData(
-                ["computer-typing-students-entered"],
+                [
+                    "computer-typing-students-entered",
+                    searchParams?.page,
+                    searchParams?.registration,
+                ],
                 (oldMarks: {
                     total: number;
                     studentsWithMarks: z.infer<typeof typingSpeedMarkSchema>[];

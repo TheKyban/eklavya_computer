@@ -23,13 +23,25 @@ interface queryType {
     studentsWithMarks: z.infer<typeof typingSpeedMarkSchema>[];
 }
 
-const ComputerTypingEnteredMarks = ({}) => {
+const ComputerTypingEnteredMarks = ({
+    page,
+    registration,
+}: {
+    registration: string | null;
+    page: string | null;
+}) => {
     const { onOpen } = useModal();
     const { data, isLoading } = useQuery<queryType>({
-        queryKey: ["computer-typing-students-entered"],
+        queryKey: [
+            "computer-typing-students-entered",
+            page ? page : "1",
+            registration ? registration : "none",
+        ],
         queryFn: async () => {
             const { data } = await axios(
-                "/api/marks/entered?computerTyping=true"
+                `/api/marks/entered?computerTyping=true&page=${page}${
+                    !!registration ? "&formNumber=" + registration : ""
+                }`
             );
             return data;
         },
@@ -91,6 +103,15 @@ const ComputerTypingEnteredMarks = ({}) => {
                                                     {
                                                         computerTypingMarks:
                                                             student,
+                                                        searchParams: {
+                                                            page: page
+                                                                ? page
+                                                                : "1",
+                                                            registration:
+                                                                registration
+                                                                    ? registration
+                                                                    : "none",
+                                                        },
                                                     }
                                                 );
                                             }}
@@ -108,6 +129,15 @@ const ComputerTypingEnteredMarks = ({}) => {
                                                     {
                                                         computerTypingMarks:
                                                             student,
+                                                        searchParams: {
+                                                            page: page
+                                                                ? page
+                                                                : "1",
+                                                            registration:
+                                                                registration
+                                                                    ? registration
+                                                                    : "none",
+                                                        },
                                                     }
                                                 )
                                             }

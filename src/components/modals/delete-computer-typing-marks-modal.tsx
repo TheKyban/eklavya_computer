@@ -20,7 +20,7 @@ import { z } from "zod";
 export const DeleteComputerTypingMarksModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "deleteComputerTypingMarks";
-    const { computerTypingMarks } = data;
+    const { computerTypingMarks, searchParams } = data;
     const queryClient = useQueryClient();
 
     const { mutate, isPending } = useMutation({
@@ -44,7 +44,11 @@ export const DeleteComputerTypingMarksModal = () => {
              * REMOVING MARKS FROM ENTERED LIST
              */
             queryClient.setQueryData(
-                ["computer-typing-students-entered"],
+                [
+                    "computer-typing-students-entered",
+                    searchParams?.page,
+                    searchParams?.registration,
+                ],
                 (oldData: {
                     total: number;
                     studentsWithMarks: z.infer<typeof typingSpeedMarkSchema>[];

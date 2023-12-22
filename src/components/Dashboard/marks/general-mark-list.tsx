@@ -15,7 +15,7 @@ import { poppins } from "@/lib/fonts";
 import { generalMarksSchema } from "@/lib/schema";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { FileSpreadsheet, Pen, Trash, UserCog } from "lucide-react";
+import { FileSpreadsheet, Pen, Trash } from "lucide-react";
 import { z } from "zod";
 
 interface queryType {
@@ -23,12 +23,26 @@ interface queryType {
     studentsWithMarks: z.infer<typeof generalMarksSchema>[];
 }
 
-const GeneralEntredMarks = ({}) => {
+const GeneralEntredMarks = ({
+    page,
+    registration,
+}: {
+    registration: string | null;
+    page: string | null;
+}) => {
     const { onOpen } = useModal();
     const { data, isLoading } = useQuery<queryType>({
-        queryKey: ["general-students-entered"],
+        queryKey: [
+            "general-students-entered",
+            page ? page : "1",
+            registration ? registration : "none",
+        ],
         queryFn: async () => {
-            const { data } = await axios("/api/marks/entered");
+            const { data } = await axios(
+                `/api/marks/entered?&page=${page}${
+                    !!registration ? "&formNumber=" + registration : ""
+                }`
+            );
             return data;
         },
     });
@@ -94,6 +108,13 @@ const GeneralEntredMarks = ({}) => {
                                             onClick={() =>
                                                 onOpen("editGeneralMarks", {
                                                     generalMarks: student,
+                                                    searchParams: {
+                                                        page: page ? page : "1",
+                                                        registration:
+                                                            registration
+                                                                ? registration
+                                                                : "none",
+                                                    },
                                                 })
                                             }
                                             className="px-2 py-0"
@@ -107,6 +128,13 @@ const GeneralEntredMarks = ({}) => {
                                             onClick={() =>
                                                 onOpen("deleteGeneralMarks", {
                                                     generalMarks: student,
+                                                    searchParams: {
+                                                        page: page ? page : "1",
+                                                        registration:
+                                                            registration
+                                                                ? registration
+                                                                : "none",
+                                                    },
                                                 })
                                             }
                                             className="ml-2 px-2 py-0"

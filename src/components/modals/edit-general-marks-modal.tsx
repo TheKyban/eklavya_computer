@@ -43,8 +43,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export const EditGeneralMarks = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "editGeneralMarks";
-    const { generalMarks } = data;
-    const [state, setState] = useState("");
+    const { generalMarks, searchParams } = data;
     const form = useForm<z.infer<typeof generalMarksSchema>>({
         resolver: zodResolver(generalMarksSchema),
         defaultValues: {
@@ -80,8 +79,15 @@ export const EditGeneralMarks = () => {
                 onClose();
             }
 
+            /**
+             * Replacing marks with updated marks
+             */
             queryClient.setQueryData(
-                ["general-students-entered"],
+                [
+                    "general-students-entered",
+                    searchParams?.page,
+                    searchParams?.registration,
+                ],
                 (oldMarks: {
                     total: number;
                     studentsWithMarks: z.infer<typeof generalMarksSchema>[];

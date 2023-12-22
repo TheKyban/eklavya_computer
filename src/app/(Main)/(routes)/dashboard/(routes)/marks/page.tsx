@@ -16,6 +16,9 @@ const Marks = () => {
     const [tabM, setTabM] = useState(
         typing ? "typingEntered" : "generalEntered"
     );
+    const page = searchParams.get("page");
+    const registration = searchParams.get("registration");
+
     useEffect(() => {
         setTab(typing ? "typing" : "general");
         setTabM(typing ? "typingEntered" : "generalEntered");
@@ -47,10 +50,16 @@ const Marks = () => {
                         </TabsTrigger>
                     </TabsList>
                     <TabsContent value="general">
-                        <GeneralMarksEntry />
+                        <GeneralMarksEntry
+                            page={page}
+                            registration={registration}
+                        />
                     </TabsContent>
                     <TabsContent value="typing">
-                        <TypingMarksEntry />
+                        <TypingMarksEntry
+                            page={page}
+                            registration={registration}
+                        />
                     </TabsContent>
                 </Tabs>
                 <Tabs
@@ -60,7 +69,10 @@ const Marks = () => {
                     className="w-[350px] md:w-[550px] xl:w-[650px] mx-auto"
                 >
                     <TabsList className="grid w-full grid-cols-2 h-12 px-2">
-                        <TabsTrigger value="generalEntered" className="min-w-[50px]">
+                        <TabsTrigger
+                            value="generalEntered"
+                            className="min-w-[50px]"
+                        >
                             <FileSpreadsheet className="text-green-400 w-5 h-5 mr-1" />{" "}
                             General List
                         </TabsTrigger>
@@ -70,10 +82,16 @@ const Marks = () => {
                         </TabsTrigger>
                     </TabsList>
                     <TabsContent value="generalEntered">
-                        <GeneralEntredMarks />
+                        <GeneralEntredMarks
+                            page={page}
+                            registration={registration}
+                        />
                     </TabsContent>
                     <TabsContent value="typingEntered">
-                        <ComputerTypingEnteredMarks />
+                        <ComputerTypingEnteredMarks
+                            page={page}
+                            registration={registration}
+                        />
                     </TabsContent>
                 </Tabs>
             </div>

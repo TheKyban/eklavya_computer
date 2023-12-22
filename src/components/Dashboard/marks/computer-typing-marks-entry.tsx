@@ -30,7 +30,13 @@ import { z } from "zod";
 
 type queryType = { formNumber: string };
 
-const TypingMarksEntry = () => {
+const TypingMarksEntry = ({
+    page,
+    registration,
+}: {
+    registration: string | null;
+    page: string | null;
+}) => {
     const form = useForm<z.infer<typeof typingSpeedMarkSchema>>({
         resolver: zodResolver(typingSpeedMarkSchema),
         defaultValues: {
@@ -81,7 +87,11 @@ const TypingMarksEntry = () => {
              * Adding registration number and marks to entered list
              */
             queryClient.setQueryData(
-                ["computer-typing-students-entered"],
+                [
+                    "computer-typing-students-entered",
+                    page ? page : "1",
+                    registration ? registration : "none",
+                ],
                 (oldData: {
                     total: number;
                     studentsWithMarks: {

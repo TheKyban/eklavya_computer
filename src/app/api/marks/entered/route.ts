@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../prisma/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
+import { per_page } from "@/lib/constants";
 
 /**
  * GET STUDENTS
@@ -26,8 +27,12 @@ export const GET = async (req: Request) => {
         const { searchParams } = new URL(req.url);
         const computerTyping =
             Boolean(searchParams.get("computerTyping")) || false;
+        const formNumber = searchParams.get("formNumber") || "";
+        const page = Number(searchParams.get("page")) || 1;
 
         const studentsWithMarks = await Prisma.student.findMany({
+            take: per_page,
+            skip: per_page * (page - 1),
             where: {
                 branch: session.user.userId,
                 course: {
@@ -35,6 +40,9 @@ export const GET = async (req: Request) => {
                     not: computerTyping ? "" : "Computer Typing",
                 },
 
+                formNumber: {
+                    startsWith: formNumber,
+                },
                 englishTyping: {
                     isSet: computerTyping,
                 },
@@ -71,6 +79,10 @@ export const GET = async (req: Request) => {
                 course: {
                     startsWith: computerTyping ? "Computer Typing" : "",
                     not: computerTyping ? "" : "Computer Typing",
+                },
+
+                formNumber: {
+                    startsWith: formNumber,
                 },
 
                 englishTyping: {
