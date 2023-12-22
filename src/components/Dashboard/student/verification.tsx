@@ -189,7 +189,7 @@ const StudentVerification = ({
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {isLoading && <LoadingCells />}
+                        {isLoading && <LoadingCells m={7}/>}
 
                         {!isLoading &&
                             data?.students?.map((student: Student) => (

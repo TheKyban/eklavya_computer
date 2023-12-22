@@ -1,5 +1,6 @@
 import MobileMenu from "@/components/Dashboard/sidebar/MobileMenu";
 import Sidebar from "@/components/Dashboard/sidebar/Sidebar";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { authOptions } from "@/lib/auth-options";
 import { getServerSession } from "next-auth";
@@ -11,6 +12,7 @@ export default async function Dasboard({
 }) {
     const session = await getServerSession(authOptions);
     const role = session?.user.role;
+
     return (
         <div className="flex min-h-screen h-screen min-w-full">
             <Sidebar
@@ -23,6 +25,11 @@ export default async function Dasboard({
                     className="lg:hidden fixed top-0 z-50 bg-white dark:bg-black"
                 />
                 <ScrollArea className="w-full h-[calc(100vh-90px)] mt-[90px] lg:mt-0 lg:h-screen  dark:bg-black">
+                    <div className="px-3 py-3">
+                        <Button variant={"secondary"} className="text-sm md:text-lg cursor-grabbing font-medium">
+                            {session?.user?.branch}
+                        </Button>
+                    </div>
                     {children}
                 </ScrollArea>
             </div>

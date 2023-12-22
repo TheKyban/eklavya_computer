@@ -87,7 +87,7 @@ const StudentList = ({
                     </TableHeader>
                     {/* TABLE BODY */}
                     <TableBody>
-                        {isLoading && <LoadingCells />}
+                        {isLoading && <LoadingCells m={7}/>}
                         {!isLoading &&
                             data?.students?.map((student: Student) => (
                                 <TableRow

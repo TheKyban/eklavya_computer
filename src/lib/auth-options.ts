@@ -44,6 +44,7 @@ export const authOptions: AuthOptions = {
                         userId: user.userId,
                         role: user.role,
                         isActive: user.isActive,
+                        branch: user.branch,
                     };
                 } catch (error) {
                     console.log(error);
@@ -76,6 +77,8 @@ export const authOptions: AuthOptions = {
                 token.userId = user?.userId;
                 // @ts-ignore
                 token.isActive = user?.isActive;
+                // @ts-ignore
+                token.branch = user?.branch;
             }
             return token;
         },
@@ -84,6 +87,7 @@ export const authOptions: AuthOptions = {
                 session.user.role = token?.role;
                 session.user.userId = token?.userId;
                 session.user.isActive = token?.isActive;
+                session.user.branch = token?.branch;
             }
             return session;
         },

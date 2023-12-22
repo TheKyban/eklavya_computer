@@ -9,6 +9,7 @@ declare module "next-auth" {
             email: string;
             userId: string;
             isActive: boolean;
+            branch: string;
         };
     }
 }
