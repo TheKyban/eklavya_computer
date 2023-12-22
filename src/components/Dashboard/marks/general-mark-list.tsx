@@ -93,17 +93,7 @@ const GeneralEntredMarks = ({}) => {
                                             size={"sm"}
                                             onClick={() =>
                                                 onOpen("editGeneralMarks", {
-                                                    generalMarks: {
-                                                        formNumber:
-                                                            student.formNumber,
-                                                        practical:
-                                                            student.practical,
-                                                        project:
-                                                            student.project,
-                                                        viva: student.viva,
-                                                        written:
-                                                            student.written,
-                                                    },
+                                                    generalMarks: student,
                                                 })
                                             }
                                             className="px-2 py-0"
@@ -114,11 +104,11 @@ const GeneralEntredMarks = ({}) => {
                                         <Button
                                             size={"sm"}
                                             variant={"outline"}
-                                            // onClick={() =>
-                                            //     onOpen("deleteUser", {
-                                            //         user,
-                                            //     })
-                                            // }
+                                            onClick={() =>
+                                                onOpen("deleteGeneralMarks", {
+                                                    generalMarks: student,
+                                                })
+                                            }
                                             className="ml-2 px-2 py-0"
                                         >
                                             <Trash className="w-4 h-4" />

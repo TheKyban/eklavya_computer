@@ -62,6 +62,9 @@ const TypingMarksEntry = () => {
                 form.reset();
             }
 
+            /**
+             * Removing registration number from entry list
+             */
             queryClient.setQueryData(
                 ["computer-typing-students"],
                 (oldData: queryType[]) => {
@@ -74,6 +77,9 @@ const TypingMarksEntry = () => {
                 }
             );
 
+            /**
+             * Adding registration number and marks to entered list
+             */
             queryClient.setQueryData(
                 ["computer-typing-students-entered"],
                 (oldData: {

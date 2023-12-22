@@ -89,14 +89,8 @@ const ComputerTypingEnteredMarks = ({}) => {
                                                 onOpen(
                                                     "editComputerTypingMarks",
                                                     {
-                                                        computerTypingMarks: {
-                                                            formNumber:
-                                                                student.formNumber,
-                                                            hindiTyping:
-                                                                student.hindiTyping,
-                                                            englishTyping:
-                                                                student.englishTyping,
-                                                        },
+                                                        computerTypingMarks:
+                                                            student,
                                                     }
                                                 );
                                             }}
@@ -108,11 +102,15 @@ const ComputerTypingEnteredMarks = ({}) => {
                                         <Button
                                             size={"sm"}
                                             variant={"outline"}
-                                            // onClick={() =>
-                                            //     onOpen("deleteUser", {
-                                            //         user,
-                                            //     })
-                                            // }
+                                            onClick={() =>
+                                                onOpen(
+                                                    "deleteComputerTypingMarks",
+                                                    {
+                                                        computerTypingMarks:
+                                                            student,
+                                                    }
+                                                )
+                                            }
                                             className="ml-2 px-2 py-0"
                                         >
                                             <Trash className="w-4 h-4" />

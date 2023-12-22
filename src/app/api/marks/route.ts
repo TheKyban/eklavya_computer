@@ -285,3 +285,81 @@ export const PUT = async (req: Request) => {
         });
     }
 };
+
+/**
+ * DELETE MARKS
+ */
+export const DELETE = async (req: Request) => {
+    try {
+        /**
+         * CHECK SESSION IS AVAILABLE
+         */
+
+        const session = await getServerSession(authOptions);
+
+        if (!session) {
+            return NextResponse.json({ message: "Unauthorized" });
+        }
+
+        const { searchParams } = new URL(req.url);
+        const computerTyping =
+            Boolean(searchParams.get("computerTyping")) || false;
+        const formNumber = searchParams.get("formNumber");
+
+        if (!formNumber) {
+            return NextResponse.json({ message: "FormNumber is required" });
+        }
+
+        /**
+         * UPDATE MARKS
+         */
+
+        const marks = await Prisma.student.update({
+            where: {
+                formNumber: formNumber,
+                branch: session.user.userId,
+            },
+            data: computerTyping
+                ? {
+                      hindiTyping: {
+                          unset: true,
+                      },
+                      englishTyping: {
+                          unset: true,
+                      },
+                  }
+                : {
+                      practical: {
+                          unset: true,
+                      },
+                      viva: {
+                          unset: true,
+                      },
+                      written: {
+                          unset: true,
+                      },
+                      project: {
+                          unset: true,
+                      },
+                  },
+
+            select: {
+                formNumber: true,
+            },
+        });
+
+        if (!marks) {
+            return NextResponse.json({ message: "Invalid data" });
+        }
+
+        return NextResponse.json({
+            message: "Marks deleted Successfully",
+            success: true,
+        });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({
+            message: "Internal Error",
+        });
+    }
+};

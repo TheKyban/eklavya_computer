@@ -1,12 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     Form,
     FormControl,
@@ -66,6 +60,9 @@ const GeneralMarksEntry = () => {
                 form.reset();
             }
 
+            /**
+             * Removing registration number from entry list
+             */
             queryClient.setQueryData(
                 ["general-students"],
                 (oldData: queryType[]) => {
@@ -77,6 +74,9 @@ const GeneralMarksEntry = () => {
                 }
             );
 
+            /**
+             * Adding registration and marks to entered list
+             */
             queryClient.setQueryData(
                 ["general-students-entered"],
                 (oldData: {
