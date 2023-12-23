@@ -12,7 +12,7 @@ import {
 import { poppins } from "@/lib/fonts";
 import { Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { Pen, Trash, UserRoundCheck } from "lucide-react";
+import { Eye, UserRoundCheck, View } from "lucide-react";
 import axios from "axios";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
@@ -20,7 +20,7 @@ import { format } from "date-fns";
 import { URL } from "@/lib/constants";
 import { useQuery } from "@tanstack/react-query";
 
-const StudentList = ({
+const CertificateList = ({
     searchParams,
 }: {
     searchParams: {
@@ -31,7 +31,7 @@ const StudentList = ({
 }) => {
     const { onOpen } = useModal();
 
-    const url = `${URL}/api/student?${
+    const url = `${URL}/api/certificate?${
         searchParams.pending ? "pending=true&" : ""
     }page=${searchParams.page}${
         !!searchParams.registration
@@ -40,7 +40,9 @@ const StudentList = ({
     }`;
     const { data, isLoading } = useQuery({
         queryKey: [
-            searchParams?.pending ? "pending_list" : "verified_list",
+            searchParams?.pending
+                ? "pending_certificate"
+                : "verified_certificate",
             searchParams.page || "1",
             searchParams.registration ? searchParams.registration : "none",
         ],
@@ -56,8 +58,8 @@ const StudentList = ({
                 <h1 className="flex items-center gap-2 md:gap-3 lg:text-xl uppercase font-semibold text-teal-700">
                     <UserRoundCheck className="text-red-600 w-5 h-5" />
                     {searchParams?.pending
-                        ? "Pending Students"
-                        : "Verified Students"}
+                        ? "Pending Certificate"
+                        : "Verified Certificate"}
                 </h1>
                 <Search
                     className="w-32 md:w-44"
@@ -84,7 +86,7 @@ const StudentList = ({
                             </TableHead>
                             <TableHead>Course</TableHead>
                             <TableHead className="text-left sm:text-right">
-                                Tool
+                                View
                             </TableHead>
                         </TableRow>
                     </TableHeader>
@@ -92,7 +94,7 @@ const StudentList = ({
                     <TableBody>
                         {isLoading && <LoadingCells m={7} />}
                         {!isLoading &&
-                            data?.students?.map((student: Student) => (
+                            data?.certificates?.map((student: Student) => (
                                 <TableRow
                                     key={student.formNumber}
                                     className={poppins.className}
@@ -124,8 +126,8 @@ const StudentList = ({
                                                     student,
                                                     searchParams: {
                                                         type: searchParams?.pending
-                                                            ? "pending_list"
-                                                            : "verified_list",
+                                                            ? "pending_certificate"
+                                                            : "verified_certificate",
 
                                                         page:
                                                             searchParams.page ||
@@ -139,32 +141,7 @@ const StudentList = ({
                                             }
                                             className="px-2 py-0"
                                         >
-                                            <Pen className="w-5 h-5" />
-                                        </Button>
-                                        {/* DELETE BTN */}
-                                        <Button
-                                            variant={"outline"}
-                                            onClick={() =>
-                                                onOpen("deleteStudent", {
-                                                    student,
-                                                    searchParams: {
-                                                        type: searchParams?.pending
-                                                            ? "pending_list"
-                                                            : "verified_list",
-
-                                                        page:
-                                                            searchParams.page ||
-                                                            "1",
-                                                        registration:
-                                                            searchParams.registration
-                                                                ? searchParams.registration
-                                                                : "none",
-                                                    },
-                                                })
-                                            }
-                                            className="sm:ml-2 px-2 py-0"
-                                        >
-                                            <Trash className="w-5 h-5" />
+                                            <Eye className="w-5 h-5" />
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -178,4 +155,4 @@ const StudentList = ({
     );
 };
 
-export default StudentList;
+export default CertificateList;

@@ -4,6 +4,9 @@ import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { per_page } from "@/lib/constants";
 
+/**
+ * GET STUDENTS
+ */
 export const GET = async (
     req: Request,
     { params }: { params: { userId: string } }
@@ -67,6 +70,11 @@ export const GET = async (
         return new NextResponse("Internal Error");
     }
 };
+
+/**
+ * VERIFY STUDENTS
+ */
+
 export const PUT = async (
     req: Request,
     { params }: { params: { userId: string } }

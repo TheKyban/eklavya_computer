@@ -1,12 +1,12 @@
 import { authOptions } from "@/lib/auth-options";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { Prisma } from "../../../../prisma/prisma";
+import { Prisma } from "../../../../../prisma/prisma";
 import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
 import { z } from "zod";
 
 /**
- * GET STUDENTS
+ * GET STUDENTS WHO DON'T HAVE MARKS
  */
 
 export const GET = async (req: Request) => {

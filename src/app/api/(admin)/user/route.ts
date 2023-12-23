@@ -1,7 +1,7 @@
 import { franchiseEditSchema, franchiseSchema } from "@/lib/schema";
 import { NextResponse } from "next/server";
-import { Prisma } from "../../../../prisma/prisma";
-import { z } from "zod";
+import { Prisma } from "../../../../../prisma/prisma";
+import { string, z } from "zod";
 import { per_page } from "@/lib/constants";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
@@ -116,7 +116,7 @@ export const POST = async (req: Request) => {
 };
 
 /**
- * GET ALL DATA
+ * GET ALL USER
  */
 
 export const GET = async (req: Request) => {
@@ -134,6 +134,18 @@ export const GET = async (req: Request) => {
         const { searchParams } = new URL(req.url);
         const page = Number(searchParams.get("page")) || 1;
         const userId = searchParams.get("userId");
+        const select = !!searchParams.get("select");
+        interface selectOtions {
+            [propName: string]: boolean;
+        }
+        const selectOtions: selectOtions = {};
+
+        searchParams
+            .get("select")
+            ?.split(",")
+            .forEach((parameter: string) => {
+                selectOtions[parameter] = true;
+            });
 
         /**
          * FINDING USERS
@@ -151,6 +163,24 @@ export const GET = async (req: Request) => {
             orderBy: {
                 id: "desc",
             },
+            select: select
+                ? selectOtions
+                : {
+                      userId: true,
+                      id: true,
+                      address: true,
+                      branch: true,
+                      _count: true,
+                      createdAt: true,
+                      email: true,
+                      img: true,
+                      isActive: true,
+                      name: true,
+                      password: true,
+                      phone: true,
+                      role: true,
+                      updatedAt: true,
+                  },
         });
 
         /**

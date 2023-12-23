@@ -41,17 +41,17 @@ export const links: LinkType[] = [
     {
         title: "Issued Certificate",
         icon: <Medal className="text-blue-400" />,
-        link: "/dashboard/certificate/issued",
+        link: "/dashboard/certificate",
     },
     {
         title: "Pending Certificate",
         icon: <Ribbon className="text-red-400" />,
-        link: "/dashboard/certificate/pending",
+        link: "/dashboard/certificate?pending=true",
     },
     {
         title: "Manage Certificate",
         icon: <Layers3 className="text-cyan-400" />,
-        link: "/dashboard/certificate",
+        link: "/dashboard/certificate/manage",
         role: "ADMIN",
     },
     {

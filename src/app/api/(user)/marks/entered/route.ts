@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { Prisma } from "../../../../../prisma/prisma";
+import { Prisma } from "../../../../../../prisma/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { per_page } from "@/lib/constants";
 
 /**
- * GET STUDENTS
+ * GET STUDENTS WHO HAVE MARKS
  */
 
 export const GET = async (req: Request) => {
@@ -21,7 +21,7 @@ export const GET = async (req: Request) => {
         }
 
         /**
-         * FIND STUDENTS WITHOUT MARKS
+         * FIND STUDENTS WITH MARKS
          */
 
         const { searchParams } = new URL(req.url);

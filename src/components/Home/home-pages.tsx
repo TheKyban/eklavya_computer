@@ -31,6 +31,7 @@ export const FirstPage = () => {
                     <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold dark:text-cyan-300">
                         Global Computer
                     </h2>
+                   
                     <p className="sm:text-base md:text-2xl lg:text-3xl font-medium text-black/50 dark:text-white">
                         Empowering Minds, Transforming Futures: Unleash Your
                         Potential.
