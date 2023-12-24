@@ -24,13 +24,12 @@ import { useRouter } from "next/navigation";
 const Franchise = ({
     searchParams,
 }: {
-    searchParams: { page: string; userId: string; ToVerification: boolean };
+    searchParams: { page: string; userId: string };
 }) => {
     const { onOpen } = useModal();
-    const url = `${URL}/api/user?page=${searchParams.page}${
+    const url = `${URL}/api/users?page=${searchParams.page}${
         !!searchParams.userId ? "&userId=" + searchParams.userId : ""
     }`;
-    const router = useRouter();
     const { data, isLoading } = useQuery({
         queryKey: ["users", searchParams?.page || "1", searchParams?.userId],
         queryFn: async () => {
@@ -88,51 +87,44 @@ const Franchise = ({
                                     </TableCell>
                                     <TableCell className="text-right">
                                         {/* BTN(STUDENT VERIFICATION PAGE)  */}
-                                        {!!searchParams?.ToVerification ? (
+                                        <>
+                                            {/* EDIT BTN */}
                                             <Button
-                                                variant={"secondary"}
+                                                variant={"outline"}
                                                 onClick={() =>
-                                                    router.push(
-                                                        `/dashboard/user/${user.userId}`
-                                                    )
+                                                    onOpen("User", {
+                                                        user,
+                                                        searchParams: {
+                                                            page:
+                                                                searchParams.page ||
+                                                                "1",
+                                                            userId: searchParams?.userId,
+                                                        },
+                                                    })
                                                 }
+                                                className="px-2 py-0"
                                             >
-                                                <ArrowRight />
+                                                <Pen className="w-5 h-5" />
                                             </Button>
-                                        ) : (
-                                            <>
-                                                {/* EDIT BTN */}
-                                                <Button
-                                                    variant={"outline"}
-                                                    onClick={() =>
-                                                        onOpen("User", {
-                                                            user,
-                                                            searchParams: {
-                                                                page:
-                                                                    searchParams.page ||
-                                                                    "1",
-                                                                userId: searchParams?.userId,
-                                                            },
-                                                        })
-                                                    }
-                                                    className="px-2 py-0"
-                                                >
-                                                    <Pen className="w-5 h-5" />
-                                                </Button>
-                                                {/* DELETE BTN */}
-                                                <Button
-                                                    variant={"outline"}
-                                                    onClick={() =>
-                                                        onOpen("deleteUser", {
-                                                            user,
-                                                        })
-                                                    }
-                                                    className="ml-2 px-2 py-0"
-                                                >
-                                                    <Trash className="w-5 h-5" />
-                                                </Button>
-                                            </>
-                                        )}
+                                            {/* DELETE BTN */}
+                                            <Button
+                                                variant={"outline"}
+                                                onClick={() =>
+                                                    onOpen("deleteUser", {
+                                                        user,
+                                                        searchParams: {
+                                                            page:
+                                                                searchParams.page ||
+                                                                "1",
+                                                            userId: searchParams?.userId,
+                                                        },
+                                                    })
+                                                }
+                                                className="ml-2 px-2 py-0"
+                                            >
+                                                <Trash className="w-5 h-5" />
+                                            </Button>
+                                        </>
                                     </TableCell>
                                 </TableRow>
                             ))}

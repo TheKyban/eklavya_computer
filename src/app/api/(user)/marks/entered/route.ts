@@ -4,10 +4,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { per_page } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 /**
  * GET STUDENTS WHO HAVE MARKS
  */
-export const dynamic = "force-dynamic";
+
 export const GET = async (req: Request) => {
     try {
         /**

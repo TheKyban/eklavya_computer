@@ -39,7 +39,6 @@ import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { franchiseEditSchema } from "@/lib/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { User } from "@prisma/client";
 import { states } from "@/lib/stateAndDistrict";
 
 export const UserModal = () => {
@@ -94,7 +93,7 @@ export const UserModal = () => {
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof franchiseEditSchema>) => {
-            const { data } = await axios.put("/api/user", values);
+            const { data } = await axios.put("/api/users", values);
             return data;
         },
 

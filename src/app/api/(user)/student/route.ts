@@ -2,7 +2,7 @@ import { authOptions } from "@/lib/auth-options";
 import { gender, role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { Prisma } from "../../../../prisma/prisma";
+import { Prisma } from "../../../../../prisma/prisma";
 import { studentSchema } from "@/lib/schema";
 import { z } from "zod";
 import { per_page } from "@/lib/constants";
@@ -324,7 +324,7 @@ export const GET = async (req: Request) => {
 };
 
 /**
- * DELETE USER
+ * DELETE STUDENT
  */
 
 export const DELETE = async (req: Request) => {

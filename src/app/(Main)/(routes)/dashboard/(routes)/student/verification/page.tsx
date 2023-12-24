@@ -14,10 +14,7 @@ const StudentVerificationPage = async ({
     }
     return (
         <div>
-            <StudentVerification
-                searchParams={searchParams}
-                userId={session.user.userId}
-            />
+            <StudentVerification searchParams={searchParams} />
         </div>
     );
 };

@@ -2,8 +2,16 @@
 import { LoadingCells } from "@/components/loading/loading";
 import Pagination from "@/components/pagination/pagination";
 import Search from "@/components/search/search";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import {
     Table,
     TableBody,
@@ -12,43 +20,63 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { toast } from "@/components/ui/use-toast";
 import { URL } from "@/lib/constants";
 import { poppins } from "@/lib/fonts";
-import { Student } from "@prisma/client";
+import { Student, role } from "@prisma/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { format } from "date-fns";
-import { ArrowLeft, UserCog } from "lucide-react";
+import { GraduationCap, Shield, Users } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { useEffect, useState } from "react";
 
-const StudentVerification = ({
+interface userType {
+    role: role;
+    userId: string;
+}
+
+type verify = "false" | "true";
+
+const ManageCertificate = ({
     searchParams,
-    userId,
-    header = false,
 }: {
     searchParams: { page: string; registration: string };
-    userId: string;
-    header?: boolean;
 }) => {
     const { data: session } = useSession();
-    const router = useRouter();
-    const queryclient = useQueryClient();
-    const url = `${URL}/api/student/all/${userId}?page=${searchParams.page}${
-        !!searchParams.registration
-            ? "&formNumber=" + searchParams.registration
-            : ""
-    }`;
+
+    const [user, setUser] = useState(session?.user.userId);
+    const [type, setType] = useState<verify>("false");
+    const registration = searchParams.registration;
+    const page = searchParams.page;
+    /**
+     * FETCHING USERS
+     */
+
+    const { data: fetchUsers, isLoading: isUserLoading } = useQuery({
+        queryKey: ["userIds"],
+        queryFn: async () => {
+            const url = `/api/users?page=1&name=aditya&select=userId,role`;
+            const { data } = await axios.get(url);
+            return data;
+        },
+    });
+    const queryClient = useQueryClient();
+
+    const url = `${URL}/api/student-verification/${user}?pending=${type}&page=${
+        searchParams.page
+    }${!!registration ? "&formNumber=" + registration : ""}`;
     const { data, isLoading } = useQuery({
         queryKey: [
             "student_verification",
-            searchParams.page || "1",
-            userId,
-            searchParams.registration ? searchParams.registration : "",
+            page || "1",
+            user,
+            registration ? registration : "",
+            type,
         ],
         queryFn: async () => {
             const { data } = await axios.get(url);
+            console.log(data);
             return data;
         },
     });
@@ -62,7 +90,7 @@ const StudentVerification = ({
             formNumber: string;
         }) => {
             const { data } = await axios.put(
-                `${URL}/api/student/all/${userId}`,
+                `${URL}/api/student-verification/${user}`,
                 {
                     isVerified,
                     formNumber,
@@ -71,103 +99,164 @@ const StudentVerification = ({
             return data;
         },
 
-        onSuccess(data, variables, context) {
-            queryclient.setQueryData(
+        onSuccess(data, variables) {
+            if (data) {
+                toast({ description: data?.message });
+            }
+
+            // remove data
+            queryClient.setQueryData(
                 [
                     "student_verification",
-                    searchParams.page || "1",
-                    userId,
-                    searchParams.registration ? searchParams.registration : "",
+                    page || "1",
+                    user,
+                    registration ? registration : "",
+                    type,
                 ],
-                (old: { total: number; students: Student[] }) => {
-                    const students = old?.students.map((student) => {
-                        return Number(student.formNumber) ===
-                            Number(variables.formNumber)
-                            ? {
-                                  ...student,
-                                  isVerified: !student.isVerified,
-                              }
-                            : student;
-                    });
-                    return { total: old.total, students };
+                (oldData: { total: number; students: Student[] }) => {
+                    console.log("from query", oldData);
+                    const students = oldData.students.filter(
+                        (student) =>
+                            student.formNumber !== data.student.formNumber
+                    );
+
+                    return {
+                        total: oldData.total - 1,
+                        students,
+                    };
                 }
             );
 
-            if (session?.user.userId === userId) {
-                if (variables.isVerified) {
-                    queryclient.setQueryData(
-                        ["verified_list", "1", "none"],
-                        (old: { total: number; students: Student[] }) => {
-                            return {
-                                total: old.total + 1,
-                                students: [data.student, ...old.students],
-                            };
-                        }
-                    );
-                    queryclient.setQueryData(
-                        ["pending_list", "1", "none"],
-                        (old: { total: number; students: Student[] }) => {
-                            const students = old?.students?.filter(
-                                (student) => student.id !== data.student.id
-                            );
-                            return { total: old.total - 1, students };
-                        }
-                    );
-                } else {
-                    queryclient.setQueryData(
-                        ["pending_list", "1", "none"],
-                        (old: { total: number; students: Student[] }) => {
-                            return {
-                                total: old.total + 1,
-                                students: [data.student, ...old.students],
-                            };
-                        }
-                    );
-                    queryclient.setQueryData(
-                        ["verified_list", "1", "none"],
-                        (old: { total: number; students: Student[] }) => {
-                            const students = old?.students?.filter(
-                                (student) => student.id !== data.student.id
-                            );
-                            return { total: old.total - 1, students };
-                        }
-                    );
+            //Add To other type
+            queryClient.setQueryData(
+                [
+                    "student_verification",
+                    page || "1",
+                    user,
+                    registration ? registration : "",
+                    type === "false" ? "true" : "false",
+                ],
+                (oldData: { total: number; students: Student[] }) => {
+                    console.log(oldData);
+                    return {
+                        total: oldData.total + 1,
+                        students: [data.student, ...oldData.students],
+                    };
                 }
-            }
+            );
         },
     });
+    useEffect(() => {
+        setUser(session?.user.userId);
+    }, [session]);
 
     return (
-        <div className="px-3 md:px-5 py-4 flex flex-col gap-4">
-            {header && (
-                <div className="flex items-center justify-between">
-                    <Button
-                        variant={"link"}
-                        onClick={() =>
-                            router.push("/dashboard/user?ToVerification=true")
-                        }
-                    >
-                        <ArrowLeft />
-                    </Button>
-                    <div className="flex items-center justify-center gap-3">
-                        <span className="font-semibold uppercase">USER:</span>
-                        <span>{userId}</span>
-                    </div>
+        <div className="px-5 flex flex-col gap-4">
+            <div className="flex justify-between">
+                <div className="flex gap-1 items-center">
+                    <GraduationCap className="text-indigo-400" />
+                    <span className="text-zinc-800 text-2xl font-semibold">
+                        Student Verification
+                    </span>
                 </div>
-            )}
-            <div className="flex justify-between px-1">
-                <h1 className="flex items-center gap-2 md:gap-3 text-sm lg:text-xl uppercase font-semibold text-teal-700">
-                    <UserCog className="text-red-600 w-6 h-6" />
-                    Student Verification
-                </h1>
                 <Search
-                    className="w-36 md:w-44"
+                    className="w-32 md:w-44"
                     placeholder="Registration"
                     queryName="registration"
                 />
             </div>
 
-            <div className="w-full overflow-x-auto">
+            <div className="flex flex-wrap gap-5">
+                {/* Users */}
+                <div className="flex flex-col gap-2">
+                    <div className="flex gap-1 items-center">
+                        <Users className="w-5 h-5 text-teal-500" />
+                        <span>USER ID</span>
+                    </div>
+                    <Select
+                        defaultValue={user}
+                        value={user}
+                        onValueChange={(val) => setUser(val)}
+                    >
+                        <SelectTrigger className="w-36">
+                            <SelectValue placeholder="Select User" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Admin</SelectLabel>
+                                <SelectItem
+                                    value={session?.user.userId as string}
+                                >
+                                    {session?.user.userId}
+                                </SelectItem>
+
+                                {isUserLoading && (
+                                    <SelectItem value="loading2">
+                                        Loading...
+                                    </SelectItem>
+                                )}
+
+                                {fetchUsers?.users?.map(
+                                    (user: userType) =>
+                                        user.role === "ADMIN" && (
+                                            <SelectItem
+                                                key={user.userId}
+                                                value={user.userId}
+                                            >
+                                                {user.userId}
+                                            </SelectItem>
+                                        )
+                                )}
+
+                                <SelectLabel>Users</SelectLabel>
+                                {isUserLoading && (
+                                    <SelectItem value="loading1">
+                                        Loading...
+                                    </SelectItem>
+                                )}
+
+                                {fetchUsers?.users?.map(
+                                    (user: userType) =>
+                                        user.role === "FRANCHISE" && (
+                                            <SelectItem
+                                                key={user.userId}
+                                                value={user.userId}
+                                            >
+                                                {user.userId}
+                                            </SelectItem>
+                                        )
+                                )}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                {/* Type */}
+                <div className="flex flex-col gap-2">
+                    <div className="flex gap-1 items-center">
+                        <Shield className="text-rose-500 w-5 h-5" />
+                        <span>Type</span>
+                    </div>
+                    <Select
+                        defaultValue={type}
+                        value={type}
+                        onValueChange={(val) => setType(val as verify)}
+                    >
+                        <SelectTrigger className="w-40">
+                            <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>courses</SelectLabel>
+                                <SelectItem value="true">Verified</SelectItem>
+                                <SelectItem value="false">Pending</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
+            </div>
+
+            <div>
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -189,7 +278,7 @@ const StudentVerification = ({
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {isLoading && <LoadingCells m={7}/>}
+                        {isLoading && <LoadingCells m={7} />}
 
                         {!isLoading &&
                             data?.students?.map((student: Student) => (
@@ -240,4 +329,4 @@ const StudentVerification = ({
     );
 };
 
-export default StudentVerification;
+export default ManageCertificate;

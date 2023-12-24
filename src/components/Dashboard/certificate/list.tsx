@@ -59,7 +59,7 @@ const CertificateList = ({
                     <UserRoundCheck className="text-red-600 w-5 h-5" />
                     {searchParams?.pending
                         ? "Pending Certificate"
-                        : "Verified Certificate"}
+                        : "Issued Certificate"}
                 </h1>
                 <Search
                     className="w-32 md:w-44"

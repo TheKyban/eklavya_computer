@@ -115,12 +115,6 @@ export const accordianLinks: accordianLinks[] = [
                 link: "/dashboard/student/verification",
                 role: "ADMIN",
             },
-            {
-                title: "All Student Verification",
-                icon: <UserRoundCog className="text-pink-600" />,
-                link: "/dashboard/user?ToVerification=true",
-                role: "ADMIN",
-            },
         ],
     },
 ];

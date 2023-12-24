@@ -5,7 +5,7 @@ import { Suspense } from "react";
 const FranchiseList = ({
     searchParams,
 }: {
-    searchParams: { page: string; userId: string; ToVerification: boolean };
+    searchParams: { page: string; userId: string };
 }) => {
     return (
         <Suspense

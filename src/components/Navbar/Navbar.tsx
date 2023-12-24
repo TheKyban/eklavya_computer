@@ -37,9 +37,9 @@ const Navbar = () => {
                 {/* Logo */}
                 <Image
                     priority
-                    src={"/logo.svg"}
-                    width={70}
-                    height={70}
+                    src={"/logomen.png"}
+                    width={90}
+                    height={0}
                     alt="logo"
                 />
 

@@ -45,9 +45,9 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
             <div>
                 <Image
                     priority
-                    src={"/logo.svg"}
-                    width={50}
-                    height={50}
+                    src={"/logomen.png"}
+                    width={80}
+                    height={0}
                     alt="logo"
                 />
             </div>

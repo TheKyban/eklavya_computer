@@ -77,7 +77,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
     const { data: fetchUsers, isLoading: isUserLoading } = useQuery({
         queryKey: ["userIds"],
         queryFn: async () => {
-            const url = `/api/user?page=1&name=aditya&select=userId,role`;
+            const url = `/api/users?page=1&name=aditya&select=userId,role`;
             const { data } = await axios.get(url);
             return data;
         },

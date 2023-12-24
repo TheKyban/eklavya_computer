@@ -8,7 +8,7 @@ import { Icon } from "@/components/Home/home-icon";
 
 export const FirstPage = () => {
     return (
-        <div className="flex justify-between items-center h-[500px] lg:h-[calc(100vh-80px)] max-h-[920px]">
+        <div className="flex justify-between items-center h-[500px] lg:h-[calc(100vh)] max-h-[920px]">
             {/*
              *
              * LEFT SIDE
@@ -24,7 +24,7 @@ export const FirstPage = () => {
 
                 <div className="self-start flex flex-col gap-3 items-center justify-center text-center lg:text-left lg:justify-start lg:items-start px-4">
                     <h1
-                        className={`${poppins.style.fontFamily} text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold text-rose-500 dark:text-cyan-400`}
+                        className={`${poppins.style.fontFamily} text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold text-indigo-600 dark:text-cyan-400`}
                     >
                         Eklavaya
                     </h1>

@@ -25,7 +25,7 @@ export const DeleteUserModal = () => {
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             const { data } = await axios.delete(
-                `/api/user?userId=${user?.userId}`
+                `/api/users?userId=${user?.userId}`
             );
             return data;
         },

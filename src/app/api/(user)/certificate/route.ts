@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
-import { Prisma } from "../../../../prisma/prisma";
+import { Prisma } from "../../../../../prisma/prisma";
 import { per_page } from "@/lib/constants";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 
 export const dynamic = "force-dynamic";
+
+/**
+ * GET CERTIFICATE INFO
+ */
+
 export const GET = async (req: Request) => {
     try {
         /**

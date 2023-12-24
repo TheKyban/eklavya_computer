@@ -32,7 +32,7 @@ export const GET = async (
         const { searchParams } = new URL(req.url);
         const page = Number(searchParams.get("page")) || 1;
         const formNumber = searchParams.get("formNumber") || "";
-
+        const pending = searchParams.get("pending") === "true" ? true : false;
         /**
          * FINDING STUDENTS
          */
@@ -45,9 +45,19 @@ export const GET = async (
                 formNumber: {
                     contains: formNumber,
                 },
+                isVerified: pending,
             },
             orderBy: {
                 id: "desc",
+            },
+            select: {
+                formNumber: true,
+                name: true,
+                fatherName: true,
+                motherName: true,
+                course: true,
+                isVerified: true,
+                dor: true,
             },
         });
 
@@ -61,6 +71,7 @@ export const GET = async (
                 formNumber: {
                     contains: formNumber,
                 },
+                isVerified: pending,
             },
         });
 
@@ -111,13 +122,25 @@ export const PUT = async (
             data: {
                 isVerified: data.isVerified,
             },
+            select: {
+                formNumber: true,
+                name: true,
+                fatherName: true,
+                motherName: true,
+                course: true,
+                isVerified: true,
+                dor: true,
+            },
         });
 
         if (!student) {
             return NextResponse.json({ messagae: "Invalid data" });
         }
 
-        return NextResponse.json({ message: "Updated successfully", student });
+        return NextResponse.json({
+            message: "Updated successfully",
+            student,
+        });
     } catch (error) {
         console.log("[GET USERS]", error);
         return new NextResponse("Internal Error");
