@@ -7,7 +7,7 @@ import { per_page } from "@/lib/constants";
 /**
  * GET STUDENTS WHO HAVE MARKS
  */
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: Request) => {
     try {
         /**
@@ -108,7 +108,7 @@ export const GET = async (req: Request) => {
 
         return NextResponse.json({ studentsWithMarks, total });
     } catch (error) {
-        console.log(error);
+        console.log("[GET ENTERED MARKS]", error);
         return NextResponse.json({
             message: "Internal error",
         });

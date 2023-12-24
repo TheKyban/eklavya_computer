@@ -4,6 +4,7 @@ import { per_page } from "@/lib/constants";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 
+export const dynamic = "force-dynamic";
 export const GET = async (req: Request) => {
     try {
         /**
@@ -59,7 +60,7 @@ export const GET = async (req: Request) => {
 
         return NextResponse.json({ total, certificates });
     } catch (error) {
-        console.log("[GET STUDENT]", error);
+        console.log("[GET CERTIFICATE]", error);
         return new NextResponse("Internal Error");
     }
 };
