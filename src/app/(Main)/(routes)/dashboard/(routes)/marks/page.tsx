@@ -44,7 +44,6 @@ const Marks = () => {
                             General
                         </TabsTrigger>
                         <TabsTrigger value="typing">
-                            {" "}
                             <TextCursorInput className="text-orange-400 w-5 h-5 mr-1" />
                             Typing
                         </TabsTrigger>

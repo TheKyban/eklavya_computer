@@ -281,69 +281,140 @@ export const ThridPage = () => {
                 </h1>
 
                 <div className="grid grid-cols-2 lg:grid-cols-3 m-auto w-fit gap-8 flex-wrap">
-                    <Image
-                        src={"/course/dca.jpg"}
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                        width={250}
-                        height={250}
-                        alt="dca"
-                    />
-                    <Image
-                        src={"/course/adca.jpg"}
-                        width={250}
-                        height={250}
-                        alt="adca"
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                    />
-                    <Image
-                        src={"/course/cca.jpg"}
-                        width={250}
-                        height={250}
-                        alt="adca"
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                    />
-                    <Image
-                        src={"/course/adit.jpg"}
-                        width={250}
-                        height={250}
-                        alt="adca"
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                    />
-                    <Image
-                        src={"/course/ddeo.jpg"}
-                        width={250}
-                        height={250}
-                        alt="adca"
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                    />
-                    <Image
-                        src={"/course/daa.jpg"}
-                        width={250}
-                        height={250}
-                        alt="adca"
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                    />
-                    <Image
-                        src={"/course/cfa.jpg"}
-                        width={250}
-                        height={250}
-                        alt="adca"
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                    />
-                    <Image
-                        src={"/course/dfa.jpg"}
-                        width={250}
-                        height={250}
-                        alt="adca"
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                    />
-                    <Image
-                        src={"/course/doa.jpg"}
-                        width={250}
-                        height={250}
-                        alt="adca"
-                        className="rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                    />
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/dca.jpg"}
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                            width={250}
+                            height={250}
+                            alt="dca"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/adca.jpg"}
+                            width={250}
+                            height={250}
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                            alt="adca"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/cca.jpg"}
+                            width={250}
+                            height={250}
+                            alt="adca"
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/adit.jpg"}
+                            width={250}
+                            height={250}
+                            alt="adca"
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/ddeo.jpg"}
+                            width={250}
+                            height={250}
+                            alt="adca"
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/daa.jpg"}
+                            width={250}
+                            height={250}
+                            alt="adca"
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/cfa.jpg"}
+                            width={250}
+                            height={250}
+                            alt="adca"
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/dfa.jpg"}
+                            width={250}
+                            height={250}
+                            alt="adca"
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="relative group overflow-hidden">
+                        <Image
+                            src={"/course/doa.jpg"}
+                            width={250}
+                            height={250}
+                            alt="adca"
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
+                        />
+                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                                More
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

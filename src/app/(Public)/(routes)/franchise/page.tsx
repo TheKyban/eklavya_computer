@@ -79,7 +79,7 @@ export default function Franchise() {
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button onClick={() => mutate()} disabled={isPending}>
+                    <Button className="w-full" variant={"secondary"} onClick={() => mutate()} disabled={isPending}>
                         {isPending ? (
                             <Loader2 className="animate-spin" />
                         ) : (
