@@ -1,41 +1,93 @@
+"use client";
 import Image from "next/image";
 import { Card as ImageCard } from "@/components/Home/home-card";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BadgeCheck, BookText, Building, Folder, Users } from "lucide-react";
+import {
+    BadgeCheck,
+    BookText,
+    Building,
+    ChevronDown,
+    Folder,
+    Users,
+} from "lucide-react";
 import { poppins } from "@/lib/fonts";
 import { Icon } from "@/components/Home/home-icon";
+import { motion } from "framer-motion";
 
+const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            delayChildren: 0.3,
+            staggerChildren: 0.2,
+        },
+    },
+};
+
+const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+        y: 0,
+        opacity: 1,
+    },
+};
+const animations = {
+    whileInView: {
+        y: 0,
+        X: 0,
+        opacity: 1,
+    },
+    one: {
+        opacity: 0,
+        y: 50,
+    },
+};
 export const FirstPage = () => {
     return (
-        <div className="flex justify-between items-center h-[500px] lg:h-[calc(100vh)] max-h-[920px]">
+        <div className="flex w-full   items-center h-[500px] lg:h-[calc(100vh)] max-h-[920px]">
             {/*
              *
              * LEFT SIDE
              *
              */}
 
-            <div className="min-h-full flex flex-col justify-evenly lg:justify-around gap-6">
+            <div className="min-h-full w-full flex flex-col justify-evenly lg:justify-around gap-6">
                 {/*
                  *
                  * TEXTS
                  *
                  */}
 
-                <div className="self-start flex flex-col gap-3 items-center justify-center text-center lg:text-left lg:justify-start lg:items-start px-4">
-                    <h1
-                        className={`${poppins.style.fontFamily} text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold text-indigo-600 dark:text-cyan-400`}
+                <div className="flex flex-col gap-3 items-center justify-center text-center lg:text-left lg:justify-start lg:items-start px-4">
+                    <motion.h1
+                        className={`${poppins.style.fontFamily} text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-bold text-indigo-600 dark:text-cyan-400`}
+                        variants={item}
                     >
                         Eklavaya
-                    </h1>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold dark:text-cyan-300">
+                    </motion.h1>
+                    <motion.h2
+                        variants={item}
+                        className="text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl font-bold text-red-600 dark:text-cyan-300"
+                    >
                         Global Computer
-                    </h2>
-                   
-                    <p className="sm:text-base md:text-2xl lg:text-3xl font-medium text-black/50 dark:text-white">
+                    </motion.h2>
+
+                    <motion.p
+                        className="sm:text-base md:text-2xl font-medium text-black/50 dark:text-white"
+                        variants={item}
+                    >
                         Empowering Minds, Transforming Futures: Unleash Your
                         Potential.
-                    </p>
+                    </motion.p>
+                    <motion.p
+                        className="sm:text-base md:text-xl font-medium text-black/80 dark:text-white"
+                        variants={item}
+                    >
+                        Recognized by the Government of India
+                    </motion.p>
                 </div>
 
                 {/*
@@ -73,8 +125,10 @@ export const FirstPage = () => {
                 width={500}
                 alt="men"
                 draggable={false}
-                className="hidden select-none lg:block lg:w-[350px] 2xl:w-[400px] self-end"
+                className="hidden select-none lg:block lg:w-[350px] 2xl:w-[400px] self-end justify-self-ends"
             />
+
+            <ChevronDown className="absolute w-10 h-10 text-indigo-700 left-1/2 bottom-0 -translate-x-1/2 animate-bounce" />
         </div>
     );
 };
@@ -125,7 +179,11 @@ export const SecondPage = () => {
              *
              */}
 
-            <div className="bg-slate-200 rounded-lg w-[93%] 2xl:w-full">
+            <motion.div
+                whileInView={animations.whileInView}
+                initial={animations.one}
+                className="bg-slate-200 rounded-lg w-[93%] 2xl:w-full"
+            >
                 <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                     <h1 className="text-4xl font-medium text-zinc-600 xl:text-6xl">
                         Why Eklavya ?.
@@ -142,7 +200,7 @@ export const SecondPage = () => {
                         boundaries.
                     </p>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };
@@ -154,8 +212,13 @@ export const ThridPage = () => {
                 <h1 className="text-5xl font-bold text-green-600">
                     Our Features
                 </h1>
-                <div className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap">
+                <motion.div
+                    whileInView={animations.whileInView}
+                    initial={animations.one}
+                    className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap"
+                >
                     {/* CARD ONE */}
+
                     <Card className="max-w-xs bg-orange-300">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-3">
@@ -209,7 +272,7 @@ export const ThridPage = () => {
                             </p>
                         </CardContent>
                     </Card>
-                </div>
+                </motion.div>
             </div>
 
             <div className="flex flex-col justify-center items-center gap-10 bg-indigo-100 w-[93%] 2xl:w-full rounded-lg py-10 h-full">

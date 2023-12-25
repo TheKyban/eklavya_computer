@@ -10,11 +10,11 @@ export const Footer = () => {
                  * DIRECTOR
                  */}
                 <div className="flex-1 flex items-center justify-center w-full">
-                    <div className="flex flex-col items-center gap-5 min-w-[300px]  w-full xl:max-w-md py-5 lg:py-9 xl:py-4">
+                    <div className="flex flex-col items-center gap-3 w-full xl:max-w-md py-5 lg:py-9 xl:py-4">
                         <h1 className="text-2xl font-semibold text-zinc-800">
                             Director
                         </h1>
-                        <div className="flex flex-col items-center gap-5">
+                        <div className="flex flex-col items-center gap-3">
                             <Image
                                 src={"/director.png"}
                                 width={200}
@@ -22,7 +22,7 @@ export const Footer = () => {
                                 alt="director"
                                 className="w-28 h-28 text-amber-700 rounded-full"
                             />
-                            <span className="text-2xl font-bold text-zinc-700">
+                            <span className="text-2xl text-zinc-700">
                                 Rajeev Kumar
                             </span>
                         </div>

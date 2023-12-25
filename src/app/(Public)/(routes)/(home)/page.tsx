@@ -1,6 +1,5 @@
 import { Footer } from "@/components/Home/footer";
 import { FirstPage, SecondPage, ThridPage } from "@/components/Home/home-pages";
-
 export default function Home() {
     return (
         <div className="min-h-screen h-full bg-orange-50 dark:bg-zinc-600  flex items-center justify-center rounded-xl">
