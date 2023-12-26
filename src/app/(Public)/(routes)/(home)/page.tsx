@@ -3,39 +3,37 @@ import { FirstPage, SecondPage, ThridPage } from "@/components/Home/home-pages";
 export default function Home() {
     return (
         <div className="min-h-[calc(100vh-63px)] h-full bg-orange-50 dark:bg-zinc-600 rounded-xl">
-            {/* <div className="h-full flex flex-col gap-6 items-center justify-center pb-5 max-w-screen-2xl"> */}
-                {/**
-                 *
-                 * HERO SECTION
-                 *
-                 */}
+            {/**
+             *
+             * HERO SECTION
+             *
+             */}
 
-                <FirstPage />
+            <FirstPage />
 
-                {/*
-                 *
-                 * SECOND PAGE
-                 *
-                 */}
+            {/*
+             *
+             * SECOND PAGE
+             *
+             */}
 
-                <SecondPage />
+            <SecondPage />
 
-                {/*
-                 *
-                 * THIRD PAGE
-                 *
-                 */}
+            {/*
+             *
+             * THIRD PAGE
+             *
+             */}
 
-                <ThridPage />
+            <ThridPage />
 
-                {/*
-                 *
-                 * FOOTER
-                 *
-                 */}
+            {/*
+             *
+             * FOOTER
+             *
+             */}
 
-                {/* <Footer /> */}
-            {/* </div> */}
+            {/* <Footer /> */}
         </div>
     );
 }

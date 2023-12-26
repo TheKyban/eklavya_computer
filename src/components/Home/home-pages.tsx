@@ -212,7 +212,7 @@ export const SecondPage = () => {
                 pauseOnClick
                 autoFill
             >
-                <ul className="list-disc flex  gap-10 overflow-x-auto text-rose-700">
+                <ul className="list-disc flex px-2 gap-10 overflow-x-auto text-rose-700">
                     <li>
                         <b>Admission is Going On...</b>
                     </li>
