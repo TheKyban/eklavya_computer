@@ -178,7 +178,7 @@ const Navbar = () => {
                             {/* Contact us */}
                             <Link
                                 className={cn(LinkStyle, LinkStyle2)}
-                                href={"/contact"}
+                                href={"#contact"}
                             >
                                 <BookUser className="w-4 h-4" />
                                 <span className="">Contact Us</span>

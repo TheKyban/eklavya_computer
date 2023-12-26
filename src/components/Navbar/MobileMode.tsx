@@ -138,7 +138,7 @@ const MobileMode = ({ isAuth }: { isAuth: boolean }) => {
                                 </Link>
                                 <Link
                                     className={LinkStyle3}
-                                    href={"/contact"}
+                                    href={"#contact"}
                                     onClick={() => setOpen(!open)}
                                 >
                                     <BookUser className="w-4 h-4" />
