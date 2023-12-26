@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { Card as ImageCard } from "@/components/Home/home-card";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -13,63 +12,109 @@ import {
 } from "lucide-react";
 import { poppins } from "@/lib/fonts";
 import { Icon } from "@/components/Home/home-icon";
-import { motion } from "framer-motion";
+import { animate, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
-const container = {
-    hidden: { opacity: 1, scale: 0 },
-    visible: {
-        opacity: 1,
-        scale: 1,
-        transition: {
-            delayChildren: 0.3,
-            staggerChildren: 0.2,
-        },
-    },
+interface CounterProps {
+    from: number;
+    to: number;
+}
+const Counter: React.FC<CounterProps> = ({ from, to }) => {
+    const nodeRef = useRef<HTMLParagraphElement | null>(null);
+    const [isInView, setIsInView] = useState(false);
+
+    useEffect(() => {
+        const node = nodeRef.current;
+        if (!node) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setIsInView(true);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        observer.observe(node);
+
+        return () => {
+            observer.unobserve(node);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isInView) return;
+
+        const node = nodeRef.current;
+        if (!node) return;
+
+        const controls = animate(from, to, {
+            duration: 1,
+            onUpdate(value) {
+                node.textContent = Math.round(value).toString();
+            },
+        });
+
+        return () => controls.stop();
+    }, [from, to, isInView]);
+
+    return (
+        <motion.p
+            ref={nodeRef}
+            initial={{ opacity: 0, scale: 0.1 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.4 }}
+        />
+    );
 };
 
-const item = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-        y: 0,
-        opacity: 1,
-    },
-};
-const animations = {
-    whileInView: {
-        y: 0,
-        X: 0,
-        opacity: 1,
-    },
-    one: {
-        opacity: 0,
-        y: 50,
-    },
-};
 export const FirstPage = () => {
     return (
-        <div className="flex w-full   items-center h-[500px] lg:h-[calc(100vh)] max-h-[920px]">
+        <div className="overflow-hidden flex max-w-[1280px] m-auto w-full items-center justify-between h-[500px] lg:h-[calc(100vh-63px)] relative">
             {/*
              *
              * LEFT SIDE
              *
              */}
 
-            <div className="min-h-full w-full flex flex-col justify-evenly lg:justify-around gap-6">
+            <div className="h-full w-full flex flex-col justify-around gap-6">
                 {/*
                  *
                  * TEXTS
                  *
                  */}
 
-                <div className="flex flex-col gap-3 items-center justify-center text-center lg:text-left lg:justify-start lg:items-start px-4">
+                <div className="flex flex-col gap-3 items-center justify-center text-center lg:text-left lg:justify-start lg:items-start">
                     <motion.h1
                         className={`${poppins.style.fontFamily} text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-bold text-indigo-600 dark:text-cyan-400`}
-                        variants={item}
+                        whileInView={{
+                            x: 0,
+                            y: 0,
+                            opacity: 1,
+                        }}
+                        initial={{
+                            x: -150,
+                            opacity: 0,
+                        }}
                     >
                         Eklavaya
                     </motion.h1>
                     <motion.h2
-                        variants={item}
+                        whileInView={{
+                            x: 0,
+                            y: 0,
+                            opacity: 1,
+                        }}
+                        initial={{
+                            x: -100,
+                            opacity: 0,
+                        }}
+                        transition={{
+                            delay: 0.1,
+                        }}
                         className="text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl font-bold text-red-600 dark:text-cyan-300"
                     >
                         Global Computer
@@ -77,14 +122,35 @@ export const FirstPage = () => {
 
                     <motion.p
                         className="sm:text-base md:text-2xl font-medium text-black/50 dark:text-white"
-                        variants={item}
+                        whileInView={{
+                            x: 0,
+                            y: 0,
+                            opacity: 1,
+                        }}
+                        initial={{
+                            x: -100,
+                            opacity: 0,
+                        }}
+                        transition={{
+                            delay: 0.2,
+                        }}
                     >
                         Empowering Minds, Transforming Futures: Unleash Your
                         Potential.
                     </motion.p>
                     <motion.p
-                        className="sm:text-base md:text-xl font-medium text-black/80 dark:text-white"
-                        variants={item}
+                        whileInView={{
+                            opacity: 1,
+                            x: 0,
+                        }}
+                        initial={{
+                            opacity: 0,
+                            x: -100,
+                        }}
+                        transition={{
+                            delay: 0.2,
+                        }}
+                        className="sm:text-base md:text-xl font-medium text-zinc-500 dark:text-white"
                     >
                         Recognized by the Government of India
                     </motion.p>
@@ -100,14 +166,14 @@ export const FirstPage = () => {
                     {/* Student */}
                     <Icon
                         text="Total Students"
-                        number="182280+"
+                        number="5000+"
                         Icon={Users}
                         color="orange"
                     />
                     {/* Branches */}
                     <Icon
                         text="Total Centers"
-                        number="450+"
+                        number="50+"
                         Icon={Building}
                         color="zinc"
                     />
@@ -135,42 +201,64 @@ export const FirstPage = () => {
 
 export const SecondPage = () => {
     return (
-        <div className="flex flex-col gap-12  items-center py-5 lg:pt-20 lg:gap-20 w-full">
-            <p
-                className={`${poppins.className} text-3xl font-bold text-orange-600`}
-            >
-                🤔 What do we think.
-            </p>
+        <div className="overflow-hidden flex flex-col gap-12 m-auto max-w-[1280px] items-center py-5 lg:pt-20 lg:gap-20 w-full">
+            <div className="w-full flex flex-col gap-6 items-center">
+                <p
+                    className={`${poppins.className} text-xl md:text-3xl font-bold text-orange-600`}
+                >
+                    From the Desk of Directors......
+                </p>
 
-            {/*
-             *
-             * CARDS
-             *
-             */}
-
-            <div className="flex flex-wrap gap-10 items-center justify-center">
-                <ImageCard
-                    className="dark:bg-orange-300"
-                    imgSrc="/png/vector.png"
-                    text="Education is the most powerful weapon which can be used to change the world.This is the only tool to remove the darkness of ignornce from the society."
-                />
-
-                <ImageCard
-                    className="bg-slate-300 dark:bg-slate-300"
-                    imgSrc="/png/computer.png"
-                    text="Information Technology has become the backbone off all the productive activities today.For this very purpose we have initiated a worldwide program named Eklavya COMPUTER ACADEMY."
-                />
-
-                <ImageCard
-                    className="bg-red-300 dark:bg-red-300"
-                    imgSrc="/png/data.png"
-                    text="Information Technology has become the backbone off all the productive activities today.For this very purpose we have initiated a worldwide named COMPUTER ACADEMY."
-                />
-                <ImageCard
-                    className="bg-blue-200 dark:bg-blue-200"
-                    imgSrc="/png/graph.png"
-                    text="I congratulate you on your decision to join Eklavya. Teaching-learning process is not merely for profit it is for nation building as well."
-                />
+                <div className="flex flex-col gap-4 w-[93%] lg:w-full">
+                    <motion.p
+                        className="text-lg"
+                        whileInView={{
+                            opacity: 1,
+                            x: 0,
+                        }}
+                        initial={{
+                            opacity: 0,
+                            x: -100,
+                        }}
+                        transition={{
+                            delay: 0.1,
+                        }}
+                    >
+                        Education is the most powerful weapon which can be used
+                        to change the world.This is the only tool to remove the
+                        darkness of ignornce from the society. Information
+                        Technology has become the backbone off all the
+                        productive activities today. It is not only the fastest
+                        growing industry but it is the most successful and most
+                        profitable industry also.For this very purpose we have
+                        initiated a worldwide program named Eklavaya global
+                        computer(EGC). Through this program we are imparting IT
+                        education and IT enabled services through a worldwide
+                        educational network. On the completion of successful
+                        years of incredible performance. Eklavaya global
+                        computer(EGC) is built on a foundation to promote
+                        greater access to quality higher education, cutting-edge
+                        research and contribution to the society. EGC provides
+                        generic skills together with flexibility, adaptability
+                        and passion for life-long learning. While simultaneously
+                        equipping young people with the best basis for carrers
+                        inany area, including industry and unforeseen needs of
+                        the future. I congratulate you on your decision to join
+                        EGC to pursue your higher education. Teaching-learning
+                        process is not merely for profit it is for nation
+                        building as well. EGC with its associate distance
+                        education provider universities/organizations will
+                        strive together to cater to your academic needs and see
+                        that you come out of your courses with flying colors. We
+                        wish you great success in all your endeavors and quest
+                        for a better tomorrow, for yourselves and for the
+                        mankind.
+                    </motion.p>
+                    <span className="self-end text-lg font-bold">
+                        Warm Regards
+                    </span>
+                    <span className="self-end text-lg font-bold">Director</span>
+                </div>
             </div>
 
             {/*
@@ -180,8 +268,12 @@ export const SecondPage = () => {
              */}
 
             <motion.div
-                whileInView={animations.whileInView}
-                initial={animations.one}
+                whileInView={{
+                    x: 0,
+                }}
+                initial={{
+                    x: 100,
+                }}
                 className="bg-slate-200 rounded-lg w-[93%] 2xl:w-full"
             >
                 <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
@@ -207,75 +299,99 @@ export const SecondPage = () => {
 
 export const ThridPage = () => {
     return (
-        <>
-            <div className="flex flex-col justify-center items-center gap-10 bg-orange-100 w-[93%] 2xl:w-full rounded-lg py-10 h-full">
+        <div className="flex flex-col gap-16 py-16 items-center overflow-hidden">
+            <div className="flex flex-col justify-center items-center gap-10 bg-orange-100 w-[93%] max-w-[1280px] m-auto 2xl:w-full rounded-lg py-10 h-full">
                 <h1 className="text-5xl font-bold text-green-600">
                     Our Features
                 </h1>
-                <motion.div
-                    whileInView={animations.whileInView}
-                    initial={animations.one}
-                    className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap"
-                >
+                <div className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap">
                     {/* CARD ONE */}
 
-                    <Card className="max-w-xs bg-orange-300">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-3">
-                                <BookText className="w-6 h-6" />
-                                <span>Books</span>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p>
-                                We Provide books, updated with latest
-                                technology.Our books help students to understand
-                                the concept of the topic very clearly. We revise
-                                our book&apos;s content time to time to ensure
-                                that our students get better quality of
-                                education.
-                            </p>
-                        </CardContent>
-                    </Card>
+                    <motion.div
+                        whileInView={{ x: 0, opacity: 1 }}
+                        initial={{
+                            x: -100,
+                            opacity: 0,
+                        }}
+                    >
+                        <Card className="max-w-xs bg-orange-300">
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-3">
+                                    <BookText className="w-6 h-6" />
+                                    <span>Books</span>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>
+                                    We Provide books, updated with latest
+                                    technology.Our books help students to
+                                    understand the concept of the topic very
+                                    clearly. We revise our book&apos;s content
+                                    time to time to ensure that our students get
+                                    better quality of education.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+
                     {/* CARD TWO */}
-                    <Card className="max-w-xs bg-indigo-300">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-3">
-                                <Folder className="w-6 h-6" />
-                                <span>Facilities</span>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p>
-                                We provide unique and very user friendly Online
-                                facilities like Student Verification, I-Card
-                                Verification, Marksheet Verification,
-                                Certificate Verification & we also provide
-                                complete online management system for our
-                                franchise.
-                            </p>
-                        </CardContent>
-                    </Card>
+
+                    <motion.div
+                        whileInView={{ x: 0, y: 0, opacity: 1 }}
+                        initial={{
+                            y: 100,
+                            opacity: 0,
+                        }}
+                    >
+                        <Card className="max-w-xs bg-indigo-300">
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-3">
+                                    <Folder className="w-6 h-6" />
+                                    <span>Facilities</span>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>
+                                    We provide unique and very user friendly
+                                    Online facilities like Student Verification,
+                                    I-Card Verification, Marksheet Verification,
+                                    Certificate Verification & we also provide
+                                    complete online management system for our
+                                    franchise.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+
                     {/* CARD THREE */}
-                    <Card className="max-w-xs bg-amber-300">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-3">
-                                <BadgeCheck className="w-6 h-6" />
-                                <span>BETTER SUPPORT</span>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p>
-                                We provide better support system for our
-                                franchise , in order to solve any aspect of
-                                problems regarding the software uses.
-                            </p>
-                        </CardContent>
-                    </Card>
-                </motion.div>
+
+                    <motion.div
+                        whileInView={{ x: 0, opacity: 1 }}
+                        initial={{
+                            x: 100,
+                            opacity: 0,
+                        }}
+                    >
+                        <Card className="max-w-xs h-full bg-amber-300">
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-3">
+                                    <BadgeCheck className="w-6 h-6" />
+                                    <span>BETTER SUPPORT</span>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>
+                                    We provide better support system for our
+                                    franchise , in order to solve any aspect of
+                                    problems regarding the software uses.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+                </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center gap-10 bg-indigo-100 w-[93%] 2xl:w-full rounded-lg py-10 h-full">
+            <div className="flex flex-col justify-center items-center gap-10 bg-indigo-100 w-[93%] max-w-[1280px] m-auto 2xl:w-full rounded-lg py-10 h-full">
                 <h1 className="text-5xl font-bold text-green-600">
                     Our Courses
                 </h1>
@@ -417,6 +533,6 @@ export const ThridPage = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };

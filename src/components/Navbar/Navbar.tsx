@@ -33,7 +33,7 @@ const Navbar = () => {
     return (
         <div className="flex justify-center items-center bg-[#e0f1bc1c] dark:bg-transparent">
             {/* PC */}
-            <div className="hidden lg:flex justify-around py-2 w-full max-w-[1700px]">
+            <div className="hidden lg:flex justify-between py-2 w-full max-w-[1280px]">
                 {/* Logo */}
                 <Image
                     priority
