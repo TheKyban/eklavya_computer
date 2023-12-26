@@ -12,64 +12,8 @@ import {
 } from "lucide-react";
 import { poppins } from "@/lib/fonts";
 import { Icon } from "@/components/Home/home-icon";
-import { animate, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-
-interface CounterProps {
-    from: number;
-    to: number;
-}
-const Counter: React.FC<CounterProps> = ({ from, to }) => {
-    const nodeRef = useRef<HTMLParagraphElement | null>(null);
-    const [isInView, setIsInView] = useState(false);
-
-    useEffect(() => {
-        const node = nodeRef.current;
-        if (!node) return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setIsInView(true);
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-
-        observer.observe(node);
-
-        return () => {
-            observer.unobserve(node);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!isInView) return;
-
-        const node = nodeRef.current;
-        if (!node) return;
-
-        const controls = animate(from, to, {
-            duration: 1,
-            onUpdate(value) {
-                node.textContent = Math.round(value).toString();
-            },
-        });
-
-        return () => controls.stop();
-    }, [from, to, isInView]);
-
-    return (
-        <motion.p
-            ref={nodeRef}
-            initial={{ opacity: 0, scale: 0.1 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.4 }}
-        />
-    );
-};
+import { motion } from "framer-motion";
+import Marquee from "react-fast-marquee";
 
 export const FirstPage = () => {
     return (
@@ -260,6 +204,30 @@ export const SecondPage = () => {
                     <span className="self-end text-lg font-bold">Director</span>
                 </div>
             </div>
+            <Marquee
+                direction="left"
+                style={{
+                    position: "relative",
+                }}
+                pauseOnClick
+                autoFill
+            >
+                <ul className="list-disc flex  gap-10 overflow-x-auto text-rose-700">
+                    <li>
+                        <b>Admission is Going On...</b>
+                    </li>
+                    <li>
+                        <b>Contact for Franchisee Opening.</b>
+                    </li>
+                    <li>
+                        <b>Educate Your Dreams</b>
+                    </li>
+
+                    <li>
+                        <b>Life+ Academics+ Creativity =Success</b>
+                    </li>
+                </ul>
+            </Marquee>
 
             {/*
              *
