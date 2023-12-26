@@ -373,8 +373,8 @@ export const ThridPage = () => {
                             height={250}
                             alt="dca"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
@@ -388,8 +388,8 @@ export const ThridPage = () => {
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                             alt="adca"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
@@ -403,8 +403,8 @@ export const ThridPage = () => {
                             alt="adca"
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
@@ -418,8 +418,8 @@ export const ThridPage = () => {
                             alt="adca"
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
@@ -433,8 +433,8 @@ export const ThridPage = () => {
                             alt="adca"
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
@@ -448,8 +448,8 @@ export const ThridPage = () => {
                             alt="adca"
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
@@ -463,8 +463,8 @@ export const ThridPage = () => {
                             alt="adca"
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
@@ -478,8 +478,8 @@ export const ThridPage = () => {
                             alt="adca"
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
@@ -493,8 +493,8 @@ export const ThridPage = () => {
                             alt="adca"
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
-                        <div className="transition-all text-white hidden group-hover:flex  items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border px-5 py-3 rounded-md cursor-pointer">
+                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
