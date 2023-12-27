@@ -26,7 +26,7 @@ export default async function Dasboard({
                 />
                 <ScrollArea className="w-full h-[calc(100vh-90px)] mt-[90px] lg:mt-0 lg:h-screen  dark:bg-black">
                     <div className="px-3 py-3">
-                        <Button variant={"secondary"} className="text-sm md:text-lg cursor-grabbing font-medium">
+                        <Button variant={"secondary"} className="text-sm md:text-lg text-zinc-600 dark:text-zinc-300 cursor-grabbing font-medium">
                             {session?.user?.branch}
                         </Button>
                     </div>

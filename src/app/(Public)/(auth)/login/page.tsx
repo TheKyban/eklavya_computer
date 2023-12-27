@@ -1,11 +1,13 @@
 "use client";
 
+import { Loader } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useLayoutEffect, useState } from "react";
 
 const Login = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
     const params = useSearchParams();
@@ -18,12 +20,16 @@ const Login = () => {
             router.push("/dashboard");
         }
     }, [status, router]);
+
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            signIn("credentials", { userId, password });
+            setIsLoading(true);
+            await signIn("credentials", { userId, password });
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     };
     return (
@@ -98,8 +104,13 @@ const Login = () => {
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                disabled={isLoading}
                             >
-                                Sign in
+                                {isLoading ? (
+                                    <Loader className="animate-spin" />
+                                ) : (
+                                    "Sign in"
+                                )}
                             </button>
                         </div>
                     </form>

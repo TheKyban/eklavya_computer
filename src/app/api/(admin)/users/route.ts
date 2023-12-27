@@ -1,7 +1,7 @@
 import { franchiseEditSchema, franchiseSchema } from "@/lib/schema";
 import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../prisma/prisma";
-import { string, z } from "zod";
+import { z } from "zod";
 import { per_page } from "@/lib/constants";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
