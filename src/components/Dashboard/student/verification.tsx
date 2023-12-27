@@ -21,7 +21,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { toast } from "@/components/ui/use-toast";
-import { URL } from "@/lib/constants";
 import { poppins } from "@/lib/fonts";
 import { Student, role } from "@prisma/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -63,7 +62,7 @@ const ManageCertificate = ({
     });
     const queryClient = useQueryClient();
 
-    const url = `${URL}/api/student-verification/${user}?pending=${type}&page=${
+    const url = `/api/student-verification/${user}?pending=${type}&page=${
         searchParams.page
     }${!!registration ? "&formNumber=" + registration : ""}`;
     const { data, isLoading } = useQuery({
@@ -76,7 +75,6 @@ const ManageCertificate = ({
         ],
         queryFn: async () => {
             const { data } = await axios.get(url);
-            console.log(data);
             return data;
         },
     });
@@ -90,7 +88,7 @@ const ManageCertificate = ({
             formNumber: string;
         }) => {
             const { data } = await axios.put(
-                `${URL}/api/student-verification/${user}`,
+                `/api/student-verification/${user}`,
                 {
                     isVerified,
                     formNumber,
@@ -114,7 +112,6 @@ const ManageCertificate = ({
                     type,
                 ],
                 (oldData: { total: number; students: Student[] }) => {
-                    console.log("from query", oldData);
                     const students = oldData.students.filter(
                         (student) =>
                             student.formNumber !== data.student.formNumber
@@ -137,7 +134,6 @@ const ManageCertificate = ({
                     type === "false" ? "true" : "false",
                 ],
                 (oldData: { total: number; students: Student[] }) => {
-                    console.log(oldData);
                     return {
                         total: oldData.total + 1,
                         students: [data.student, ...oldData.students],

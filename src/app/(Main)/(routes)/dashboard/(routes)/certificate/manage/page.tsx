@@ -11,7 +11,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
     Table,
     TableBody,
@@ -172,7 +171,6 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                     type === "false" ? "true" : "false",
                 ],
                 (oldData: { total: number; studentsWithMarks: student[] }) => {
-                    console.log(oldData);
                     return {
                         total: oldData.total + 1,
                         studentsWithMarks: [

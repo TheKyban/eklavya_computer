@@ -3,7 +3,6 @@ import { useModal } from "@/hooks/use-modal-store";
 import {
     Dialog,
     DialogContent,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";

@@ -20,13 +20,11 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CircleUser, Loader, Loader2, Smile } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { typingSpeedMarkSchema } from "@/lib/schema";

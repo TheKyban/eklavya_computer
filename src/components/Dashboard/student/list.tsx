@@ -17,7 +17,6 @@ import axios from "axios";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
 import { format } from "date-fns";
-import { URL } from "@/lib/constants";
 import { useQuery } from "@tanstack/react-query";
 
 const StudentList = ({
@@ -31,7 +30,7 @@ const StudentList = ({
 }) => {
     const { onOpen } = useModal();
 
-    const url = `${URL}/api/student?${
+    const url = `/api/student?${
         searchParams.pending ? "pending=true&" : ""
     }page=${searchParams.page}${
         !!searchParams.registration

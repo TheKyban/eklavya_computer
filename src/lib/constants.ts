@@ -84,11 +84,6 @@ export const info = [
 export const per_page = 10;
 
 /**
- * URL
- */
-export const URL = "https://eklavaya.vercel.app";
-
-/**
  * COURSE
  */
 export const Courses = [

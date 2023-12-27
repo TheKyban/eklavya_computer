@@ -17,9 +17,7 @@ import { UserCog } from "lucide-react";
 import axios from "axios";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
-import { URL } from "@/lib/constants";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 
 const Franchise = ({
     searchParams,
@@ -27,7 +25,7 @@ const Franchise = ({
     searchParams: { page: string; userId: string };
 }) => {
     const { onOpen } = useModal();
-    const url = `${URL}/api/users?page=${searchParams.page}${
+    const url = `/api/users?page=${searchParams.page}${
         !!searchParams.userId ? "&userId=" + searchParams.userId : ""
     }`;
     const { data, isLoading } = useQuery({
