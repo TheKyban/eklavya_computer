@@ -17,7 +17,7 @@ export const Icon: FC<IconProp> = ({ text, number, Icon, color, ...props }) => {
             <div className="flex flex-col items-center">
                 <Icon
                     className={cn(
-                        "w-16 h-16 select-none",
+                        "w-10 h-10 md:w-16 md:h-16 select-none",
                         color === "zinc"
                             ? "text-zinc-600 dark:text-yellow-500"
                             : "text-orange-600 dark:text-cyan-400"

@@ -7,7 +7,10 @@ import {
     BookText,
     Building,
     ChevronDown,
+    Contact,
     Folder,
+    GraduationCap,
+    Target,
     Users,
 } from "lucide-react";
 import { poppins } from "@/lib/fonts";
@@ -24,7 +27,7 @@ export const FirstPage = () => {
              *
              */}
 
-            <div className="h-full w-full flex flex-col justify-around gap-6">
+            <div className="h-full w-full flex flex-col justify-evenly lg:justify-around gap-6">
                 {/*
                  *
                  * TEXTS
@@ -155,7 +158,7 @@ export const SecondPage = () => {
 
                 <div className="flex flex-col gap-4 w-[93%] lg:w-full">
                     <motion.p
-                        className="text-lg"
+                        className="h-[343px] no-scrollbar overflow-y-auto md:h-fit text-sm text-center md:text-lg"
                         whileInView={{
                             opacity: 1,
                             x: 0,
@@ -198,10 +201,14 @@ export const SecondPage = () => {
                         for a better tomorrow, for yourselves and for the
                         mankind.
                     </motion.p>
-                    <span className="self-end text-lg font-bold">
-                        Warm Regards
-                    </span>
-                    <span className="self-end text-lg font-bold">Director</span>
+                    <div className="flex flex-col">
+                        <span className="self-end text-sm md:text-lg font-bold">
+                            Warm Regards
+                        </span>
+                        <span className="self-end text-sm md:text-lg font-bold">
+                            Director
+                        </span>
+                    </div>
                 </div>
             </div>
             <Marquee
@@ -212,18 +219,22 @@ export const SecondPage = () => {
                 pauseOnClick
                 autoFill
             >
-                <ul className="list-disc flex px-2 gap-10 overflow-x-auto text-rose-700">
-                    <li>
+                <ul className="flex px-2 gap-10 overflow-x-auto">
+                    <li className="flex gap-2 text-rose-700">
+                        <BookText />
                         <b>Admission is Going On...</b>
                     </li>
-                    <li>
+                    <li className="flex gap-2 text-indigo-600">
+                        <Contact />
                         <b>Contact for Franchisee Opening.</b>
                     </li>
-                    <li>
+                    <li className="flex text-slate-600 gap-2">
+                        <GraduationCap />
                         <b>Educate Your Dreams</b>
                     </li>
 
-                    <li>
+                    <li className="flex gap-2 text-orange-600">
+                        <Target />
                         <b>Life+ Academics+ Creativity =Success</b>
                     </li>
                 </ul>
