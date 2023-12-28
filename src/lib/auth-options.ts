@@ -54,6 +54,13 @@ export const authOptions: AuthOptions = {
         }),
     ],
 
+    session: {
+        strategy: "jwt",
+        maxAge: 3600, // 1 hour
+    },
+    jwt: {
+        maxAge: 3600, // 1 hour
+    },
     callbacks: {
         async signIn({ user }) {
             //@ts-ignore
