@@ -45,7 +45,7 @@ const Search: FC<pageProps> = ({
                 defaultValue={params.get(queryName) as string}
             />
             <SearchIcon
-                className="w-5 h-5 absolute top-[50%] translate-y-[-50%] right-4 text-teal-600 cursor-pointer"
+                className="w-4 h-4 md:w-5 md:h-5 absolute top-[50%] translate-y-[-50%] right-3 md:right-4 text-teal-600 cursor-pointer"
                 suppressHydrationWarning
             />
         </div>

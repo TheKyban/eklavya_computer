@@ -184,11 +184,11 @@ const ManageCertificate: FC<pageProps> = ({}) => {
     });
 
     return (
-        <div className="px-5 flex flex-col gap-4">
+        <div className="w-screen lg:w-full h-full px-5 flex flex-col gap-4">
             <div className="flex justify-between">
                 <div className="flex gap-1 items-center">
                     <Layers3 className="text-indigo-400" />
-                    <span className="text-zinc-800 text-2xl font-semibold">
+                    <span className="text-zinc-800 text-lg lg:text-2xl font-semibold">
                         Manage Certificate
                     </span>
                 </div>
@@ -199,7 +199,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                 />
             </div>
 
-            <div className="flex flex-wrap gap-5">
+            <div className="w-full flex flex-wrap gap-5">
                 {/* Users */}
                 <div className="flex flex-col gap-2">
                     <div className="flex gap-1 items-center">
@@ -314,7 +314,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                 </div>
             </div>
 
-            <div>
+            {/* <div> */}
                 <Table>
                     {/* TABLE HEADER */}
                     <TableHeader>
@@ -442,7 +442,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                             )}
                     </TableBody>
                 </Table>
-            </div>
+            {/* </div> */}
         </div>
     );
 };
