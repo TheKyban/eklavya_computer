@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { role as ROLE } from "@prisma/client";
 import { ModeToggle } from "@/components/ThemeTogggle";
 import {
     Accordion,
@@ -81,7 +80,7 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                             <ScrollArea className="flex flex-col gap-1">
                                 <Link
                                     href={"/"}
-                                    className={LinkStyle3}
+                                    className={cn(LinkStyle3, "uppercase")}
                                     onClick={() => setOpen(false)}
                                 >
                                     <Home className="text-teal-600" />
@@ -89,7 +88,7 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                                 </Link>
                                 <Link
                                     href={"/dashboard"}
-                                    className={cn(LinkStyle3)}
+                                    className={cn(LinkStyle3, "uppercase")}
                                     onClick={() => setOpen(false)}
                                 >
                                     <LayoutDashboard className="text-orange-600" />
@@ -109,7 +108,7 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                                                 }
                                             >
                                                 <AccordionTrigger>
-                                                    <div className="flex gap-3 text-lg items-center justify-center">
+                                                    <div className="flex gap-3 text-lg items-center uppercase justify-center">
                                                         {link.icon} {link.title}
                                                     </div>
                                                 </AccordionTrigger>
@@ -127,7 +126,7 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                                                                 className={cn(
                                                                     LinkStyle,
                                                                     LinkStyle2,
-                                                                    "text-base"
+                                                                    "text-base uppercase"
                                                                 )}
                                                                 onClick={() =>
                                                                     setOpen(
@@ -154,7 +153,7 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                                             key={link.title}
                                             className={cn(
                                                 LinkStyle,
-                                                LinkStyle3
+                                                LinkStyle3,"uppercase"
                                             )}
                                             onClick={() => setOpen(false)}
                                         >

@@ -42,14 +42,14 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                 ) : (
                     <ShieldPlus className="w-8 h-8 text-orange-600" />
                 )}
-                <h1 className="text-2xl font-semibold uppercase text-zinc-600">
+                <h1 className="text-lg lg:text-xl xl:text-2xl font-semibold uppercase text-zinc-600">
                     {role}
                 </h1>
             </div>
 
             <Separator className="mb-4" />
             <ScrollArea className="flex flex-col gap-1">
-                <Link href={"/"} className={LinkStyle3}>
+                <Link href={"/"} className={cn(LinkStyle3, "uppercase")}>
                     <Home className="text-teal-600" />
                     Home
                 </Link>
@@ -58,7 +58,8 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                     className={cn(
                         LinkStyle3,
                         "transition-all",
-                        path === "dashboard" && "bg-black/5"
+                        path === "dashboard" && "bg-black/5",
+                        "uppercase"
                     )}
                 >
                     <LayoutDashboard className="text-orange-600" />
@@ -82,7 +83,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                 )}
                             >
                                 <AccordionTrigger>
-                                    <div className="flex gap-3 text-lg items-center justify-center">
+                                    <div className="flex gap-3 text-lg items-center uppercase justify-center">
                                         {link.icon} {link.title}
                                     </div>
                                 </AccordionTrigger>
@@ -96,7 +97,8 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                                 key={link.title}
                                                 className={cn(
                                                     LinkStyle,
-                                                    LinkStyle2
+                                                    LinkStyle2,
+                                                    "uppercase"
                                                 )}
                                             >
                                                 {link.icon}
@@ -115,7 +117,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                         <Link
                             href={link.link}
                             key={link.title}
-                            className={cn(LinkStyle, LinkStyle3)}
+                            className={cn(LinkStyle, LinkStyle3, "uppercase")}
                         >
                             {link.icon} {link.title}
                         </Link>

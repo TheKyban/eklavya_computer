@@ -205,3 +205,29 @@ export const generalMarksSchema = z.object({
         .min(1, { message: "marks cannot less than 1" })
         .max(100, { message: "marks cannot be greater than 100" }),
 });
+
+export const changePasswordSchema = z
+    .object({
+        currentPassword: z
+            .string({ required_error: "Enter current Password." })
+            .min(8, { message: "Enter valid current password." }),
+        password: z
+            .string({ required_error: "Please enter new password" })
+            .trim()
+            .min(8, { message: "password must be atleast 8 characters" }),
+        confirmPassword: z
+            .string({ required_error: "Please enter confirm password." })
+            .min(8),
+    })
+    .refine(
+        (value) => {
+            return value.currentPassword !== value.password;
+        },
+        { message: "Password cannot be same.", path: ["password"] }
+    )
+    .refine(
+        (values) => {
+            return values.password === values.confirmPassword;
+        },
+        { message: "Password must match!", path: ["confirmPassword"] }
+    );
