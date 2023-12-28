@@ -54,7 +54,7 @@ const Password = () => {
     };
 
     return (
-        <Card className="m-auto mt-5 lg:mt-28 max-w-xs lg:max-w-md">
+        <Card className="m-auto mt-5 lg:mt-28 max-w-xs lg:max-w-md drop-shadow-xl">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <TextCursorInputIcon className="text-indigo-600" />
