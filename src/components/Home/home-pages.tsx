@@ -6,16 +6,13 @@ import {
     BadgeCheck,
     BookText,
     Building,
-    ChevronDown,
     Contact,
     Folder,
     GraduationCap,
     Smile,
     Target,
-    Users,
 } from "lucide-react";
 import { poppins } from "@/lib/fonts";
-import { Icon } from "@/components/Home/home-icon";
 import { motion } from "framer-motion";
 import {
     Carousel,
@@ -25,9 +22,19 @@ import {
 } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const FirstPage = () => {
     const [api, setApi] = useState<CarouselApi>();
+    const { data, isLoading } = useQuery({
+        queryKey: ["allUserDetailsForCarousel"],
+        queryFn: async () => {
+            const { data } = await axios.get("/api/user-details");
+            return data;
+        },
+        staleTime: 1000 * 60 * 5,
+    });
     useEffect(() => {
         if (!api) {
             return;
@@ -38,7 +45,7 @@ export const FirstPage = () => {
     }, [api]);
 
     return (
-        <div className="max-w-[1280px] m-auto w-full h-full flex flex-col gap-2 overflow-x-hidden">
+        <div className="max-w-[1280px] m-auto w-full h-full flex flex-col gap-2 py-3 overflow-x-hidden">
             <div className="relative w-full h-[80px] sm:h-[150px]">
                 <Image src={"/banner.jpg"} fill alt="banner" />
             </div>
@@ -61,7 +68,7 @@ export const FirstPage = () => {
                                     src={"/squareBanner.jpg"}
                                     fill
                                     alt="bill board"
-                                    className="object-fill"
+                                    className="object-fill w-full h-full"
                                 />
                             </div>
                         </CarouselItem>
@@ -71,6 +78,7 @@ export const FirstPage = () => {
                                     src={"/banner2.jpg"}
                                     fill
                                     alt="bill board"
+                                    className="w-full h-full"
                                 />
                             </div>
                         </CarouselItem>
@@ -78,47 +86,49 @@ export const FirstPage = () => {
                 </Carousel>
 
                 <div className="flex-1 relative h-[450px] w-full flex flex-col">
-                    <h1 className="text-center bg-slate-400 text-zinc-900 text-2xl font-semibold py-2">
+                    <h1 className="text-center bg-red-500 text-white uppercase text-2xl font-semibold py-2">
                         Family
                     </h1>
                     {/* @ts-ignore */}
                     <marquee direction="up">
-                        <div className="flex flex-col gap-2 mt-4 mb-4 items-center">
-                            <Image
-                                src={"/noavatar.png"}
-                                width={100}
-                                height={100}
-                                alt="avatar"
-                            />
-                            <div className="flex flex-col gap-1 font-semibold items-center">
-                                <span>Aditya</span>
-                                <span>Anmol Education</span>
+                        {isLoading && (
+                            <div className="flex items-center justify-center">
+                                Loading...
                             </div>
-                        </div>
-                        <div className="flex flex-col gap-2 mt-4 mb-4 items-center">
-                            <Image
-                                src={"/noavatar.png"}
-                                width={100}
-                                height={100}
-                                alt="avatar"
-                            />
-                            <div className="flex flex-col gap-1 font-semibold items-center">
-                                <span>Aditya</span>
-                                <span>Anmol Education</span>
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2 mt-4 mb-4 items-center">
-                            <Image
-                                src={"/noavatar.png"}
-                                width={100}
-                                height={100}
-                                alt="avatar"
-                            />
-                            <div className="flex flex-col gap-1 font-semibold items-center">
-                                <span>Aditya</span>
-                                <span>Anmol Education</span>
-                            </div>
-                        </div>
+                        )}
+                        {data?.map(
+                            (
+                                user: {
+                                    img: string;
+                                    name: string;
+                                    branch: string;
+                                },
+                                idx: number
+                            ) => (
+                                <div
+                                    key={idx}
+                                    className="flex flex-col gap-2 mt-4 mb-4 items-center"
+                                >
+                                    <Image
+                                        src={user.img}
+                                        width={100}
+                                        height={100}
+                                        alt="avatar"
+                                        placeholder="empty"
+                                        className="rounded-full"
+                                    />
+                                    <div className="flex flex-col gap-1 font-semibold items-center">
+                                        <span className="capitalize text-rose-800">
+                                            {user.name}
+                                        </span>
+                                        <span className="capitalize text-orange-600">
+                                            {user.branch}
+                                        </span>
+                                    </div>
+                                </div>
+                            )
+                        )}
+
                         {/* @ts-ignore */}
                     </marquee>
                 </div>
@@ -133,14 +143,14 @@ export const SecondPage = () => {
             <div className="flex gap-3 flex-col lg:flex-row">
                 <div className="w-full flex flex-col gap-6 items-center">
                     <p
-                        className={`${poppins.className} text-xl md:text-2xl font-bold bg-slate-300 w-full text-center py-2`}
+                        className={`${poppins.className} text-xl md:text-2xl font-semibold bg-red-500 w-full text-white uppercase text-center py-2`}
                     >
                         From the Desk of Directors......
                     </p>
 
                     <div className="flex flex-col gap-4 w-[93%] lg:w-full">
                         <motion.p
-                            className="text-center sm:text-left md:h-fit text-sm md:text-lg"
+                            className="text-center sm:text-left md:h-fit text-sm md:text-lg text-slate-800"
                             whileInView={{
                                 opacity: 1,
                                 x: 0,
@@ -185,11 +195,11 @@ export const SecondPage = () => {
                             great success in all your endeavors and quest for a
                             better tomorrow, for yourselves and for the mankind.
                         </motion.p>
-                        <div className="flex flex-col">
-                            <span className="self-end text-sm md:text-lg font-bold">
+                        <div className="flex flex-col text-zinc-600">
+                            <span className="self-end text-sm text md:text-lg font-bold mr-6">
                                 Warm Regards
                             </span>
-                            <span className="self-end text-sm md:text-lg font-bold">
+                            <span className="self-end text-sm md:text-lg font-bold mr-6">
                                 Director
                             </span>
                         </div>
@@ -197,12 +207,15 @@ export const SecondPage = () => {
                 </div>
 
                 <div>
-                    <h1 className="bg-indigo-300 text-xl md:text-2xl text-center py-2">
+                    <h1 className="bg-red-500 text-white font-semibold uppercase text-xl md:text-2xl text-center py-2">
                         Notice
                     </h1>
                     {/* @ts-ignore */}
-                    <marquee direction="up" className="w-[385px] m-auto flex">
-                        <ul className="flex flex-col items-center lg:items-start px-3 text-sm gap-5">
+                    <marquee
+                        direction="up"
+                        className="w-[95%] sm:w-[80%] lg:w-[385px] m-auto flex"
+                    >
+                        <ul className="flex flex-col w-full text-center items-center sm:text-start sm:items-start px-3 text-sm gap-5">
                             <li className="flex flex-col sm:flex-row items-center justify-center px-3 gap-2 text-rose-700">
                                 <BookText />
                                 <b>Admission is Going On...</b>
@@ -271,7 +284,7 @@ export const SecondPage = () => {
             >
                 <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                     <h1 className="text-4xl font-medium text-zinc-600 xl:text-6xl">
-                        Why Eklavya ?.
+                        Why Eklavya <span className="inline-block animate-bounce">?</span>.
                     </h1>
 
                     <p className="text-base w-full xl:w-[70%] xl:text-lg font-medium dark:text-zinc-700">
@@ -390,7 +403,19 @@ export const ThridPage = () => {
                 </h1>
 
                 <div className="grid grid-cols-2 lg:grid-cols-3 m-auto w-fit gap-8 flex-wrap">
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            x: -100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/dca.jpg"}
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
@@ -399,13 +424,26 @@ export const ThridPage = () => {
                             alt="dca"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            y: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            y: -100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/adca.jpg"}
                             width={250}
@@ -414,13 +452,25 @@ export const ThridPage = () => {
                             alt="adca"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            x: 100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/cca.jpg"}
                             width={250}
@@ -429,13 +479,25 @@ export const ThridPage = () => {
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            x: -100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/adit.jpg"}
                             width={250}
@@ -444,13 +506,26 @@ export const ThridPage = () => {
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            y: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            y: -100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/ddeo.jpg"}
                             width={250}
@@ -459,13 +534,25 @@ export const ThridPage = () => {
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            x: 100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/daa.jpg"}
                             width={250}
@@ -474,13 +561,25 @@ export const ThridPage = () => {
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            x: -100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/cfa.jpg"}
                             width={250}
@@ -489,13 +588,26 @@ export const ThridPage = () => {
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            y: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            y: -100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/dfa.jpg"}
                             width={250}
@@ -504,13 +616,25 @@ export const ThridPage = () => {
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative group overflow-hidden">
+                    <motion.div
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                            scale: 1,
+                        }}
+                        initial={{
+                            x: 100,
+                            opacity: 0,
+                            scale: 1.5,
+                        }}
+                        className="relative group overflow-hidden"
+                    >
                         <Image
                             src={"/course/doa.jpg"}
                             width={250}
@@ -519,11 +643,11 @@ export const ThridPage = () => {
                             className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border border-indigo-600 px-5 py-3 rounded-md cursor-pointer">
+                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
                                 More
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>

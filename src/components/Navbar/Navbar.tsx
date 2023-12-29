@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import MobileMode from "@/components/Navbar/MobileMode";
-import { ModeToggle } from "@/components/ThemeTogggle";
 import { Hover, HoverContent, HoverTrigger } from "@/components/hover";
 import { DownloadFiles, LinkStyle, LinkStyle2 } from "@/lib/constants";
 import { useSession } from "next-auth/react";
@@ -33,7 +32,7 @@ const Navbar = () => {
     return (
         <div className="flex justify-center items-center bg-[#e0f1bc1c] dark:bg-transparent">
             {/* PC */}
-            <div className="hidden lg:flex justify-between py-2 w-full max-w-[1280px]">
+            <div className="hidden lg:flex justify-between py-2 w-full max-w-[1280px] bg-red-500 px-3">
                 {/* Logo */}
                 <Image
                     priority
@@ -43,7 +42,7 @@ const Navbar = () => {
                     alt="logo"
                 />
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 text-white">
                     {/* Login  & Dasboard*/}
                     {status === "authenticated" ? (
                         <Link href="/dashboard" className={LinkStyle}>
@@ -94,7 +93,7 @@ const Navbar = () => {
                         <HoverTrigger>
                             <span>More</span>
                         </HoverTrigger>
-                        <HoverContent>
+                        <HoverContent className="bg-red-500">
                             <Accordion
                                 type="single"
                                 collapsible
@@ -185,12 +184,10 @@ const Navbar = () => {
                             </Link>
                         </HoverContent>
                     </Hover>
-                    {/* Theme */}
-                    <ModeToggle />
                 </div>
             </div>
             {/* MOBILE */}
-            <MobileMode isAuth={status === "authenticated" ? true : false} />
+            <MobileMode />
         </div>
     );
 };

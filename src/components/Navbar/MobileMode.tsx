@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ThemeTogggle";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Accordion,
@@ -34,16 +33,19 @@ import {
     LinkStyle2,
     LinkStyle3,
 } from "@/lib/constants";
+import { useSession } from "next-auth/react";
 
-const MobileMode = ({ isAuth }: { isAuth: boolean }) => {
+const MobileMode = () => {
     const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const { status } = useSession();
+    const isAuth = status === "authenticated" ? true : false;
     useEffect(() => {
         setMounted(true);
     }, []);
     if (!mounted) return null;
     return (
-        <div className="lg:hidden w-full flex justify-around py-5">
+        <div className="lg:hidden w-full flex justify-around py-5 bg-red-500">
             <div>
                 <Image
                     priority
@@ -54,17 +56,15 @@ const MobileMode = ({ isAuth }: { isAuth: boolean }) => {
                 />
             </div>
             <div className="flex gap-5 items-center justify-center">
-                <ModeToggle />
-
                 <Sheet open={open} onOpenChange={(val) => setOpen(val)}>
                     <SheetTrigger asChild>
                         <Button
                             variant={"outline"}
                             size={"sm"}
-                            className="py-5 px-3"
+                            className="py-5 px-3 drop-shadow-md"
                             suppressHydrationWarning
                         >
-                            <Menu className="h-[1.2rem] w-[1.2rem]" />
+                            <Menu className="h-[1.2rem] w-[1.2rem] text-red-700" />
                             <span className="sr-only">Menu</span>
                         </Button>
                     </SheetTrigger>

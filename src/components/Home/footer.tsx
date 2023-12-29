@@ -9,7 +9,7 @@ export const Footer = () => {
             id="contact"
         >
             <div className="w-full h-full  flex flex-col items-center justify-around pb-6 bg-slate-900 text-white">
-                <div className="relative w-full h-[160px] lg:h-[230px]">
+                <div className="relative w-full h-[160px] lg:h-[210px]">
                     <Image src={"/banner.jpg"} fill alt="banner" />
                 </div>
 

@@ -18,9 +18,19 @@ export const HoverTrigger: React.FC<HoverTypes> = ({ children }) => {
     );
 };
 
-export const HoverContent: React.FC<HoverTypes> = ({ children }) => {
+export const HoverContent: React.FC<HoverTypes> = ({
+    children,
+    className,
+    ...props
+}) => {
     return (
-        <div className="hidden  z-20 transition-all flex-col absolute group-hover:flex shadow-md px-3 py-3 group-hover:border rounded-md bg-white dark:bg-black top-[102%]  w-fit min-w-[320px] -right-10">
+        <div
+            className={cn(
+                "hidden z-20 transition-all flex-col absolute group-hover:flex shadow-md px-3 py-3 group-hover:border rounded-md bg-white dark:bg-black top-[102%]  w-fit min-w-[320px] -right-10",
+                className
+            )}
+            {...props}
+        >
             {children}
         </div>
     );
