@@ -8,6 +8,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
 
 export default function About() {
@@ -140,6 +141,11 @@ export default function About() {
                         opts={{
                             align: "start",
                         }}
+                        plugins={[
+                            Autoplay({
+                                delay: 2000,
+                            }),
+                        ]}
                     >
                         <CarouselContent>
                             <CarouselItem className="md:basis-1/2 lg:basis-1/3">
