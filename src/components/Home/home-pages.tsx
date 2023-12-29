@@ -85,14 +85,15 @@ export const FirstPage = () => {
                     </CarouselContent>
                 </Carousel>
 
-                <div className="flex-1 relative h-[450px] w-full flex flex-col">
+                {/* FAMILY */}
+                <div className="flex-1 relative max-h-[450px] w-full flex flex-col">
                     <h1 className="text-center bg-red-500 text-white uppercase text-2xl font-semibold py-2">
                         Family
                     </h1>
                     {/* @ts-ignore */}
                     <marquee direction="up">
                         {isLoading && (
-                            <div className="flex items-center justify-center">
+                            <div className="flex  items-center justify-center">
                                 Loading...
                             </div>
                         )}
@@ -150,7 +151,7 @@ export const SecondPage = () => {
 
                     <div className="flex flex-col gap-4 w-[93%] lg:w-full">
                         <motion.p
-                            className="text-center sm:text-left md:h-fit text-sm md:text-lg text-slate-800"
+                            className="text-center sm:text-left md:h-fit text-sm md:text-lg text-slate-800 px-2"
                             whileInView={{
                                 opacity: 1,
                                 x: 0,
@@ -213,7 +214,7 @@ export const SecondPage = () => {
                     {/* @ts-ignore */}
                     <marquee
                         direction="up"
-                        className="w-[95%] sm:w-[80%] lg:w-[385px] m-auto flex"
+                        className="w-[95%] max-h-72 lg:max-h-full sm:w-[80%] lg:w-[385px] m-auto flex"
                     >
                         <ul className="flex flex-col w-full text-center items-center sm:text-start sm:items-start px-3 text-sm gap-5">
                             <li className="flex flex-col sm:flex-row items-center justify-center px-3 gap-2 text-rose-700">
@@ -284,7 +285,8 @@ export const SecondPage = () => {
             >
                 <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                     <h1 className="text-4xl font-medium text-zinc-600 xl:text-6xl">
-                        Why Eklavya <span className="inline-block animate-bounce">?</span>.
+                        Why Eklavya{" "}
+                        <span className="inline-block animate-bounce">?</span>.
                     </h1>
 
                     <p className="text-base w-full xl:w-[70%] xl:text-lg font-medium dark:text-zinc-700">
@@ -320,7 +322,7 @@ export const ThridPage = () => {
                             opacity: 0,
                         }}
                     >
-                        <Card className="max-w-xs bg-orange-300">
+                        <Card className="max-w-xs bg-orange-300 dark:border-0 dark:text-black">
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-3">
                                     <BookText className="w-6 h-6" />
@@ -349,7 +351,7 @@ export const ThridPage = () => {
                             opacity: 0,
                         }}
                     >
-                        <Card className="max-w-xs bg-indigo-300">
+                        <Card className="max-w-xs bg-indigo-300 dark:border-0 dark:text-black">
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-3">
                                     <Folder className="w-6 h-6" />
@@ -378,7 +380,7 @@ export const ThridPage = () => {
                             opacity: 0,
                         }}
                     >
-                        <Card className="max-w-xs h-full bg-amber-300">
+                        <Card className="max-w-xs h-full bg-amber-300 dark:text-black dark:border-0">
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-3">
                                     <BadgeCheck className="w-6 h-6" />

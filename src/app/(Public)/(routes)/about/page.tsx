@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 export default function About() {
     return (
         <>
-            <div className="min-h-[calc(100vh-63px)] flex flex-col gap-6 bg-orange-50  dark:bg-slate-900 dark:text-black w-full py-10 overflow-hidden px-3">
+            <div className="min-h-[calc(100vh-63px)] flex flex-col gap-6 bg-orange-50 text-black w-full py-10 overflow-hidden px-3">
                 <motion.div
                     whileInView={{
                         y: 0,
