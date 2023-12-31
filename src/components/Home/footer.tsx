@@ -5,10 +5,10 @@ export const Footer = () => {
     const year = new Date(Date.now()).getFullYear();
     return (
         <div
-            className="flex flex-col gap-3 items-center max-w-[1280px] m-auto justify-center h-full w-full"
+            className="flex flex-col items-center max-w-[1280px] m-auto justify-center h-full w-full"
             id="contact"
         >
-            <div className="w-full h-full flex gap-3 flex-col items-center justify-around">
+            <div className="w-full h-full flex flex-col items-center justify-around">
                 <div className="relative w-full h-[100px] lg:h-[210px]">
                     <Image src={"/banner.jpg"} fill alt="banner" />
                 </div>

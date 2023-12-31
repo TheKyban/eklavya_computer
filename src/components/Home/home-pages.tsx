@@ -140,7 +140,7 @@ export const FirstPage = () => {
 
 export const SecondPage = () => {
     return (
-        <div className="overflow-hidden flex flex-col gap-12 m-auto max-w-[1280px] items-center py-5 lg:pt-9 lg:gap-20 w-full">
+        <div className="overflow-hidden flex flex-col m-auto max-w-[1280px] items-center lg:gap-10 w-full">
             <div className="flex gap-3 flex-col lg:flex-row">
                 <div className="w-full flex flex-col gap-6 items-center">
                     <p
@@ -345,9 +345,12 @@ export const ThridPage = () => {
                     {/* CARD TWO */}
 
                     <motion.div
-                        whileInView={{ x: 0, y: 0, opacity: 1 }}
-                        initial={{
-                            y: 100,
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                        }}
+                        animate={{
+                            x: 100,
                             opacity: 0,
                         }}
                     >
@@ -414,7 +417,7 @@ export const ThridPage = () => {
                         initial={{
                             x: -100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -442,7 +445,7 @@ export const ThridPage = () => {
                         initial={{
                             y: -100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -469,7 +472,7 @@ export const ThridPage = () => {
                         initial={{
                             x: 100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -496,7 +499,7 @@ export const ThridPage = () => {
                         initial={{
                             x: -100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -524,7 +527,7 @@ export const ThridPage = () => {
                         initial={{
                             y: -100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -551,7 +554,7 @@ export const ThridPage = () => {
                         initial={{
                             x: 100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -578,7 +581,7 @@ export const ThridPage = () => {
                         initial={{
                             x: -100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -606,7 +609,7 @@ export const ThridPage = () => {
                         initial={{
                             y: -100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -633,7 +636,7 @@ export const ThridPage = () => {
                         initial={{
                             x: 100,
                             opacity: 0,
-                            scale: 1.5,
+                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
