@@ -1,0 +1,11 @@
+#registrationVerify::before {
+    background-image: url("/logomen.png");
+    content: "";
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.6;
+}
