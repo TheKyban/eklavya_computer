@@ -200,6 +200,8 @@ export default function StudentZone() {
                         registration={data?.student?.formNumber}
                     />
                 )}
+
+                {data?.student && tab === "icard" && <div>I card here</div>}
             </div>
             {/*
              *
