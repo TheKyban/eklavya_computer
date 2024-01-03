@@ -23,6 +23,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { MAX_WIDTH } from "@/lib/styles";
 
 export const FirstPage = () => {
     const [api, setApi] = useState<CarouselApi>();
@@ -54,7 +55,9 @@ export const FirstPage = () => {
     }, [api]);
 
     return (
-        <div className="max-w-[1280px] m-auto w-full h-full flex flex-col gap-2 py-3 overflow-x-hidden">
+        <div
+            className={`${MAX_WIDTH} m-auto w-full h-full flex flex-col gap-2 py-3 overflow-x-hidden`}
+        >
             {/* BANNER */}
 
             <div className="relative w-full h-[80px] sm:h-[150px]">
@@ -153,7 +156,9 @@ export const FirstPage = () => {
 
 export const SecondPage = () => {
     return (
-        <div className="overflow-hidden flex flex-col m-auto max-w-[1280px] items-center lg:gap-10 w-full">
+        <div
+            className={`overflow-hidden flex flex-col m-auto ${MAX_WIDTH} items-center lg:gap-10 w-full`}
+        >
             <div className="flex gap-3 flex-col lg:flex-row">
                 <div className="w-full flex flex-col gap-6 items-center">
                     <p
@@ -164,7 +169,7 @@ export const SecondPage = () => {
 
                     <div className="flex flex-col gap-4 w-[93%] lg:w-full">
                         <motion.p
-                            className="text-center sm:text-left md:h-fit text-sm md:text-lg text-slate-800 px-2"
+                            className="text-center sm:text-left md:h-fit text-sm md:text-base text-slate-800 px-2"
                             whileInView={{
                                 opacity: 1,
                                 x: 0,
@@ -320,8 +325,12 @@ export const SecondPage = () => {
 
 export const ThridPage = () => {
     return (
-        <div className="flex flex-col gap-16 py-16 items-center overflow-hidden">
-            <div className="flex flex-col justify-center items-center gap-10 bg-orange-100 w-[93%] max-w-[1280px] m-auto 2xl:w-full rounded-lg py-10 h-full">
+        <div
+            className={`flex flex-col gap-16 py-16 items-center overflow-hidden w-[93%] ${MAX_WIDTH} m-auto 2xl:w-full`}
+        >
+            <div
+                className={`flex flex-col justify-center items-center gap-10 bg-orange-100 w-full rounded-lg py-10 h-full`}
+            >
                 <h1 className="text-5xl font-bold text-green-600">
                     Our Features
                 </h1>
@@ -415,7 +424,9 @@ export const ThridPage = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center gap-10 bg-indigo-100 w-[93%] max-w-[1280px] m-auto 2xl:w-full rounded-lg py-10 h-full">
+            <div
+                className={`flex flex-col justify-center items-center gap-10 bg-indigo-100 w-full rounded-lg py-10 h-full`}
+            >
                 <h1 className="text-5xl font-bold text-green-600">
                     Our Courses
                 </h1>

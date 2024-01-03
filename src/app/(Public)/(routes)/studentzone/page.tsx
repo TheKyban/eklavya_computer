@@ -49,7 +49,7 @@ export default function StudentZone() {
     return (
         <>
             <div
-                className={`flex flex-col w-full min-h-[${MIN_HEIGHT}] gap-5 px-2 py-16`}
+                className={`flex flex-col w-full ${MIN_HEIGHT} gap-5 px-2 py-16`}
             >
                 {/* TAB */}
                 <Tabs

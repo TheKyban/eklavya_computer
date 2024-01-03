@@ -16,12 +16,12 @@ export default function About() {
     return (
         <>
             <div
-                className={`min-h-[${MIN_HEIGHT}] flex flex-col gap-6 bg-orange-50 text-black w-full py-5 overflow-hidden px-3`}
+                className={`${MIN_HEIGHT} flex flex-col gap-6 bg-orange-50 text-black w-full py-5 overflow-hidden px-3`}
             >
                 {/* CERTIFICATES */}
 
                 <div
-                    className={`max-w-[${MAX_WIDTH}] m-auto flex flex-col gap-4 items-center py-4 w-full bg-orange-200`}
+                    className={`${MAX_WIDTH} m-auto flex flex-col gap-4 items-center py-4 w-full bg-orange-200`}
                 >
                     <h1 className="text-2xl font-semibold border-b-2 border-red-600 p-2">
                         CERTIFICATES
@@ -99,7 +99,7 @@ export default function About() {
                         y: -100,
                         opacity: 0,
                     }}
-                    className={`max-w-[${MAX_WIDTH}] m-auto flex flex-col items-center gap-8 bg-orange-200 px-10 max-h-96 lg:max-h-fit py-10`}
+                    className={`${MAX_WIDTH} m-auto flex flex-col items-center gap-8 bg-orange-200 px-10 max-h-96 lg:max-h-fit py-10`}
                 >
                     <h1 className="text-2xl text-orange-600 font-semibold border-b-2 border-blue-400 py-4">
                         🤔 About The Academy
@@ -151,7 +151,7 @@ export default function About() {
                 </motion.div>
 
                 <div
-                    className={`flex gap-6 max-w-[${MAX_WIDTH}] w-full m-auto  flex-wrap text-center lg:flex-nowrap`}
+                    className={`flex gap-6 ${MAX_WIDTH} w-full m-auto  flex-wrap text-center lg:flex-nowrap`}
                 >
                     {/* OUR MISSION */}
 
@@ -214,9 +214,7 @@ export default function About() {
                 </div>
             </div>
             {/*
-             *
              * FOOTER
-             *
              */}
 
             <Footer />
