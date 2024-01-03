@@ -43,6 +43,7 @@ export default function StudentZone() {
     return (
         <>
             <div className="flex flex-col w-full min-h-[calc(100vh-63px-434px)] gap-5 px-2 py-16">
+                {/* TAB */}
                 <Tabs
                     className="max-w-xl lg:min-w-[500px] m-auto"
                     defaultValue={"registration"}
@@ -52,20 +53,24 @@ export default function StudentZone() {
                         setRegistration("");
                     }}
                 >
+                    {/* TAB LIST */}
+
                     <TabsList className="w-full">
                         <TabsTrigger className="w-full" value="registration">
-                            Registration
+                            REGISTRATION
                         </TabsTrigger>
                         <TabsTrigger className="w-full" value="icard">
-                            I Card
+                            I CARD
                         </TabsTrigger>
                         <TabsTrigger className="w-full" value="marksheet">
-                            MarkSheet
+                            MARKSHEET
                         </TabsTrigger>
                         <TabsTrigger className="w-full" value="certificate">
-                            Certificate
+                            CERTIFICATE
                         </TabsTrigger>
                     </TabsList>
+
+                    {/* REGISTRATION  TAB  */}
 
                     <TabsContent value="registration">
                         <Card className="bg-transparent">
@@ -97,6 +102,9 @@ export default function StudentZone() {
                             </CardFooter>
                         </Card>
                     </TabsContent>
+
+                    {/* I CARD VERIFICATION  */}
+
                     <TabsContent value="icard">
                         <Card className="bg-transparent">
                             <CardHeader>
@@ -127,6 +135,9 @@ export default function StudentZone() {
                             </CardFooter>
                         </Card>
                     </TabsContent>
+
+                    {/* MARKSHEET VERIFICATION */}
+
                     <TabsContent value="marksheet">
                         <Card className="bg-transparent">
                             <CardHeader>
@@ -157,6 +168,9 @@ export default function StudentZone() {
                             </CardFooter>
                         </Card>
                     </TabsContent>
+
+                    {/* CERTIFICATE VERIFICATION */}
+
                     <TabsContent value="certificate">
                         <Card className="bg-transparent">
                             <CardHeader>
@@ -189,6 +203,7 @@ export default function StudentZone() {
                     </TabsContent>
                 </Tabs>
 
+                {/* STUDENT REGISTRATION */}
                 {data?.student && tab === "registration" && (
                     <RegistrationVerify
                         img={data?.student?.img}
@@ -200,6 +215,8 @@ export default function StudentZone() {
                         registration={data?.student?.formNumber}
                     />
                 )}
+
+                {/* STUDENT I-CARD  */}
 
                 {data?.student && tab === "icard" && <div>I card here</div>}
             </div>
