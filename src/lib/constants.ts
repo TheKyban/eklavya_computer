@@ -57,7 +57,7 @@ export const LinkStyle3 =
     "text-lg font-medium flex items-center gap-3 hover:bg-primary/10 px-3 py-3 rounded-md hover:underline";
 
 /**
- * ADDRESS INFO
+ * ADDRESS AND INFO
  */
 
 export const info = [
@@ -74,7 +74,7 @@ export const info = [
     {
         title: "Email",
         icon: Mail,
-        details: ["aaditya1392@gmail.com", "aaditya1392@gmail.com"],
+        details: ["eklavaya@gmail.com", "example@gmail.com"],
     },
 ];
 

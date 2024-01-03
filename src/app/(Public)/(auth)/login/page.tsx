@@ -37,8 +37,8 @@ const Login = () => {
             <div className="flex h-fit w-fit max-w-[350px] flex-1 flex-col  px-8 pt-4 rounded-xl pb-10 shadow-2xl dark:bg-white/5">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <Image
-                        className="mx-auto h-[100px] w-[100px]"
-                        src={"/logo.svg"}
+                        className="mx-auto h-auto w-[100px]"
+                        src={"/logomen.png"}
                         alt="Your Company"
                         width={100}
                         height={100}

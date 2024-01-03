@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
+import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/styles";
 import { Address } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -57,13 +58,18 @@ export default function Franchise() {
 
     return (
         <>
-            <div className="w-full min-h-[calc(100vh-63px-434px)] h-full py-20 lg:pt-28 flex items-center justify-center gap-9 flex-wrap">
-                <Card className="max-w-lg w-1/2 min-w-[350px]">
+            <div
+                className={`w-full max-w-[${MAX_WIDTH}] m-auto min-h-[${MIN_HEIGHT}] h-full py-20 lg:pt-28 flex items-center justify-center gap-9 flex-wrap`}
+            >
+                {/* VERIFIY FRANCHISE */}
+                <Card className="max-w-lg w-1/2 min-w-[350px] bg-transparent">
                     <CardHeader>
-                        <CardTitle>Verify Franchise</CardTitle>
+                        <CardTitle className="uppercase">
+                            Verify Franchise
+                        </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <div>
+                    <CardContent className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-2">
                             <Label>Branch Code</Label>
                             <Input
                                 placeholder="Enter Branch Code"
@@ -71,7 +77,7 @@ export default function Franchise() {
                                 onChange={(e) => setBranch(e.target.value)}
                             />
                         </div>
-                        <div>
+                        <div className="flex flex-col gap-2">
                             <Label>Password</Label>
                             <Input
                                 placeholder="Enter Password"
@@ -95,8 +101,11 @@ export default function Franchise() {
                         </Button>
                     </CardFooter>
                 </Card>
+
+                {/* IF FRANCHISE DATA EXIST */}
+
                 {data && (
-                    <Card>
+                    <Card className="bg-transparent">
                         <CardHeader className="items-center">
                             {data?.img && (
                                 <Image
@@ -104,6 +113,7 @@ export default function Franchise() {
                                     width={150}
                                     height={150}
                                     alt="avatar"
+                                    className="rounded-full"
                                 />
                             )}
 

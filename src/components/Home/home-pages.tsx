@@ -1,7 +1,11 @@
 "use client";
-import Image from "next/image";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselApi,
+} from "../ui/carousel";
 import {
     BadgeCheck,
     BookText,
@@ -12,21 +16,21 @@ import {
     Smile,
     Target,
 } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 import { poppins } from "@/lib/fonts";
 import { motion } from "framer-motion";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselApi,
-} from "../ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const FirstPage = () => {
     const [api, setApi] = useState<CarouselApi>();
+
+    /**
+     * FETCHING ALL USERS DETAILS(FAMILY)
+     */
+
     const { data, isLoading } = useQuery({
         queryKey: ["allUserDetailsForCarousel"],
         queryFn: async () => {
@@ -35,6 +39,11 @@ export const FirstPage = () => {
         },
         staleTime: 1000 * 60 * 5,
     });
+
+    /**
+     * RESETING CAROUSEL AUTOPLAY ON STOP
+     */
+
     useEffect(() => {
         if (!api) {
             return;
@@ -46,11 +55,15 @@ export const FirstPage = () => {
 
     return (
         <div className="max-w-[1280px] m-auto w-full h-full flex flex-col gap-2 py-3 overflow-x-hidden">
+            {/* BANNER */}
+
             <div className="relative w-full h-[80px] sm:h-[150px]">
                 <Image src={"/banner.jpg"} fill alt="banner" />
             </div>
 
             <div className="w-full flex justify-between gap-2 flex-col lg:flex-row">
+                {/* CAROUSEL */}
+
                 <Carousel
                     className="w-full lg:w-[70%] h-[350px] sm:h-[450px]"
                     setApi={setApi}

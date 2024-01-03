@@ -19,13 +19,19 @@ import axios from "axios";
 import { Loader } from "lucide-react";
 import { Student } from "@prisma/client";
 import { toast } from "@/components/ui/use-toast";
+import { MIN_HEIGHT } from "@/lib/styles";
 
 export default function StudentZone() {
+    const [registration, setRegistration] = useState("");
     const [tab, setTab] = useState("registration");
     const [data, setData] = useState<{
         student: Student & { branchName: string };
     }>();
-    const [registration, setRegistration] = useState("");
+
+    /**
+     * FUNCTION FOR SEARCH
+     */
+
     const { isPending, mutate } = useMutation({
         mutationKey: ["studentZone", tab],
         mutationFn: async () => {
@@ -42,7 +48,9 @@ export default function StudentZone() {
     });
     return (
         <>
-            <div className="flex flex-col w-full min-h-[calc(100vh-63px-434px)] gap-5 px-2 py-16">
+            <div
+                className={`flex flex-col w-full min-h-[${MIN_HEIGHT}] gap-5 px-2 py-16`}
+            >
                 {/* TAB */}
                 <Tabs
                     className="max-w-xl lg:min-w-[500px] m-auto"
