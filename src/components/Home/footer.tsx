@@ -1,5 +1,5 @@
-import { info } from "@/lib/constants";
 import Image from "next/image";
+import { info } from "@/lib/constants";
 
 export const Footer = () => {
     const year = new Date(Date.now()).getFullYear();
@@ -17,11 +17,11 @@ export const Footer = () => {
                     {info.map((info, i) => (
                         <div
                             key={i}
-                            className="flex flex-col items-center gap-2 min-w-fit lg:min-w-[300px] w-full text-black"
+                            className="flex flex-col items-center gap-1 min-w-fit lg:min-w-[300px] w-full text-black"
                         >
                             <info.icon className="w-5 text-indigo-600 h-5" />
-                            <span className="text-base">{info.title}</span>
-                            <div className="flex flex-col gap-2 items-center justify-center text-base">
+                            <span className="text-base uppercase">{info.title}</span>
+                            <div className="flex flex-col items-center justify-center text-base">
                                 {info.details.map((detail, idx) => (
                                     <span key={idx}>{detail}</span>
                                 ))}

@@ -19,7 +19,7 @@ import axios from "axios";
 import { Loader } from "lucide-react";
 import { Student } from "@prisma/client";
 import { toast } from "@/components/ui/use-toast";
-import { MIN_HEIGHT } from "@/lib/styles";
+import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/styles";
 
 export default function StudentZone() {
     const [registration, setRegistration] = useState("");
@@ -49,11 +49,11 @@ export default function StudentZone() {
     return (
         <>
             <div
-                className={`flex flex-col w-full ${MIN_HEIGHT} gap-5 px-2 py-16`}
+                className={`flex flex-col w-full ${MAX_WIDTH} ${MIN_HEIGHT} m-auto bg-orange-100 gap-5 px-2 py-16`}
             >
                 {/* TAB */}
                 <Tabs
-                    className="max-w-xl lg:min-w-[500px] m-auto"
+                    className="max-w-xs md:max-w-xl lg:min-w-[500px] m-auto"
                     defaultValue={"registration"}
                     value={tab}
                     onValueChange={(e) => {
@@ -63,17 +63,29 @@ export default function StudentZone() {
                 >
                     {/* TAB LIST */}
 
-                    <TabsList className="w-full">
-                        <TabsTrigger className="w-full" value="registration">
+                    <TabsList className="w-full bg-red-300">
+                        <TabsTrigger
+                            className="w-full px-1 sm:px-2 text-xs sm:text-sm"
+                            value="registration"
+                        >
                             REGISTRATION
                         </TabsTrigger>
-                        <TabsTrigger className="w-full" value="icard">
+                        <TabsTrigger
+                            className="w-ful px-1 sm:px-2 text-xs sm:text-sm"
+                            value="icard"
+                        >
                             I CARD
                         </TabsTrigger>
-                        <TabsTrigger className="w-full" value="marksheet">
+                        <TabsTrigger
+                            className="w-full px-1 sm:px-2 text-xs sm:text-sm"
+                            value="marksheet"
+                        >
                             MARKSHEET
                         </TabsTrigger>
-                        <TabsTrigger className="w-full" value="certificate">
+                        <TabsTrigger
+                            className="w-full px-1 sm:px-2 text-xs sm:text-sm"
+                            value="certificate"
+                        >
                             CERTIFICATE
                         </TabsTrigger>
                     </TabsList>
@@ -83,7 +95,9 @@ export default function StudentZone() {
                     <TabsContent value="registration">
                         <Card className="bg-transparent">
                             <CardHeader>
-                                <CardTitle>Registratio Verification</CardTitle>
+                                <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
+                                    Registratio Verification
+                                </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <Input
@@ -96,7 +110,7 @@ export default function StudentZone() {
                             </CardContent>
                             <CardFooter>
                                 <Button
-                                    variant={"primary"}
+                                    variant={"destructive"}
                                     disabled={isPending}
                                     className="w-full"
                                     onClick={() => mutate()}
@@ -116,7 +130,9 @@ export default function StudentZone() {
                     <TabsContent value="icard">
                         <Card className="bg-transparent">
                             <CardHeader>
-                                <CardTitle>I Card Verification</CardTitle>
+                                <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
+                                    I Card Verification
+                                </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <Input
@@ -129,7 +145,7 @@ export default function StudentZone() {
                             </CardContent>
                             <CardFooter>
                                 <Button
-                                    variant={"primary"}
+                                    variant={"destructive"}
                                     disabled={isPending}
                                     className="w-full"
                                     onClick={() => mutate()}
@@ -149,7 +165,9 @@ export default function StudentZone() {
                     <TabsContent value="marksheet">
                         <Card className="bg-transparent">
                             <CardHeader>
-                                <CardTitle>MarkSheet Verification</CardTitle>
+                                <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
+                                    MarkSheet Verification
+                                </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <Input
@@ -162,7 +180,7 @@ export default function StudentZone() {
                             </CardContent>
                             <CardFooter>
                                 <Button
-                                    variant={"primary"}
+                                    variant={"destructive"}
                                     disabled={isPending}
                                     className="w-full"
                                     onClick={() => mutate()}
@@ -182,7 +200,9 @@ export default function StudentZone() {
                     <TabsContent value="certificate">
                         <Card className="bg-transparent">
                             <CardHeader>
-                                <CardTitle>Certificate Verification</CardTitle>
+                                <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
+                                    Certificate Verification
+                                </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <Input
@@ -196,7 +216,7 @@ export default function StudentZone() {
                             <CardFooter>
                                 <Button
                                     onClick={() => mutate()}
-                                    variant={"primary"}
+                                    variant={"destructive"}
                                     disabled={isPending}
                                     className="w-full"
                                 >
