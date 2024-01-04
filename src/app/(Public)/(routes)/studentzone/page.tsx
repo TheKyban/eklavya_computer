@@ -53,7 +53,7 @@ export default function StudentZone() {
             >
                 {/* TAB */}
                 <Tabs
-                    className="max-w-xs md:max-w-xl lg:min-w-[500px] m-auto"
+                    className="max-w-[363px] md:max-w-xl lg:min-w-[500px] m-auto"
                     defaultValue={"registration"}
                     value={tab}
                     onValueChange={(e) => {
@@ -65,25 +65,25 @@ export default function StudentZone() {
 
                     <TabsList className="w-full bg-red-300">
                         <TabsTrigger
-                            className="w-full px-1 sm:px-2 text-xs sm:text-sm"
+                            className="w-full text-xs sm:text-sm"
                             value="registration"
                         >
                             REGISTRATION
                         </TabsTrigger>
                         <TabsTrigger
-                            className="w-ful px-1 sm:px-2 text-xs sm:text-sm"
+                            className="w-ful text-xs sm:text-sm"
                             value="icard"
                         >
                             I CARD
                         </TabsTrigger>
                         <TabsTrigger
-                            className="w-full px-1 sm:px-2 text-xs sm:text-sm"
+                            className="w-full text-xs sm:text-sm"
                             value="marksheet"
                         >
                             MARKSHEET
                         </TabsTrigger>
                         <TabsTrigger
-                            className="w-full px-1 sm:px-2 text-xs sm:text-sm"
+                            className="w-full text-xs sm:text-sm"
                             value="certificate"
                         >
                             CERTIFICATE
