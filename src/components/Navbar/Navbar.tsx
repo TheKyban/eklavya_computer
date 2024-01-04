@@ -24,15 +24,18 @@ import {
 import { cn } from "@/lib/utils";
 import MobileMode from "@/components/Navbar/MobileMode";
 import { Hover, HoverContent, HoverTrigger } from "@/components/hover";
-import { DownloadFiles, LinkStyle, LinkStyle2 } from "@/lib/constants";
+import { LinkStyle, LinkStyle2, MAX_WIDTH } from "@/lib/styles";
+import { DownloadFiles } from "@/lib/constants";
 import { useSession } from "next-auth/react";
 
 const Navbar = () => {
     const { status } = useSession();
     return (
-        <div className="flex justify-center items-center bg-[#e0f1bc1c] dark:bg-transparent">
+        <div className="flex justify-center items-center dark:bg-transparent">
             {/* PC */}
-            <div className="hidden lg:flex justify-between py-2 w-full max-w-[1280px] bg-red-500 px-3">
+            <div
+                className={`hidden lg:flex justify-between py-2 w-full ${MAX_WIDTH} bg-red-500 px-3`}
+            >
                 {/* Logo */}
                 <Image
                     priority
@@ -116,10 +119,7 @@ const Navbar = () => {
                                             {DownloadFiles?.map((file, i) => (
                                                 <a
                                                     key={i}
-                                                    className={cn(
-                                                        LinkStyle,
-                                                        LinkStyle2
-                                                    )}
+                                                    className={cn(LinkStyle)}
                                                     href={file.link}
                                                     download={file.download}
                                                 >
@@ -144,16 +144,16 @@ const Navbar = () => {
                                         </div>
                                     </AccordionTrigger>
                                     <AccordionContent>
-                                        <div className="flex flex-col gap-0">
+                                        <div className="flex flex-col">
                                             <Link
-                                                className="text-base font-medium flex items-center gap-4 hover:bg-primary/10 py-4 px-3 rounded hover:underline"
+                                                className={LinkStyle}
                                                 href={"#"}
                                             >
                                                 <Database className="w-4 h-4" />
                                                 <span>ADCA</span>
                                             </Link>
                                             <Link
-                                                className="text-base font-medium flex items-center gap-4 hover:bg-primary/10 py-4 px-3 rounded hover:underline"
+                                                className={LinkStyle}
                                                 href={"#"}
                                             >
                                                 <Computer className="w-4 h-4" />

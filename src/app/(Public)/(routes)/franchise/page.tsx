@@ -59,18 +59,18 @@ export default function Franchise() {
     return (
         <>
             <div
-                className={`w-full ${MAX_WIDTH} m-auto ${MIN_HEIGHT} h-full py-20 lg:pt-28 flex items-center justify-center gap-9 flex-wrap`}
+                className={`w-full ${MAX_WIDTH} bg-orange-100 m-auto ${MIN_HEIGHT} h-full py-20 lg:pt-28 flex items-center justify-center gap-9 flex-wrap`}
             >
                 {/* VERIFIY FRANCHISE */}
                 <Card className="max-w-lg w-1/2 min-w-[350px] bg-transparent">
                     <CardHeader>
-                        <CardTitle className="uppercase">
+                        <CardTitle className="uppercase text-red-600">
                             Verify Franchise
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
-                            <Label>Branch Code</Label>
+                            <Label className="text-red-950">Branch Code</Label>
                             <Input
                                 placeholder="Enter Branch Code"
                                 value={branch}
@@ -78,7 +78,7 @@ export default function Franchise() {
                             />
                         </div>
                         <div className="flex flex-col gap-2">
-                            <Label>Password</Label>
+                            <Label className="text-red-950">Password</Label>
                             <Input
                                 placeholder="Enter Password"
                                 value={password}
@@ -89,7 +89,7 @@ export default function Franchise() {
                     <CardFooter>
                         <Button
                             className="w-full"
-                            variant={"secondary"}
+                            variant={"destructive"}
                             onClick={() => mutate()}
                             disabled={isPending}
                         >

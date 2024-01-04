@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/constants";
+import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 import {
     Home,

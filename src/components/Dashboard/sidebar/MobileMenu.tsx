@@ -1,16 +1,17 @@
 "use client";
-import Image from "next/image";
-import { ModeToggle } from "@/components/ThemeTogggle";
+
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 import {
     Home,
     LayoutDashboard,
@@ -19,15 +20,14 @@ import {
     ShieldPlus,
     Menu,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
-
+import Image from "next/image";
+import { ModeToggle } from "@/components/ThemeTogggle";
 import { FC, HTMLAttributes, useEffect, useState } from "react";
-import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTrigger,
-} from "@/components/ui/sheet";
 import { signOut } from "next-auth/react";
 import { accordianLinks, links } from "./url";
 
@@ -153,7 +153,8 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                                             key={link.title}
                                             className={cn(
                                                 LinkStyle,
-                                                LinkStyle3,"uppercase"
+                                                LinkStyle3,
+                                                "uppercase"
                                             )}
                                             onClick={() => setOpen(false)}
                                         >

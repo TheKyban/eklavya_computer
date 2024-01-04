@@ -27,12 +27,8 @@ import {
     Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-    DownloadFiles,
-    LinkStyle,
-    LinkStyle2,
-    LinkStyle3,
-} from "@/lib/constants";
+import { DownloadFiles } from "@/lib/constants";
+import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/styles";
 import { useSession } from "next-auth/react";
 
 const MobileMode = () => {
@@ -40,10 +36,16 @@ const MobileMode = () => {
     const [mounted, setMounted] = useState(false);
     const { status } = useSession();
     const isAuth = status === "authenticated" ? true : false;
+
+    /**
+     * CHECKING COMPONENT IS MOUNTED OR NOT
+     */
+
     useEffect(() => {
         setMounted(true);
     }, []);
     if (!mounted) return null;
+
     return (
         <div className="lg:hidden w-full flex justify-around py-5 bg-red-500">
             <div>
