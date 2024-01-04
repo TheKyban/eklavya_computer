@@ -9,17 +9,19 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Image from "next/image";
 import { useState } from "react";
-import styles from "./page.module.css";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader } from "lucide-react";
 import { Student } from "@prisma/client";
 import { toast } from "@/components/ui/use-toast";
 import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/styles";
+import {
+    Certificate,
+    MarkSheet,
+    RegistrationVerify,
+} from "@/components/student-zone";
 
 export default function StudentZone() {
     const [registration, setRegistration] = useState("");
@@ -35,9 +37,8 @@ export default function StudentZone() {
     const { isPending, mutate } = useMutation({
         mutationKey: ["studentZone", tab],
         mutationFn: async () => {
-            const { data } = await axios.get(
-                `/api/student/${registration}?type=${tab}`
-            );
+            if (!registration) return;
+            const { data } = await axios.get(`/api/student/${registration}`);
             console.log("mutation", data);
             if (!!data?.message) {
                 toast({ description: (data.message as string).toUpperCase() });
@@ -96,7 +97,7 @@ export default function StudentZone() {
                         <Card className="bg-transparent">
                             <CardHeader>
                                 <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
-                                    Registratio Verification
+                                    Registration Verification
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -106,6 +107,7 @@ export default function StudentZone() {
                                     onChange={(e) =>
                                         setRegistration(e.target.value)
                                     }
+                                    className="bg-white dark:focus:ring-offset-white"
                                 />
                             </CardContent>
                             <CardFooter>
@@ -141,6 +143,7 @@ export default function StudentZone() {
                                     onChange={(e) =>
                                         setRegistration(e.target.value)
                                     }
+                                    className="bg-white dark:focus:ring-offset-white"
                                 />
                             </CardContent>
                             <CardFooter>
@@ -176,6 +179,7 @@ export default function StudentZone() {
                                     onChange={(e) =>
                                         setRegistration(e.target.value)
                                     }
+                                    className="bg-white dark:focus:ring-offset-white"
                                 />
                             </CardContent>
                             <CardFooter>
@@ -211,6 +215,7 @@ export default function StudentZone() {
                                     onChange={(e) =>
                                         setRegistration(e.target.value)
                                     }
+                                    className="bg-white dark:focus:ring-offset-white"
                                 />
                             </CardContent>
                             <CardFooter>
@@ -247,88 +252,20 @@ export default function StudentZone() {
                 {/* STUDENT I-CARD  */}
 
                 {data?.student && tab === "icard" && <div>I card here</div>}
-            </div>
-            {/*
-             *
-             * FOOTER
-             *
-             */}
 
+                {/* MARKSHEET */}
+                {data?.student && tab === "marksheet" && (
+                    <MarkSheet student={data?.student} />
+                )}
+
+                {/* CERTIFICATE */}
+                {data?.student && tab === "certificate" && (
+                    <Certificate student={data?.student} />
+                )}
+            </div>
+
+            {/* FOOTER */}
             <Footer />
         </>
     );
 }
-
-const RegistrationVerify = ({
-    registration,
-    name,
-    fatherName,
-    course,
-    branch,
-    branchCode,
-    img,
-}: {
-    registration: string;
-    name: string;
-    fatherName: string;
-    course: string;
-    branch: string;
-    branchCode: string;
-    img: string;
-}) => {
-    return (
-        <Card
-            id={styles.registrationVerify}
-            className="m-auto max-w-xl lg:min-w-[500px] relative bg-transparent py-4"
-        >
-            <CardContent>
-                <Image src={img} height={100} width={100} alt="profile img" />
-                <Table>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Registration
-                            </TableCell>
-                            <TableCell>{registration}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Name
-                            </TableCell>
-                            <TableCell className="capitalize">{name}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Father&apos;s Name
-                            </TableCell>
-                            <TableCell className="capitalize">
-                                {fatherName}
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Course
-                            </TableCell>
-                            <TableCell>{course}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Branch Name
-                            </TableCell>
-                            <TableCell className="capitalize">
-                                {branch}
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Branch Code
-                            </TableCell>
-                            <TableCell>{branchCode}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </CardContent>
-        </Card>
-    );
-};

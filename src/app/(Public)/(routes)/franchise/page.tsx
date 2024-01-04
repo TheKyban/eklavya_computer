@@ -75,6 +75,7 @@ export default function Franchise() {
                                 placeholder="Enter Branch Code"
                                 value={branch}
                                 onChange={(e) => setBranch(e.target.value)}
+                                className="bg-white dark:focus:ring-offset-white"
                             />
                         </div>
                         <div className="flex flex-col gap-2">
@@ -83,6 +84,7 @@ export default function Franchise() {
                                 placeholder="Enter Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                className="bg-white dark:focus:ring-offset-white"
                             />
                         </div>
                     </CardContent>

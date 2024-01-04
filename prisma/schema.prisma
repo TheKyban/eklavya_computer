@@ -43,12 +43,18 @@ model Student {
     Branch        User     @relation(fields: [branch], references: [userId], onDelete: Cascade)
     isVerified    Boolean  @default(false)
     certificate   Boolean  @default(false)
+    serialNumber  Int?
     written       Int?
     practical     Int?
     project       Int?
     viva          Int?
     englishTyping Int?
     hindiTyping   Int?
+}
+
+model StudentSerialNumber {
+    id           String @id @default(auto()) @map("_id") @db.ObjectId
+    serialNumber Int
 }
 
 type Address {

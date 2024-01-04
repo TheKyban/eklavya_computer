@@ -87,6 +87,31 @@ export const POST = async (req: Request) => {
         }
 
         /**
+         * UPDATE SERIAL NUMBER
+         */
+
+        const serialNumber = await Prisma.studentSerialNumber.findMany();
+        let StudentSerialNumber = 1;
+
+        if (!serialNumber?.[0]) {
+            await Prisma.studentSerialNumber.create({
+                data: {
+                    serialNumber: 1,
+                },
+            });
+        } else {
+            StudentSerialNumber = serialNumber[0].serialNumber + 1;
+            await Prisma.studentSerialNumber.update({
+                where: {
+                    id: serialNumber[0].id,
+                },
+                data: {
+                    serialNumber: StudentSerialNumber,
+                },
+            });
+        }
+
+        /**
          * CREATE STUDENT
          */
 
@@ -111,12 +136,9 @@ export const POST = async (req: Request) => {
                 course: data.course,
                 branch: data.branch,
                 formNumber: data.formNumber,
+                serialNumber: StudentSerialNumber,
             },
         });
-
-        /**
-         * Disconnect Db
-         */
 
         return NextResponse.json({
             message: "Student Registered Successfully",

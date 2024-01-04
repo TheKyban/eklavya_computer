@@ -16,51 +16,40 @@ export const GET = async (
         }
 
         const reqParams = new URLSearchParams(req.url);
-        const type = reqParams.get("type") || "registration";
 
         /**
-         * REGISTRATION VERIFICATION
+         * REGISTRATION VERIFICATION OR I CARD VERIFICATION
          */
 
-        if (type === "registration") {
-            const student = await Prisma.student.findFirst({
-                where: {
-                    formNumber: params.formNumber,
-                    isVerified: true,
-                },
-                select: {
-                    img: true,
-                    name: true,
-                    branch: true,
-                    course: true,
-                    fatherName: true,
-                    formNumber: true,
-                },
-            });
+        const student = await Prisma.student.findFirst({
+            where: {
+                formNumber: params.formNumber,
+                isVerified: true,
+            },
+        });
 
-            if (!student) {
-                return NextResponse.json(
-                    { message: "Not Verified." },
-                    { status: 200 }
-                );
-            }
-
-            const branch = await Prisma.user.findFirst({
-                where: {
-                    userId: student.branch,
-                },
-                select: {
-                    branch: true,
-                },
-            });
-
-            return NextResponse.json({
-                student: {
-                    ...student,
-                    branchName: branch?.branch,
-                },
-            });
+        if (!student) {
+            return NextResponse.json(
+                { message: "Not Verified." },
+                { status: 200 }
+            );
         }
+
+        const branch = await Prisma.user.findFirst({
+            where: {
+                userId: student.branch,
+            },
+            select: {
+                branch: true,
+            },
+        });
+
+        return NextResponse.json({
+            student: {
+                ...student,
+                branchName: branch?.branch,
+            },
+        });
     } catch (error) {
         console.log("[STUDENT ZONE]", error);
         return NextResponse.json(
