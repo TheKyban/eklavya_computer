@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -31,9 +31,15 @@ import { franchiseSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { states } from "@/lib/stateAndDistrict";
+import {
+    DELETE_FILE,
+    GET_FILE_URL,
+    UPLOAD_TO_FIREBASE,
+} from "@/lib/firebaseConfig";
 
 const FranchiseRegistration = ({}) => {
     const [state, setState] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const form = useForm<z.infer<typeof franchiseSchema>>({
         resolver: zodResolver(franchiseSchema),
         defaultValues: {
@@ -61,12 +67,17 @@ const FranchiseRegistration = ({}) => {
             }
 
             if (data.success) {
+                setState("");
                 form.reset();
             }
         } catch (error) {
             console.log(error);
         }
     };
+
+    /**
+     * IMAGE HANDLER
+     */
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -76,14 +87,25 @@ const FranchiseRegistration = ({}) => {
                 });
                 return;
             }
-            const reader = new FileReader();
-            reader.readAsDataURL(file as Blob);
-            reader.onloadend = () => {
-                form.setValue("img", reader.result as string);
-                form.setError("img", { message: "" });
-            };
+
+            if (form.getValues("img")) {
+                await DELETE_FILE(form.getValues("img"));
+            }
+            const imagePath = await UPLOAD_TO_FIREBASE(file, "user");
+            const Url = await GET_FILE_URL(imagePath);
+            setImageUrl(Url);
+            form.setValue("img", imagePath);
+            form.setError("img", { message: "" });
         }
     };
+
+    useEffect(() => {
+        return () => {
+            if (form.getValues("img")) {
+                DELETE_FILE(form.getValues("img"));
+            }
+        };
+    }, [form]);
 
     return (
         <div className="w-full flex h-full flex-col gap-5 px-5 pt-3">
@@ -114,8 +136,7 @@ const FranchiseRegistration = ({}) => {
                                         >
                                             <Image
                                                 src={
-                                                    field.value ||
-                                                    "/noavatar.png"
+                                                    imageUrl || "/noavatar.png"
                                                 }
                                                 priority
                                                 width={100}
