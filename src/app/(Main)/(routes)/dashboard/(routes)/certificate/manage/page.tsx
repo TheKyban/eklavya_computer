@@ -346,7 +346,11 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                         {fetchStudents?.studentsWithMarks?.[0]?.hindiTyping && (
                             <TableHead>Hindi</TableHead>
                         )}
-                        <TableHead className="text-center">Verify</TableHead>
+                        {fetchStudents?.studentsWithMarks?.[0] && (
+                            <TableHead className="text-center">
+                                Verify
+                            </TableHead>
+                        )}
                     </TableRow>
                 </TableHeader>
                 {/* TABLE BODY */}
