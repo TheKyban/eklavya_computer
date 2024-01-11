@@ -1,8 +1,8 @@
-import Franchise from "@/components/Dashboard/user/user-list";
+import User from "@/components/Dashboard/user/user-list";
 import { Loader2 } from "lucide-react";
 import { Suspense } from "react";
 
-const FranchiseList = ({
+const UserList = ({
     searchParams,
 }: {
     searchParams: { page: string; userId: string };
@@ -11,9 +11,9 @@ const FranchiseList = ({
         <Suspense
             fallback={<Loader2 className="animate-spin m-auto mt-[25%]" />}
         >
-            <Franchise searchParams={searchParams} />
+            <User searchParams={searchParams} />
         </Suspense>
     );
 };
 
-export default FranchiseList;
+export default UserList;

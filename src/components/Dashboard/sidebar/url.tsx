@@ -70,7 +70,7 @@ interface accordianLinks {
 }
 export const accordianLinks: accordianLinks[] = [
     {
-        title: "Franchise",
+        title: "Users",
         icon: <Users className="text-gray-600" />,
         role: "ADMIN",
         links: [
@@ -80,7 +80,7 @@ export const accordianLinks: accordianLinks[] = [
                 link: "/dashboard/user/registration",
             },
             {
-                title: "Manage Franchise",
+                title: "Manage Users",
                 icon: <UserRoundCog className="text-red-600" />,
                 link: "/dashboard/user",
             },

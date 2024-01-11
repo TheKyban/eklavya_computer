@@ -11,6 +11,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useModal } from "@/hooks/use-modal-store";
+import { per_page } from "@/lib/constants";
 import { poppins } from "@/lib/fonts";
 import { generalMarksSchema } from "@/lib/schema";
 import { useQuery } from "@tanstack/react-query";
@@ -146,7 +147,12 @@ const GeneralEntredMarks = ({
                             ))}
                     </TableBody>
                 </Table>
-                <Pagination total={data?.total || 0} isLoading={isLoading} />
+                {data && data?.total > per_page && (
+                    <Pagination
+                        total={data?.total || 0}
+                        isLoading={isLoading}
+                    />
+                )}
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import { Prisma } from "../../../../../prisma/prisma";
 import { studentSchema } from "@/lib/schema";
 import { z } from "zod";
 import { per_page } from "@/lib/constants";
+import { del } from "@vercel/blob";
 
 /**
  * REGISTER STUDENTS
@@ -375,8 +376,7 @@ export const DELETE = async (req: Request) => {
             });
         }
 
-        const url = req.url;
-        const { searchParams } = new URL(url);
+        const { searchParams } = new URL(req.url);
         const formNumber = searchParams.get("formNumber");
 
         if (!formNumber) {
@@ -398,6 +398,8 @@ export const DELETE = async (req: Request) => {
                 success: false,
             });
         }
+
+        del(student.img);
 
         return NextResponse.json({
             message: "Student Deleted successfully",

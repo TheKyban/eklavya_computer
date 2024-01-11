@@ -12,14 +12,15 @@ import {
 import { poppins } from "@/lib/fonts";
 import { User } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Pen, Trash } from "lucide-react";
+import { Pen, Trash } from "lucide-react";
 import { UserCog } from "lucide-react";
 import axios from "axios";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
 import { useQuery } from "@tanstack/react-query";
+import { per_page } from "@/lib/constants";
 
-const Franchise = ({
+const UserList = ({
     searchParams,
 }: {
     searchParams: { page: string; userId: string };
@@ -41,7 +42,7 @@ const Franchise = ({
             <div className="flex justify-between">
                 <h1 className="flex items-center gap-3 lg:text-xl uppercase font-semibold text-teal-700">
                     <UserCog className="text-red-600 w-5 h-5" />
-                    Users
+                    Manage Users
                 </h1>
                 <Search placeholder="UserId" queryName="userId" />
             </div>
@@ -128,10 +129,12 @@ const Franchise = ({
                             ))}
                     </TableBody>
                 </Table>
-                <Pagination total={data?.total} isLoading={isLoading} />
+                {data?.total > per_page && (
+                    <Pagination total={data?.total} isLoading={isLoading} />
+                )}
             </div>
         </div>
     );
 };
 
-export default Franchise;
+export default UserList;

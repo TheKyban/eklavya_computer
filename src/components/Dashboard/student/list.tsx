@@ -18,6 +18,7 @@ import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
 import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
+import { per_page } from "@/lib/constants";
 
 const StudentList = ({
     searchParams,
@@ -171,7 +172,9 @@ const StudentList = ({
                     </TableBody>
                 </Table>
                 {/* PAGINATION */}
-                <Pagination total={data?.total} isLoading={isLoading} />
+                {data && data?.total > per_page && (
+                    <Pagination total={data?.total} isLoading={isLoading} />
+                )}
             </div>
         </div>
     );

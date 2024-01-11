@@ -31,15 +31,10 @@ import { franchiseSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { states } from "@/lib/stateAndDistrict";
-import {
-    DELETE_FILE,
-    GET_FILE_URL,
-    UPLOAD_TO_FIREBASE,
-} from "@/lib/firebaseConfig";
+import { IMAGE_SIZE } from "@/lib/constants";
 
 const FranchiseRegistration = ({}) => {
     const [state, setState] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
     const form = useForm<z.infer<typeof franchiseSchema>>({
         resolver: zodResolver(franchiseSchema),
         defaultValues: {
@@ -81,7 +76,7 @@ const FranchiseRegistration = ({}) => {
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            if (file.size > 40000) {
+            if (file.size > IMAGE_SIZE) {
                 form.setError("img", {
                     message: "Image Should be lesser than 40kb",
                 });
@@ -89,12 +84,15 @@ const FranchiseRegistration = ({}) => {
             }
 
             if (form.getValues("img")) {
-                await DELETE_FILE(form.getValues("img"));
+                await axios.delete(`/api/upload?url=${form.getValues("img")}`);
             }
-            const imagePath = await UPLOAD_TO_FIREBASE(file, "user");
-            const Url = await GET_FILE_URL(imagePath);
-            setImageUrl(Url);
-            form.setValue("img", imagePath);
+
+            const { data } = await axios.post(
+                `/api/upload?filename=${file.name}`,
+                file
+            );
+
+            form.setValue("img", data.url);
             form.setError("img", { message: "" });
         }
     };
@@ -102,7 +100,7 @@ const FranchiseRegistration = ({}) => {
     useEffect(() => {
         return () => {
             if (form.getValues("img")) {
-                DELETE_FILE(form.getValues("img"));
+                axios.delete(`/api/upload?url=${form.getValues("img")}`);
             }
         };
     }, [form]);
@@ -110,7 +108,7 @@ const FranchiseRegistration = ({}) => {
     return (
         <div className="w-full flex h-full flex-col gap-5 px-5 pt-3">
             <h1 className="text-zinc-600 flex items-center gap-2 uppercase text-xl lg:text-2xl font-medium mb-3">
-                <Users className="" /> Franchise Registration
+                <Users className="" /> User Registration
             </h1>
             <Form {...form}>
                 <form
@@ -136,7 +134,8 @@ const FranchiseRegistration = ({}) => {
                                         >
                                             <Image
                                                 src={
-                                                    imageUrl || "/noavatar.png"
+                                                    field.value ||
+                                                    "/noavatar.png"
                                                 }
                                                 priority
                                                 width={100}

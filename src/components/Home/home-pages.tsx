@@ -109,7 +109,7 @@ export const FirstPage = () => {
                     {/* @ts-ignore */}
                     <marquee direction="up">
                         {isLoading && (
-                            <div className="flex  items-center justify-center">
+                            <div className="flex text-black items-center justify-center">
                                 Loading...
                             </div>
                         )}

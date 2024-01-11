@@ -40,7 +40,7 @@ const Search: FC<pageProps> = ({
             <Input
                 {...props}
                 placeholder={placeholder}
-                className={cn("rounded-3xl w-32", className)}
+                className={cn("rounded-3xl w-32 uppercase", className)}
                 onChange={onChange}
                 defaultValue={params.get(queryName) as string}
             />

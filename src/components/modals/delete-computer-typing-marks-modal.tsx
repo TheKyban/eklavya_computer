@@ -99,7 +99,7 @@ export const DeleteComputerTypingMarksModal = () => {
                     </DialogDescription>
                 </DialogHeader>
 
-                <DialogFooter className="bg-gray-100 px-6 py-4">
+                <DialogFooter className="bg-gray-100 dark:bg-zinc-950 px-6 py-4">
                     <div className="flex items-center justify-between w-full">
                         <Button
                             disabled={isPending}

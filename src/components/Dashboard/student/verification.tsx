@@ -21,6 +21,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { toast } from "@/components/ui/use-toast";
+import { per_page } from "@/lib/constants";
 import { poppins } from "@/lib/fonts";
 import { Student, role } from "@prisma/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -319,7 +320,9 @@ const ManageCertificate = ({
                             ))}
                     </TableBody>
                 </Table>
-                <Pagination total={data?.total} isLoading={isLoading} />
+                {data?.total > per_page && (
+                    <Pagination total={data?.total} isLoading={isLoading} />
+                )}
             </div>
         </div>
     );

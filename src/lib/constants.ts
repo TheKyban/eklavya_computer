@@ -106,3 +106,6 @@ export const Courses = [
     "MRC",
     "PDDTP",
 ];
+
+
+export const IMAGE_SIZE = 40000

@@ -40,6 +40,7 @@ import { toast } from "@/components/ui/use-toast";
 import { franchiseEditSchema } from "@/lib/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { states } from "@/lib/stateAndDistrict";
+import { IMAGE_SIZE } from "@/lib/constants";
 
 export const UserModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -146,18 +147,24 @@ export const UserModal = () => {
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            if (file.size > 40000) {
+            if (file.size > IMAGE_SIZE) {
                 form.setError("img", {
                     message: "Image Should be lesser than 40kb",
                 });
                 return;
             }
-            const reader = new FileReader();
-            reader.readAsDataURL(file as Blob);
-            reader.onloadend = () => {
-                form.setValue("img", reader.result as string);
-                form.setError("img", { message: "" });
-            };
+
+            if (form.getValues("img")) {
+                await axios.delete(`/api/upload?url=${form.getValues("img")}`);
+            }
+
+            const { data } = await axios.post(
+                `/api/upload?filename=${file.name}`,
+                file
+            );
+
+            form.setValue("img", data.url);
+            form.setError("img", { message: "" });
         }
     };
 

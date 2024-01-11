@@ -51,6 +51,8 @@ export const GET = async (req: Request) => {
                 },
                 certificate: verified,
 
+                isVerified: true,
+
                 formNumber: {
                     startsWith: formNumber,
                 },
@@ -98,6 +100,8 @@ export const GET = async (req: Request) => {
                 formNumber: {
                     startsWith: formNumber,
                 },
+
+                isVerified: true,
 
                 englishTyping: {
                     isSet: computerTyping,

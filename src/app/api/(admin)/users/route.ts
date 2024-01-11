@@ -6,6 +6,8 @@ import { per_page } from "@/lib/constants";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { role as ROLE } from "@prisma/client";
+import { del } from "@vercel/blob";
+
 /**
  * CREATE USER
  */
@@ -43,30 +45,22 @@ export const POST = async (req: Request) => {
          * BY USER ID
          */
 
-        // BY EMAIL
-        const byEmail = await Prisma.user.findFirst({
+        const isUserExist = await Prisma.user.findFirst({
             where: {
-                email: data.email,
+                OR: [
+                    {
+                        email: data.email,
+                    },
+                    {
+                        userId: data.userId,
+                    },
+                ],
             },
         });
 
-        if (byEmail) {
+        if (isUserExist) {
             return NextResponse.json({
-                message: "Franchise all ready exist with this email",
-                success: false,
-            });
-        }
-
-        // BY USER ID
-        const byUserId = await Prisma.user.findFirst({
-            where: {
-                userId: data.userId,
-            },
-        });
-
-        if (byUserId) {
-            return NextResponse.json({
-                message: "Franchise all ready exist with this userid",
+                message: "Franchise already exist with email Id or user Id",
                 success: false,
             });
         }
@@ -312,8 +306,7 @@ export const DELETE = async (req: Request) => {
                 success: false,
             });
         }
-        const url = req.url;
-        const { searchParams } = new URL(url);
+        const { searchParams } = new URL(req.url);
         const userId = searchParams.get("userId");
 
         if (!userId) {
@@ -335,6 +328,8 @@ export const DELETE = async (req: Request) => {
                 success: false,
             });
         }
+
+        await del(user.img!);
 
         return NextResponse.json({
             message: "User Deleted successfully",

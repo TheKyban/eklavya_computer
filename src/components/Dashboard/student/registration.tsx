@@ -31,7 +31,7 @@ import { CalendarIcon, GraduationCap, Loader, PlusCircle } from "lucide-react";
 import { studentSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { Courses } from "@/lib/constants";
+import { Courses, IMAGE_SIZE } from "@/lib/constants";
 import { useSession } from "next-auth/react";
 import {
     Popover,
@@ -43,7 +43,6 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { states } from "@/lib/stateAndDistrict";
-
 
 const StudentRegistration = () => {
     const currentYear = new Date().getFullYear();
@@ -90,6 +89,7 @@ const StudentRegistration = () => {
             }
             if (data.success) {
                 form.reset();
+                setState("");
                 form.setValue("branch", session?.user?.userId as string);
             }
         } catch (error) {
@@ -100,20 +100,34 @@ const StudentRegistration = () => {
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            if (file.size > 40000) {
+            if (file.size > IMAGE_SIZE) {
                 form.setError("img", {
                     message: "Image Should be lesser than 40kb",
                 });
                 return;
             }
-            const reader = new FileReader();
-            reader.readAsDataURL(file as Blob);
-            reader.onloadend = () => {
-                form.setValue("img", reader.result as string);
-                form.setError("img", { message: "" });
-            };
+
+            if (form.getValues("img")) {
+                await axios.delete(`/api/upload?url=${form.getValues("img")}`);
+            }
+
+            const { data } = await axios.post(
+                `/api/upload?filename=${file.name}`,
+                file
+            );
+
+            form.setValue("img", data.url);
+            form.setError("img", { message: "" });
         }
     };
+
+    useEffect(() => {
+        return () => {
+            if (form.getValues("img")) {
+                axios.delete(`/api/upload?url=${form.getValues("img")}`);
+            }
+        };
+    }, [form]);
 
     return (
         <div className="w-full flex h-full flex-col gap-5 px-5 pt-3">
