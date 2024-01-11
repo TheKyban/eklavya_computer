@@ -43,7 +43,7 @@ const Login = () => {
                         width={100}
                         height={100}
                     />
-                    <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white/90">
+                    <h2 className="mt-5 text-center text-2xl font-semibold leading-9 tracking-tight text-gray-900">
                         Sign in to your account
                     </h2>
                 </div>
@@ -53,7 +53,7 @@ const Login = () => {
                         <div>
                             <label
                                 htmlFor="userid"
-                                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white/90"
+                                className="block uppercase text-sm font-medium leading-6 text-gray-900 "
                             >
                                 User id
                             </label>
@@ -64,7 +64,7 @@ const Login = () => {
                                     type="text"
                                     autoComplete="userid"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:text-white/90 px-5 dark:focus:ring-1"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset bg-white focus:ring-indigo-600 sm:text-sm sm:leading-6  px-5"
                                     value={userId}
                                     onChange={(e) => setUserId(e.target.value)}
                                 />
@@ -75,7 +75,7 @@ const Login = () => {
                             <div className="flex items-center justify-between">
                                 <label
                                     htmlFor="password"
-                                    className="block text-sm font-medium leading-6 text-gray-900 dark:text-white/90"
+                                    className="block uppercase text-sm font-medium leading-6 text-gray-900 "
                                 >
                                     Password
                                 </label>
@@ -87,7 +87,7 @@ const Login = () => {
                                     type="password"
                                     autoComplete="current-password"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:text-white/90 px-5 dark:focus:ring-1"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  px-5 dark:focus:ring-1"
                                     value={password}
                                     onChange={(e) =>
                                         setPassword(e.target.value)
