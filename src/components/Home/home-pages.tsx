@@ -68,7 +68,7 @@ export const FirstPage = () => {
                 {/* CAROUSEL */}
 
                 <Carousel
-                    className="w-full lg:w-[70%] h-[350px] sm:h-[450px]"
+                    className="w-full lg:w-[70%] h-[300px] sm:h-[450px] relative"
                     setApi={setApi}
                     plugins={[
                         Autoplay({
@@ -77,11 +77,11 @@ export const FirstPage = () => {
                         }),
                     ]}
                 >
-                    <CarouselContent className="w-full h-fit">
+                    <CarouselContent>
                         <CarouselItem className="flex items-center justify-center">
-                            <div className="relative w-full m-auto h-[350px] sm:h-[450px]">
+                            <div className="relative w-full h-[300px] sm:h-[450px]">
                                 <Image
-                                    src={"/squareBanner.jpg"}
+                                    src={"/carousel/squareBanner.jpg"}
                                     fill
                                     alt="bill board"
                                     className="object-fill w-full h-full"
@@ -89,9 +89,39 @@ export const FirstPage = () => {
                             </div>
                         </CarouselItem>
                         <CarouselItem>
-                            <div className="relative w-full h-[350px] sm:h-[450px]">
+                            <div className="relative w-full h-[300px] sm:h-[450px]">
                                 <Image
-                                    src={"/banner2.jpg"}
+                                    src={"/carousel/banner2.jpg"}
+                                    fill
+                                    alt="bill board"
+                                    className="w-full h-full"
+                                />
+                            </div>
+                        </CarouselItem>
+                        <CarouselItem>
+                            <div className="relative w-full h-[300px] sm:h-[450px]">
+                                <Image
+                                    src={"/carousel/msOffice.jpg"}
+                                    fill
+                                    alt="bill board"
+                                    className="w-full h-full"
+                                />
+                            </div>
+                        </CarouselItem>
+                        <CarouselItem>
+                            <div className="relative w-full h-[300px] sm:h-[450px]">
+                                <Image
+                                    src={"/carousel/keyboarBasics.jpg"}
+                                    fill
+                                    alt="bill board"
+                                    className="w-full h-full"
+                                />
+                            </div>
+                        </CarouselItem>
+                        <CarouselItem>
+                            <div className="relative w-full h-[300px] sm:h-[450px]">
+                                <Image
+                                    src={"/carousel/dca.jpg"}
                                     fill
                                     alt="bill board"
                                     className="w-full h-full"
