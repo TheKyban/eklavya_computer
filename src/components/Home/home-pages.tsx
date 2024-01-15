@@ -162,7 +162,7 @@ export const FirstPage = () => {
                                         height={100}
                                         alt="avatar"
                                         placeholder="empty"
-                                        className="rounded-full"
+                                        className="rounded-full object-cover min-w-[100px] min-h-[100px] max-w-[100px] max-h-[100px]"
                                     />
                                     <div className="flex flex-col gap-1 font-semibold items-center">
                                         <span className="capitalize text-rose-800">
