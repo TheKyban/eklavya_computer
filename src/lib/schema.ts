@@ -12,7 +12,7 @@ export const phoneRegex = new RegExp(
  */
 export const franchiseSchema = z
     .object({
-        img: z.string({ required_error: "Please select a picture" }),
+        img: z.string({ required_error: "Please select a picture" }).trim().min(2,"image is required."),
         name: z
             .string({ required_error: "Please Enter email id" })
             .trim()
@@ -41,7 +41,7 @@ export const franchiseSchema = z
         branch: z
             .string({ required_error: "Please Enter branch name" })
             .trim()
-            .min(5, { message: "Enter valid branch name" }),
+            .min(3, { message: "Enter valid branch name" }),
         userId: z
             .string({ required_error: "Please Enter User id" })
             .trim()

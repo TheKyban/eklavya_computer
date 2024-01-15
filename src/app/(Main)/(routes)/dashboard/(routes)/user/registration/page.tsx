@@ -35,6 +35,8 @@ import { IMAGE_SIZE } from "@/lib/constants";
 
 const FranchiseRegistration = ({}) => {
     const [state, setState] = useState("");
+    const [isUploading, setIsUploading] = useState(false);
+
     const form = useForm<z.infer<typeof franchiseSchema>>({
         resolver: zodResolver(franchiseSchema),
         defaultValues: {
@@ -83,17 +85,27 @@ const FranchiseRegistration = ({}) => {
                 return;
             }
 
-            if (form.getValues("img")) {
-                await axios.delete(`/api/upload?url=${form.getValues("img")}`);
+            try {
+                setIsUploading(true);
+
+                if (form.getValues("img")) {
+                    await axios.delete(
+                        `/api/upload?url=${form.getValues("img")}`
+                    );
+                }
+
+                const { data } = await axios.post(
+                    `/api/upload?filename=${file.name}`,
+                    file
+                );
+
+                form.setValue("img", data.url);
+                form.setError("img", { message: "" });
+            } catch (error: any) {
+                form.setError("img", { message: error.message });
+            } finally {
+                setIsUploading(false);
             }
-
-            const { data } = await axios.post(
-                `/api/upload?filename=${file.name}`,
-                file
-            );
-
-            form.setValue("img", data.url);
-            form.setError("img", { message: "" });
         }
     };
 
@@ -130,7 +142,7 @@ const FranchiseRegistration = ({}) => {
                                     <FormItem className="w-fit">
                                         <Label
                                             htmlFor="img"
-                                            className="cursor-pointer"
+                                            className="cursor-pointer relative"
                                         >
                                             <Image
                                                 src={
@@ -143,6 +155,10 @@ const FranchiseRegistration = ({}) => {
                                                 alt="picture"
                                                 className="rounded-full w-[100px] h-[100px]"
                                             />
+
+                                            {isUploading && (
+                                                <Loader className="absolute top-1/3 left-[38%] animate-spin" />
+                                            )}
                                         </Label>
                                         <FormControl>
                                             <Input

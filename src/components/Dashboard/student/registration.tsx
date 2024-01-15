@@ -48,6 +48,7 @@ const StudentRegistration = () => {
     const currentYear = new Date().getFullYear();
     const { data: session } = useSession();
     const [state, setState] = useState("");
+    const [isUploading, setIsUploading] = useState(false);
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
         defaultValues: {
@@ -107,17 +108,27 @@ const StudentRegistration = () => {
                 return;
             }
 
-            if (form.getValues("img")) {
-                await axios.delete(`/api/upload?url=${form.getValues("img")}`);
+            try {
+                setIsUploading(true);
+
+                if (form.getValues("img")) {
+                    await axios.delete(
+                        `/api/upload?url=${form.getValues("img")}`
+                    );
+                }
+
+                const { data } = await axios.post(
+                    `/api/upload?filename=${file.name}`,
+                    file
+                );
+
+                form.setValue("img", data.url);
+                form.setError("img", { message: "" });
+            } catch (error: any) {
+                form.setError("img", { message: error.message });
+            } finally {
+                setIsUploading(false);
             }
-
-            const { data } = await axios.post(
-                `/api/upload?filename=${file.name}`,
-                file
-            );
-
-            form.setValue("img", data.url);
-            form.setError("img", { message: "" });
         }
     };
 
@@ -149,7 +160,10 @@ const StudentRegistration = () => {
                         control={form.control}
                         render={({ field }) => (
                             <FormItem className="w-fit">
-                                <Label htmlFor="img" className="cursor-pointer">
+                                <Label
+                                    htmlFor="img"
+                                    className="cursor-pointer relative"
+                                >
                                     <Image
                                         src={field.value || "/noavatar.png"}
                                         priority
@@ -158,6 +172,9 @@ const StudentRegistration = () => {
                                         alt="picture"
                                         className="rounded-full w-[100px] h-[100px]"
                                     />
+                                    {isUploading && (
+                                        <Loader className="absolute top-1/3 left-[38%] animate-spin" />
+                                    )}
                                 </Label>
                                 <FormControl>
                                     <Input
