@@ -51,7 +51,7 @@ const Dasboard = () => {
                     <Loader className="w-10 h-10 text-blue-600 animate-spin" />
                 </div>
             )}
-            {!!data?.details[0] && (
+            {!!data?.details?.[0] && (
                 <div className="flex gap-2 items-center px-5 bg-slate-200 w-fit py-3 rounded-lg">
                     <BadgeAlert className="w-8 h-8 text-indigo-600" />
                     <h1 className="uppercase text-xl text-indigo-800 font-semibold">
@@ -72,7 +72,7 @@ const Dasboard = () => {
                 ))}
             </div>
 
-            {!!data?.allUsers[0] && (
+            {!!data?.allUsers && (
                 <div className="flex flex-col gap-3 w-full h-full">
                     <div className="flex gap-2 items-center px-5 bg-slate-200 w-fit py-3 rounded-lg">
                         <Users className="w-8 h-8 text-indigo-600" />
@@ -118,11 +118,11 @@ const Dasboard = () => {
                         </TableHeader>
                         <TableBody>
                             {data?.allUsers?.map((user) => (
-                                <TableRow key={user.userId}>
-                                    <TableCell>{user.userId}</TableCell>
+                                <TableRow key={user?.userId}>
+                                    <TableCell>{user?.userId}</TableCell>
                                     <TableCell className="items-center justify-center hidden md:flex">
                                         <Image
-                                            src={user.img}
+                                            src={user?.img}
                                             height={60}
                                             width={60}
                                             alt="user"
@@ -130,29 +130,29 @@ const Dasboard = () => {
                                         />
                                     </TableCell>
                                     <TableCell className="text-center hidden md:table-cell">
-                                        <h3>{user.name}</h3>
+                                        <h3>{user?.name}</h3>
                                     </TableCell>
                                     <TableCell className="text-center hidden md:table-cell">
-                                        <h1>{user.branch}</h1>
+                                        <h1>{user?.branch}</h1>
                                     </TableCell>
 
                                     <TableCell className="text-center">
-                                        {user.pendingStudents}
+                                        {user?.pendingStudents}
                                     </TableCell>
                                     <TableCell className="text-center">
-                                        {user.verifiedStudents}
+                                        {user?.verifiedStudents}
                                     </TableCell>
                                     <TableCell className="text-center hidden md:table-cell">
-                                        {user.totalStudents}
+                                        {user?.totalStudents}
                                     </TableCell>
                                     <TableCell className="text-center hidden md:table-cell">
-                                        {user.issuedCertificates}
+                                        {user?.issuedCertificates}
                                     </TableCell>
                                     <TableCell className="text-center hidden md:table-cell">
-                                        {user.pendingCertificates}
+                                        {user?.pendingCertificates}
                                     </TableCell>
                                     <TableCell className="text-center hidden md:table-cell">
-                                        {user.role}
+                                        {user?.role}
                                     </TableCell>
                                 </TableRow>
                             ))}
