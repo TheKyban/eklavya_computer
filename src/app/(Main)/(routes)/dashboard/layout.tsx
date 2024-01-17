@@ -3,13 +3,11 @@ import Sidebar from "@/components/Dashboard/sidebar/Sidebar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { authOptions } from "@/lib/auth-options";
+import { Loader } from "lucide-react";
 import { getServerSession } from "next-auth";
+import { Suspense } from "react";
 
-export default async function Dasboard({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+async function Dasboard({ children }: { children: React.ReactNode }) {
     const session = await getServerSession(authOptions);
     const role = session?.user.role;
 
@@ -26,7 +24,10 @@ export default async function Dasboard({
                 />
                 <ScrollArea className="w-full h-[calc(100vh-90px)] mt-[90px] lg:mt-0 lg:h-screen  dark:bg-black">
                     <div className="px-3 py-3">
-                        <Button variant={"secondary"} className="text-sm md:text-lg text-zinc-600 dark:text-zinc-300 cursor-grabbing font-medium">
+                        <Button
+                            variant={"secondary"}
+                            className="text-sm md:text-lg text-zinc-600 dark:text-zinc-300 cursor-grabbing font-medium"
+                        >
                             {session?.user?.branch}
                         </Button>
                     </div>
@@ -34,5 +35,23 @@ export default async function Dasboard({
                 </ScrollArea>
             </div>
         </div>
+    );
+}
+
+export default async function DasboardRootLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <Suspense
+            fallback={
+                <div className="h-screen flex items-center justify-center">
+                    <Loader className="animate-spin" />
+                </div>
+            }
+        >
+            <Dasboard>{children}</Dasboard>
+        </Suspense>
     );
 }

@@ -40,7 +40,6 @@ const Dasboard = () => {
         queryKey: ["dashboard"],
         queryFn: async () => {
             const { data } = await axios("/api/dashboard");
-            console.log(data);
             return data;
         },
     });

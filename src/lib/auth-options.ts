@@ -47,7 +47,6 @@ export const authOptions: AuthOptions = {
                         branch: user.branch,
                     };
                 } catch (error) {
-                    console.log(error);
                     throw new Error("Wrong credentials");
                 }
             },
