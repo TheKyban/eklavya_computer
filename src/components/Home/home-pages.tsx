@@ -1,11 +1,4 @@
-"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselApi,
-} from "../ui/carousel";
 import {
     BadgeCheck,
     BookText,
@@ -16,44 +9,13 @@ import {
     Smile,
     Target,
 } from "lucide-react";
-import Autoplay from "embla-carousel-autoplay";
 import { poppins } from "@/lib/fonts";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { MAX_WIDTH } from "@/lib/styles";
+import { HomeCarousel, HomeFamily } from "./home-client-component";
+import { AnimationDiv } from "./home-animated-component";
 
 export const FirstPage = () => {
-    const [api, setApi] = useState<CarouselApi>();
-
-    /**
-     * FETCHING ALL USERS DETAILS(FAMILY)
-     */
-
-    const { data, isLoading } = useQuery({
-        queryKey: ["allUserDetailsForCarousel"],
-        queryFn: async () => {
-            const { data } = await axios.get("/api/user-details");
-            return data;
-        },
-        staleTime: 1000 * 60 * 5,
-    });
-
-    /**
-     * RESETING CAROUSEL AUTOPLAY ON STOP
-     */
-
-    useEffect(() => {
-        if (!api) {
-            return;
-        }
-        api.on("autoplay:stop", () => {
-            api?.autoplay?.reset();
-        });
-    }, [api]);
-
     return (
         <div
             className={`${MAX_WIDTH} m-auto w-full h-full flex flex-col gap-2 py-3 overflow-x-hidden`}
@@ -66,119 +28,10 @@ export const FirstPage = () => {
 
             <div className="w-full flex justify-between gap-2 flex-col lg:flex-row">
                 {/* CAROUSEL */}
-
-                <Carousel
-                    className="w-full lg:w-[70%] h-[300px] sm:h-[450px] relative"
-                    setApi={setApi}
-                    plugins={[
-                        Autoplay({
-                            delay: 3000,
-                            stopOnInteraction: false,
-                        }),
-                    ]}
-                >
-                    <CarouselContent>
-                        <CarouselItem className="flex items-center justify-center">
-                            <div className="relative w-full h-[300px] sm:h-[450px]">
-                                <Image
-                                    src={"/carousel/squareBanner.jpg"}
-                                    fill
-                                    alt="bill board"
-                                    className="object-fill w-full h-full"
-                                />
-                            </div>
-                        </CarouselItem>
-                        <CarouselItem>
-                            <div className="relative w-full h-[300px] sm:h-[450px]">
-                                <Image
-                                    src={"/carousel/banner2.jpg"}
-                                    fill
-                                    alt="bill board"
-                                    className="w-full h-full"
-                                />
-                            </div>
-                        </CarouselItem>
-                        <CarouselItem>
-                            <div className="relative w-full h-[300px] sm:h-[450px]">
-                                <Image
-                                    src={"/carousel/msOffice.jpg"}
-                                    fill
-                                    alt="bill board"
-                                    className="w-full h-full"
-                                />
-                            </div>
-                        </CarouselItem>
-                        <CarouselItem>
-                            <div className="relative w-full h-[300px] sm:h-[450px]">
-                                <Image
-                                    src={"/carousel/keyboarBasics.jpg"}
-                                    fill
-                                    alt="bill board"
-                                    className="w-full h-full"
-                                />
-                            </div>
-                        </CarouselItem>
-                        <CarouselItem>
-                            <div className="relative w-full h-[300px] sm:h-[450px]">
-                                <Image
-                                    src={"/carousel/dca.jpg"}
-                                    fill
-                                    alt="bill board"
-                                    className="w-full h-full"
-                                />
-                            </div>
-                        </CarouselItem>
-                    </CarouselContent>
-                </Carousel>
+                <HomeCarousel />
 
                 {/* FAMILY */}
-                <div className="flex-1 relative max-h-[450px] w-full flex flex-col">
-                    <h1 className="text-center bg-red-500 text-white uppercase text-2xl font-semibold py-2">
-                        Family
-                    </h1>
-                    {/* @ts-ignore */}
-                    <marquee direction="up">
-                        {isLoading && (
-                            <div className="flex text-black items-center justify-center">
-                                Loading...
-                            </div>
-                        )}
-                        {data?.map(
-                            (
-                                user: {
-                                    img: string;
-                                    name: string;
-                                    branch: string;
-                                },
-                                idx: number
-                            ) => (
-                                <div
-                                    key={idx}
-                                    className="flex flex-col gap-2 mt-4 mb-4 items-center"
-                                >
-                                    <Image
-                                        src={user.img}
-                                        width={100}
-                                        height={100}
-                                        alt="avatar"
-                                        placeholder="empty"
-                                        className="rounded-full object-cover min-w-[100px] min-h-[100px] max-w-[100px] max-h-[100px]"
-                                    />
-                                    <div className="flex flex-col gap-1 font-semibold items-center">
-                                        <span className="capitalize text-rose-800">
-                                            {user.name}
-                                        </span>
-                                        <span className="capitalize text-orange-600">
-                                            {user.branch}
-                                        </span>
-                                    </div>
-                                </div>
-                            )
-                        )}
-
-                        {/* @ts-ignore */}
-                    </marquee>
-                </div>
+                <HomeFamily />
             </div>
         </div>
     );
@@ -190,7 +43,21 @@ export const SecondPage = () => {
             className={`overflow-hidden flex flex-col m-auto ${MAX_WIDTH} items-center lg:gap-10 w-full`}
         >
             <div className="flex gap-3 flex-col lg:flex-row">
-                <div className="w-full flex flex-col gap-6 items-center">
+                {/* From desk of director */}
+                <AnimationDiv
+                    whileInView={{
+                        x: 0,
+                        opacity: 1,
+                    }}
+                    initial={{
+                        opacity: 0,
+                        x: -100,
+                    }}
+                    transition={{
+                        delay: 0.1,
+                    }}
+                    className="w-full flex flex-col gap-6 items-center"
+                >
                     <p
                         className={`${poppins.className} text-xl md:text-2xl font-semibold bg-red-500 w-full text-white uppercase text-center py-2`}
                     >
@@ -198,20 +65,7 @@ export const SecondPage = () => {
                     </p>
 
                     <div className="flex flex-col gap-4 w-[93%] lg:w-full">
-                        <motion.p
-                            className="text-center sm:text-left md:h-fit text-sm md:text-base text-slate-800 px-2"
-                            whileInView={{
-                                opacity: 1,
-                                x: 0,
-                            }}
-                            initial={{
-                                opacity: 0,
-                                x: -100,
-                            }}
-                            transition={{
-                                delay: 0.1,
-                            }}
-                        >
+                        <p className="text-center sm:text-left md:h-fit text-sm md:text-base text-slate-800 px-2">
                             Education is the most powerful weapon which can be
                             used to change the world.This is the only tool to
                             remove the darkness of ignornce from the society.
@@ -243,7 +97,7 @@ export const SecondPage = () => {
                             out of your courses with flying colors. We wish you
                             great success in all your endeavors and quest for a
                             better tomorrow, for yourselves and for the mankind.
-                        </motion.p>
+                        </p>
                         <div className="flex flex-col text-zinc-600">
                             <span className="self-end text-sm text md:text-lg font-bold mr-6">
                                 Warm Regards
@@ -253,8 +107,7 @@ export const SecondPage = () => {
                             </span>
                         </div>
                     </div>
-                </div>
-
+                </AnimationDiv>
                 <div>
                     <h1 className="bg-red-500 text-white font-semibold uppercase text-xl md:text-2xl text-center py-2">
                         Notice
@@ -322,12 +175,14 @@ export const SecondPage = () => {
              *
              */}
 
-            <motion.div
+            <AnimationDiv
                 whileInView={{
                     x: 0,
+                    opacity: 1,
                 }}
                 initial={{
                     x: 100,
+                    opacity: 0,
                 }}
                 className="bg-slate-200 rounded-lg w-[93%] 2xl:w-full"
             >
@@ -348,7 +203,7 @@ export const SecondPage = () => {
                         boundaries.
                     </p>
                 </div>
-            </motion.div>
+            </AnimationDiv>
         </div>
     );
 };
@@ -367,8 +222,11 @@ export const ThridPage = () => {
                 <div className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap">
                     {/* CARD ONE */}
 
-                    <motion.div
-                        whileInView={{ x: 0, opacity: 1 }}
+                    <AnimationDiv
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                        }}
                         initial={{
                             x: -100,
                             opacity: 0,
@@ -392,17 +250,18 @@ export const ThridPage = () => {
                                 </p>
                             </CardContent>
                         </Card>
-                    </motion.div>
+                    </AnimationDiv>
 
                     {/* CARD TWO */}
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             opacity: 1,
+                            scale: 1,
                         }}
                         animate={{
-                            x: 100,
+                            scale: 0.8,
                             opacity: 0,
                         }}
                     >
@@ -424,12 +283,15 @@ export const ThridPage = () => {
                                 </p>
                             </CardContent>
                         </Card>
-                    </motion.div>
+                    </AnimationDiv>
 
                     {/* CARD THREE */}
 
-                    <motion.div
-                        whileInView={{ x: 0, opacity: 1 }}
+                    <AnimationDiv
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                        }}
                         initial={{
                             x: 100,
                             opacity: 0,
@@ -450,7 +312,7 @@ export const ThridPage = () => {
                                 </p>
                             </CardContent>
                         </Card>
-                    </motion.div>
+                    </AnimationDiv>
                 </div>
             </div>
 
@@ -462,16 +324,14 @@ export const ThridPage = () => {
                 </h1>
 
                 <div className="grid grid-cols-2 lg:grid-cols-3 m-auto w-fit gap-8 flex-wrap">
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             opacity: 1,
-                            scale: 1,
                         }}
                         initial={{
                             x: -100,
                             opacity: 0,
-                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -487,9 +347,9 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             y: 0,
@@ -497,9 +357,8 @@ export const ThridPage = () => {
                             scale: 1,
                         }}
                         initial={{
-                            y: -100,
                             opacity: 0,
-                            scale: 1.1,
+                            scale: 0.8,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -515,18 +374,16 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             opacity: 1,
-                            scale: 1,
                         }}
                         initial={{
                             x: 100,
                             opacity: 0,
-                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -542,18 +399,16 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             opacity: 1,
-                            scale: 1,
                         }}
                         initial={{
                             x: -100,
                             opacity: 0,
-                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -569,9 +424,9 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             y: 0,
@@ -579,9 +434,8 @@ export const ThridPage = () => {
                             scale: 1,
                         }}
                         initial={{
-                            y: -100,
                             opacity: 0,
-                            scale: 1.1,
+                            scale: 0.8,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -597,18 +451,16 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             opacity: 1,
-                            scale: 1,
                         }}
                         initial={{
                             x: 100,
                             opacity: 0,
-                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -624,18 +476,16 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             opacity: 1,
-                            scale: 1,
                         }}
                         initial={{
                             x: -100,
                             opacity: 0,
-                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -651,9 +501,9 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             y: 0,
@@ -661,9 +511,8 @@ export const ThridPage = () => {
                             scale: 1,
                         }}
                         initial={{
-                            y: -100,
                             opacity: 0,
-                            scale: 1.1,
+                            scale: 0.8,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -679,18 +528,16 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
 
-                    <motion.div
+                    <AnimationDiv
                         whileInView={{
                             x: 0,
                             opacity: 1,
-                            scale: 1,
                         }}
                         initial={{
                             x: 100,
                             opacity: 0,
-                            scale: 1.1,
                         }}
                         className="relative group overflow-hidden"
                     >
@@ -706,7 +553,7 @@ export const ThridPage = () => {
                                 More
                             </span>
                         </div>
-                    </motion.div>
+                    </AnimationDiv>
                 </div>
             </div>
         </div>
