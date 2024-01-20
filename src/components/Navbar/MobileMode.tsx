@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -33,18 +33,8 @@ import { useSession } from "next-auth/react";
 
 const MobileMode = () => {
     const [open, setOpen] = useState(false);
-    const [mounted, setMounted] = useState(false);
     const { status } = useSession();
     const isAuth = status === "authenticated" ? true : false;
-
-    /**
-     * CHECKING COMPONENT IS MOUNTED OR NOT
-     */
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-    if (!mounted) return null;
 
     return (
         <div className="lg:hidden w-full flex justify-around py-5 bg-red-500">
