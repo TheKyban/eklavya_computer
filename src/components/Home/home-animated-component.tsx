@@ -14,6 +14,8 @@ interface CustomMotionDivProps extends HTMLAttributes<HTMLDivElement> {
     animate?: {
         scale?: number;
         opacity?: number;
+        x?: number;
+        y?: number;
     };
 }
 

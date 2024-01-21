@@ -11,6 +11,7 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { AnimationDiv } from "./home-animated-component";
 
 const carousel_Image = [
     {
@@ -52,31 +53,46 @@ export const HomeCarousel = () => {
     }, [api]);
 
     return (
-        <Carousel
-            className="w-full lg:w-[70%] h-[230px] sm:h-[450px] relative"
-            setApi={setApi}
-            plugins={[
-                Autoplay({
-                    delay: 3000,
-                    stopOnInteraction: false,
-                }),
-            ]}
+        <AnimationDiv
+            animate={{
+                x: 0,
+                opacity: 1,
+            }}
+            initial={{
+                opacity: 0,
+                x: 100,
+            }}
+            transition={{
+                delay: 0.1,
+            }}
+            className="w-full lg:w-[70%] "
         >
-            <CarouselContent>
-                {carousel_Image.map((image, idx) => (
-                    <CarouselItem key={idx}>
-                        <div className="relative w-full h-[230px] sm:h-[450px]">
-                            <Image
-                                src={image.url}
-                                fill
-                                alt={image.alt}
-                                className="object-fill w-full h-full"
-                            />
-                        </div>
-                    </CarouselItem>
-                ))}
-            </CarouselContent>
-        </Carousel>
+            <Carousel
+                className="w-full h-[230px] sm:h-[450px] relative"
+                setApi={setApi}
+                plugins={[
+                    Autoplay({
+                        delay: 3000,
+                        stopOnInteraction: false,
+                    }),
+                ]}
+            >
+                <CarouselContent>
+                    {carousel_Image.map((image, idx) => (
+                        <CarouselItem key={idx}>
+                            <div className="relative w-full h-[230px] sm:h-[450px]">
+                                <Image
+                                    src={image.url}
+                                    fill
+                                    alt={image.alt}
+                                    className="object-fill w-full h-full"
+                                />
+                            </div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
+        </AnimationDiv>
     );
 };
 
@@ -95,7 +111,20 @@ export const HomeFamily = () => {
     });
 
     return (
-        <div className="flex-1 relative max-h-[450px] w-full flex flex-col">
+        <AnimationDiv
+            animate={{
+                x: 0,
+                opacity: 1,
+            }}
+            initial={{
+                opacity: 0,
+                x: 100,
+            }}
+            transition={{
+                delay: 0.1,
+            }}
+            className="flex-1 relative max-h-[450px] w-full flex flex-col"
+        >
             <h1 className="text-center bg-red-500 text-white uppercase text-2xl font-semibold py-2">
                 Family
             </h1>
@@ -141,6 +170,6 @@ export const HomeFamily = () => {
 
                 {/* @ts-ignore */}
             </marquee>
-        </div>
+        </AnimationDiv>
     );
 };

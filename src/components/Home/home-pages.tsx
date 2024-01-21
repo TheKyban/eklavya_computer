@@ -22,9 +22,22 @@ export const FirstPage = () => {
         >
             {/* BANNER */}
 
-            <div className="relative w-full h-[80px] sm:h-[150px]">
+            <AnimationDiv
+                animate={{
+                    x: 0,
+                    opacity: 1,
+                }}
+                initial={{
+                    opacity: 0,
+                    x: 100,
+                }}
+                transition={{
+                    delay: 0.1,
+                }}
+                className="relative w-full h-[80px] sm:h-[150px]"
+            >
                 <Image src={"/banner.jpg"} fill alt="banner" />
-            </div>
+            </AnimationDiv>
 
             <div className="w-full flex justify-between gap-2 flex-col lg:flex-row">
                 {/* CAROUSEL */}
@@ -45,7 +58,7 @@ export const SecondPage = () => {
             <div className="flex gap-3 flex-col lg:flex-row">
                 {/* From desk of director */}
                 <AnimationDiv
-                    whileInView={{
+                    animate={{
                         x: 0,
                         opacity: 1,
                     }}
@@ -110,7 +123,20 @@ export const SecondPage = () => {
                 </AnimationDiv>
 
                 {/* NOTICE */}
-                <div className="h-full w-full">
+                <AnimationDiv
+                    animate={{
+                        x: 0,
+                        opacity: 1,
+                    }}
+                    initial={{
+                        opacity: 0,
+                        x: 100,
+                    }}
+                    transition={{
+                        delay: 0.1,
+                    }}
+                    className="h-full"
+                >
                     <h1 className="bg-red-500 text-white font-semibold uppercase text-xl md:text-2xl text-center py-2">
                         Notice
                     </h1>
@@ -168,7 +194,7 @@ export const SecondPage = () => {
                         </ul>
                         {/* @ts-ignore */}
                     </marquee>
-                </div>
+                </AnimationDiv>
             </div>
 
             {/*
