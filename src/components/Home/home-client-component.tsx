@@ -106,7 +106,7 @@ export const HomeFamily = () => {
             const { data } = await axios.get("/api/user-details");
             return data;
         },
-        staleTime: 1000 * 60 * 5,
+        staleTime: 1000 * 60 * 60, // 1hr
     });
 
     return (
