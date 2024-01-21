@@ -12,7 +12,6 @@ export async function POST(request: Request): Promise<NextResponse> {
     try {
         const data = await request.formData();
         const file = data.get("file") as File;
-
         const results = await UPLOAD_TO_CLOUDINARY(file);
 
         return NextResponse.json(results, { status: 201 });
