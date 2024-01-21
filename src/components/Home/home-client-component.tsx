@@ -60,7 +60,7 @@ export const HomeCarousel = () => {
             }}
             initial={{
                 opacity: 0,
-                x: 100,
+                x: -100,
             }}
             transition={{
                 delay: 0.1,
