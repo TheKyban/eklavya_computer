@@ -12,6 +12,29 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const carousel_Image = [
+    {
+        url: "/carousel/squareBanner.jpg",
+        alt: "banner",
+    },
+    {
+        url: "/carousel/banner2.jpg",
+        alt: "banner",
+    },
+    {
+        url: "/carousel/msOffice.jpg",
+        alt: "banner",
+    },
+    {
+        url: "/carousel/keyboarBasics.jpg",
+        alt: "banner",
+    },
+    {
+        url: "/carousel/dca.jpg",
+        alt: "banner",
+    },
+];
+
 export const HomeCarousel = () => {
     const [api, setApi] = useState<CarouselApi>();
 
@@ -30,7 +53,7 @@ export const HomeCarousel = () => {
 
     return (
         <Carousel
-            className="w-full lg:w-[70%] h-[300px] sm:h-[450px] relative"
+            className="w-full lg:w-[70%] h-[230px] sm:h-[450px] relative"
             setApi={setApi}
             plugins={[
                 Autoplay({
@@ -40,56 +63,18 @@ export const HomeCarousel = () => {
             ]}
         >
             <CarouselContent>
-                <CarouselItem className="flex items-center justify-center">
-                    <div className="relative w-full h-[300px] sm:h-[450px]">
-                        <Image
-                            src={"/carousel/squareBanner.jpg"}
-                            fill
-                            alt="bill board"
-                            className="object-fill w-full h-full"
-                        />
-                    </div>
-                </CarouselItem>
-                <CarouselItem>
-                    <div className="relative w-full h-[300px] sm:h-[450px]">
-                        <Image
-                            src={"/carousel/banner2.jpg"}
-                            fill
-                            alt="bill board"
-                            className="w-full h-full"
-                        />
-                    </div>
-                </CarouselItem>
-                <CarouselItem>
-                    <div className="relative w-full h-[300px] sm:h-[450px]">
-                        <Image
-                            src={"/carousel/msOffice.jpg"}
-                            fill
-                            alt="bill board"
-                            className="w-full h-full"
-                        />
-                    </div>
-                </CarouselItem>
-                <CarouselItem>
-                    <div className="relative w-full h-[300px] sm:h-[450px]">
-                        <Image
-                            src={"/carousel/keyboarBasics.jpg"}
-                            fill
-                            alt="bill board"
-                            className="w-full h-full"
-                        />
-                    </div>
-                </CarouselItem>
-                <CarouselItem>
-                    <div className="relative w-full h-[300px] sm:h-[450px]">
-                        <Image
-                            src={"/carousel/dca.jpg"}
-                            fill
-                            alt="bill board"
-                            className="w-full h-full"
-                        />
-                    </div>
-                </CarouselItem>
+                {carousel_Image.map((image, idx) => (
+                    <CarouselItem key={idx}>
+                        <div className="relative w-full h-[230px] sm:h-[450px]">
+                            <Image
+                                src={image.url}
+                                fill
+                                alt={image.alt}
+                                className="object-fill w-full h-full"
+                            />
+                        </div>
+                    </CarouselItem>
+                ))}
             </CarouselContent>
         </Carousel>
     );
