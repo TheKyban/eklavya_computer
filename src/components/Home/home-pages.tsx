@@ -108,14 +108,16 @@ export const SecondPage = () => {
                         </div>
                     </div>
                 </AnimationDiv>
-                <div>
+
+                {/* NOTICE */}
+                <div className="h-full w-full">
                     <h1 className="bg-red-500 text-white font-semibold uppercase text-xl md:text-2xl text-center py-2">
                         Notice
                     </h1>
                     {/* @ts-ignore */}
                     <marquee
                         direction="up"
-                        className="w-[95%] max-h-72 lg:max-h-full sm:w-[80%] lg:w-[385px] m-auto flex"
+                        className="h-full w-[95%] max-h-72 lg:max-h-full sm:w-[80%] lg:w-[385px] m-auto flex"
                     >
                         <ul className="flex flex-col w-full text-center items-center sm:text-start sm:items-start px-3 text-sm gap-5">
                             <li className="flex flex-col sm:flex-row items-center justify-center px-3 gap-2 text-rose-700">
@@ -184,7 +186,7 @@ export const SecondPage = () => {
                     x: 100,
                     opacity: 0,
                 }}
-                className="bg-slate-200 rounded-lg w-[93%] 2xl:w-full"
+                className="bg-slate-200 mt-5 lg:mt-0 rounded-lg w-[93%] 2xl:w-full"
             >
                 <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                     <h1 className="text-4xl font-medium text-zinc-600 xl:text-6xl">

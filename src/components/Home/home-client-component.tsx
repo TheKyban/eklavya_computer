@@ -125,7 +125,7 @@ export const HomeFamily = () => {
                                 height={100}
                                 alt="avatar"
                                 placeholder="empty"
-                                className="rounded-full object-cover min-w-[100px] min-h-[100px] max-w-[100px] max-h-[100px]"
+                                className="rounded-full object-cover min-w-[80px] min-h-[80px] max-w-[80px] max-h-[80px] lg:min-w-[100px] lg:min-h-[100px] lg:max-w-[100px] lg:max-h-[100px]"
                             />
                             <div className="flex flex-col gap-1 font-semibold items-center">
                                 <span className="capitalize text-rose-800">
