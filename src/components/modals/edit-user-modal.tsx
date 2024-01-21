@@ -3,7 +3,6 @@ import { useModal } from "@/hooks/use-modal-store";
 import {
     Dialog,
     DialogContent,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
@@ -47,6 +46,8 @@ export const UserModal = () => {
     const isModalOpen = isOpen && type === "User";
     const { user, searchParams } = data;
     const [state, setState] = useState("");
+    const [isUploading, setIsUploading] = useState(false);
+
     const form = useForm<z.infer<typeof franchiseEditSchema>>({
         resolver: zodResolver(franchiseEditSchema),
         defaultValues: {
@@ -154,17 +155,27 @@ export const UserModal = () => {
                 return;
             }
 
-            if (form.getValues("img")) {
-                await axios.delete(`/api/upload?url=${form.getValues("img")}`);
+            try {
+                setIsUploading(true);
+
+                if (form.getValues("img")) {
+                    await axios.delete(
+                        `/api/upload?url=${form.getValues("img")}`
+                    );
+                }
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                const { data } = await axios.post(`/api/upload`, formData);
+
+                form.setValue("img", data.url);
+                form.setError("img", { message: "" });
+            } catch (error: any) {
+                form.setError("img", { message: error.message });
+            } finally {
+                setIsUploading(false);
             }
-
-            const { data } = await axios.post(
-                `/api/upload?filename=${file.name}`,
-                file
-            );
-
-            form.setValue("img", data.url);
-            form.setError("img", { message: "" });
         }
     };
 
@@ -194,7 +205,7 @@ export const UserModal = () => {
                                     <FormItem className="w-fit">
                                         <Label
                                             htmlFor="img"
-                                            className="cursor-pointer"
+                                            className="cursor-pointer relative"
                                         >
                                             <Image
                                                 src={
@@ -207,6 +218,10 @@ export const UserModal = () => {
                                                 alt="picture"
                                                 className="rounded-full w-[100px] h-[100px]"
                                             />
+
+                                            {isUploading && (
+                                                <Loader className="absolute top-1/3 left-[38%] animate-spin" />
+                                            )}
                                         </Label>
                                         <FormControl>
                                             <Input

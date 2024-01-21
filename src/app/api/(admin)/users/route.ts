@@ -6,7 +6,7 @@ import { per_page } from "@/lib/constants";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { role as ROLE } from "@prisma/client";
-import { del } from "@vercel/blob";
+import { DELETE_FILE } from "@/lib/cloudinary";
 
 /**
  * CREATE USER
@@ -329,7 +329,7 @@ export const DELETE = async (req: Request) => {
             });
         }
 
-        await del(user.img!);
+        DELETE_FILE(user.img!);
 
         return NextResponse.json({
             message: "User Deleted successfully",

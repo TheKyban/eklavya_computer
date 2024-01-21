@@ -6,7 +6,7 @@ import { Prisma } from "../../../../../prisma/prisma";
 import { studentSchema } from "@/lib/schema";
 import { z } from "zod";
 import { per_page } from "@/lib/constants";
-import { del } from "@vercel/blob";
+import { DELETE_FILE } from "@/lib/cloudinary";
 
 /**
  * REGISTER STUDENTS
@@ -399,7 +399,7 @@ export const DELETE = async (req: Request) => {
             });
         }
 
-        del(student.img);
+        DELETE_FILE(student.img);
 
         return NextResponse.json({
             message: "Student Deleted successfully",

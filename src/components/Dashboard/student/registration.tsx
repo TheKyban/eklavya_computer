@@ -116,11 +116,9 @@ const StudentRegistration = () => {
                         `/api/upload?url=${form.getValues("img")}`
                     );
                 }
-
-                const { data } = await axios.post(
-                    `/api/upload?filename=${file.name}`,
-                    file
-                );
+                const formData = new FormData();
+                formData.append("file", file);
+                const { data } = await axios.post(`/api/upload`, formData);
 
                 form.setValue("img", data.url);
                 form.setError("img", { message: "" });

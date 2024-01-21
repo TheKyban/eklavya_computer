@@ -32,13 +32,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-    CalendarIcon,
-    CircleUser,
-    GraduationCap,
-    Loader,
-    Smile,
-} from "lucide-react";
+import { CalendarIcon, GraduationCap, Loader } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { studentSchema } from "@/lib/schema";
@@ -57,6 +51,8 @@ export const EditStudentModal = () => {
     const isModalOpen = isOpen && type === "editStudent";
     const { student, searchParams } = data;
     const [state, setState] = useState("");
+    const [isUploading, setIsUploading] = useState(false);
+
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
     });
@@ -161,17 +157,27 @@ export const EditStudentModal = () => {
                 return;
             }
 
-            if (form.getValues("img")) {
-                await axios.delete(`/api/upload?url=${form.getValues("img")}`);
+            try {
+                setIsUploading(true);
+
+                if (form.getValues("img")) {
+                    await axios.delete(
+                        `/api/upload?url=${form.getValues("img")}`
+                    );
+                }
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                const { data } = await axios.post(`/api/upload`, formData);
+
+                form.setValue("img", data.url);
+                form.setError("img", { message: "" });
+            } catch (error: any) {
+                form.setError("img", { message: error.message });
+            } finally {
+                setIsUploading(false);
             }
-
-            const { data } = await axios.post(
-                `/api/upload?filename=${file.name}`,
-                file
-            );
-
-            form.setValue("img", data.url);
-            form.setError("img", { message: "" });
         }
     };
 
@@ -199,7 +205,7 @@ export const EditStudentModal = () => {
                                 <FormItem className="w-fit">
                                     <Label
                                         htmlFor="img"
-                                        className="cursor-pointer"
+                                        className="cursor-pointer relative"
                                     >
                                         <Image
                                             src={field.value || "/noavatar.png"}
@@ -209,6 +215,10 @@ export const EditStudentModal = () => {
                                             alt="picture"
                                             className="rounded-full w-[100px] h-[100px]"
                                         />
+
+                                        {isUploading && (
+                                            <Loader className="absolute top-1/3 left-[38%] animate-spin" />
+                                        )}
                                     </Label>
                                     <FormControl>
                                         <Input
