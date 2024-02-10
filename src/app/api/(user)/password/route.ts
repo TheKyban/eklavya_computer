@@ -71,7 +71,7 @@ export const POST = async (req: Request) => {
             },
         });
 
-        if (!changePasswordSchema) {
+        if (!changedPassword) {
             return NextResponse.json({
                 message: "Something went wrong.",
                 success: false,

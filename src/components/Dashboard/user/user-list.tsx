@@ -85,7 +85,6 @@ const UserList = ({
                                         {user.isActive ? "Yes" : "No"}
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        {/* BTN(STUDENT VERIFICATION PAGE)  */}
                                         <>
                                             {/* EDIT BTN */}
                                             <Button

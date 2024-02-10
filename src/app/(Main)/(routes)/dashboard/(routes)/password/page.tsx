@@ -18,7 +18,6 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import { changePasswordSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";

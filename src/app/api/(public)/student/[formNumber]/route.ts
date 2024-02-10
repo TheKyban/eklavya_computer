@@ -30,7 +30,7 @@ export const GET = async (
 
         if (!student) {
             return NextResponse.json(
-                { message: "Not Verified." },
+                { message: "Invalid Registration Number or Not Verified." },
                 { status: 200 }
             );
         }
