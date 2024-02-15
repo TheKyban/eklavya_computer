@@ -6,7 +6,7 @@ import {
     CarouselContent,
     CarouselItem,
     CarouselApi,
-} from "../ui/carousel";
+} from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useEffect, useState } from "react";

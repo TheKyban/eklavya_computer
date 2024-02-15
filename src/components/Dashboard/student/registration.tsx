@@ -178,6 +178,7 @@ const StudentRegistration = () => {
                                     <Input
                                         className="hidden max-w-0 w-0 h-0"
                                         type="file"
+                                        accept="image/*"
                                         id="img"
                                         value={""}
                                         onChange={(e) => handleImage(e)}
