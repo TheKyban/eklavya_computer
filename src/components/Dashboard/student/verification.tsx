@@ -40,7 +40,7 @@ interface userType {
 
 type verify = "false" | "true";
 
-const ManageCertificate = ({
+const StudentVerificationManagement = ({
     searchParams,
 }: {
     searchParams: { page: string; registration: string };
@@ -132,7 +132,7 @@ const ManageCertificate = ({
                     </span>
                 </div>
                 <Search
-                    className="w-32 md:w-44"
+                    className="w-32 md:w-44 text-xs lg:text-sm"
                     placeholder="Registration"
                     queryName="registration"
                 />
@@ -303,4 +303,4 @@ const ManageCertificate = ({
     );
 };
 
-export default ManageCertificate;
+export default StudentVerificationManagement;

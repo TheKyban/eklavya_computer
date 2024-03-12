@@ -27,8 +27,8 @@ const UserList = ({
     const { onOpen } = useModal();
 
     const { data, isLoading } = useUsers(
-        searchParams.page,
-        searchParams.userId
+        searchParams.page || "1",
+        searchParams.userId || ""
     );
 
     return (
@@ -38,7 +38,7 @@ const UserList = ({
                     <UserCog className="text-red-600 w-5 h-5" />
                     Manage Users
                 </h1>
-                <Search placeholder="UserId" queryName="userId" />
+                <Search placeholder="UserId" queryName="userId" className="text-xs lg:text-sm" />
             </div>
 
             <div>

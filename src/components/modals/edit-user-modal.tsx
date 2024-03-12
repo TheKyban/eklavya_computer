@@ -40,6 +40,7 @@ import { franchiseEditSchema } from "@/lib/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { states } from "@/lib/stateAndDistrict";
 import { IMAGE_SIZE } from "@/lib/constants";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 export const UserModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -92,53 +93,27 @@ export const UserModal = () => {
             form.setValue("role", user?.role);
         }
     }, [data, form, user]);
-    const queryClient = useQueryClient();
+    const { updateUser } = useCustumQuery();
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof franchiseEditSchema>) => {
             const { data } = await axios.put("/api/users", values);
             return data;
         },
 
-        onSuccess(data, variables) {
+        onSuccess(data) {
             if (data) {
                 toast({ description: data.message });
             }
             if (data.success) {
-                queryClient.setQueryData(
-                    ["users", searchParams?.page, searchParams?.userId],
-                    (old: {
-                        total: number;
-                        users: z.infer<typeof franchiseEditSchema>[];
-                    }) => {
-                        const users = old.users.map((user) =>
-                            user.id === variables.id
-                                ? {
-                                      img: variables.img,
-                                      id: variables.id,
-                                      isActive: variables.isActive,
-                                      password: variables.password,
-                                      role: variables.role,
-                                      userId: variables.userId,
-                                      name: variables.name,
-                                      branch: variables.branch,
-                                      email: variables.email,
-                                      phone: variables.phone,
-                                      address: {
-                                          state: variables.state,
-                                          district: variables.district,
-                                          pincode: variables.pincode,
-                                          street: variables.address,
-                                      },
-                                  }
-                                : user
-                        );
-
-                        return {
-                            total: old.total,
-                            users,
-                        };
-                    }
+                updateUser(
+                    [
+                        "users",
+                        searchParams?.page || "1",
+                        searchParams?.registration || "",
+                    ],
+                    data?.user
                 );
+
                 form.reset();
                 onClose();
             }

@@ -46,7 +46,7 @@ export const DeleteComputerTypingMarksModal = () => {
                 [
                     "general-students-entered",
                     searchParams?.page || "1",
-                    "none",
+                    searchParams?.registration || "none",
                     true,
                 ],
                 computerTypingMarks?.formNumber as string

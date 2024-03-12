@@ -38,7 +38,7 @@ const ComputerTypingEnteredMarks = ({
                     Computer Typing
                 </h1>
                 <Search
-                    className="w-32 md:w-44"
+                    className="w-32 md:w-44 text-xs lg:text-sm"
                     placeholder="Registration"
                     queryName="registration"
                 />

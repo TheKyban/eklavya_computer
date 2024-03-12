@@ -81,7 +81,7 @@ export const POST = async (req: Request) => {
             state,
             userId,
         } = data;
-        const franchise = await Prisma.user.create({
+        const user = await Prisma.user.create({
             data: {
                 name,
                 email,
@@ -102,6 +102,7 @@ export const POST = async (req: Request) => {
         return NextResponse.json({
             message: "Franchise Registered",
             success: true,
+            user,
         });
     } catch (error) {
         console.log("[USER POST]", error);
@@ -286,6 +287,7 @@ export const PUT = async (req: Request) => {
         return NextResponse.json({
             message: "Successfully updated",
             success: true,
+            user,
         });
     } catch (error) {
         console.log(error);

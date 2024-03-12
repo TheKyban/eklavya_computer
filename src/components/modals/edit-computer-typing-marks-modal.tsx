@@ -79,7 +79,7 @@ export const EditComputerTypingMarksModal = () => {
                 [
                     "general-students-entered",
                     searchParams?.page || "1",
-                    "none",
+                    searchParams?.registration || "none",
                     true,
                 ],
                 variables

@@ -12,13 +12,12 @@ import {
 import { poppins } from "@/lib/fonts";
 import { Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { Eye, UserRoundCheck, View } from "lucide-react";
-import axios from "axios";
+import { Eye, UserRoundCheck } from "lucide-react";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
 import { format } from "date-fns";
-import { useQuery } from "@tanstack/react-query";
 import { per_page } from "@/lib/constants";
+import { useCertificate } from "@/hooks/useFetch";
 
 const CertificateList = ({
     searchParams,
@@ -31,26 +30,11 @@ const CertificateList = ({
 }) => {
     const { onOpen } = useModal();
 
-    const url = `/api/certificate?${
-        searchParams.pending ? "pending=true&" : ""
-    }page=${searchParams.page}${
-        !!searchParams.registration
-            ? "&formNumber=" + searchParams.registration
-            : ""
-    }`;
-    const { data, isLoading } = useQuery({
-        queryKey: [
-            searchParams?.pending
-                ? "pending_certificate"
-                : "verified_certificate",
-            searchParams.page || "1",
-            searchParams.registration ? searchParams.registration : "none",
-        ],
-        queryFn: async () => {
-            const { data } = await axios.get(url);
-            return data;
-        },
-    });
+    const { data, isLoading } = useCertificate(
+        searchParams.pending || false,
+        searchParams.page,
+        searchParams.registration
+    );
 
     return (
         <div className="px-5 py-4 flex flex-col gap-4">
@@ -62,7 +46,7 @@ const CertificateList = ({
                         : "Issued Certificate"}
                 </h1>
                 <Search
-                    className="w-32 md:w-44"
+                    className="w-32 md:w-44 text-xs lg:text-sm"
                     placeholder="Registration"
                     queryName="registration"
                 />

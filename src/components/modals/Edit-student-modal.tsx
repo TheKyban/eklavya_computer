@@ -96,7 +96,7 @@ export const EditStudentModal = () => {
             return data;
         },
 
-        onSuccess(data, variables) {
+        onSuccess(data) {
             if (data) {
                 toast({ description: data.message });
                 form.reset();

@@ -76,7 +76,7 @@ export const EditGeneralMarks = () => {
                 [
                     "general-students-entered",
                     searchParams?.page || "1",
-                    "none",
+                    searchParams?.registration || "none",
                     false,
                 ],
                 variables

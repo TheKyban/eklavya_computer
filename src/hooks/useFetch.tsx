@@ -114,3 +114,53 @@ export const useStudentMarkEntered = (
         },
     });
 };
+
+export const useCertificate = (
+    pending: boolean,
+    page: string,
+    registration: string
+) => {
+    const url = `/api/certificate?${
+        pending ? "pending=true&" : ""
+    }page=${page}${!!registration ? "&formNumber=" + registration : ""}`;
+    return useQuery({
+        queryKey: [
+            pending ? "pending_certificate" : "verified_certificate",
+            page || "1",
+            registration || "none",
+        ],
+        queryFn: async () => {
+            const { data } = await axios.get(url);
+            return data;
+        },
+    });
+};
+
+export const useVerifyCertificate = (
+    registration: string,
+    page: string,
+    user: string,
+    course: string,
+    type: string
+) => {
+    return useQuery({
+        queryKey: [
+            "students",
+            registration || "none",
+            page || "1",
+            user,
+            course,
+            type,
+        ],
+        queryFn: async () => {
+            const { data } = await axios(
+                `/api/verify/marks?userId=${user}&${
+                    course === "computerTyping" ? "computerTyping=true&" : "&"
+                }verified=${type}&page=${page ? page : "1"}${
+                    !!registration ? "&formNumber=" + registration : ""
+                }`
+            );
+            return data;
+        },
+    });
+};

@@ -46,7 +46,7 @@ export const DeleteGeneralMarksModal = () => {
                 [
                     "general-students-entered",
                     searchParams?.page || "1",
-                    "none",
+                    searchParams?.registration || "none",
                     false,
                 ],
                 generalMarks?.formNumber as string

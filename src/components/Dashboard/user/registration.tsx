@@ -32,6 +32,7 @@ import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { states } from "@/lib/stateAndDistrict";
 import { IMAGE_SIZE } from "@/lib/constants";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 const UserRegistration = ({}) => {
     const [state, setState] = useState("");
@@ -55,6 +56,8 @@ const UserRegistration = ({}) => {
         },
     });
 
+    const { addUser } = useCustumQuery();
+
     const onSubmit = async (values: z.infer<typeof franchiseSchema>) => {
         try {
             const { data } = await axios.post("/api/users", values);
@@ -66,6 +69,7 @@ const UserRegistration = ({}) => {
             if (data.success) {
                 setState("");
                 form.reset();
+                addUser(["users", "1", ""], data?.user);
             }
         } catch (error) {
             console.log(error);

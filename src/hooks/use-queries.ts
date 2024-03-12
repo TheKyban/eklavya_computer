@@ -1,5 +1,5 @@
 import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
-import { Student } from "@prisma/client";
+import { Student, User } from "@prisma/client";
 import { QueryKey, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -16,31 +16,45 @@ interface markType {
 export const useCustumQuery = () => {
     const queryClient = useQueryClient();
 
-    // const updateData = (key: QueryKey, data: queryType) => {
-    //     queryClient.setQueryData(key, (old: queryType[]) => {
-    //         const allData = old?.map((client) =>
-    //             client?._id === data?._id
-    //                 ? {
-    //                       ...data,
-    //                   }
-    //                 : client
-    //         );
-    //         return allData;
-    //     });
-    // };
+    const addUser = (key: QueryKey, data: User) => {
+        queryClient.setQueryData(
+            key,
+            (old: { total: number; users: User[] }) => {
+                return {
+                    total: old.total + 1,
+                    users: [data, ...old.users],
+                };
+            }
+        );
+    };
 
-    // const removeData = (key: QueryKey, id: string) => {
-    //     queryClient.setQueryData(key, (old: queryType[]) => {
-    //         const allData = old?.filter((data) => data?._id !== id);
-    //         return allData;
-    //     });
-    // };
-    // const addData = (key: QueryKey, data: queryType) => {
-    //     queryClient.setQueryData(key, (old: queryType[]) => {
-    //         const allData = [data, ...old];
-    //         return allData;
-    //     });
-    // };
+    const removeUser = (key: QueryKey, id: string) => {
+        queryClient.setQueryData(
+            key,
+            (old: { total: number; users: User[] }) => {
+                const users = old.users.filter((user) => user?.id !== id);
+                return {
+                    total: old.total - 1,
+                    users,
+                };
+            }
+        );
+    };
+    const updateUser = (key: QueryKey, data: User) => {
+        queryClient.setQueryData(
+            key,
+            (old: { total: number; users: User[] }) => {
+                const users = old.users.map((user) =>
+                    user.id === data.id ? data : user
+                );
+                console.log(old);
+                return {
+                    total: old.total,
+                    users,
+                };
+            }
+        );
+    };
     const removeStudent = (key: QueryKey, formNumber: string) => {
         queryClient.setQueryData(
             key,
@@ -142,5 +156,8 @@ export const useCustumQuery = () => {
         addMark,
         removeMark,
         updateMark,
+        addUser,
+        removeUser,
+        updateUser,
     };
 };

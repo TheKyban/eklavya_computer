@@ -15,12 +15,15 @@ import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
 import { User } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 export const DeleteUserModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "deleteUser";
     const { user, searchParams } = data;
     const queryClient = useQueryClient();
+
+    const { removeUser } = useCustumQuery();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
@@ -35,18 +38,13 @@ export const DeleteUserModal = () => {
                 onClose();
             }
             if (!!data?.success) {
-                queryClient.setQueryData(
-                    ["users", searchParams?.page, searchParams?.userId],
-                    (old: { total: number; users: User[] }) => {
-                        const users = old.users.filter(
-                            (Singaluser) => Singaluser.id !== user?.id
-                        );
-
-                        return {
-                            total: old.total,
-                            users,
-                        };
-                    }
+                removeUser(
+                    [
+                        "users",
+                        searchParams?.page || "1",
+                        searchParams?.userId || "",
+                    ],
+                    user?.id as string
                 );
             }
         },
