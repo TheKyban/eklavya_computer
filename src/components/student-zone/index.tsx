@@ -1,12 +1,8 @@
 import { Student } from "@prisma/client";
 import styles from "./page.module.css";
-import {
-    Card,
-    CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
-
 
 export const Certificate = ({ student }: { student: Student }) => {
     if (!student.certificate) {
@@ -48,9 +44,9 @@ export const RegistrationVerify = ({
     return (
         <Card
             id={styles.registrationVerify}
-            className="m-auto max-w-xl lg:min-w-[500px] relative bg-transparent py-4"
+            className="m-auto  relative bg-inherit py-4 overflow-auto"
         >
-            <CardContent>
+            <CardContent className="min-w-[500px]">
                 <Image src={img} height={100} width={100} alt="profile img" />
                 <Table>
                     <TableBody>

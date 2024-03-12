@@ -49,10 +49,7 @@ const Marks = () => {
                         </TabsTrigger>
                     </TabsList>
                     <TabsContent value="general">
-                        <GeneralMarksEntry
-                            page={page}
-                            registration={registration}
-                        />
+                        <GeneralMarksEntry />
                     </TabsContent>
                     <TabsContent value="typing">
                         <TypingMarksEntry
