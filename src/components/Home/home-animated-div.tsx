@@ -10,6 +10,7 @@ interface CustomMotionDivProps extends HTMLAttributes<HTMLDivElement> {
     initial?: { x?: number; y?: number; opacity?: number; scale?: number };
     transition?: {
         delay?: number;
+        duration?: number;
     };
     animate?: {
         scale?: number;
@@ -31,7 +32,13 @@ export const AnimationDiv: FC<CustomMotionDivProps> = ({
         <motion.div
             initial={initial}
             whileInView={whileInView}
-            transition={transition}
+            transition={{
+                type: "tween",
+                ...transition,
+            }}
+            viewport={{
+                once: true,
+            }}
             animate={animate}
             className={cn(className)}
         >

@@ -11,7 +11,7 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { AnimationDiv } from "./home-animated-component";
+import { AnimationDiv } from "./home-animated-div";
 
 const carousel_Image = [
     {
@@ -63,7 +63,8 @@ export const HomeCarousel = () => {
                 x: -100,
             }}
             transition={{
-                delay: 0.1,
+                delay: 0.4,
+                duration: 0.6,
             }}
             className="w-full lg:w-[70%] "
         >
@@ -121,7 +122,8 @@ export const HomeFamily = () => {
                 x: 100,
             }}
             transition={{
-                delay: 0.1,
+                delay: 0.4,
+                duration: 0.6,
             }}
             className="flex-1 relative max-h-[450px] w-full flex flex-col"
         >
