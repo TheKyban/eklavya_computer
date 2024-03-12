@@ -13,12 +13,11 @@ import { poppins } from "@/lib/fonts";
 import { Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Pen, Trash, UserRoundCheck } from "lucide-react";
-import axios from "axios";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
 import { format } from "date-fns";
-import { useQuery } from "@tanstack/react-query";
 import { per_page } from "@/lib/constants";
+import { useStudents } from "@/hooks/useFetch";
 
 const StudentList = ({
     searchParams,
@@ -31,24 +30,11 @@ const StudentList = ({
 }) => {
     const { onOpen } = useModal();
 
-    const url = `/api/student?${
-        searchParams.pending ? "pending=true&" : ""
-    }page=${searchParams.page}${
-        !!searchParams.registration
-            ? "&formNumber=" + searchParams.registration
-            : ""
-    }`;
-    const { data, isLoading } = useQuery({
-        queryKey: [
-            searchParams?.pending ? "pending_list" : "verified_list",
-            searchParams.page || "1",
-            searchParams.registration ? searchParams.registration : "none",
-        ],
-        queryFn: async () => {
-            const { data } = await axios.get(url);
-            return data;
-        },
-    });
+    const { data, isLoading } = useStudents(
+        searchParams.page || "1",
+        searchParams.pending,
+        searchParams.registration
+    );
 
     return (
         <div className="px-5 py-4 flex flex-col gap-4">

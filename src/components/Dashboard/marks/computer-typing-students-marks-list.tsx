@@ -11,18 +11,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useModal } from "@/hooks/use-modal-store";
+import { useStudentMarkEntered } from "@/hooks/useFetch";
 import { per_page } from "@/lib/constants";
 import { poppins } from "@/lib/fonts";
-import { typingSpeedMarkSchema } from "@/lib/schema";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Pen, TextCursorInput, Trash } from "lucide-react";
-import { z } from "zod";
-
-interface queryType {
-    total: number;
-    studentsWithMarks: z.infer<typeof typingSpeedMarkSchema>[];
-}
 
 const ComputerTypingEnteredMarks = ({
     page,
@@ -32,21 +24,11 @@ const ComputerTypingEnteredMarks = ({
     page: string | null;
 }) => {
     const { onOpen } = useModal();
-    const { data, isLoading } = useQuery<queryType>({
-        queryKey: [
-            "computer-typing-students-entered",
-            page ? page : "1",
-            registration ? registration : "none",
-        ],
-        queryFn: async () => {
-            const { data } = await axios(
-                `/api/marks/entered?computerTyping=true&page=${page}${
-                    !!registration ? "&formNumber=" + registration : ""
-                }`
-            );
-            return data;
-        },
-    });
+    const { data, isLoading } = useStudentMarkEntered(
+        page || "1",
+        registration || "",
+        true
+    );
 
     return (
         <div className="px-5 py-4 flex flex-col gap-4">

@@ -13,15 +13,15 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader } from "lucide-react";
 import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { generalMarksSchema } from "@/lib/schema";
-import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 export const DeleteGeneralMarksModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "deleteGeneralMarks";
     const { generalMarks, searchParams } = data;
-    const queryClient = useQueryClient();
+
+    const { removeMark, addFormNumber } = useCustumQuery();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
@@ -42,40 +42,23 @@ export const DeleteGeneralMarksModal = () => {
             /**
              * REMOVING MARKS FROM ENTERED LIST
              */
-            queryClient.setQueryData(
+            removeMark(
                 [
                     "general-students-entered",
-                    searchParams?.page,
-                    searchParams?.registration,
+                    searchParams?.page || "1",
+                    "none",
+                    false,
                 ],
-                (oldData: {
-                    total: number;
-                    studentsWithMarks: z.infer<typeof generalMarksSchema>[];
-                }) => {
-                    const studentsWithMarks = oldData.studentsWithMarks.filter(
-                        (student) =>
-                            student.formNumber !== generalMarks?.formNumber
-                    );
-
-                    return {
-                        total: oldData.total - 1,
-                        studentsWithMarks,
-                    };
-                }
+                generalMarks?.formNumber as string
             );
 
             /**
              * ADD REGISTRATION NUMBER TO ENTERY LIST
              */
 
-            queryClient.setQueryData(
-                ["general-students"],
-                (oldData: { formNumber: string }[]) => {
-                    return [
-                        { formNumber: generalMarks?.formNumber },
-                        ...oldData,
-                    ];
-                }
+            addFormNumber(
+                ["computer-students-mark", false],
+                Number(generalMarks?.formNumber)
             );
         },
     });

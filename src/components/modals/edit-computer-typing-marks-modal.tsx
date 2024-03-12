@@ -29,6 +29,7 @@ import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { typingSpeedMarkSchema } from "@/lib/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 export const EditComputerTypingMarksModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -50,7 +51,9 @@ export const EditComputerTypingMarksModal = () => {
             form.setValue("englishTyping", computerTypingMarks.englishTyping);
         }
     }, [form, computerTypingMarks]);
-    const queryClient = useQueryClient();
+
+    const { updateMark } = useCustumQuery();
+
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof typingSpeedMarkSchema>) => {
             const { data } = await axios.put(
@@ -72,29 +75,14 @@ export const EditComputerTypingMarksModal = () => {
             /**
              * Replacing marks with updated marks
              */
-            queryClient.setQueryData(
+            updateMark(
                 [
-                    "computer-typing-students-entered",
-                    searchParams?.page,
-                    searchParams?.registration,
+                    "general-students-entered",
+                    searchParams?.page || "1",
+                    "none",
+                    true,
                 ],
-                (oldMarks: {
-                    total: number;
-                    studentsWithMarks: z.infer<typeof typingSpeedMarkSchema>[];
-                }) => {
-                    const studentsWithMarks = oldMarks.studentsWithMarks.map(
-                        (mark) => {
-                            return mark.formNumber === variables.formNumber
-                                ? variables
-                                : mark;
-                        }
-                    );
-
-                    return {
-                        total: oldMarks.total,
-                        studentsWithMarks,
-                    };
-                }
+                variables
             );
         },
     });

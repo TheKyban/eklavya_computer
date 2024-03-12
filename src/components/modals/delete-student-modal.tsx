@@ -8,22 +8,19 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
-
 import { Loader } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { studentSchema } from "@/lib/schema";
-import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 export const DeleteStudentModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "deleteStudent";
     const { student, searchParams } = data;
 
-    const queryClient = useQueryClient();
+    const { removeStudent } = useCustumQuery();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
@@ -38,25 +35,13 @@ export const DeleteStudentModal = () => {
                 onClose();
             }
             if (!!data?.success) {
-                queryClient.setQueryData(
+                removeStudent(
                     [
                         searchParams?.type,
-                        searchParams?.page,
+                        searchParams?.page || "1",
                         searchParams?.registration,
                     ],
-                    (old: {
-                        total: number;
-                        students: z.infer<typeof studentSchema>[];
-                    }) => {
-                        const students = old.students.filter(
-                            (oldStudent) =>
-                                oldStudent.formNumber !== student?.formNumber
-                        );
-                        return {
-                            total: old.total,
-                            students,
-                        };
-                    }
+                    student?.formNumber as string
                 );
             }
         },

@@ -13,15 +13,14 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader } from "lucide-react";
 import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { typingSpeedMarkSchema } from "@/lib/schema";
-import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 export const DeleteComputerTypingMarksModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "deleteComputerTypingMarks";
     const { computerTypingMarks, searchParams } = data;
-    const queryClient = useQueryClient();
+    const { addFormNumber, removeMark } = useCustumQuery();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
@@ -43,46 +42,26 @@ export const DeleteComputerTypingMarksModal = () => {
             /**
              * REMOVING MARKS FROM ENTERED LIST
              */
-            queryClient.setQueryData(
+            removeMark(
                 [
-                    "computer-typing-students-entered",
-                    searchParams?.page,
-                    searchParams?.registration,
+                    "general-students-entered",
+                    searchParams?.page || "1",
+                    "none",
+                    true,
                 ],
-                (oldData: {
-                    total: number;
-                    studentsWithMarks: z.infer<typeof typingSpeedMarkSchema>[];
-                }) => {
-                    const studentsWithMarks = oldData.studentsWithMarks.filter(
-                        (student) =>
-                            student.formNumber !==
-                            computerTypingMarks?.formNumber
-                    );
-
-                    return {
-                        total: oldData.total - 1,
-                        studentsWithMarks,
-                    };
-                }
+                computerTypingMarks?.formNumber as string
             );
 
             /**
              * ADD REGISTRATION NUMBER TO ENTERY LIST
              */
 
-            queryClient.setQueryData(
-                ["computer-typing-students"],
-                (oldData: { formNumber: string }[]) => {
-                    return [
-                        { formNumber: computerTypingMarks?.formNumber },
-                        ...oldData,
-                    ];
-                }
+            addFormNumber(
+                ["computer-students-mark", true],
+                Number(computerTypingMarks?.formNumber)
             );
         },
     });
-
-    //  ["computer-typing-students-entered"],
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>

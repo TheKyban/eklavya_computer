@@ -32,6 +32,8 @@ export const GET = async (req: Request) => {
         const formNumber = searchParams.get("formNumber") || "";
         const page = Number(searchParams.get("page")) || 1;
 
+        console.log(req.url);
+
         const studentsWithMarks = await Prisma.student.findMany({
             take: per_page,
             skip: per_page * (page - 1),

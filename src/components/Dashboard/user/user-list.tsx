@@ -14,11 +14,10 @@ import { User } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Pen, Trash } from "lucide-react";
 import { UserCog } from "lucide-react";
-import axios from "axios";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
-import { useQuery } from "@tanstack/react-query";
 import { per_page } from "@/lib/constants";
+import { useUsers } from "@/hooks/useFetch";
 
 const UserList = ({
     searchParams,
@@ -26,16 +25,11 @@ const UserList = ({
     searchParams: { page: string; userId: string };
 }) => {
     const { onOpen } = useModal();
-    const url = `/api/users?page=${searchParams.page}${
-        !!searchParams.userId ? "&userId=" + searchParams.userId : ""
-    }`;
-    const { data, isLoading } = useQuery({
-        queryKey: ["users", searchParams?.page || "1", searchParams?.userId],
-        queryFn: async () => {
-            const { data } = await axios.get(url);
-            return data;
-        },
-    });
+
+    const { data, isLoading } = useUsers(
+        searchParams.page,
+        searchParams.userId
+    );
 
     return (
         <div className="px-5 py-4 flex flex-col gap-4">

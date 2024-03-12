@@ -27,7 +27,8 @@ import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { generalMarksSchema } from "@/lib/schema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 export const EditGeneralMarks = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -52,7 +53,7 @@ export const EditGeneralMarks = () => {
             form.setValue("project", generalMarks.project);
         }
     }, [form, generalMarks]);
-    const queryClient = useQueryClient();
+    const { updateMark } = useCustumQuery();
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof generalMarksSchema>) => {
             const { data } = await axios.put("/api/marks", values);
@@ -71,29 +72,14 @@ export const EditGeneralMarks = () => {
             /**
              * Replacing marks with updated marks
              */
-            queryClient.setQueryData(
+            updateMark(
                 [
                     "general-students-entered",
-                    searchParams?.page,
-                    searchParams?.registration,
+                    searchParams?.page || "1",
+                    "none",
+                    false,
                 ],
-                (oldMarks: {
-                    total: number;
-                    studentsWithMarks: z.infer<typeof generalMarksSchema>[];
-                }) => {
-                    const studentsWithMarks = oldMarks.studentsWithMarks.map(
-                        (mark) => {
-                            return mark.formNumber === variables.formNumber
-                                ? variables
-                                : mark;
-                        }
-                    );
-
-                    return {
-                        total: oldMarks.total,
-                        studentsWithMarks,
-                    };
-                }
+                variables
             );
         },
     });
@@ -151,29 +137,6 @@ export const EditGeneralMarks = () => {
                                 </FormItem>
                             )}
                         />
-                        {/* Practical */}
-                        <FormField
-                            control={form.control}
-                            name="practical"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Practical Marks</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            onChange={(e) =>
-                                                field.onChange(
-                                                    Number(e.target.value)
-                                                )
-                                            }
-                                            placeholder="Practical marks"
-                                            type="number"
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
                         {/* Viva */}
                         <FormField
                             control={form.control}
@@ -197,6 +160,30 @@ export const EditGeneralMarks = () => {
                                 </FormItem>
                             )}
                         />
+                        {/* Practical */}
+                        <FormField
+                            control={form.control}
+                            name="practical"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Practical Marks</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            onChange={(e) =>
+                                                field.onChange(
+                                                    Number(e.target.value)
+                                                )
+                                            }
+                                            placeholder="Practical marks"
+                                            type="number"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
                         {/* Projects */}
                         <FormField
                             control={form.control}

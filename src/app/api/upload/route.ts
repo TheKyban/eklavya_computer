@@ -28,6 +28,5 @@ export async function DELETE(request: Request) {
     const urlToDelete = searchParams.get("url") as string;
 
     const result = await DELETE_FILE(urlToDelete);
-    console.log(result);
     return NextResponse.json(result, { status: 200 });
 }

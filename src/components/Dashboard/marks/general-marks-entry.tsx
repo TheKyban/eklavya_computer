@@ -20,22 +20,17 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
+import { useCustumQuery } from "@/hooks/use-queries";
+import { useStudentMark } from "@/hooks/useFetch";
 import { generalMarksSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { FileSpreadsheet, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-type queryType = { formNumber: string };
-const GeneralMarksEntry = ({
-    page,
-    registration,
-}: {
-    registration: string | null;
-    page: string | null;
-}) => {
+const GeneralMarksEntry = () => {
     const form = useForm<z.infer<typeof generalMarksSchema>>({
         resolver: zodResolver(generalMarksSchema),
         defaultValues: {
@@ -45,14 +40,10 @@ const GeneralMarksEntry = ({
             written: 0,
         },
     });
-    const { data, isLoading } = useQuery<queryType[]>({
-        queryKey: ["general-students"],
-        queryFn: async () => {
-            const { data } = await axios("/api/marks");
-            return data;
-        },
-    });
-    const queryClient = useQueryClient();
+
+    const { data, isLoading } = useStudentMark();
+    const { removeFormNumber, addMark } = useCustumQuery();
+
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof generalMarksSchema>) => {
             const { data } = await axios.post("/api/marks", values);
@@ -69,38 +60,17 @@ const GeneralMarksEntry = ({
             /**
              * Removing registration number from entry list
              */
-            queryClient.setQueryData(
-                ["general-students"],
-                (oldData: queryType[]) => {
-                    return oldData.filter(
-                        (data) =>
-                            Number(data?.formNumber) !==
-                            Number(variables.formNumber)
-                    );
-                }
+            removeFormNumber(
+                ["computer-students-mark", false],
+                Number(variables.formNumber)
             );
 
             /**
              * Adding registration and marks to entered list
              */
-            queryClient.setQueryData(
-                [
-                    "general-students-entered",
-                    page ? page : "1",
-                    registration ? registration : "none",
-                ],
-                (oldData: {
-                    total: number;
-                    studentsWithMarks: z.infer<typeof generalMarksSchema>[];
-                }) => {
-                    return {
-                        total: oldData.total + 1,
-                        studentsWithMarks: [
-                            variables,
-                            ...oldData.studentsWithMarks,
-                        ],
-                    };
-                }
+            addMark(
+                ["general-students-entered", "1", "none", false],
+                variables
             );
         },
     });

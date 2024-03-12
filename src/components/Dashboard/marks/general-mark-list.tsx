@@ -11,18 +11,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useModal } from "@/hooks/use-modal-store";
+import { useStudentMarkEntered } from "@/hooks/useFetch";
 import { per_page } from "@/lib/constants";
 import { poppins } from "@/lib/fonts";
-import { generalMarksSchema } from "@/lib/schema";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { FileSpreadsheet, Pen, Trash } from "lucide-react";
-import { z } from "zod";
-
-interface queryType {
-    total: number;
-    studentsWithMarks: z.infer<typeof generalMarksSchema>[];
-}
 
 const GeneralEntredMarks = ({
     page,
@@ -32,21 +24,11 @@ const GeneralEntredMarks = ({
     page: string | null;
 }) => {
     const { onOpen } = useModal();
-    const { data, isLoading } = useQuery<queryType>({
-        queryKey: [
-            "general-students-entered",
-            page ? page : "1",
-            registration ? registration : "none",
-        ],
-        queryFn: async () => {
-            const { data } = await axios(
-                `/api/marks/entered?&page=${page}${
-                    !!registration ? "&formNumber=" + registration : ""
-                }`
-            );
-            return data;
-        },
-    });
+    const { data, isLoading } = useStudentMarkEntered(
+        page || "1",
+        registration || "",
+        false
+    );
 
     return (
         <div className="px-5 py-4 flex flex-col gap-4">
@@ -91,16 +73,16 @@ const GeneralEntredMarks = ({
                                     className={poppins.className}
                                 >
                                     <TableCell className="font-medium">
-                                        {student.formNumber}
+                                        {student?.formNumber}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        {student.written}
+                                        {student?.written}
                                     </TableCell>
-                                    <TableCell>{student.viva}</TableCell>
+                                    <TableCell>{student?.viva}</TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                        {student.practical}
+                                        {student?.practical}
                                     </TableCell>
-                                    <TableCell>{student.project}</TableCell>
+                                    <TableCell>{student?.project}</TableCell>
                                     <TableCell className="text-right">
                                         {/* EDIT BTN */}
                                         <Button

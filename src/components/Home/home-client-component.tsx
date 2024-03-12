@@ -1,17 +1,14 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { AnimationDiv } from "./home-animated-div";
+import { useClients } from "@/hooks/useFetch";
 
 const carousel_Image = [
     {
@@ -37,21 +34,6 @@ const carousel_Image = [
 ];
 
 export const HomeCarousel = () => {
-    const [api, setApi] = useState<CarouselApi>();
-
-    /**
-     * RESETING CAROUSEL AUTOPLAY ON STOP
-     */
-
-    useEffect(() => {
-        if (!api) {
-            return;
-        }
-        api.on("autoplay:stop", () => {
-            api?.autoplay?.reset();
-        });
-    }, [api]);
-
     return (
         <AnimationDiv
             animate={{
@@ -70,7 +52,6 @@ export const HomeCarousel = () => {
         >
             <Carousel
                 className="w-full h-[230px] sm:h-[450px] relative"
-                setApi={setApi}
                 plugins={[
                     Autoplay({
                         delay: 3000,
@@ -98,18 +79,7 @@ export const HomeCarousel = () => {
 };
 
 export const HomeFamily = () => {
-    /**
-     * FETCHING ALL USERS DETAILS(FAMILY)
-     */
-
-    const { data, isLoading } = useQuery({
-        queryKey: ["allUserDetailsForCarousel"],
-        queryFn: async () => {
-            const { data } = await axios.get("/api/user-details");
-            return data;
-        },
-        staleTime: 1000 * 60 * 60, // 1hr
-    });
+    const { data, isLoading } = useClients();
 
     return (
         <AnimationDiv

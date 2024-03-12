@@ -21,10 +21,12 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { toast } from "@/components/ui/use-toast";
+import { useCustumQuery } from "@/hooks/use-queries";
+import { useStudentVerification, useUsers } from "@/hooks/useFetch";
 import { per_page } from "@/lib/constants";
 import { poppins } from "@/lib/fonts";
 import { Student, role } from "@prisma/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { format } from "date-fns";
 import { GraduationCap, Shield, Users } from "lucide-react";
@@ -47,38 +49,26 @@ const ManageCertificate = ({
 
     const [user, setUser] = useState(session?.user.userId);
     const [type, setType] = useState<verify>("false");
-    const registration = searchParams.registration;
-    const page = searchParams.page;
+    const registration = searchParams?.registration;
+    const page = searchParams?.page || "1";
+
     /**
      * FETCHING USERS
      */
 
-    const { data: fetchUsers, isLoading: isUserLoading } = useQuery({
-        queryKey: ["userIds"],
-        queryFn: async () => {
-            const url = `/api/users?page=1&name=aditya&select=userId,role`;
-            const { data } = await axios.get(url);
-            return data;
-        },
-    });
-    const queryClient = useQueryClient();
+    const { data: fetchUsers, isLoading: isUserLoading } = useUsers(
+        "all",
+        undefined,
+        "userId,role"
+    );
+    const { data, isLoading } = useStudentVerification(
+        page,
+        user,
+        registration,
+        type
+    );
 
-    const url = `/api/student-verification/${user}?pending=${type}&page=${
-        searchParams.page
-    }${!!registration ? "&formNumber=" + registration : ""}`;
-    const { data, isLoading } = useQuery({
-        queryKey: [
-            "student_verification",
-            page || "1",
-            user,
-            registration ? registration : "",
-            type,
-        ],
-        queryFn: async () => {
-            const { data } = await axios.get(url);
-            return data;
-        },
-    });
+    const { removeStudent, addStudent } = useCustumQuery();
 
     const { mutate } = useMutation({
         mutationFn: async ({
@@ -103,8 +93,8 @@ const ManageCertificate = ({
                 toast({ description: data?.message });
             }
 
-            // remove data
-            queryClient.setQueryData(
+            // remove Student from the list
+            removeStudent(
                 [
                     "student_verification",
                     page || "1",
@@ -112,21 +102,11 @@ const ManageCertificate = ({
                     registration ? registration : "",
                     type,
                 ],
-                (oldData: { total: number; students: Student[] }) => {
-                    const students = oldData.students.filter(
-                        (student) =>
-                            student.formNumber !== data.student.formNumber
-                    );
-
-                    return {
-                        total: oldData.total - 1,
-                        students,
-                    };
-                }
+                data.student.formNumber
             );
 
-            //Add To other type
-            queryClient.setQueryData(
+            //Add To other list
+            addStudent(
                 [
                     "student_verification",
                     page || "1",
@@ -134,12 +114,7 @@ const ManageCertificate = ({
                     registration ? registration : "",
                     type === "false" ? "true" : "false",
                 ],
-                (oldData: { total: number; students: Student[] }) => {
-                    return {
-                        total: oldData.total + 1,
-                        students: [data.student, ...oldData.students],
-                    };
-                }
+                data.student
             );
         },
     });

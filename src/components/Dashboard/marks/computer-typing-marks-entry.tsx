@@ -20,15 +20,15 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
+import { useCustumQuery } from "@/hooks/use-queries";
+import { useStudentMark } from "@/hooks/useFetch";
 import { typingSpeedMarkSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2, TextCursorInput } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-type queryType = { formNumber: string };
 
 const TypingMarksEntry = ({
     page,
@@ -44,14 +44,8 @@ const TypingMarksEntry = ({
             englishTyping: 0,
         },
     });
-    const { data, isLoading } = useQuery<queryType[]>({
-        queryKey: ["computer-typing-students"],
-        queryFn: async () => {
-            const { data } = await axios("/api/marks?computerTyping=true");
-            return data;
-        },
-    });
-    const queryClient = useQueryClient();
+    const { data, isLoading } = useStudentMark(true);
+    const { removeFormNumber, addMark } = useCustumQuery();
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof typingSpeedMarkSchema>) => {
             const { data } = await axios.post(
@@ -69,46 +63,22 @@ const TypingMarksEntry = ({
             }
 
             /**
+             * TODO all
+             */
+
+            /**
              * Removing registration number from entry list
              */
-            queryClient.setQueryData(
-                ["computer-typing-students"],
-                (oldData: queryType[]) => {
-                    console.log(oldData);
-                    return oldData.filter(
-                        (data) =>
-                            Number(data?.formNumber) !==
-                            Number(variables.formNumber)
-                    );
-                }
+
+            removeFormNumber(
+                ["computer-students-mark", true],
+                Number(variables.formNumber)
             );
 
             /**
              * Adding registration number and marks to entered list
              */
-            queryClient.setQueryData(
-                [
-                    "computer-typing-students-entered",
-                    page ? page : "1",
-                    registration ? registration : "none",
-                ],
-                (oldData: {
-                    total: number;
-                    studentsWithMarks: {
-                        formNumber: string;
-                        englishTyping: number;
-                        hindiTyping: number;
-                    }[];
-                }) => {
-                    return {
-                        total: oldData.total + 1,
-                        studentsWithMarks: [
-                            variables,
-                            ...oldData.studentsWithMarks,
-                        ],
-                    };
-                }
-            );
+            addMark(["general-students-entered", "1", "none", true], variables);
         },
     });
 

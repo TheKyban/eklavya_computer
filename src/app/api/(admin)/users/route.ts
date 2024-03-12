@@ -126,7 +126,10 @@ export const GET = async (req: Request) => {
             });
         }
         const { searchParams } = new URL(req.url);
-        const page = Number(searchParams.get("page")) || 1;
+        const page =
+            searchParams.get("page") === "all"
+                ? -1
+                : Number(searchParams.get("page")) || 1;
         const userId = searchParams.get("userId");
         const select = !!searchParams.get("select");
         interface selectOtions {
@@ -146,8 +149,8 @@ export const GET = async (req: Request) => {
          */
 
         const users = await Prisma.user.findMany({
-            take: per_page,
-            skip: per_page * (page - 1),
+            take: page === -1 ? undefined : per_page,
+            skip: page === -1 ? 0 : per_page * (page - 1),
             where: {
                 userId: {
                     contains: userId ? userId : "",
@@ -177,6 +180,7 @@ export const GET = async (req: Request) => {
                   },
         });
 
+        console.log(users);
         /**
          * TOTAL USER
          */

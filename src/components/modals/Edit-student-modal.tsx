@@ -42,8 +42,9 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
 import { Courses, IMAGE_SIZE } from "@/lib/constants";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { states } from "@/lib/stateAndDistrict";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 export const EditStudentModal = () => {
     const currentYear = new Date().getFullYear();
@@ -88,7 +89,7 @@ export const EditStudentModal = () => {
         }
     }, [data, form, student]);
 
-    const queryClient = useQueryClient();
+    const { updateStudent } = useCustumQuery();
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof studentSchema>) => {
             const { data } = await axios.put("/api/student", values);
@@ -102,46 +103,13 @@ export const EditStudentModal = () => {
                 onClose();
             }
             if (data.success) {
-                queryClient.setQueryData(
+                updateStudent(
                     [
                         searchParams?.type,
                         searchParams?.page,
                         searchParams?.registration,
                     ],
-                    (old: {
-                        total: number;
-                        students: z.infer<typeof studentSchema>[];
-                    }) => {
-                        const students = old.students.map((student) =>
-                            student.formNumber === variables.formNumber
-                                ? {
-                                      img: variables.img,
-                                      name: variables.name,
-                                      fatherName: variables.fatherName,
-                                      formNumber: variables.formNumber,
-                                      branch: variables.branch,
-                                      course: variables.course,
-                                      dob: variables.dob,
-                                      dor: variables.dor,
-                                      email: variables.email,
-                                      phone: variables.phone,
-                                      gender: variables.gender,
-                                      motherName: variables.motherName,
-                                      qualification: variables.qualification,
-                                      address: {
-                                          state: variables.state,
-                                          district: variables.district,
-                                          pincode: variables.pincode,
-                                          street: variables.address,
-                                      },
-                                  }
-                                : student
-                        );
-                        return {
-                            total: old.total,
-                            students,
-                        };
-                    }
+                    data?.student
                 );
             }
         },

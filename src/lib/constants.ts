@@ -71,7 +71,7 @@ export const info = [
 /**
  * RESULTS PER PAGE
  */
-export const per_page = 10;
+export const per_page = 50;
 
 /**
  * COURSE

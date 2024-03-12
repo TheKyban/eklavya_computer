@@ -43,6 +43,7 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { states } from "@/lib/stateAndDistrict";
+import { useCustumQuery } from "@/hooks/use-queries";
 
 const StudentRegistration = () => {
     const currentYear = new Date().getFullYear();
@@ -76,6 +77,8 @@ const StudentRegistration = () => {
      * SETTING USER ID
      */
 
+    const { addStudent } = useCustumQuery();
+
     useEffect(() => {
         if (session?.user?.userId) {
             form.setValue("branch", session?.user?.userId);
@@ -92,6 +95,7 @@ const StudentRegistration = () => {
                 form.reset();
                 setState("");
                 form.setValue("branch", session?.user?.userId as string);
+                addStudent(["pending_list", "1", "none"], data?.student);
             }
         } catch (error) {
             console.log(error);
