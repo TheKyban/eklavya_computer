@@ -15,8 +15,6 @@ export const GET = async (
             );
         }
 
-        const reqParams = new URLSearchParams(req.url);
-
         /**
          * REGISTRATION VERIFICATION OR I CARD VERIFICATION
          */
