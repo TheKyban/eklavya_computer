@@ -1,4 +1,5 @@
 import {
+    Album,
     FileSpreadsheet,
     FormInput,
     GraduationCap,
@@ -59,6 +60,12 @@ export const links: LinkType[] = [
         title: "Password",
         icon: <FormInput className="text-fuchsia-400" />,
         link: "/dashboard/password",
+    },
+    {
+        title: "Carousel",
+        link: "/dashboard/carousel",
+        icon: <Album className="text-indigo-700 dark:text-indigo-500" />,
+        role: "ADMIN",
     },
 ];
 

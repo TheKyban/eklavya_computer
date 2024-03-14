@@ -12,7 +12,7 @@ model User {
     userId    String    @unique
     name      String
     email     String?   @unique
-    img       String?
+    img       String
     password  String
     phone     String
     address   Address

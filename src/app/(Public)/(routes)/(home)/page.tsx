@@ -1,39 +1,75 @@
 import { Footer } from "@/components/Home/footer";
 import { FirstPage, SecondPage, ThridPage } from "@/components/Home/home-pages";
-export default function Home() {
-    return (
-        <div className="min-h-[calc(100vh-63px)] h-full bg-orange-50 rounded-xl">
-            {/**
-             *
-             * HERO SECTION
-             *
-             */}
+import { v2 as cloudinary } from "cloudinary";
+import { Prisma } from "../../../../../prisma/prisma";
 
-            <FirstPage />
+const fetchCarousels = async () => {
+    cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_CLOUD_API,
+        api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
+    });
 
-            {/*
-             *
-             * SECOND PAGE
-             *
-             */}
+    const assets = await cloudinary.api.resources({
+        type: "upload",
+        prefix: "eklavaya-carousel", // add your folder
+    });
+    return assets?.resources;
+};
 
-            <SecondPage />
+const fetchFamilies = async () => {
+    const users = await Prisma.user.findMany({
+        select: {
+            img: true,
+            name: true,
+            branch: true,
+        },
+    });
 
-            {/*
-             *
-             * THIRD PAGE
-             *
-             */}
+    return users;
+};
 
-            <ThridPage />
+export default async function Home() {
+    try {
+        const data = await fetchCarousels();
+        const families = await fetchFamilies();
+        return (
+            <div className="min-h-[calc(100vh-63px)] h-full bg-orange-50 rounded-xl">
+                {/**
+                 *
+                 * HERO SECTION
+                 *
+                 */}
 
-            {/*
-             *
-             * FOOTER
-             *
-             */}
+                <FirstPage carousel={data} family={families} />
 
-            <Footer />
-        </div>
-    );
+                {/*
+                 *
+                 * SECOND PAGE
+                 *
+                 */}
+
+                <SecondPage />
+
+                {/*
+                 *
+                 * THIRD PAGE
+                 *
+                 */}
+
+                <ThridPage />
+
+                {/*
+                 *
+                 * FOOTER
+                 *
+                 */}
+
+                <Footer />
+            </div>
+        );
+    } catch (error) {
+        console.log(error);
+        return <div>Some thing Went wrong</div>;
+    }
 }

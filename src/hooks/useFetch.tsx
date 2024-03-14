@@ -4,17 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { z } from "zod";
 
-export const useClients = () => {
-    return useQuery({
-        queryKey: ["allUserDetailsForCarousel"],
-        queryFn: async () => {
-            const { data } = await axios("/api/user-details");
-            return data;
-        },
-        staleTime: 1000 * 60 * 60, // 1hr
-    });
-};
-
 export const useUsers = (page: string, userId?: string, select?: string) => {
     const url = `/api/users?page=${page}${!!userId ? "&userId=" + userId : ""}${
         !!select ? "&select=" + select : ""
@@ -161,5 +150,16 @@ export const useVerifyCertificate = (
             );
             return data;
         },
+    });
+};
+
+export const useAssests = () => {
+    return useQuery<{ public_id: string; secure_url: string }[]>({
+        queryKey: ["assets"],
+        queryFn: async () => {
+            const { data } = await axios("/api/media");
+            return data;
+        },
+        staleTime: 60 * 1000 * 30,
     });
 };

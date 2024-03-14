@@ -78,7 +78,7 @@ const UserList = ({
                                     <TableCell>
                                         {user.isActive ? "Yes" : "No"}
                                     </TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell className="text-right flex gap-2">
                                         <>
                                             {/* EDIT BTN */}
                                             <Button
@@ -112,7 +112,7 @@ const UserList = ({
                                                         },
                                                     })
                                                 }
-                                                className="ml-2 px-2 py-0"
+                                                className="px-2 py-0"
                                             >
                                                 <Trash className="w-5 h-5" />
                                             </Button>

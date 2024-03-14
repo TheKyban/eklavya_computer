@@ -6,24 +6,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
 });
 
-// export const UPLOAD_TO_CLOUDINARY = async (file: File) => {
-//     const arrayBuffer = await file.arrayBuffer();
-//     const buffer = new Uint8Array(arrayBuffer);
-//     const results: any = await new Promise((resolve, reject) => {
-//         cloudinary.uploader
-//             .upload_stream(function (error, result) {
-//                 if (error) {
-//                     reject(error);
-//                     return;
-//                 }
-//                 resolve(result);
-//             })
-//             .end(buffer);
-//     });
-
-//     return results;
-// };
-export const UPLOAD_TO_CLOUDINARY = async (file: File) => {
+export const UPLOAD_TO_CLOUDINARY = async (file: File, folder?: string) => {
     const fileBuffer = await file.arrayBuffer();
     var mime = file.type;
     var encoding = "base64";
@@ -36,9 +19,9 @@ export const UPLOAD_TO_CLOUDINARY = async (file: File) => {
                 var result = cloudinary.uploader
                     .upload(fileUri, {
                         invalidate: true,
+                        folder,
                     })
                     .then((result) => {
-                        console.log(result);
                         resolve(result);
                     })
                     .catch((error) => {
@@ -56,15 +39,19 @@ export const UPLOAD_TO_CLOUDINARY = async (file: File) => {
         return error;
     }
 };
-
-export const DELETE_FILE = async (url: string) => {
-    let fileUrl = url.split("/");
-    let publicId = fileUrl[fileUrl.length - 1].split(".")[0];
-
+export const DELETE_IMG = async (publicId: string) => {
     const result = await cloudinary.uploader.destroy(publicId, {
         invalidate: true,
         resource_type: "image",
     });
 
+    return result;
+};
+
+export const DELETE_FILE = async (url: string) => {
+    let fileUrl = url.split("/");
+    let publicId = fileUrl[fileUrl.length - 1].split(".")[0];
+
+    const result = await DELETE_IMG(publicId);
     return result;
 };

@@ -147,7 +147,15 @@ export const useCustumQuery = () => {
         );
     };
 
+    const addData = (key: QueryKey, data: queryType) => {
+        queryClient.setQueryData(key, (old: queryType[]) => {
+            const allData = [data, ...old];
+            return allData;
+        });
+    };
+
     return {
+        addData,
         removeStudent,
         addStudent,
         updateStudent,

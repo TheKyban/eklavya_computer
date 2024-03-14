@@ -10,12 +10,27 @@ import {
     Target,
 } from "lucide-react";
 import { poppins } from "@/lib/fonts";
-import Image from "next/image";
 import { MAX_WIDTH } from "@/lib/styles";
-import { HomeCarousel, HomeFamily } from "./home-client-component";
-import { AnimationDiv } from "./home-animated-div";
+import Image from "next/image";
+import {
+    AnimationDiv,
+    HomeCarousel,
+} from "@/components/Home/home-animated-component";
+import { FC } from "react";
 
-export const FirstPage = () => {
+interface familyType {
+    img: string;
+    name: string;
+    branch: string;
+}
+
+interface firstPageProps {
+    carousel?: {
+        secure_url: string;
+    }[];
+    family?: familyType[];
+}
+export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
     return (
         <div
             className={`${MAX_WIDTH} m-auto w-full h-full flex flex-col gap-2 py-3 overflow-x-hidden`}
@@ -42,10 +57,10 @@ export const FirstPage = () => {
 
             <div className="w-full flex justify-between gap-2 flex-col lg:flex-row">
                 {/* CAROUSEL */}
-                <HomeCarousel />
+                <HomeCarousel carousel={carousel} />
 
                 {/* FAMILY */}
-                <HomeFamily />
+                <HomeFamily family={family} />
             </div>
         </div>
     );
@@ -78,6 +93,67 @@ export const ThridPage = () => {
             <OurFeatures />
             <OurCourses />
         </div>
+    );
+};
+
+const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
+    return (
+        <AnimationDiv
+            animate={{
+                x: 0,
+                opacity: 1,
+            }}
+            initial={{
+                opacity: 0,
+                x: 100,
+            }}
+            transition={{
+                delay: 0.4,
+                duration: 0.6,
+            }}
+            className="flex-1 relative max-h-[450px] w-full flex flex-col"
+        >
+            <h1 className="text-center bg-red-500 text-white uppercase text-2xl font-semibold py-2">
+                Family
+            </h1>
+            {/* @ts-ignore */}
+            <marquee direction="up">
+                {family?.map(
+                    (
+                        user: {
+                            img: string;
+                            name: string;
+                            branch: string;
+                        },
+                        idx: number
+                    ) => (
+                        <div
+                            key={idx}
+                            className="flex flex-col gap-2 mt-4 mb-4 items-center"
+                        >
+                            <Image
+                                src={user.img}
+                                width={100}
+                                height={100}
+                                alt="avatar"
+                                placeholder="empty"
+                                className="rounded-full object-cover min-w-[80px] min-h-[80px] max-w-[80px] max-h-[80px] lg:min-w-[100px] lg:min-h-[100px] lg:max-w-[100px] lg:max-h-[100px]"
+                            />
+                            <div className="flex flex-col gap-1 font-semibold items-center">
+                                <span className="capitalize text-rose-800">
+                                    {user.name}
+                                </span>
+                                <span className="capitalize text-orange-600">
+                                    {user.branch}
+                                </span>
+                            </div>
+                        </div>
+                    )
+                )}
+
+                {/* @ts-ignore */}
+            </marquee>
+        </AnimationDiv>
     );
 };
 

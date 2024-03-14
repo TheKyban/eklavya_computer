@@ -75,7 +75,7 @@ const ComputerTypingEnteredMarks = ({
                                         {student.englishTyping}
                                     </TableCell>
                                     <TableCell>{student.hindiTyping}</TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell className="text-right flex gap-2">
                                         {/* EDIT BTN */}
                                         <Button
                                             variant={"outline"}
@@ -124,7 +124,7 @@ const ComputerTypingEnteredMarks = ({
                                                     }
                                                 )
                                             }
-                                            className="ml-2 px-2 py-0"
+                                            className="px-2 py-0"
                                         >
                                             <Trash className="w-4 h-4" />
                                         </Button>
