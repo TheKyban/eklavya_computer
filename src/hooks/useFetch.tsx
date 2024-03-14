@@ -109,7 +109,6 @@ export const useStudentMarkEntered = (
                 }${typing ? "&computerTyping=true" : ""}`
             );
 
-            console.log(data);
             return data;
         },
     });

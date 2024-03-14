@@ -20,14 +20,17 @@ import {
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { FC, HTMLAttributes } from "react";
 import { accordianLinks, links } from "./url";
 
 interface sidebar extends HTMLAttributes<HTMLDivElement> {}
 const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
     const pathname = usePathname();
-    const path = pathname.split("/").pop();
+    const search = useSearchParams();
+    const fullPath = `${pathname}${
+        search.toString() ? `?${search.toString()}` : ""
+    }`;
     return (
         <div
             {...props}
@@ -58,7 +61,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                     className={cn(
                         LinkStyle3,
                         "transition-all",
-                        path === "dashboard" && "bg-black/5",
+                        fullPath === "/dashboard" && "bg-black/5",
                         "uppercase"
                     )}
                 >
@@ -98,7 +101,9 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                                 className={cn(
                                                     LinkStyle,
                                                     LinkStyle2,
-                                                    "uppercase"
+                                                    "uppercase",
+                                                    link.link === fullPath &&
+                                                        "bg-primary/10"
                                                 )}
                                             >
                                                 {link.icon}
@@ -117,7 +122,12 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                         <Link
                             href={link.link}
                             key={link.title}
-                            className={cn(LinkStyle, LinkStyle3, "uppercase")}
+                            className={cn(
+                                LinkStyle,
+                                LinkStyle3,
+                                "uppercase",
+                                link.link === fullPath && "bg-black/5"
+                            )}
                         >
                             {link.icon} {link.title}
                         </Link>

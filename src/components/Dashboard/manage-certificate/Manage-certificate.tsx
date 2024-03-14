@@ -113,7 +113,6 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                 course,
                 userId,
             });
-            console.log(data);
             return data;
         },
 

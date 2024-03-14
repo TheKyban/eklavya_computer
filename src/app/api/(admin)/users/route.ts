@@ -181,7 +181,6 @@ export const GET = async (req: Request) => {
                   },
         });
 
-        console.log(users);
         /**
          * TOTAL USER
          */

@@ -77,12 +77,12 @@ export const accordianLinks: accordianLinks[] = [
             {
                 title: "Registration",
                 icon: <PlusCircle className="text-orange-500" />,
-                link: "/dashboard/user/registration",
+                link: "/dashboard/users/registration",
             },
             {
                 title: "Manage Users",
                 icon: <UserRoundCog className="text-red-600" />,
-                link: "/dashboard/user",
+                link: "/dashboard/users",
             },
         ],
     },

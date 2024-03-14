@@ -14,7 +14,6 @@ const Login = () => {
     const onSubmit = async (data: FormData) => {
         const userId = data.get("userid");
         const password = data.get("password");
-        console.log(userId, password);
         try {
             setIsLoading(true);
             signIn("credentials", { userId, password });

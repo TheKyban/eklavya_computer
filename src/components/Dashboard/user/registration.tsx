@@ -61,7 +61,6 @@ const UserRegistration = ({}) => {
     const onSubmit = async (values: z.infer<typeof franchiseSchema>) => {
         try {
             const { data } = await axios.post("/api/users", values);
-            console.log(data);
             if (data) {
                 toast({ description: data.message });
             }
