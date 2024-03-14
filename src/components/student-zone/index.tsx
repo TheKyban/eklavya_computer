@@ -2,14 +2,54 @@ import { Student } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import jsPdf from "jspdf";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import qrcode from "qrcode";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { Loader } from "lucide-react";
+
+const SearchTemplate: FC<{
+    searchFunc: (e: FormEvent) => void;
+    title: string;
+    registration: string;
+    setRegistration: (val: string) => void;
+    isLoading: boolean;
+}> = ({ searchFunc, title, registration, setRegistration, isLoading }) => {
+    return (
+        <Card className="bg-transparent">
+            <CardHeader>
+                <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
+                    {title}
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <form onSubmit={searchFunc} className="flex flex-col gap-5">
+                    <Input
+                        placeholder="Registration no."
+                        value={registration}
+                        onChange={(e) => setRegistration(e.target.value)}
+                        className="bg-white dark:focus:ring-offset-white"
+                    />
+                    <Button
+                        variant={"destructive"}
+                        disabled={isLoading}
+                        className="w-full"
+                        type="submit"
+                    >
+                        {isLoading ? (
+                            <Loader className="animate-spin" />
+                        ) : (
+                            "Search"
+                        )}
+                    </Button>
+                </form>
+            </CardContent>
+        </Card>
+    );
+};
 
 export const ICard = () => {
     const [registration, setRegistration] = useState("");
@@ -43,35 +83,13 @@ export const ICard = () => {
     };
 
     return (
-        <Card className="bg-transparent">
-            <CardHeader>
-                <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
-                    CERTIFICATE VERIFICATION
-                </CardTitle>
-            </CardHeader>
-            <CardContent>
-                <form onSubmit={handleSearch} className="flex flex-col gap-5">
-                    <Input
-                        placeholder="Registration no."
-                        value={registration}
-                        onChange={(e) => setRegistration(e.target.value)}
-                        className="bg-white dark:focus:ring-offset-white"
-                    />
-                    <Button
-                        variant={"destructive"}
-                        disabled={isLoading}
-                        className="w-full"
-                        type="submit"
-                    >
-                        {isLoading ? (
-                            <Loader className="animate-spin" />
-                        ) : (
-                            "Search"
-                        )}
-                    </Button>
-                </form>
-            </CardContent>
-        </Card>
+        <SearchTemplate
+            title="I-CARD VERIFICATION"
+            registration={registration}
+            setRegistration={setRegistration}
+            searchFunc={handleSearch}
+            isLoading={isLoading}
+        />
     );
 };
 
@@ -102,35 +120,13 @@ export const Certificate = () => {
     };
 
     return (
-        <Card className="bg-transparent">
-            <CardHeader>
-                <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
-                    CERTIFICATE VERIFICATION
-                </CardTitle>
-            </CardHeader>
-            <CardContent>
-                <form onSubmit={handleSearch} className="flex flex-col gap-5">
-                    <Input
-                        placeholder="Registration no."
-                        value={registration}
-                        onChange={(e) => setRegistration(e.target.value)}
-                        className="bg-white dark:focus:ring-offset-white"
-                    />
-                    <Button
-                        variant={"destructive"}
-                        disabled={isLoading}
-                        className="w-full"
-                        type="submit"
-                    >
-                        {isLoading ? (
-                            <Loader className="animate-spin" />
-                        ) : (
-                            "Search"
-                        )}
-                    </Button>
-                </form>
-            </CardContent>
-        </Card>
+        <SearchTemplate
+            title="CERTIFICATE VERIFICATION"
+            registration={registration}
+            setRegistration={setRegistration}
+            searchFunc={handleSearch}
+            isLoading={isLoading}
+        />
     );
 };
 
@@ -224,105 +220,116 @@ export const MarkSheet = () => {
     };
 
     return (
-        <Card className="bg-transparent">
-            <CardHeader>
-                <CardTitle className="uppercase text-red-600 text-xl md:text-2xl">
-                    MarkSheet Verification
-                </CardTitle>
-            </CardHeader>
-            <CardContent>
-                <form onSubmit={handleSearch} className="flex flex-col gap-5">
-                    <Input
-                        placeholder="Registration no."
-                        value={registration}
-                        onChange={(e) => setRegistration(e.target.value)}
-                        className="bg-white dark:focus:ring-offset-white"
-                    />
-                    <Button
-                        variant={"destructive"}
-                        disabled={isLoading}
-                        className="w-full"
-                        type="submit"
-                    >
-                        {isLoading ? (
-                            <Loader className="animate-spin" />
-                        ) : (
-                            "Search"
-                        )}
-                    </Button>
-                </form>
-            </CardContent>
-        </Card>
+        <SearchTemplate
+            title="MARKSHEET VERIFICATION"
+            registration={registration}
+            setRegistration={setRegistration}
+            searchFunc={handleSearch}
+            isLoading={isLoading}
+        />
     );
 };
 
-export const RegistrationVerify = ({
-    registration,
-    name,
-    fatherName,
-    course,
-    branch,
-    branchCode,
-    img,
-}: {
-    registration: string;
-    name: string;
-    fatherName: string;
-    course: string;
-    branch: string;
-    branchCode: string;
-    img: string;
-}) => {
-    return (
-        <Card className="m-auto relative before:content-[' '] before:bg-[url('/logomen.png')] before:bg-no-repeat before:bg-cover before:min-w-[500px] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:opacity-50 bg-inherit py-4 overflow-auto">
-            <CardContent className="min-w-[500px]">
-                <Image src={img} height={100} width={100} alt="profile img" />
-                <Table>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Registration
-                            </TableCell>
-                            <TableCell>{registration}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Name
-                            </TableCell>
-                            <TableCell className="capitalize">{name}</TableCell>
-                        </TableRow>
+export const RegistrationVerify = () => {
+    const [registration, setRegistration] = useState("");
+    const [data, setData] = useState<{
+        student: Student & { branchName: string };
+    }>();
+    const [isLoading, setIsLoading] = useState(false);
 
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Father&apos;s Name
-                            </TableCell>
-                            <TableCell className="capitalize">
-                                {fatherName}
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Course
-                            </TableCell>
-                            <TableCell>{course}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Branch Name
-                            </TableCell>
-                            <TableCell className="capitalize">
-                                {branch}
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-semibold">
-                                Branch Code
-                            </TableCell>
-                            <TableCell>{branchCode}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </CardContent>
-        </Card>
+    /**
+     * FUNCTION FOR SEARCH
+     */
+
+    const handleSeach = async (e: FormEvent) => {
+        e?.preventDefault();
+        if (!registration) return;
+        try {
+            setIsLoading(true);
+            const { data } = await axios.get(`/api/student/${registration}`);
+            if (!!data?.message) {
+                toast({ description: (data.message as string).toUpperCase() });
+            }
+            setData(data);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    return (
+        <div>
+            <SearchTemplate
+                title="REGISTRATION VERIFICATION"
+                registration={registration}
+                setRegistration={setRegistration}
+                searchFunc={handleSeach}
+                isLoading={isLoading}
+            />
+
+            {data?.student && (
+                <Card className="m-auto relative before:content-[' '] before:bg-[url('/logomen.png')] before:bg-no-repeat before:bg-cover before:min-w-[500px] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:opacity-50 bg-inherit py-4 overflow-auto mt-4">
+                    <CardContent className="min-w-[500px]">
+                        <Image
+                            src={data?.student?.img}
+                            height={100}
+                            width={100}
+                            alt="profile img"
+                        />
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell className="font-semibold">
+                                        Registration
+                                    </TableCell>
+                                    <TableCell>{registration}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell className="font-semibold">
+                                        Name
+                                    </TableCell>
+                                    <TableCell className="capitalize">
+                                        {data?.student?.name}
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell className="font-semibold">
+                                        Father&apos;s Name
+                                    </TableCell>
+                                    <TableCell className="capitalize">
+                                        {data?.student?.fatherName}
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell className="font-semibold">
+                                        Course
+                                    </TableCell>
+                                    <TableCell>
+                                        {data?.student?.course}
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell className="font-semibold">
+                                        Branch Name
+                                    </TableCell>
+                                    <TableCell className="capitalize">
+                                        {data?.student?.branchName}
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell className="font-semibold">
+                                        Branch Code
+                                    </TableCell>
+                                    <TableCell>
+                                        {data?.student?.branch}
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+                </Card>
+            )}
+        </div>
     );
 };
