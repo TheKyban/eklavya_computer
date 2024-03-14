@@ -101,7 +101,7 @@ const StudentList = ({
                                     <TableCell className="text-xs md:text-sm">
                                         {student.course}
                                     </TableCell>
-                                    <TableCell className="text-left sm:text-right text-xs md:text-sm flex gap-2">
+                                    <TableCell className="text-left sm:text-right text-xs md:text-sm flex justify-end gap-2">
                                         {/* EDIT BTN */}
                                         <Button
                                             variant={"outline"}
