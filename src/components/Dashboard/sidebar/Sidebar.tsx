@@ -35,37 +35,37 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
         <div
             {...props}
             className={cn(
-                "flex flex-col min-h-full h-full min-w-[350px] bg-zinc-50 dark:bg-black px-4 py-3",
+                "flex flex-col min-h-full h-full min-w-[300px] bg-zinc-50 dark:bg-black px-4 py-3",
                 className
             )}
         >
             <div className="flex gap-3 items-center justify-center py-2 mb-2 select-none">
                 {role === "ADMIN" ? (
-                    <ShieldCheck className="w-8 h-8 text-indigo-600" />
+                    <ShieldCheck className="w-6 h-6 text-indigo-600" />
                 ) : (
-                    <ShieldPlus className="w-8 h-8 text-orange-600" />
+                    <ShieldPlus className="w-6 h-6 text-orange-600" />
                 )}
-                <h1 className="text-lg lg:text-xl xl:text-2xl font-semibold uppercase text-zinc-600">
+                <h1 className="text-lg lg:text-xl font-semibold uppercase text-zinc-600">
                     {role}
                 </h1>
             </div>
 
             <Separator className="mb-4" />
             <ScrollArea className="flex flex-col gap-1">
-                <Link href={"/"} className={cn(LinkStyle3, "uppercase")}>
-                    <Home className="text-teal-600" />
+                <Link href={"/"} className={cn(LinkStyle3, "uppercase text-base")}>
+                    <Home className="w-5 h-5 text-teal-600" />
                     Home
                 </Link>
                 <Link
                     href={"/dashboard"}
                     className={cn(
                         LinkStyle3,
-                        "transition-all",
+                        "transition-all text-base",
                         fullPath === "/dashboard" && "bg-black/5",
                         "uppercase"
                     )}
                 >
-                    <LayoutDashboard className="text-orange-600" />
+                    <LayoutDashboard className="w-5 h-5 text-orange-600" />
                     Dashboard
                 </Link>
                 <Accordion type="single" collapsible>
@@ -86,7 +86,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                 )}
                             >
                                 <AccordionTrigger>
-                                    <div className="flex gap-3 text-lg items-center uppercase justify-center">
+                                    <div className="flex gap-3 text-base items-center uppercase justify-center">
                                         {link.icon} {link.title}
                                     </div>
                                 </AccordionTrigger>
@@ -101,7 +101,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                                 className={cn(
                                                     LinkStyle,
                                                     LinkStyle2,
-                                                    "uppercase",
+                                                    "uppercase text-sm",
                                                     link.link === fullPath &&
                                                         "bg-primary/10"
                                                 )}
@@ -125,7 +125,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                             className={cn(
                                 LinkStyle,
                                 LinkStyle3,
-                                "uppercase",
+                                "uppercase text-base",
                                 link.link === fullPath && "bg-black/5"
                             )}
                         >

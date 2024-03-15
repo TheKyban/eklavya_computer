@@ -20,7 +20,24 @@ export default function About() {
             >
                 {/* CERTIFICATES */}
 
-                <div
+                <motion.div
+                    whileInView={{
+                        x: 0,
+                        opacity: 1,
+                    }}
+                    transition={{
+                        duration: 0.5,
+                        easings: "tween",
+                        ease: "easeInOut",
+                        delay: 0.1,
+                    }}
+                    viewport={{
+                        once: true,
+                    }}
+                    initial={{
+                        x: -100,
+                        opacity: 0,
+                    }}
                     className={`${MAX_WIDTH} m-auto flex flex-col gap-4 items-center py-4 w-full bg-orange-200`}
                 >
                     <h1 className="text-2xl font-semibold border-b-2 border-red-600 p-2">
@@ -33,70 +50,52 @@ export default function About() {
                         }}
                         plugins={[
                             Autoplay({
-                                delay: 2000,
+                                delay: 3000,
+                                stopOnInteraction: false,
                             }),
                         ]}
                     >
                         <CarouselContent>
-                            <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                                <div className="p-1">
-                                    <Card className="max-w-xs">
-                                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                                            <span className="text-4xl font-semibold">
-                                                1
-                                            </span>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-                            </CarouselItem>
-                            <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                                <div className="p-1">
-                                    <Card className="max-w-xs">
-                                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                                            <span className="text-4xl font-semibold">
-                                                2
-                                            </span>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-                            </CarouselItem>
-                            <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                                <div className="p-1">
-                                    <Card className="max-w-xs">
-                                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                                            <span className="text-4xl font-semibold">
-                                                3
-                                            </span>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-                            </CarouselItem>
-                            <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                                <div className="p-1">
-                                    <Card className="max-w-xs">
-                                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                                            <span className="text-4xl font-semibold">
-                                                4
-                                            </span>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-                            </CarouselItem>
+                            {Array(4)
+                                .fill(" ")
+                                .map((c, idx) => (
+                                    <CarouselItem
+                                        className="grid place-content-center"
+                                        key={idx}
+                                    >
+                                        <Card className="min-w-[30vw]  min-h-[500px] w-full h-full grid place-content-center">
+                                            <CardContent className="flex aspect-square items-center justify-center p-6">
+                                                <span className="text-4xl font-semibold">
+                                                    {idx + 1}
+                                                </span>
+                                            </CardContent>
+                                        </Card>
+                                    </CarouselItem>
+                                ))}
                         </CarouselContent>
                         <CarouselPrevious className="dark:text-white" />
                         <CarouselNext className="dark:text-white" />
                     </Carousel>
-                </div>
+                </motion.div>
 
                 {/* ABOUT THE ACADEMY */}
 
                 <motion.div
                     whileInView={{
-                        y: 0,
+                        x: 0,
                         opacity: 1,
                     }}
+                    transition={{
+                        duration: 0.5,
+                        easings: "tween",
+                        ease: "easeInOut",
+                        delay: 0.2,
+                    }}
+                    viewport={{
+                        once: true,
+                    }}
                     initial={{
-                        y: -100,
+                        x: 100,
                         opacity: 0,
                     }}
                     className={`${MAX_WIDTH} m-auto flex flex-col items-center gap-8 bg-orange-200 px-10 max-h-96 lg:max-h-fit py-10`}
@@ -160,6 +159,15 @@ export default function About() {
                             x: 0,
                             opacity: 1,
                         }}
+                        transition={{
+                            delay: 0.4,
+                            duration: 0.5,
+                            easings: "tween",
+                            ease: "easeInOut",
+                        }}
+                        viewport={{
+                            once: true,
+                        }}
                         initial={{
                             x: -100,
                             opacity: 0,
@@ -188,6 +196,15 @@ export default function About() {
                         whileInView={{
                             x: 0,
                             opacity: 1,
+                        }}
+                        transition={{
+                            delay: 0.6,
+                            duration: 0.5,
+                            easings: "tween",
+                            ease: "easeInOut",
+                        }}
+                        viewport={{
+                            once: true,
                         }}
                         initial={{
                             x: 100,

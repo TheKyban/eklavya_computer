@@ -27,44 +27,44 @@ interface LinkType {
 export const links: LinkType[] = [
     {
         title: "Marks Entry",
-        icon: <FileSpreadsheet className="text-green-400" />,
+        icon: <FileSpreadsheet className="w-5 h-5 text-green-400" />,
         link: "/dashboard/marks",
     },
     {
         title: "Typing Entry",
-        icon: <TextCursorInput className="text-orange-400" />,
+        icon: <TextCursorInput className="w-5 h-5 text-orange-400" />,
         link: "/dashboard/marks?typing=true",
     },
     {
         title: "Issued Certificate",
-        icon: <Medal className="text-blue-400" />,
+        icon: <Medal className="w-5 h-5 text-blue-400" />,
         link: "/dashboard/certificate",
     },
     {
         title: "Pending Certificate",
-        icon: <Ribbon className="text-red-400" />,
+        icon: <Ribbon className="w-5 h-5 text-red-400" />,
         link: "/dashboard/certificate?pending=true",
     },
     {
         title: "Manage Certificate",
-        icon: <Layers3 className="text-cyan-400" />,
+        icon: <Layers3 className="w-5 h-5 text-cyan-400" />,
         link: "/dashboard/certificate/manage",
         role: "ADMIN",
     },
     {
         title: "Payment",
-        icon: <IndianRupee className="text-rose-400" />,
+        icon: <IndianRupee className="w-5 h-5 text-rose-400" />,
         link: "/dashboard/payment",
     },
     {
         title: "Password",
-        icon: <FormInput className="text-fuchsia-400" />,
+        icon: <FormInput className="w-5 h-5 text-fuchsia-400" />,
         link: "/dashboard/password",
     },
     {
         title: "Carousel",
         link: "/dashboard/carousel",
-        icon: <Album className="text-indigo-700 dark:text-indigo-500" />,
+        icon: <Album className="w-5 h-5 text-indigo-700 dark:text-indigo-500" />,
         role: "ADMIN",
     },
 ];
@@ -78,43 +78,43 @@ interface accordianLinks {
 export const accordianLinks: accordianLinks[] = [
     {
         title: "Users",
-        icon: <Users className="text-gray-600" />,
+        icon: <Users className="w-5 h-5 text-gray-600" />,
         role: "ADMIN",
         links: [
             {
                 title: "Registration",
-                icon: <PlusCircle className="text-orange-500" />,
+                icon: <PlusCircle className="w-5 h-5 text-orange-500" />,
                 link: "/dashboard/users/registration",
             },
             {
                 title: "Manage Users",
-                icon: <UserRoundCog className="text-red-600" />,
+                icon: <UserRoundCog className="w-5 h-5 text-red-600" />,
                 link: "/dashboard/users",
             },
         ],
     },
     {
         title: "Student",
-        icon: <GraduationCap className="text-indigo-600" />,
+        icon: <GraduationCap className="w-5 h-5 text-indigo-600" />,
         links: [
             {
                 title: "Registration",
-                icon: <PlusCircle className="text-orange-500" />,
+                icon: <PlusCircle className="w-5 h-5 text-orange-500" />,
                 link: "/dashboard/student/registration",
             },
             {
                 title: "Pending List",
-                icon: <ShieldAlert className="text-red-600" />,
+                icon: <ShieldAlert className="w-5 h-5 text-red-600" />,
                 link: "/dashboard/student?pending=true",
             },
             {
                 title: "Verified List",
-                icon: <ShieldCheck className="text-indigo-600" />,
+                icon: <ShieldCheck className="w-5 h-5 text-indigo-600" />,
                 link: "/dashboard/student",
             },
             {
                 title: "Verification",
-                icon: <UserRoundCog className="text-pink-600" />,
+                icon: <UserRoundCog className="w-5 h-5 text-pink-600" />,
                 link: "/dashboard/student/verification",
                 role: "ADMIN",
             },
