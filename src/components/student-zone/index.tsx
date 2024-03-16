@@ -2,7 +2,7 @@ import { Student } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
-import { FC, FormEvent, useEffect, useRef, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import jsPdf from "jspdf";
 import { Button } from "@/components/ui/button";
 import qrcode from "qrcode";
@@ -32,6 +32,7 @@ const SearchTemplate: FC<{
                         value={registration}
                         onChange={(e) => setRegistration(e.target.value)}
                         className="bg-white dark:focus:ring-offset-white"
+                        autoFocus
                     />
                     <Button
                         variant={"destructive"}
@@ -51,6 +52,17 @@ const SearchTemplate: FC<{
     );
 };
 
+const fetchStuddent = async (registration: string) => {
+    const { data } = await axios.get<{
+        message: string;
+        student: Student & {
+            branchName: string;
+        };
+    }>(`/api/student/${registration}`);
+
+    return data;
+};
+
 export const ICard = () => {
     const [registration, setRegistration] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -59,12 +71,7 @@ export const ICard = () => {
             e.preventDefault();
             if (!registration || registration.length <= 6) return;
             setIsLoading(true);
-            const { data } = await axios.get<{
-                message: string;
-                student: Student & {
-                    branchName: string;
-                };
-            }>(`/api/student/${registration}`);
+            const data = await fetchStuddent(registration);
             if (!!data?.message) {
                 toast({ description: (data.message as string).toUpperCase() });
             }
@@ -101,7 +108,7 @@ export const Certificate = () => {
             e.preventDefault();
             if (!registration || registration.length <= 6) return;
             setIsLoading(true);
-            const { data } = await axios.get(`/api/student/${registration}`);
+            const data = await fetchStuddent(registration);
             if (!!data?.message) {
                 toast({ description: (data.message as string).toUpperCase() });
             }
@@ -138,15 +145,15 @@ export const MarkSheet = () => {
             e.preventDefault();
             if (!registration || registration.length <= 6) return;
             setIsLoading(true);
-            const { data } = await axios.get(`/api/student/${registration}`);
+
+            const data = await fetchStuddent(registration);
+
             if (!!data?.message) {
                 toast({ description: (data.message as string).toUpperCase() });
             }
 
             if (
-                (data?.student?.course === "Computer Typing" &&
-                    (!data?.student?.englishTyping ||
-                        !data?.student?.hindiTyping)) ||
+                data?.student?.course === "Computer Typing" ||
                 (data?.student?.course !== "Computer Typing" &&
                     (!data?.student?.viva ||
                         !data?.student?.written ||
@@ -155,7 +162,13 @@ export const MarkSheet = () => {
             ) {
                 toast({ description: "NOT GENERATED" });
                 return;
-            } else {
+            } else if (
+                data?.student?.course !== "Computer Typing" &&
+                !!data?.student?.viva &&
+                !!data?.student?.written &&
+                !!data?.student?.project &&
+                !!data?.student?.practical
+            ) {
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
@@ -175,6 +188,23 @@ export const MarkSheet = () => {
                     ctx?.fillText("6 months", 240, 335); // course
                     ctx?.fillText(data?.student.branchName, 240, 360); // course
                     ctx?.fillText(data?.student.branch, 240, 385); // course
+
+                    ctx?.fillText(
+                        data?.student?.written?.toString()!,
+                        530,
+                        610
+                    ); // course
+                    ctx?.fillText(
+                        data?.student?.practical?.toString()!,
+                        530,
+                        637
+                    ); // course
+                    ctx?.fillText(
+                        data?.student?.project?.toString()!,
+                        530,
+                        664
+                    ); // course
+                    ctx?.fillText(data?.student?.viva?.toString()!, 530, 690);
 
                     // qr
                     const CreateQR = async () => {
@@ -209,7 +239,9 @@ export const MarkSheet = () => {
                     var width = doc.internal.pageSize.getWidth();
                     var height = doc.internal.pageSize.getHeight();
                     doc.addImage(canvas, "", 0, 0, width, height);
-                    doc.output("dataurlnewwindow");
+                    doc.output("dataurlnewwindow", {
+                        filename: `marksheet-${data?.student?.formNumber}.pdf`,
+                    });
                 };
             }
         } catch (error) {
@@ -246,7 +278,9 @@ export const RegistrationVerify = () => {
         if (!registration) return;
         try {
             setIsLoading(true);
-            const { data } = await axios.get(`/api/student/${registration}`);
+
+            const data = await fetchStuddent(registration);
+
             if (!!data?.message) {
                 toast({ description: (data.message as string).toUpperCase() });
             }
