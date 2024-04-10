@@ -3,13 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import { FC, FormEvent, useState } from "react";
-import jsPdf from "jspdf";
+import jsPdf, { jsPDF } from "jspdf";
 import { Button } from "@/components/ui/button";
 import qrcode from "qrcode";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { Loader } from "lucide-react";
+import { format } from "date-fns";
+import StudentStats from "@/lib/StudentStats";
 
 const SearchTemplate: FC<{
     searchFunc: (e: FormEvent) => void;
@@ -109,6 +111,7 @@ export const Certificate = () => {
             if (!registration || registration.length <= 6) return;
             setIsLoading(true);
             const data = await fetchStuddent(registration);
+            console.log(data);
             if (!!data?.message) {
                 toast({ description: (data.message as string).toUpperCase() });
             }
@@ -117,7 +120,82 @@ export const Certificate = () => {
                 toast({ description: "NOT GENERATED" });
                 return;
             } else {
-                toast({ description: "Certificate will available soon." });
+                const student = data.student;
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                const image = document.createElement("img");
+                image.src = "/eklavya_cert3.jpg";
+                image.onload = async () => {
+                    canvas.width = image.naturalWidth;
+                    canvas.height = image.naturalHeight;
+                    // template
+                    ctx?.drawImage(image, 0, 0);
+
+                    // texts
+                    ctx!.font = "bold 32px Arial";
+                    ctx?.fillText(student.name, 600, 500); // name
+                    ctx?.fillText(student.fatherName, 400, 560); // fname
+                    ctx?.fillText(student.course, 700, 630); // course
+                    ctx?.fillText(student.branchName, 550, 690); // branch
+                    ctx?.fillText(student.branch, 350, 750); // branch code
+                    ctx?.fillText("6 months", 750, 750); // duration
+                    ctx?.fillText("Jan 2023", 1150, 750); // completed date
+                    ctx?.fillText("A", 650, 815); // Grade
+
+                    ctx!.font = "bold 22px Arial";
+                    ctx?.fillText(
+                        format(new Date(student.updatedAt), "dd/MM/yyyy"),
+                        300,
+                        900
+                    ); // date of creation
+
+                    ctx?.fillText(`EUPL/${student.serialNumber}`, 1350, 185); // serial number
+                    ctx?.fillText(student.formNumber, 1350, 265); // registration number
+
+                    // qr
+                    const CreateQR = async () => {
+                        const createQR = new Promise((resolve) => {
+                            qrcode.toDataURL(
+                                `${{
+                                    name: student.name,
+                                    registration: student.formNumber,
+                                    father: student.fatherName,
+                                    mother: student.motherName,
+                                    course: student.course,
+                                    branch: student.branch,
+                                    branchName: student?.branchName,
+                                }}`,
+                                {
+                                    width: 80,
+                                    margin: 0,
+                                    color: {
+                                        light: "#fff7ed",
+                                    },
+                                },
+                                (er, url) => {
+                                    const qr = document.createElement("img");
+                                    qr.src = url;
+                                    qr.onload = async () => {
+                                        ctx?.drawImage(qr, 760, 960, 80, 80);
+                                        resolve(qr);
+                                    };
+                                }
+                            );
+                        });
+                        await createQR;
+                    };
+                    await CreateQR();
+                    const doc = new jsPDF({
+                        orientation: "l",
+                        compress: true,
+                    });
+                    const width = doc.internal.pageSize.getWidth();
+                    const height = doc.internal.pageSize.getHeight();
+                    doc.addImage(canvas, "", 0, 0, width, height);
+                    doc.output("dataurlnewwindow", {
+                        filename: `certificate_${student.formNumber}.pdf`,
+                    });
+                };
             }
         } catch (error) {
             console.log(error);
@@ -172,59 +250,40 @@ export const MarkSheet = () => {
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
-                image.src = "/samples/sample_mark.jpg";
+                image.src = "/eklavya_mark.jpg";
                 image.onload = async () => {
                     canvas.width = image.naturalWidth;
                     canvas.height = image.naturalHeight;
                     // template
                     ctx?.drawImage(image, 0, 0);
 
-                    // texts
-                    ctx!.font = "bold 14px Arial";
-                    ctx?.fillText(data?.student.name, 240, 240); // name
-                    ctx?.fillText(data?.student.motherName, 240, 265); // Mname
-                    ctx?.fillText(data?.student.fatherName, 240, 287); // fname
-                    ctx?.fillText(data?.student.course, 240, 310); // course
-                    ctx?.fillText("6 months", 240, 335); // course
-                    ctx?.fillText(data?.student.branchName, 240, 360); // course
-                    ctx?.fillText(data?.student.branch, 240, 385); // course
-
-                    ctx?.fillText(
-                        data?.student?.written?.toString()!,
-                        530,
-                        610
-                    ); // course
-                    ctx?.fillText(
-                        data?.student?.practical?.toString()!,
-                        530,
-                        637
-                    ); // course
-                    ctx?.fillText(
-                        data?.student?.project?.toString()!,
-                        530,
-                        664
-                    ); // course
-                    ctx?.fillText(data?.student?.viva?.toString()!, 530, 690);
-
+                    const student = data?.student;
                     // qr
+
                     const CreateQR = async () => {
                         const createQR = new Promise((resolve) => {
                             qrcode.toDataURL(
                                 `${{
-                                    name: data?.student.name,
-                                    registration: data?.student.formNumber,
-                                    father: data?.student.fatherName,
-                                    mother: data?.student.motherName,
-                                    course: data?.student.course,
-                                    branch: data?.student.branch,
-                                    branchName: data?.student?.branchName,
+                                    name: student.name,
+                                    registration: student.formNumber,
+                                    father: student.fatherName,
+                                    mother: student.motherName,
+                                    course: student.course,
+                                    branch: student.branch,
+                                    branchName: student?.branchName,
                                 }}`,
-                                { width: 80, margin: 1 },
+                                {
+                                    width: 80,
+                                    margin: 0,
+                                    color: {
+                                        light: "#fff7ed",
+                                    },
+                                },
                                 (er, url) => {
                                     const qr = document.createElement("img");
                                     qr.src = url;
                                     qr.onload = async () => {
-                                        ctx?.drawImage(qr, 530, 50, 80, 80);
+                                        ctx?.drawImage(qr, 927, 100, 80, 80);
                                         resolve(qr);
                                     };
                                 }
@@ -233,6 +292,56 @@ export const MarkSheet = () => {
                         await createQR;
                     };
                     await CreateQR();
+
+                    // candidate details
+                    ctx!.font = "bold 20px Arial";
+                    ctx?.fillText(`EUPL/${student.serialNumber}`, 180, 268); // serial number
+                    ctx?.fillText(`${student.formNumber}`, 880, 268); // serial number
+
+                    ctx!.font = "bold 24px Arial";
+                    ctx?.fillText(student.name, 380, 410); // name
+                    ctx?.fillText(student.motherName, 380, 450); // Mname
+                    ctx?.fillText(student.fatherName, 380, 490); // fname
+                    ctx?.fillText(student.course, 380, 530); // course
+                    ctx?.fillText("6 months", 380, 570); // duration
+                    ctx?.fillText(student.branchName, 380, 610); // branch
+                    ctx?.fillText(student.branch, 380, 650); // branch
+
+                    const studentStats = new StudentStats(
+                        [
+                            student.written!,
+                            student.practical!,
+                            student.project!,
+                            student.viva!,
+                        ],
+                        400
+                    );
+
+                    // full marks
+                    ctx?.fillText("100", 420, 1003); // written
+                    ctx?.fillText("100", 420, 1043); // practical
+                    ctx?.fillText("100", 420, 1090); // project
+                    ctx?.fillText("100", 420, 1130); // viva
+
+                    // pass marks
+                    ctx?.fillText("40", 610, 1003); // written
+                    ctx?.fillText("40", 610, 1043); // practical
+                    ctx?.fillText("40", 610, 1090); // project
+                    ctx?.fillText("40", 610, 1130); // viva
+
+                    // marks
+                    ctx?.fillText(student?.written?.toString()!, 830, 1003); // written
+                    ctx?.fillText(student?.practical?.toString()!, 830, 1043); // practical
+                    ctx?.fillText(student?.project?.toString()!, 830, 1090); // project
+                    ctx?.fillText(student?.viva?.toString()!, 830, 1130); // viva
+
+                    // stats
+                    ctx?.fillText(
+                        `${studentStats.getPercentage()}%`,
+                        420,
+                        1200
+                    );
+                    ctx?.fillText(studentStats.getPerformance(), 850, 1201);
 
                     //  Download
                     const doc = new jsPdf({ orientation: "p" });
