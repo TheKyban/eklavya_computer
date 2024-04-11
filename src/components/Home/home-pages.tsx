@@ -1,15 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     BadgeCheck,
+    Book,
     BookText,
     Building,
     Contact,
     Folder,
     GraduationCap,
+    Hand,
+    HandMetal,
     Smile,
     Target,
 } from "lucide-react";
-import { poppins } from "@/lib/fonts";
+import { langar, poppins } from "@/lib/fonts";
 import { MAX_WIDTH } from "@/lib/styles";
 import Image from "next/image";
 import {
@@ -33,32 +36,15 @@ interface firstPageProps {
 export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
     return (
         <div
-            className={`${MAX_WIDTH} m-auto w-full h-full flex flex-col gap-2 py-3 overflow-x-hidden`}
+            className={`${MAX_WIDTH} m-auto w-full h-full flex flex-col gap-2 py-5 overflow-x-hidden`}
         >
-            {/* BANNER */}
-
-            <AnimationDiv
-                animate={{
-                    x: 0,
-                    opacity: 1,
-                }}
-                initial={{
-                    opacity: 0,
-                    x: 100,
-                }}
-                transition={{
-                    delay: 0.1,
-                    duration: 0.6,
-                }}
-                className="relative w-full h-[80px] sm:h-[150px]"
-            >
-                <Image src={"/banner.jpg"} fill alt="banner" />
-            </AnimationDiv>
-
-            <div className="w-full flex justify-between gap-2 flex-col lg:flex-row">
+            <div className="w-full flex justify-between gap-2 flex-col md:flex-row">
+                {/* FAMILY */}
+                <div className="h-[400px] max-h-[400px] w-full max-w-xs hidden lg:block">
+                    <HomeFamily family={family} />
+                </div>
                 {/* CAROUSEL */}
                 <HomeCarousel carousel={carousel} />
-
                 {/* FAMILY */}
                 <HomeFamily family={family} />
             </div>
@@ -71,7 +57,7 @@ export const SecondPage = () => {
         <div
             className={`overflow-hidden flex flex-col m-auto ${MAX_WIDTH} items-center lg:gap-10 w-full`}
         >
-            <div className="flex gap-3 flex-col lg:flex-row">
+            <div className="flex gap-3 flex-col md:flex-row">
                 {/* From desk of director */}
                 <FromDeskOf />
 
@@ -111,13 +97,15 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
                 delay: 0.4,
                 duration: 0.6,
             }}
-            className="flex-1 relative max-h-[450px] w-full flex flex-col"
+            className="relative h-[400px] max-h-[400px] w-full max-w-full md:max-w-xs flex flex-col border"
         >
-            <h1 className="text-center bg-red-500 text-white uppercase text-2xl font-semibold py-2">
+            <h1
+                className={`bg-[#026335] text-white uppercase text-lg text-center py-2 ${langar.className}`}
+            >
                 Family
             </h1>
             {/* @ts-ignore */}
-            <marquee direction="up">
+            <marquee direction="up" className="w-full h-full">
                 {family?.map(
                     (
                         user: {
@@ -137,9 +125,9 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
                                 height={100}
                                 alt="avatar"
                                 placeholder="empty"
-                                className="rounded-full object-cover min-w-[80px] min-h-[80px] max-w-[80px] max-h-[80px] lg:min-w-[100px] lg:min-h-[100px] lg:max-w-[100px] lg:max-h-[100px]"
+                                className="rounded-full object-cover min-w-[50px] min-h-[50px] max-w-[50px] max-h-[50px] lg:min-w-[70px] lg:min-h-[70px] lg:max-w-[70px] lg:max-h-[70px]"
                             />
-                            <div className="flex flex-col gap-1 font-semibold items-center">
+                            <div className="flex flex-col gap-1 font-semibold items-center text-xs ">
                                 <span className="capitalize text-rose-800">
                                     {user.name}
                                 </span>
@@ -172,16 +160,16 @@ const FromDeskOf = () => {
                 delay: 0.2,
                 duration: 0.6,
             }}
-            className="w-full flex flex-col gap-6 items-center"
+            className="w-full flex flex-col gap-2 items-center border"
         >
             <p
-                className={`${poppins.className} text-xl md:text-2xl font-semibold bg-red-500 w-full text-white uppercase text-center py-2`}
+                className={`bg-[#026335] w-full text-white uppercase text-lg text-center py-2 ${langar.className}`}
             >
                 From the Desk of Directors......
             </p>
 
-            <div className="flex flex-col gap-4 w-[93%] lg:w-full">
-                <p className="text-center sm:text-left md:h-fit text-sm md:text-base text-slate-800 px-2">
+            <div className="flex flex-col gap-4 w-full px-5 py-3">
+                <p className="text-center sm:text-left md:h-fit text-sm  text-slate-800 px-2 leading-6">
                     Education is the most powerful weapon which can be used to
                     change the world.This is the only tool to remove the
                     darkness of ignornce from the society. Information
@@ -211,10 +199,10 @@ const FromDeskOf = () => {
                     tomorrow, for yourselves and for the mankind.
                 </p>
                 <div className="flex flex-col text-zinc-600">
-                    <span className="self-end text-sm text md:text-lg font-bold mr-6">
+                    <span className="self-end text-sm font-semibold mr-6">
                         Warm Regards
                     </span>
-                    <span className="self-end text-sm md:text-lg font-bold mr-6">
+                    <span className="self-end text-sm font-semibold mr-6">
                         Director
                     </span>
                 </div>
@@ -238,56 +226,58 @@ const NoticeSection = () => {
                 delay: 0.2,
                 duration: 0.6,
             }}
-            className="h-full"
+            className="w-full max-w-full md:max-w-xs border overflow-y-hidden"
         >
-            <h1 className="bg-red-500 text-white font-semibold uppercase text-xl md:text-2xl text-center py-2">
+            <h1
+                className={`bg-[#026335] text-white uppercase text-lg text-center py-2 ${langar.className}`}
+            >
                 Notice
             </h1>
             {/* @ts-ignore */}
             <marquee
                 direction="up"
-                className="h-full w-[95%] max-h-72 lg:max-h-full sm:w-[80%] lg:w-[385px] m-auto flex"
+                className="h-full max-h-full px-5 m-auto flex"
             >
-                <ul className="flex flex-col w-full text-center items-center sm:text-start sm:items-start px-3 text-sm gap-5">
-                    <li className="flex flex-col sm:flex-row items-center justify-center px-3 gap-2 text-rose-700">
-                        <BookText />
-                        <b>Admission is Going On...</b>
+                <ul className="flex flex-col w-full text-center font-medium items-center sm:text-start sm:items-start text-xs gap-5">
+                    <li className="flex flex-col sm:flex-row items-center justify-center  gap-2 text-rose-700">
+                        <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                        <p>Admission is Going On...</p>
                     </li>
-                    <li className="flex gap-2 flex-col sm:flex-row items-center justify-center px-3 text-indigo-600">
-                        <Contact />
-                        <b>Contact for Franchisee Opening.</b>
+                    <li className="flex gap-2 flex-col sm:flex-row items-center justify-center text-indigo-600">
+                        <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                        <p>Contact for Franchisee Opening.</p>
                     </li>
-                    <li className="flex flex-col sm:flex-row items-center justify-center px-3 text-slate-600 gap-2">
-                        <GraduationCap />
-                        <b>Educate Your Dreams</b>
-                    </li>
-
-                    <li className="flex flex-col sm:flex-row items-center justify-center px-3 gap-2 text-orange-600">
-                        <Target />
-                        <b>Life+ Academics+ Creativity =Success</b>
+                    <li className="flex flex-col sm:flex-row items-center justify-center text-slate-600 gap-2">
+                        <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                        <p>Educate Your Dreams</p>
                     </li>
 
-                    <li className="flex flex-col sm:flex-row items-center justify-center px-3 text-slate-600 gap-2">
-                        <BookText />
-                        <b>Educating Today’s Learners for Tomorrow’s world.</b>
+                    <li className="flex flex-col sm:flex-row items-center justify-center gap-2 text-orange-600">
+                        <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                        <p>Life+ Academics+ Creativity =Success</p>
                     </li>
 
-                    <li className="flex flex-col sm:flex-row items-center justify-center px-3 text-indigo-600 gap-2">
-                        <Smile />
-                        <b>
+                    <li className="flex flex-col sm:flex-row items-center justify-center text-slate-600 gap-2">
+                        <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                        <p>Educating Today’s Learners for Tomorrow’s world.</p>
+                    </li>
+
+                    <li className="flex flex-col sm:flex-row items-center justify-center text-indigo-600 gap-2">
+                        <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                        <p>
                             “You dared to Struggle Yesterday you can dare to win
                             Today”
-                        </b>
+                        </p>
                     </li>
-                    <li className="flex flex-col sm:flex-row items-center justify-center px-3 text-rose-600 gap-2">
-                        <Building className="min-w-[15px] min-h-[15px]" />
-                        <b>
+                    <li className="flex flex-col sm:flex-row items-center justify-center text-rose-600 gap-2">
+                        <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                        <p>
                             It Is With Great Pleasure That I Congratulate You On
                             Your Five Year Anniversary. Please Know That You Are
                             Important Members Of Our Team And Your abilities And
                             Contributions Will Be An Important Part Of Our
-                            Continued Success. People Are And Will Always Be{" "}
-                        </b>
+                            Continued Success. People Are And Will Always Be.
+                        </p>
                     </li>
                 </ul>
                 {/* @ts-ignore */}
@@ -314,12 +304,12 @@ const WhySection = () => {
             className="bg-slate-200 mt-5 lg:mt-0 rounded-lg w-[93%] 2xl:w-full"
         >
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
-                <h1 className="text-4xl font-medium text-zinc-600 xl:text-6xl">
+                <h1 className="text-3xl font-medium text-zinc-600 xl:text-6xl">
                     Why Eklavya{" "}
-                    <span className="inline-block animate-bounce">?</span>.
+                    <span className="inline-block animate-pulse">?</span>.
                 </h1>
 
-                <p className="text-base w-full xl:w-[70%] xl:text-lg font-medium dark:text-zinc-700">
+                <p className="text-sm w-full lg:w-[70%] xl:text-lg dark:text-zinc-700">
                     Our purpose as a company and sevices as the standard against
                     which we weight our action and dicisions. To strengthen,
                     sustain and professionalize business knowledge through
@@ -338,7 +328,7 @@ const OurFeatures = () => {
         <div
             className={`flex flex-col justify-center items-center gap-10 bg-orange-100 w-full rounded-lg py-10 h-full`}
         >
-            <h1 className="text-5xl font-bold text-green-600">Our Features</h1>
+            <h1 className="text-3xl font-bold text-green-600">Our Features</h1>
             <div className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap">
                 {/* CARD ONE */}
 
@@ -359,12 +349,12 @@ const OurFeatures = () => {
                     <Card className="max-w-xs bg-orange-300 dark:border-0 dark:text-black">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-3">
-                                <BookText className="w-6 h-6" />
-                                <span>Books</span>
+                                <BookText className="w-4 h-4" />
+                                <span className="text-lg">Books</span>
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p>
+                            <p className="text-sm">
                                 We Provide books, updated with latest
                                 technology.Our books help students to understand
                                 the concept of the topic very clearly. We revise
@@ -395,12 +385,12 @@ const OurFeatures = () => {
                     <Card className="max-w-xs bg-indigo-300 dark:border-0 dark:text-black">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-3">
-                                <Folder className="w-6 h-6" />
-                                <span>Facilities</span>
+                                <Folder className="w-4 h-4" />
+                                <span className="text-lg">Facilities</span>
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p>
+                            <p className="text-sm">
                                 We provide unique and very user friendly Online
                                 facilities like Student Verification, I-Card
                                 Verification, Marksheet Verification,
@@ -431,12 +421,12 @@ const OurFeatures = () => {
                     <Card className="max-w-xs h-full bg-amber-300 dark:text-black dark:border-0">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-3">
-                                <BadgeCheck className="w-6 h-6" />
-                                <span>BETTER SUPPORT</span>
+                                <BadgeCheck className="w-4 h-4" />
+                                <span className="text-lg">BETTER SUPPORT</span>
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p>
+                            <p className="text-sm">
                                 We provide better support system for our
                                 franchise , in order to solve any aspect of
                                 problems regarding the software uses.
@@ -489,7 +479,7 @@ const OurCourses = () => {
         <div
             className={`flex flex-col justify-center items-center gap-10 bg-indigo-100 w-full rounded-lg py-10 h-full`}
         >
-            <h1 className="text-5xl font-bold text-green-600">Our Courses</h1>
+            <h1 className="text-3xl font-bold text-green-600">Our Courses</h1>
 
             <div className="grid grid-cols-2 lg:grid-cols-3 m-auto w-fit gap-8 flex-wrap">
                 {courses?.map((course, idx) => (
@@ -514,13 +504,13 @@ const OurCourses = () => {
                             delay: 0.2,
                             duration: 0.6,
                         }}
-                        className="relative group overflow-hidden"
+                        className="relative group overflow-hidden rounded-lg"
                     >
                         <Image
                             src={course.url}
-                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36 md:w-auto md:h-auto"
-                            width={250}
-                            height={250}
+                            className="transition-all group-hover:scale-110 rounded-lg w-28 h-28 md:w-auto md:h-auto"
+                            width={130}
+                            height={130}
                             alt={course.name}
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">

@@ -37,7 +37,7 @@ const MobileMode = () => {
     const isAuth = status === "authenticated" ? true : false;
 
     return (
-        <div className="lg:hidden w-full flex justify-around py-5 bg-red-500">
+        <div className="lg:hidden w-full flex justify-around py-5 bg-[#026335]">
             <div>
                 <Image
                     priority
@@ -45,6 +45,7 @@ const MobileMode = () => {
                     width={80}
                     height={0}
                     alt="logo"
+                    className="shadow-2xl"
                 />
             </div>
             <div className="flex gap-5 items-center justify-center">

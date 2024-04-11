@@ -7,33 +7,10 @@ export const Footer = () => {
     const year = new Date(Date.now()).getFullYear();
     return (
         <div
-            className="flex flex-col items-center max-w-[1280px] m-auto justify-center h-full w-full"
+            className="flex flex-col items-center max-w-[1280px] m-auto justify-center h-full w-full overflow-hidden"
             id="contact"
         >
-            <div className="w-full h-full flex flex-col items-center justify-around">
-                <motion.div
-                    whileInView={{
-                        x: 0,
-                        opacity: 1,
-                    }}
-                    transition={{
-                        duration: 0.6,
-                        easings: "tween",
-                        ease: "easeInOut",
-                        delay: 0.6,
-                    }}
-                    viewport={{
-                        once: true,
-                    }}
-                    initial={{
-                        x: 100,
-                        opacity: 0,
-                    }}
-                    className="relative w-full h-[100px] lg:h-[210px]"
-                >
-                    <Image src={"/banner.jpg"} fill alt="banner" />
-                </motion.div>
-
+            <div className="w-full h-full flex flex-col items-center justify-around ">
                 <motion.div
                     whileInView={{
                         x: 0,

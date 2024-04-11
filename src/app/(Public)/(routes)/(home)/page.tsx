@@ -34,7 +34,7 @@ export default async function Home() {
         const data = await fetchCarousels();
         const families = await fetchFamilies();
         return (
-            <div className="min-h-[calc(100vh-63px)] h-full bg-orange-50 rounded-xl">
+            <div className="min-h-[calc(100vh-63px)] h-full bg-orange-50">
                 {/**
                  *
                  * HERO SECTION
