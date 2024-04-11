@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { info } from "@/lib/constants";
 import { motion } from "framer-motion";
 
@@ -20,7 +19,7 @@ export const Footer = () => {
                         duration: 0.6,
                         easings: "tween",
                         ease: "easeInOut",
-                        delay: 0.8,
+                        delay: 0.3,
                     }}
                     viewport={{
                         once: true,
@@ -29,7 +28,7 @@ export const Footer = () => {
                         x: -100,
                         opacity: 0,
                     }}
-                    className="flex justify-around w-full h-full bg-orange-200 flex-col lg:flex-row gap-6 py-5 "
+                    className="flex justify-around w-full h-full bg-[#0B0D38] flex-col md:flex-row gap-6 py-5 "
                 >
                     {info.map((info, i) => (
                         <div
@@ -37,10 +36,10 @@ export const Footer = () => {
                             className="flex flex-col items-center gap-1 min-w-fit lg:min-w-[300px] w-full text-black"
                         >
                             <info.icon className="w-5 text-indigo-600 h-5" />
-                            <span className="text-base uppercase">
+                            <span className="text-sm uppercase font-medium text-white">
                                 {info.title}
                             </span>
-                            <div className="flex flex-col items-center justify-center text-base">
+                            <div className="flex flex-col items-center text-white justify-center text-sm">
                                 {info.details.map((detail, idx) => (
                                     <span key={idx}>{detail}</span>
                                 ))}
@@ -67,7 +66,7 @@ export const Footer = () => {
                     x: 100,
                     opacity: 0,
                 }}
-                className="text-center text-sm bg-orange-700 text-white w-full"
+                className="text-center text-sm bg-[#026335] text-white w-full"
             >
                 <span>Copyright © 2023-{year} </span>
                 <span>Eklavaya Global Computer Pvt. Ltd.</span>

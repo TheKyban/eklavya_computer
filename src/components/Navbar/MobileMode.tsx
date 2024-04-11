@@ -37,17 +37,15 @@ const MobileMode = () => {
     const isAuth = status === "authenticated" ? true : false;
 
     return (
-        <div className="lg:hidden w-full flex justify-around py-5 bg-[#026335]">
-            <div>
-                <Image
-                    priority
-                    src={"/logomen.png"}
-                    width={80}
-                    height={0}
-                    alt="logo"
-                    className="shadow-2xl"
-                />
-            </div>
+        <div className="md:hidden w-full flex justify-around bg-orange-50">
+            <Image
+                priority
+                src={"/banner.jpg"}
+                width={500}
+                height={50}
+                alt="logo"
+                className="w-full h-auto max-h-20 object-fill shadow-2xl"
+            />
             <div className="flex gap-5 items-center justify-center">
                 <Sheet open={open} onOpenChange={(val) => setOpen(val)}>
                     <SheetTrigger asChild>
@@ -95,7 +93,44 @@ const MobileMode = () => {
                                         <span>Login</span>
                                     </Link>
                                 )}
+                                <Link
+                                    href="/"
+                                    onClick={() => setOpen(!open)}
+                                    className={LinkStyle3}
+                                >
+                                    <GraduationCap className="w-4 h-4" />
+                                    <span>Addmission</span>
+                                </Link>
 
+                                {/* Franchise */}
+                                <Link
+                                    href="/franchise"
+                                    onClick={() => setOpen(!open)}
+                                    className={LinkStyle3}
+                                >
+                                    <Users className="w-4 h-4" />
+                                    <span>Franchise Apply</span>
+                                </Link>
+
+                                <Link
+                                    href={"/university"}
+                                    className={LinkStyle3}
+                                    onClick={() => setOpen(!open)}
+                                >
+                                    <GraduationCap className="w-4 h-4" />
+                                    <span>University Programs</span>
+                                </Link>
+
+                                {/* Affiliation */}
+
+                                <Link
+                                    className={LinkStyle3}
+                                    href={"/affiliation"}
+                                    onClick={() => setOpen(!open)}
+                                >
+                                    <LibraryBig className="w-4 h-4" />
+                                    <span>Affiliation</span>
+                                </Link>
                                 <Link
                                     className={LinkStyle3}
                                     href={"/franchise"}

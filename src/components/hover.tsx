@@ -26,7 +26,7 @@ export const HoverContent: React.FC<HoverTypes> = ({
     return (
         <div
             className={cn(
-                "hidden z-50 transition-all flex-col absolute group-hover:flex shadow-md px-3 py-3 group-hover:border rounded-md bg-red-500 dark:bg-red-500 top-[102%]  w-fit min-w-[320px] right-10",
+                "hidden z-50 transition-all flex-col absolute group-hover:flex shadow-md px-3 py-3 group-hover:border rounded-md bg-orange-50 dark:bg-orange-50 top-[102%]  w-fit min-w-[320px] right-10 text-black dark:text-black",
                 className
             )}
             {...props}

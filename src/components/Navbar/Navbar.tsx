@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Computer, Database } from "lucide-react";
+import { Computer, Database, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import MobileMode from "@/components/Navbar/MobileMode";
 import { Hover, HoverContent, HoverTrigger } from "@/components/hover";
@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className="flex justify-center items-center dark:bg-transparent">
             {/* PC */}
             <div
-                className={`hidden lg:flex flex-col justify-between w-full ${MAX_WIDTH} shadow-xl`}
+                className={`hidden md:flex flex-col justify-between w-full ${MAX_WIDTH} shadow-xl`}
             >
                 <div className="w-full h-full flex items-center justify-between px-3 gap-4 text-white text-xs font-semibold bg-[#026335]">
                     {/* Login  & Dasboard*/}
@@ -115,19 +115,19 @@ const Navbar = () => {
                     <Image src={"/banner.jpg"} fill alt="banner" />
                 </motion.div>
 
-                <div className="w-full h-full flex items-center justify-between px-3 gap-4 text-white text-xs font-bold bg-[#0B0D38] z-20">
+                <div className="w-full h-full flex items-center flex-wrap justify-between px-3 gap-4 text-white text-xs font-bold bg-[#0B0D38] z-20">
                     {/* Home */}
                     <Link href="/" className={LinkStyle}>
                         <span>Home</span>
                     </Link>
 
                     {/* Home */}
-                    <Link href="/" className={LinkStyle}>
+                    <Link href="/addmission" className={LinkStyle}>
                         <span>Addmission</span>
                     </Link>
 
                     {/* Franchise */}
-                    <Link href="/franchise" className={LinkStyle}>
+                    <Link href="/franchiseApply" className={LinkStyle}>
                         <span>Franchise Apply</span>
                     </Link>
 
@@ -137,9 +137,23 @@ const Navbar = () => {
                         <span>Course</span>
                     </Link>
 
-                    <Link href={"/course"} className={LinkStyle}>
-                        <span>University Programs</span>
-                    </Link>
+                    {/* University */}
+                    <Hover>
+                        <HoverTrigger>
+                            <span>University Programs</span>
+                        </HoverTrigger>
+                        <HoverContent>
+                            <div className="flex flex-col gap-0">
+                                <Link
+                                    className={cn(LinkStyle)}
+                                    href={"/university/xyz"}
+                                >
+                                    <GraduationCap className="w-4 h-4" />
+                                    <span>XYZ University</span>
+                                </Link>
+                            </div>
+                        </HoverContent>
+                    </Hover>
 
                     {/* Affiliation */}
 
@@ -157,7 +171,7 @@ const Navbar = () => {
                         <HoverTrigger>
                             <span>Download</span>
                         </HoverTrigger>
-                        <HoverContent className="bg-red-500">
+                        <HoverContent>
                             <div className="flex flex-col gap-0">
                                 {DownloadFiles?.map((file, i) => (
                                     <a
@@ -179,7 +193,7 @@ const Navbar = () => {
                         <HoverTrigger>
                             <span>Syllabus</span>
                         </HoverTrigger>
-                        <HoverContent className="bg-red-500">
+                        <HoverContent>
                             <div className="flex flex-col">
                                 <Link className={LinkStyle} href={"#"}>
                                     <Database className="w-4 h-4" />

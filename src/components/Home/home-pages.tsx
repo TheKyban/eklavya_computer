@@ -508,9 +508,9 @@ const OurCourses = () => {
                     >
                         <Image
                             src={course.url}
-                            className="transition-all group-hover:scale-110 rounded-lg w-28 h-28 md:w-auto md:h-auto"
                             width={130}
                             height={130}
+                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36"
                             alt={course.name}
                         />
                         <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
