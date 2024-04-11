@@ -1,4 +1,3 @@
-import { Footer } from "@/components/Home/footer";
 import { FirstPage, SecondPage, ThridPage } from "@/components/Home/home-pages";
 import { v2 as cloudinary } from "cloudinary";
 import { Prisma } from "../../../../../prisma/prisma";
@@ -58,14 +57,6 @@ export default async function Home() {
                  */}
 
                 <ThridPage />
-
-                {/*
-                 *
-                 * FOOTER
-                 *
-                 */}
-
-                <Footer />
             </div>
         );
     } catch (error) {

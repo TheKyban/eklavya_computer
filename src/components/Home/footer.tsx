@@ -1,12 +1,13 @@
 "use client";
 import { info } from "@/lib/constants";
+import { MAX_WIDTH } from "@/lib/styles";
 import { motion } from "framer-motion";
 
 export const Footer = () => {
     const year = new Date(Date.now()).getFullYear();
     return (
         <div
-            className="flex flex-col items-center max-w-[1280px] m-auto justify-center h-full w-full overflow-hidden"
+            className={`overflow-hidden flex flex-col m-auto ${MAX_WIDTH} items-center w-full overflow-hidden`}
             id="contact"
         >
             <div className="w-full h-full flex flex-col items-center justify-around ">
@@ -28,7 +29,7 @@ export const Footer = () => {
                         x: -100,
                         opacity: 0,
                     }}
-                    className="flex justify-around w-full h-full bg-[#0B0D38] flex-col md:flex-row gap-6 py-5 "
+                    className="flex justify-around w-full h-full bg-[#0B0D38] flex-col sm:flex-row gap-6 py-5 "
                 >
                     {info.map((info, i) => (
                         <div
@@ -66,7 +67,7 @@ export const Footer = () => {
                     x: 100,
                     opacity: 0,
                 }}
-                className="text-center text-sm bg-[#026335] text-white w-full"
+                className="text-center text-xs bg-[#026335] text-white w-full"
             >
                 <span>Copyright © 2023-{year} </span>
                 <span>Eklavaya Global Computer Pvt. Ltd.</span>

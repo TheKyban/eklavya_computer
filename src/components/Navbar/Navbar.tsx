@@ -38,11 +38,6 @@ const Navbar = () => {
                         <span>Course</span>
                     </Link>
 
-                    {/* Student Zone */}
-                    <Link href={"/studentzone"} className={LinkStyle}>
-                        <span className="">Student Zone</span>
-                    </Link>
-
                     {/* About us */}
 
                     <Link className={LinkStyle} href={"/about"}>
@@ -50,50 +45,9 @@ const Navbar = () => {
                     </Link>
 
                     {/* Contact us */}
-                    {/* <Link className={LinkStyle} href={"#contact"}>
+                    <Link className={LinkStyle} href={"#contact"}>
                         <span className="">Contact Us</span>
-                    </Link> */}
-
-                    {/* DOWNLOAD */}
-                    {/* <Hover>
-                        <HoverTrigger>
-                            <span>Download</span>
-                        </HoverTrigger>
-                        <HoverContent className="bg-red-500">
-                            <div className="flex flex-col gap-0">
-                                {DownloadFiles?.map((file, i) => (
-                                    <a
-                                        key={i}
-                                        className={cn(LinkStyle)}
-                                        href={file.link}
-                                        download={file.download}
-                                    >
-                                        <file.icon className="w-4 h-4" />
-                                        <span>{file.title}</span>
-                                    </a>
-                                ))}
-                            </div>
-                        </HoverContent>
-                    </Hover> */}
-
-                    {/* Syllabus */}
-                    {/* <Hover>
-                        <HoverTrigger>
-                            <span>Syllabus</span>
-                        </HoverTrigger>
-                        <HoverContent className="bg-red-500">
-                            <div className="flex flex-col">
-                                <Link className={LinkStyle} href={"#"}>
-                                    <Database className="w-4 h-4" />
-                                    <span>ADCA</span>
-                                </Link>
-                                <Link className={LinkStyle} href={"#"}>
-                                    <Computer className="w-4 h-4" />
-                                    <span className="">DCA</span>
-                                </Link>
-                            </div>
-                        </HoverContent>
-                    </Hover> */}
+                    </Link>
 
                     <TimeComponent />
                 </div>
@@ -117,11 +71,6 @@ const Navbar = () => {
 
                 <div className="w-full h-full flex items-center flex-wrap justify-between px-3 gap-4 text-white text-xs font-bold bg-[#0B0D38] z-20">
                     {/* Home */}
-                    <Link href="/" className={LinkStyle}>
-                        <span>Home</span>
-                    </Link>
-
-                    {/* Home */}
                     <Link href="/addmission" className={LinkStyle}>
                         <span>Addmission</span>
                     </Link>
@@ -131,10 +80,9 @@ const Navbar = () => {
                         <span>Franchise Apply</span>
                     </Link>
 
-                    {/* Course */}
-
-                    <Link href={"/course"} className={LinkStyle}>
-                        <span>Course</span>
+                    {/* Student Zone */}
+                    <Link href={"/studentzone"} className={LinkStyle}>
+                        <span className="">Student Zone</span>
                     </Link>
 
                     {/* University */}
@@ -154,17 +102,6 @@ const Navbar = () => {
                             </div>
                         </HoverContent>
                     </Hover>
-
-                    {/* Affiliation */}
-
-                    <Link className={LinkStyle} href={"/affiliation"}>
-                        <span>Affiliation</span>
-                    </Link>
-
-                    {/* Contact us */}
-                    <Link className={LinkStyle} href={"#contact"}>
-                        <span className="">Contact Us</span>
-                    </Link>
 
                     {/* DOWNLOAD */}
                     <Hover>
@@ -206,6 +143,12 @@ const Navbar = () => {
                             </div>
                         </HoverContent>
                     </Hover>
+
+                    {/* Affiliation */}
+
+                    <Link className={LinkStyle} href={"/affiliation"}>
+                        <span>Affiliation</span>
+                    </Link>
                 </div>
             </div>
             {/* MOBILE */}

@@ -1,5 +1,4 @@
 "use client";
-import { Footer } from "@/components/Home/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import {
     Carousel,
@@ -230,11 +229,6 @@ export default function About() {
                     </motion.div>
                 </div>
             </div>
-            {/*
-             * FOOTER
-             */}
-
-            <Footer />
         </>
     );
 }

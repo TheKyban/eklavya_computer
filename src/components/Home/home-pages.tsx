@@ -481,7 +481,7 @@ const OurCourses = () => {
         >
             <h1 className="text-3xl font-bold text-green-600">Our Courses</h1>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 m-auto w-fit gap-8 flex-wrap">
+            <div className="grid grid-cols-2 sm:grid-cols-3 m-auto w-fit gap-8 flex-wrap">
                 {courses?.map((course, idx) => (
                     <AnimationDiv
                         key={course.name}

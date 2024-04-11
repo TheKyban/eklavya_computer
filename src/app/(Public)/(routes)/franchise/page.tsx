@@ -1,5 +1,4 @@
 "use client";
-import { Footer } from "@/components/Home/footer";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -57,138 +56,127 @@ export default function Franchise() {
     });
 
     return (
-        <>
-            <div
-                className={`w-full ${MAX_WIDTH} bg-orange-100 m-auto ${MIN_HEIGHT} h-full py-20 lg:pt-28 flex items-center justify-center gap-9 flex-wrap`}
-            >
-                {/* VERIFIY FRANCHISE */}
-                <Card className="max-w-lg w-1/2 min-w-[350px] bg-transparent">
-                    <CardHeader>
-                        <CardTitle className="uppercase text-red-600">
-                            Verify Franchise
-                        </CardTitle>
+        <div
+            className={`w-full ${MAX_WIDTH} bg-orange-100 m-auto ${MIN_HEIGHT} h-full py-20 lg:pt-28 flex items-center justify-center gap-9 flex-wrap`}
+        >
+            {/* VERIFIY FRANCHISE */}
+            <Card className="max-w-lg w-1/2 min-w-[350px] bg-transparent">
+                <CardHeader>
+                    <CardTitle className="uppercase text-red-600">
+                        Verify Franchise
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-2">
+                        <Label className="text-red-950">Branch Code</Label>
+                        <Input
+                            placeholder="Enter Branch Code"
+                            value={branch}
+                            onChange={(e) => setBranch(e.target.value)}
+                            className="bg-white dark:focus:ring-offset-white"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <Label className="text-red-950">Password</Label>
+                        <Input
+                            placeholder="Enter Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="bg-white dark:focus:ring-offset-white"
+                        />
+                    </div>
+                </CardContent>
+                <CardFooter>
+                    <Button
+                        className="w-full"
+                        variant={"destructive"}
+                        onClick={() => mutate()}
+                        disabled={isPending}
+                    >
+                        {isPending ? (
+                            <Loader2 className="animate-spin" />
+                        ) : (
+                            "Search"
+                        )}
+                    </Button>
+                </CardFooter>
+            </Card>
+
+            {/* IF FRANCHISE DATA EXIST */}
+
+            {data && (
+                <Card className="bg-transparent">
+                    <CardHeader className="items-center">
+                        {data?.img && (
+                            <Image
+                                src={data?.img}
+                                width={150}
+                                height={150}
+                                alt="avatar"
+                                className="rounded-full"
+                            />
+                        )}
+
+                        {data?.userId && (
+                            <div className="flex items-center gap-3">
+                                <p className="text-lg font-semibold">
+                                    Branch Code :
+                                </p>
+                                <span>{data?.userId}</span>
+                            </div>
+                        )}
                     </CardHeader>
-                    <CardContent className="flex flex-col gap-3">
-                        <div className="flex flex-col gap-2">
-                            <Label className="text-red-950">Branch Code</Label>
-                            <Input
-                                placeholder="Enter Branch Code"
-                                value={branch}
-                                onChange={(e) => setBranch(e.target.value)}
-                                className="bg-white dark:focus:ring-offset-white"
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <Label className="text-red-950">Password</Label>
-                            <Input
-                                placeholder="Enter Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="bg-white dark:focus:ring-offset-white"
-                            />
-                        </div>
+                    <CardContent>
+                        {data?.branch && (
+                            <div className="flex gap-3 items-center">
+                                <p className="text-lg font-semibold">
+                                    Branch Name:
+                                </p>
+                                <span>{data?.branch}</span>
+                            </div>
+                        )}
+                        {data?.name && (
+                            <div className="flex gap-3 items-center">
+                                <p className="text-lg font-semibold">
+                                    Director Name:{" "}
+                                </p>
+                                <span>{data?.name}</span>
+                            </div>
+                        )}
+                        {data?.address && (
+                            <div className="flex items-center gap-3">
+                                <p className="text-lg font-semibold">
+                                    Address :
+                                </p>
+                                <span>{data?.address.street}</span>
+                            </div>
+                        )}
+
+                        {data?.address.district && (
+                            <div className="flex items-center gap-3">
+                                <p className="text-lg font-semibold">
+                                    District:{" "}
+                                </p>
+                                <span>{data?.address.district}</span>
+                            </div>
+                        )}
+                        {data?.address.state && (
+                            <div className="flex items-center gap-3">
+                                <p className="text-lg font-semibold">State: </p>
+                                <span>{data?.address.state}</span>
+                            </div>
+                        )}
+                        {data?.address.pincode && (
+                            <div className="flex items-center gap-3">
+                                <p className="text-lg font-semibold">
+                                    Pin code:{" "}
+                                </p>
+                                <span>{data?.address.pincode}</span>
+                            </div>
+                        )}
                     </CardContent>
-                    <CardFooter>
-                        <Button
-                            className="w-full"
-                            variant={"destructive"}
-                            onClick={() => mutate()}
-                            disabled={isPending}
-                        >
-                            {isPending ? (
-                                <Loader2 className="animate-spin" />
-                            ) : (
-                                "Search"
-                            )}
-                        </Button>
-                    </CardFooter>
                 </Card>
-
-                {/* IF FRANCHISE DATA EXIST */}
-
-                {data && (
-                    <Card className="bg-transparent">
-                        <CardHeader className="items-center">
-                            {data?.img && (
-                                <Image
-                                    src={data?.img}
-                                    width={150}
-                                    height={150}
-                                    alt="avatar"
-                                    className="rounded-full"
-                                />
-                            )}
-
-                            {data?.userId && (
-                                <div className="flex items-center gap-3">
-                                    <p className="text-lg font-semibold">
-                                        Branch Code :
-                                    </p>
-                                    <span>{data?.userId}</span>
-                                </div>
-                            )}
-                        </CardHeader>
-                        <CardContent>
-                            {data?.branch && (
-                                <div className="flex gap-3 items-center">
-                                    <p className="text-lg font-semibold">
-                                        Branch Name:
-                                    </p>
-                                    <span>{data?.branch}</span>
-                                </div>
-                            )}
-                            {data?.name && (
-                                <div className="flex gap-3 items-center">
-                                    <p className="text-lg font-semibold">
-                                        Director Name:{" "}
-                                    </p>
-                                    <span>{data?.name}</span>
-                                </div>
-                            )}
-                            {data?.address && (
-                                <div className="flex items-center gap-3">
-                                    <p className="text-lg font-semibold">
-                                        Address :
-                                    </p>
-                                    <span>{data?.address.street}</span>
-                                </div>
-                            )}
-
-                            {data?.address.district && (
-                                <div className="flex items-center gap-3">
-                                    <p className="text-lg font-semibold">
-                                        District:{" "}
-                                    </p>
-                                    <span>{data?.address.district}</span>
-                                </div>
-                            )}
-                            {data?.address.state && (
-                                <div className="flex items-center gap-3">
-                                    <p className="text-lg font-semibold">
-                                        State:{" "}
-                                    </p>
-                                    <span>{data?.address.state}</span>
-                                </div>
-                            )}
-                            {data?.address.pincode && (
-                                <div className="flex items-center gap-3">
-                                    <p className="text-lg font-semibold">
-                                        Pin code:{" "}
-                                    </p>
-                                    <span>{data?.address.pincode}</span>
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
-                )}
-            </div>
-            {/*
-             *
-             * FOOTER
-             *
-             */}
-
-            <Footer />
-        </>
+            )}
+        </div>
     );
 }
