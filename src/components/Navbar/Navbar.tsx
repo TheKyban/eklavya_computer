@@ -50,12 +50,12 @@ const Navbar = () => {
                     </Link>
 
                     {/* Contact us */}
-                    <Link className={LinkStyle} href={"#contact"}>
+                    {/* <Link className={LinkStyle} href={"#contact"}>
                         <span className="">Contact Us</span>
-                    </Link>
+                    </Link> */}
 
                     {/* DOWNLOAD */}
-                    <Hover>
+                    {/* <Hover>
                         <HoverTrigger>
                             <span>Download</span>
                         </HoverTrigger>
@@ -74,10 +74,10 @@ const Navbar = () => {
                                 ))}
                             </div>
                         </HoverContent>
-                    </Hover>
+                    </Hover> */}
 
                     {/* Syllabus */}
-                    <Hover>
+                    {/* <Hover>
                         <HoverTrigger>
                             <span>Syllabus</span>
                         </HoverTrigger>
@@ -93,7 +93,7 @@ const Navbar = () => {
                                 </Link>
                             </div>
                         </HoverContent>
-                    </Hover>
+                    </Hover> */}
 
                     <TimeComponent />
                 </div>
@@ -110,23 +110,25 @@ const Navbar = () => {
                         delay: 0.1,
                         duration: 1,
                     }}
-                    className="relative w-full h-[120px] overflow-hidden"
+                    className="relative w-[50vw] m-auto h-[120px] overflow-hidden"
                 >
-                    <Image src={"/banner.jpg"} fill alt="banner"  className="object-cover object-top"/>
+                    <Image src={"/banner.jpg"} fill alt="banner" />
                 </motion.div>
 
                 <div className="w-full h-full flex items-center justify-between px-3 gap-4 text-white text-xs font-bold bg-[#0B0D38] z-20">
-                    {/* Login  & Dasboard*/}
-                    <IsAuth />
-
                     {/* Home */}
                     <Link href="/" className={LinkStyle}>
                         <span>Home</span>
                     </Link>
 
+                    {/* Home */}
+                    <Link href="/" className={LinkStyle}>
+                        <span>Addmission</span>
+                    </Link>
+
                     {/* Franchise */}
                     <Link href="/franchise" className={LinkStyle}>
-                        <span>Franchise</span>
+                        <span>Franchise Apply</span>
                     </Link>
 
                     {/* Course */}
@@ -135,15 +137,14 @@ const Navbar = () => {
                         <span>Course</span>
                     </Link>
 
-                    {/* Student Zone */}
-                    <Link href={"/studentzone"} className={LinkStyle}>
-                        <span className="">Student Zone</span>
+                    <Link href={"/course"} className={LinkStyle}>
+                        <span>University Programs</span>
                     </Link>
 
-                    {/* About us */}
+                    {/* Affiliation */}
 
-                    <Link className={LinkStyle} href={"/about"}>
-                        <span>About Us</span>
+                    <Link className={LinkStyle} href={"/affiliation"}>
+                        <span>Affiliation</span>
                     </Link>
 
                     {/* Contact us */}
