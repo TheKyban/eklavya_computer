@@ -157,7 +157,9 @@ export const useAssests = () => {
     return useQuery<{ public_id: string; secure_url: string }[]>({
         queryKey: ["assets"],
         queryFn: async () => {
-            const { data } = await axios("/api/media");
+            const { data } = await axios("/api/media",{
+                
+            });
             return data;
         },
         staleTime: 60 * 1000 * 30,

@@ -12,8 +12,21 @@ const fetchCarousels = async () => {
     const assets = await cloudinary.api.resources({
         type: "upload",
         prefix: "eklavaya-carousel", // add your folder
+        direction: "desc",
     });
-    return assets?.resources;
+
+    return Array.from(
+        assets?.resources as {
+            asset_id: string;
+            public_id: string;
+            created_at: "2024-03-14T04:12:25Z";
+            secure_url: string;
+        }[]
+    ).sort(
+        (a, b) =>
+            new Date(a?.created_at).getTime() -
+            new Date(b?.created_at).getTime()
+    );
 };
 
 const fetchFamilies = async () => {
