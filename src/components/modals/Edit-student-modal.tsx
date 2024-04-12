@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -143,7 +143,10 @@ export const EditStudentModal = () => {
                                         className="cursor-pointer relative"
                                     >
                                         <Image
-                                            src={field.value || "/noavatar.png"}
+                                            src={
+                                                field.value ||
+                                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712930560/ekavaya_assets/jpxbhz4hxaewfz8er2kv.png"
+                                            }
                                             priority
                                             width={100}
                                             height={100}

@@ -113,7 +113,7 @@ const UserRegistration = ({}) => {
                                             <Image
                                                 src={
                                                     field.value ||
-                                                    "/noavatar.png"
+                                                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712930560/ekavaya_assets/jpxbhz4hxaewfz8er2kv.png"
                                                 }
                                                 priority
                                                 width={100}

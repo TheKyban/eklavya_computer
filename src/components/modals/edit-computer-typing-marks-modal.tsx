@@ -3,14 +3,12 @@ import { useModal } from "@/hooks/use-modal-store";
 import {
     Dialog,
     DialogContent,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 import {
     Form,
@@ -28,7 +26,7 @@ import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { typingSpeedMarkSchema } from "@/lib/schema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useCustumQuery } from "@/hooks/use-queries";
 
 export const EditComputerTypingMarksModal = () => {
