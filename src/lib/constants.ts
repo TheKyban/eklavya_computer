@@ -16,31 +16,31 @@ import {
 export const DownloadFiles = [
     {
         title: "Prospectus",
-        link: "/Prospectus.pdf",
+        link: "",
         icon: BookUser,
         download: "prospectus",
     },
     {
         title: "Admission Form",
-        link: "/form/AdmissionForm.pdf",
+        link: "",
         icon: Album,
         download: "admissionForm",
     },
     {
         title: "Franchisee Form",
-        link: "/form/franchiseeForm.pdf",
+        link: "",
         icon: Contact,
         download: "franchiseeForm",
     },
     {
         title: "Sample Ceritificate",
-        link: "/samples/sample_certificate.jpg",
+        link: "",
         icon: GraduationCap,
         download: "sample_certificate",
     },
     {
         title: "Sample Marksheet",
-        link: "/samples/sample_mark.jpg",
+        link: "",
         icon: Table,
         download: "sample_marksheet",
     },
@@ -107,5 +107,4 @@ export const Courses = [
     "PDDTP",
 ];
 
-
-export const IMAGE_SIZE = 40000
+export const IMAGE_SIZE = 40000;

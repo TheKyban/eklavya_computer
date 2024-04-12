@@ -1,14 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     BadgeCheck,
-    Book,
     BookText,
     Building,
     Contact,
     Folder,
     GraduationCap,
-    Hand,
-    HandMetal,
     Smile,
     Target,
 } from "lucide-react";
@@ -441,37 +438,40 @@ const OurFeatures = () => {
 
 const OurCourses = () => {
     const courses = [
-        { url: "/course/dca.jpg", name: "dca" },
         {
-            url: "/course/adca.jpg",
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900177/eklavaya_course/xejiyhsq2dxmpctsktqz.jpg",
+            name: "dca",
+        },
+        {
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900175/eklavaya_course/kimyzcdbivlwrguj9a8g.jpg",
             name: "adca",
         },
         {
-            url: "/course/cca.jpg",
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900176/eklavaya_course/i0zrttbjt18kkbegztnc.jpg",
             name: "cca",
         },
         {
-            url: "/course/adit.jpg",
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900176/eklavaya_course/dqeay3yvod8oknni0nks.jpg",
             name: "adit",
         },
         {
-            url: "/course/ddeo.jpg",
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900178/eklavaya_course/qf8neuxwq0scjvk4yfty.jpg",
             name: "ddeo",
         },
         {
-            url: "/course/daa.jpg",
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900177/eklavaya_course/xajf6bqsawfboqzpxanz.jpg",
             name: "daa",
         },
         {
-            url: "/course/cfa.jpg",
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900177/eklavaya_course/lcyj6qdaz4rqfektxmdb.jpg",
             name: "cfa",
         },
         {
-            url: "/course/dfa.jpg",
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900178/eklavaya_course/ta8n2tgak0vq2gtisyqc.jpg",
             name: "dfa",
         },
         {
-            url: "/course/doa.jpg",
+            url: "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900174/eklavaya_course/fxcyd9yhax1ywpxwi2se.jpg",
             name: "doa",
         },
     ];

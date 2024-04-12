@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -31,8 +31,8 @@ import { franchiseSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { states } from "@/lib/stateAndDistrict";
-import { IMAGE_SIZE } from "@/lib/constants";
 import { useCustumQuery } from "@/hooks/use-queries";
+import { ImageHandler } from "@/lib/imageHandler";
 
 const UserRegistration = ({}) => {
     const [state, setState] = useState("");
@@ -72,43 +72,6 @@ const UserRegistration = ({}) => {
             }
         } catch (error) {
             console.log(error);
-        }
-    };
-
-    /**
-     * IMAGE HANDLER
-     */
-    const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            if (file.size > IMAGE_SIZE) {
-                form.setError("img", {
-                    message: "Image Should be lesser than 40kb",
-                });
-                return;
-            }
-
-            try {
-                setIsUploading(true);
-
-                if (form.getValues("img")) {
-                    await axios.delete(
-                        `/api/upload?url=${form.getValues("img")}`
-                    );
-                }
-
-                const formData = new FormData();
-                formData.append("file", file);
-
-                const { data } = await axios.post(`/api/upload`, formData);
-
-                form.setValue("img", data.url);
-                form.setError("img", { message: "" });
-            } catch (error: any) {
-                form.setError("img", { message: error.message });
-            } finally {
-                setIsUploading(false);
-            }
         }
     };
 
@@ -170,7 +133,13 @@ const UserRegistration = ({}) => {
                                                 id="img"
                                                 accept="image/*"
                                                 value={""}
-                                                onChange={(e) => handleImage(e)}
+                                                onChange={(e) =>
+                                                    ImageHandler(
+                                                        e,
+                                                        form,
+                                                        setIsUploading
+                                                    )
+                                                }
                                             />
                                         </FormControl>
                                         <FormMessage />

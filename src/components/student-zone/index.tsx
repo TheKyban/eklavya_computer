@@ -124,7 +124,9 @@ export const Certificate = () => {
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
-                image.src = "/eklavya_cert3.jpg";
+                image.crossOrigin = "anonymous";
+                image.src =
+                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900605/ekavaya_assets/zeib4pejjzevocvlmg4j.jpg";
                 image.onload = async () => {
                     canvas.width = image.naturalWidth;
                     canvas.height = image.naturalHeight;
@@ -250,7 +252,9 @@ export const MarkSheet = () => {
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
-                image.src = "/eklavya_mark.jpg";
+                image.crossOrigin = "anonymous";
+                image.src =
+                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900605/ekavaya_assets/g9la6ysdljkrjr9fssz5.jpg";
                 image.onload = async () => {
                     canvas.width = image.naturalWidth;
                     canvas.height = image.naturalHeight;
@@ -411,7 +415,7 @@ export const RegistrationVerify = () => {
             />
 
             {data?.student && (
-                <Card className="m-auto relative before:content-[' '] before:bg-[url('/logomen.png')] before:bg-no-repeat before:bg-cover before:min-w-[500px] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:opacity-50 bg-inherit py-4 overflow-auto mt-4">
+                <Card className="m-auto relative before:content-[' '] before:bg-[url('https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900852/ekavaya_assets/f5tpu1skpaewn1gp0e6g.png')] before:bg-no-repeat before:bg-cover before:min-w-[500px] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:opacity-50 bg-inherit py-4 overflow-auto mt-4">
                     <CardContent className="min-w-[500px]">
                         <Image
                             src={data?.student?.img}

@@ -45,6 +45,7 @@ import { Courses, IMAGE_SIZE } from "@/lib/constants";
 import { useMutation } from "@tanstack/react-query";
 import { states } from "@/lib/stateAndDistrict";
 import { useCustumQuery } from "@/hooks/use-queries";
+import { ImageHandler } from "@/lib/imageHandler";
 
 export const EditStudentModal = () => {
     const currentYear = new Date().getFullYear();
@@ -115,40 +116,6 @@ export const EditStudentModal = () => {
         },
     });
 
-    const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            if (file.size > IMAGE_SIZE) {
-                form.setError("img", {
-                    message: "Image Should be lesser than 40kb",
-                });
-                return;
-            }
-
-            try {
-                setIsUploading(true);
-
-                if (form.getValues("img")) {
-                    await axios.delete(
-                        `/api/upload?url=${form.getValues("img")}`
-                    );
-                }
-
-                const formData = new FormData();
-                formData.append("file", file);
-
-                const { data } = await axios.post(`/api/upload`, formData);
-
-                form.setValue("img", data.url);
-                form.setError("img", { message: "" });
-            } catch (error: any) {
-                form.setError("img", { message: error.message });
-            } finally {
-                setIsUploading(false);
-            }
-        }
-    };
-
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="max-h-[90vh] h-[90vh]">
@@ -194,7 +161,13 @@ export const EditStudentModal = () => {
                                             type="file"
                                             id="img"
                                             value={""}
-                                            onChange={(e) => handleImage(e)}
+                                            onChange={(e) =>
+                                                ImageHandler(
+                                                    e,
+                                                    form,
+                                                    setIsUploading
+                                                )
+                                            }
                                         />
                                     </FormControl>
                                     <FormMessage />

@@ -66,7 +66,13 @@ const Navbar = () => {
                     }}
                     className="relative w-[50vw] m-auto h-[120px] overflow-hidden"
                 >
-                    <Image src={"/banner.jpg"} fill alt="banner" />
+                    <Image
+                        src={
+                            "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712899947/ekavaya_assets/opflfl8pq0yfpeqj0kwc.jpg"
+                        }
+                        fill
+                        alt="banner"
+                    />
                 </motion.div>
 
                 <div className="w-full h-full flex items-center flex-wrap justify-between px-3 gap-4 text-white text-xs font-bold bg-[#0B0D38] z-20">
@@ -113,9 +119,12 @@ const Navbar = () => {
                                 {DownloadFiles?.map((file, i) => (
                                     <a
                                         key={i}
-                                        className={cn(LinkStyle)}
-                                        href={file.link}
-                                        download={file.download}
+                                        className={cn(
+                                            LinkStyle,
+                                            "cursor-pointer"
+                                        )}
+                                        href={file?.link && file?.link}
+                                        download={file?.download}
                                     >
                                         <file.icon className="w-4 h-4" />
                                         <span>{file.title}</span>

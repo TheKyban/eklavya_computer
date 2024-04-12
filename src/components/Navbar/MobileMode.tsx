@@ -40,7 +40,7 @@ const MobileMode = () => {
         <div className="md:hidden w-full flex justify-around bg-orange-50">
             <Image
                 priority
-                src={"/banner.jpg"}
+                src={"https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712899947/ekavaya_assets/opflfl8pq0yfpeqj0kwc.jpg"}
                 width={500}
                 height={50}
                 alt="logo"

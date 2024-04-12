@@ -44,7 +44,9 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
             <div>
                 <Image
                     priority
-                    src={"/logomen.png"}
+                    src={
+                        "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900852/ekavaya_assets/f5tpu1skpaewn1gp0e6g.png"
+                    }
                     width={80}
                     height={0}
                     alt="logo"

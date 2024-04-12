@@ -78,8 +78,6 @@ export default function StudentZone() {
                     <Certificate />
                 </TabsContent>
             </Tabs>
-
-            {/* STUDENT REGISTRATION */}
         </div>
     );
 }

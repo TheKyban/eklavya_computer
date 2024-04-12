@@ -39,7 +39,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
         const data = await request.formData();
         const file = data.get("file") as File;
-        const results = await UPLOAD_TO_CLOUDINARY(file);
+        const results = await UPLOAD_TO_CLOUDINARY(file,"eklavaya");
 
         return NextResponse.json(results, { status: 201 });
     } catch (error) {
