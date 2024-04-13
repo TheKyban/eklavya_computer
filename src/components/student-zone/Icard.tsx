@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 import { printHandler } from "@/lib/printHandler";
 import { downloadHandler } from "@/lib/pdfDownload";
 
-export const ICard = () => {
+const ICard = () => {
     const [registration, setRegistration] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [student, setStudent] = useState(false);
@@ -78,3 +78,5 @@ export const ICard = () => {
         </div>
     );
 };
+
+export default ICard;

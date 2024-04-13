@@ -9,7 +9,7 @@ import { fetchStuddent } from "@/lib/fetchStudent";
 import { SearchTemplate } from "@/components/student-zone/searchTemplate";
 import { MAX_WIDTH } from "@/lib/styles";
 
-export const Registration = () => {
+const Registration = () => {
     const [registration, setRegistration] = useState("");
     const [data, setData] = useState<{
         student: Student & { branchName: string };
@@ -117,3 +117,5 @@ export const Registration = () => {
         </div>
     );
 };
+
+export default Registration;

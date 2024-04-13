@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { per_page } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
 /**
  * GET STUDENTS WHO HAVE MARKS
  */

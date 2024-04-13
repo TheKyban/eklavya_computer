@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { printHandler } from "@/lib/printHandler";
 import { downloadHandler } from "@/lib/pdfDownload";
 
-export const MarkSheet = () => {
+const MarkSheet = () => {
     const [registration, setRegistration] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [student, setStudent] = useState(false);
@@ -188,8 +188,13 @@ export const MarkSheet = () => {
             )}
 
             <div className="w-full overflow-x-auto">
-                <canvas ref={ref} className="mx-auto"></canvas>
+                <canvas
+                    ref={ref}
+                    className="mx-auto max-w-xl max-h-fit"
+                ></canvas>
             </div>
         </div>
     );
 };
+
+export default MarkSheet;

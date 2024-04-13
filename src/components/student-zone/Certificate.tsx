@@ -11,7 +11,7 @@ import { printHandler } from "@/lib/printHandler";
 import { downloadHandler } from "@/lib/pdfDownload";
 import { format } from "date-fns";
 
-export const Certificate = () => {
+const Certificate = () => {
     const [registration, setRegistration] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [student, setStudent] = useState(false);
@@ -145,8 +145,10 @@ export const Certificate = () => {
             )}
 
             <div className="w-full overflow-x-auto">
-                <canvas ref={ref} className="mx-auto max-w-4xl"></canvas>
+                <canvas ref={ref} className="mx-auto max-w-2xl max-h-fit"></canvas>
             </div>
         </div>
     );
 };
+
+export default Certificate;
