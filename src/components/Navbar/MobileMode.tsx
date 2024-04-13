@@ -40,7 +40,9 @@ const MobileMode = () => {
         <div className="md:hidden w-full flex justify-around bg-orange-50">
             <Image
                 priority
-                src={"https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712899947/ekavaya_assets/opflfl8pq0yfpeqj0kwc.jpg"}
+                src={
+                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712899947/ekavaya_assets/opflfl8pq0yfpeqj0kwc.jpg"
+                }
                 width={500}
                 height={50}
                 alt="logo"
@@ -94,7 +96,7 @@ const MobileMode = () => {
                                     </Link>
                                 )}
                                 <Link
-                                    href="/"
+                                    href="/addmission"
                                     onClick={() => setOpen(!open)}
                                     className={LinkStyle3}
                                 >
@@ -139,14 +141,7 @@ const MobileMode = () => {
                                     <Users className="w-4 h-4" />
                                     <span>Franchise</span>
                                 </Link>
-                                <Link
-                                    className={LinkStyle3}
-                                    href={"/studentzone"}
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    <GraduationCap className="w-4 h-4" />
-                                    <span>Student Zone</span>
-                                </Link>
+
                                 <Link
                                     className={LinkStyle3}
                                     onClick={() => setOpen(!open)}
@@ -176,6 +171,72 @@ const MobileMode = () => {
 
                             <Accordion type="single" collapsible className="">
                                 <AccordionItem
+                                    value="studentzone"
+                                    className="hover:bg-primary/10 px-3  rounded-md"
+                                >
+                                    <AccordionTrigger>
+                                        <div className="flex items-center gap-3 text-lg">
+                                            <GraduationCap className="w-4 h-4" />
+                                            <span>Student Zone</span>
+                                        </div>
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        <div className="flex flex-col gap-0">
+                                            <Link
+                                                className={cn(
+                                                    LinkStyle,
+                                                    LinkStyle2
+                                                )}
+                                                href={
+                                                    "/studentzone/registration"
+                                                }
+                                                onClick={() => setOpen(!open)}
+                                            >
+                                                <GraduationCap className="w-4 h-4" />
+                                                <span>Registration</span>
+                                            </Link>
+
+                                            <Link
+                                                className={cn(
+                                                    LinkStyle,
+                                                    LinkStyle2
+                                                )}
+                                                onClick={() => setOpen(!open)}
+                                                href={"/studentzone/marksheet"}
+                                            >
+                                                <GraduationCap className="w-4 h-4" />
+                                                <span>Marksheet</span>
+                                            </Link>
+
+                                            <Link
+                                                className={cn(
+                                                    LinkStyle,
+                                                    LinkStyle2
+                                                )}
+                                                onClick={() => setOpen(!open)}
+                                                href={
+                                                    "/studentzone/certificate"
+                                                }
+                                            >
+                                                <GraduationCap className="w-4 h-4" />
+                                                <span>Certificate</span>
+                                            </Link>
+
+                                            <Link
+                                                className={cn(
+                                                    LinkStyle,
+                                                    LinkStyle2
+                                                )}
+                                                onClick={() => setOpen(!open)}
+                                                href={"/studentzone/icard"}
+                                            >
+                                                <GraduationCap className="w-4 h-4" />
+                                                <span>I-Card</span>
+                                            </Link>
+                                        </div>
+                                    </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem
                                     value="download"
                                     className="hover:bg-primary/10 px-3  rounded-md"
                                 >
@@ -196,10 +257,10 @@ const MobileMode = () => {
                                                                 LinkStyle,
                                                                 LinkStyle2
                                                             )}
-                                                            href={file.link}
                                                             download={
                                                                 file.download
                                                             }
+                                                            href={file.link}
                                                         >
                                                             <file.icon className="w-4 h-4" />
                                                             <span>
