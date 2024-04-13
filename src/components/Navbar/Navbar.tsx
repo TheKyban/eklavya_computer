@@ -87,27 +87,51 @@ const Navbar = () => {
                     </Link>
 
                     {/* Student Zone */}
-                    <Link href={"/studentzone"} className={LinkStyle}>
-                        <span className="">Student Zone</span>
-                    </Link>
-
-                    {/* University */}
                     <Hover>
                         <HoverTrigger>
-                            <span>University Programs</span>
+                            <span>Student Zone</span>
                         </HoverTrigger>
                         <HoverContent>
                             <div className="flex flex-col gap-0">
                                 <Link
                                     className={cn(LinkStyle)}
-                                    href={"/university/xyz"}
+                                    href={"/studentzone/registration"}
                                 >
                                     <GraduationCap className="w-4 h-4" />
-                                    <span>XYZ University</span>
+                                    <span>Registration</span>
+                                </Link>
+
+                                <Link
+                                    className={cn(LinkStyle)}
+                                    href={"/studentzone/marksheet"}
+                                >
+                                    <GraduationCap className="w-4 h-4" />
+                                    <span>Marksheet</span>
+                                </Link>
+
+                                <Link
+                                    className={cn(LinkStyle)}
+                                    href={"/studentzone/certificate"}
+                                >
+                                    <GraduationCap className="w-4 h-4" />
+                                    <span>Certificate</span>
+                                </Link>
+
+                                <Link
+                                    className={cn(LinkStyle)}
+                                    href={"/studentzone/icard"}
+                                >
+                                    <GraduationCap className="w-4 h-4" />
+                                    <span>I-Card</span>
                                 </Link>
                             </div>
                         </HoverContent>
                     </Hover>
+
+                    {/* University */}
+                    <Link className={cn(LinkStyle)} href={"/university"}>
+                        <span>University Programs</span>
+                    </Link>
 
                     {/* DOWNLOAD */}
                     <Hover>

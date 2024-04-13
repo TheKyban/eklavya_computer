@@ -9,7 +9,7 @@ import {
     Smile,
     Target,
 } from "lucide-react";
-import { langar, poppins } from "@/lib/fonts";
+import { langar } from "@/lib/fonts";
 import { MAX_WIDTH } from "@/lib/styles";
 import Image from "next/image";
 import {

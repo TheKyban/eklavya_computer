@@ -1,7 +1,5 @@
-"use client";
 import { info } from "@/lib/constants";
 import { MAX_WIDTH } from "@/lib/styles";
-import { motion } from "framer-motion";
 
 export const Footer = () => {
     const year = new Date(Date.now()).getFullYear();
@@ -11,26 +9,7 @@ export const Footer = () => {
             id="contact"
         >
             <div className="w-full h-full flex flex-col items-center justify-around ">
-                <motion.div
-                    whileInView={{
-                        x: 0,
-                        opacity: 1,
-                    }}
-                    transition={{
-                        duration: 0.6,
-                        easings: "tween",
-                        ease: "easeInOut",
-                        delay: 0.3,
-                    }}
-                    viewport={{
-                        once: true,
-                    }}
-                    initial={{
-                        x: -100,
-                        opacity: 0,
-                    }}
-                    className="flex justify-around w-full h-full bg-[#0B0D38] flex-col sm:flex-row gap-6 py-5 "
-                >
+                <div className="flex justify-around w-full h-full bg-[#0B0D38] flex-col sm:flex-row gap-6 py-5 ">
                     {info.map((info, i) => (
                         <div
                             key={i}
@@ -47,31 +26,12 @@ export const Footer = () => {
                             </div>
                         </div>
                     ))}
-                </motion.div>
+                </div>
             </div>
-            <motion.p
-                whileInView={{
-                    x: 0,
-                    opacity: 1,
-                }}
-                transition={{
-                    duration: 0.6,
-                    easings: "tween",
-                    ease: "easeInOut",
-                    delay: 1,
-                }}
-                viewport={{
-                    once: true,
-                }}
-                initial={{
-                    x: 100,
-                    opacity: 0,
-                }}
-                className="text-center text-xs bg-[#026335] text-white w-full"
-            >
+            <p className="text-center text-xs bg-[#026335] text-white w-full">
                 <span>Copyright © 2023-{year} </span>
                 <span>Eklavaya Global Computer Pvt. Ltd.</span>
-            </motion.p>
+            </p>
         </div>
     );
 };
