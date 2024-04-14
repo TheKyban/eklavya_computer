@@ -217,12 +217,6 @@ export const PUT = async (req: Request) => {
             });
         }
 
-        const isFormNumberExist = await Prisma.student.findUnique({
-            where: {
-                formNumber: data.formNumber,
-            },
-        });
-
         /**
          * UPDATE STUDENT
          */

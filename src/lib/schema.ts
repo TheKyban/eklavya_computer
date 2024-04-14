@@ -12,7 +12,10 @@ export const phoneRegex = new RegExp(
  */
 export const franchiseSchema = z
     .object({
-        img: z.string({ required_error: "Please select a picture" }).trim().min(2,"image is required."),
+        img: z
+            .string({ required_error: "Please select a picture" })
+            .trim()
+            .min(2, "image is required."),
         name: z
             .string({ required_error: "Please Enter email id" })
             .trim()
@@ -167,6 +170,59 @@ export const studentSchema = z.object({
     formNumber: z
         .string({ required_error: "Form number is required." })
         .min(4, { message: "Enter valid form number" }),
+    qualification: z.string(),
+});
+
+export const studentAddmissionSchema = z.object({
+    img: z
+        .string({ required_error: "Please select a picture" })
+        .min(50, { message: "Please select a picture" }),
+    name: z
+        .string({ required_error: "Please Enter Name" })
+        .trim()
+        .min(2, { message: "Name must be atleast 2 characters." }),
+    motherName: z
+        .string({ required_error: "Please Enter Mother Name" })
+        .trim()
+        .min(2, { message: "Name must be atleast 2 characters." }),
+    fatherName: z
+        .string({ required_error: "Please Enter Father Name" })
+        .trim()
+        .min(2, { message: "Name must be atleast 2 characters." }),
+    email: z
+        .string({ required_error: "Please Enter email id" })
+        .trim()
+        .email({ message: "Invalid Email id" })
+        .min(4, { message: "Please Enter Valid Email id" }),
+    phone: z
+        .string({ required_error: "Please Enter phone number" })
+        .trim()
+        .regex(phoneRegex, "Invalid phone number")
+        .min(10, { message: "Invalid phone number" })
+        .max(10, { message: "Invalid phone number" }),
+    state: z
+        .string({ required_error: "Please Select State" })
+        .min(3, { message: "Select valid state" }),
+    district: z
+        .string({ required_error: "Please Select District" })
+        .min(3, { message: "Select valid district" }),
+    pincode: z
+        .string({ required_error: "Please Enter pin code" })
+        .trim()
+        .min(6, { message: "Enter valid pin code" }),
+    address: z
+        .string({ required_error: "Please Enter address" })
+        .trim()
+        .min(10, { message: "Please enter valid address" }),
+    branch: z.string().min(5, { message: "Branch id is required" }),
+    dob: z.date({ required_error: "Please select dob" }),
+    dor: z.date(),
+    gender: z
+        .string({ required_error: "Gender is required." })
+        .min(4, { message: "Please select gender" }),
+    course: z
+        .string({ required_error: "Course is required." })
+        .min(2, { message: "Please select course" }),
     qualification: z.string(),
 });
 

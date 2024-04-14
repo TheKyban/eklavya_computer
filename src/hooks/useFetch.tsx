@@ -16,6 +16,15 @@ export const useUsers = (page: string, userId?: string, select?: string) => {
         },
     });
 };
+export const useBranch = () => {
+    return useQuery<{ branches: { branch: string; userId: string }[] }>({
+        queryKey: ["branches"],
+        queryFn: async () => {
+            const { data } = await axios.get("/api/branch");
+            return data;
+        },
+    });
+};
 
 export const useStudents = (
     page: string,
@@ -157,9 +166,7 @@ export const useAssests = () => {
     return useQuery<{ public_id: string; secure_url: string }[]>({
         queryKey: ["assets"],
         queryFn: async () => {
-            const { data } = await axios("/api/media",{
-                
-            });
+            const { data } = await axios("/api/media", {});
             return data;
         },
         staleTime: 60 * 1000 * 30,

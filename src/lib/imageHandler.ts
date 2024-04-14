@@ -1,6 +1,11 @@
 import { ChangeEvent } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { franchiseEditSchema, franchiseSchema, studentSchema } from "./schema";
+import {
+    franchiseEditSchema,
+    franchiseSchema,
+    studentAddmissionSchema,
+    studentSchema,
+} from "./schema";
 import { z } from "zod";
 import { IMAGE_SIZE } from "./constants";
 import axios from "axios";
@@ -10,7 +15,8 @@ export const ImageHandler = async (
     Form:
         | UseFormReturn<z.infer<typeof franchiseEditSchema>>
         | UseFormReturn<z.infer<typeof franchiseSchema>>
-        | UseFormReturn<z.infer<typeof studentSchema>>,
+        | UseFormReturn<z.infer<typeof studentSchema>>
+        | UseFormReturn<z.infer<typeof studentAddmissionSchema>>,
     setIsUploading: (value: boolean) => void
 ) => {
     const file = e.target.files?.[0];

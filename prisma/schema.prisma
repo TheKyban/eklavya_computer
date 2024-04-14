@@ -50,8 +50,40 @@ model Student {
     viva          Int?
     englishTyping Int?
     hindiTyping   Int?
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+}
+
+model UserApplication {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    email     String?  @unique
+    img       String
+    password  String
+    phone     String
+    address   Address
+    branch    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model StudentApplication {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    name          String
+    img           String
+    fatherName    String
+    motherName    String
+    gender        gender
+    qualification String?
+    dob           DateTime
+    phone         String
+    email         String?
+    dor           DateTime
+    course        String
+    address       Address
+    branch        String
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
 }
 
 model StudentSerialNumber {
