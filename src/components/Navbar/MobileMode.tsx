@@ -11,23 +11,9 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-    Album,
-    BookUser,
-    Computer,
-    Database,
-    Download,
-    Files,
-    GraduationCap,
-    Home,
-    LayoutDashboard,
-    LibraryBig,
-    Menu,
-    User,
-    Users,
-} from "lucide-react";
+import { LayoutDashboard, Menu, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DownloadFiles } from "@/lib/constants";
+import { AccordionLinks, singleLink } from "@/components/Navbar/urls";
 import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/styles";
 import { useSession } from "next-auth/react";
 
@@ -67,15 +53,7 @@ const MobileMode = () => {
                     >
                         <ScrollArea>
                             <div className="flex flex-col">
-                                <Link
-                                    className={LinkStyle3}
-                                    href={"/"}
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    <Home className="w-4 h-4" />{" "}
-                                    <span>Home</span>
-                                </Link>
-
+                                {/* Authentication */}
                                 {isAuth ? (
                                     <Link
                                         className={LinkStyle3}
@@ -95,213 +73,62 @@ const MobileMode = () => {
                                         <span>Login</span>
                                     </Link>
                                 )}
-                                <Link
-                                    href="/addmission"
-                                    onClick={() => setOpen(!open)}
-                                    className={LinkStyle3}
-                                >
-                                    <GraduationCap className="w-4 h-4" />
-                                    <span>Addmission</span>
-                                </Link>
 
-                                {/* Franchise */}
-                                <Link
-                                    href="/franchise"
-                                    onClick={() => setOpen(!open)}
-                                    className={LinkStyle3}
-                                >
-                                    <Users className="w-4 h-4" />
-                                    <span>Franchise Apply</span>
-                                </Link>
-
-                                <Link
-                                    href={"/university"}
-                                    className={LinkStyle3}
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    <GraduationCap className="w-4 h-4" />
-                                    <span>University Programs</span>
-                                </Link>
-
-                                {/* Affiliation */}
-
-                                <Link
-                                    className={LinkStyle3}
-                                    href={"/affiliation"}
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    <LibraryBig className="w-4 h-4" />
-                                    <span>Affiliation</span>
-                                </Link>
-                                <Link
-                                    className={LinkStyle3}
-                                    href={"/franchise"}
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    <Users className="w-4 h-4" />
-                                    <span>Franchise</span>
-                                </Link>
-
-                                <Link
-                                    className={LinkStyle3}
-                                    onClick={() => setOpen(!open)}
-                                    href={"/course"}
-                                >
-                                    <LibraryBig className="w-4 h-4" />
-                                    <span>Course</span>
-                                </Link>
-
-                                <Link
-                                    className={LinkStyle3}
-                                    href={"/about"}
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    <Album className="w-4 h-4" />
-                                    <span>About Us</span>
-                                </Link>
-                                <Link
-                                    className={LinkStyle3}
-                                    href={"#contact"}
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    <BookUser className="w-4 h-4" />
-                                    <span>Contact Us</span>
-                                </Link>
+                                {singleLink.map((link, idx) => (
+                                    <Link
+                                        key={idx}
+                                        className={LinkStyle3}
+                                        href={link.link}
+                                        onClick={() => setOpen(!open)}
+                                    >
+                                        <link.icon className="w-4 h-4" />{" "}
+                                        <span>{link.title}</span>
+                                    </Link>
+                                ))}
                             </div>
 
+                            {/* Accordion Links */}
                             <Accordion type="single" collapsible className="">
-                                <AccordionItem
-                                    value="studentzone"
-                                    className="hover:bg-primary/10 px-3  rounded-md"
-                                >
-                                    <AccordionTrigger>
-                                        <div className="flex items-center gap-3 text-lg">
-                                            <GraduationCap className="w-4 h-4" />
-                                            <span>Student Zone</span>
-                                        </div>
-                                    </AccordionTrigger>
-                                    <AccordionContent>
-                                        <div className="flex flex-col gap-0">
-                                            <Link
-                                                className={cn(
-                                                    LinkStyle,
-                                                    LinkStyle2
-                                                )}
-                                                href={
-                                                    "/studentzone/registration"
-                                                }
-                                                onClick={() => setOpen(!open)}
-                                            >
-                                                <GraduationCap className="w-4 h-4" />
-                                                <span>Registration</span>
-                                            </Link>
-
-                                            <Link
-                                                className={cn(
-                                                    LinkStyle,
-                                                    LinkStyle2
-                                                )}
-                                                onClick={() => setOpen(!open)}
-                                                href={"/studentzone/marksheet"}
-                                            >
-                                                <GraduationCap className="w-4 h-4" />
-                                                <span>Marksheet</span>
-                                            </Link>
-
-                                            <Link
-                                                className={cn(
-                                                    LinkStyle,
-                                                    LinkStyle2
-                                                )}
-                                                onClick={() => setOpen(!open)}
-                                                href={
-                                                    "/studentzone/certificate"
-                                                }
-                                            >
-                                                <GraduationCap className="w-4 h-4" />
-                                                <span>Certificate</span>
-                                            </Link>
-
-                                            <Link
-                                                className={cn(
-                                                    LinkStyle,
-                                                    LinkStyle2
-                                                )}
-                                                onClick={() => setOpen(!open)}
-                                                href={"/studentzone/icard"}
-                                            >
-                                                <GraduationCap className="w-4 h-4" />
-                                                <span>I-Card</span>
-                                            </Link>
-                                        </div>
-                                    </AccordionContent>
-                                </AccordionItem>
-                                <AccordionItem
-                                    value="download"
-                                    className="hover:bg-primary/10 px-3  rounded-md"
-                                >
-                                    <AccordionTrigger>
-                                        <div className="flex items-center gap-3 text-lg">
-                                            <Download className="w-4 h-4" />
-                                            <span>Download</span>
-                                        </div>
-                                    </AccordionTrigger>
-                                    <AccordionContent>
+                                {AccordionLinks.map((accordionLink, idx) => (
+                                    <AccordionItem
+                                        key={idx}
+                                        value={accordionLink.name}
+                                        className="hover:bg-primary/10 px-3  rounded-md"
+                                    >
+                                        <AccordionTrigger>
+                                            <div className="flex items-center gap-3 text-lg">
+                                                <accordionLink.icon className="w-4 h-4" />
+                                                <span>
+                                                    {accordionLink.name}
+                                                </span>
+                                            </div>
+                                        </AccordionTrigger>
                                         <AccordionContent>
                                             <div className="flex flex-col gap-0">
-                                                {DownloadFiles?.map(
-                                                    (file, i) => (
-                                                        <a
-                                                            key={i}
+                                                {accordionLink.links.map(
+                                                    (link, idx) => (
+                                                        <Link
+                                                            key={idx}
                                                             className={cn(
                                                                 LinkStyle,
                                                                 LinkStyle2
                                                             )}
-                                                            download={
-                                                                file.download
+                                                            href={link.link}
+                                                            onClick={() =>
+                                                                setOpen(!open)
                                                             }
-                                                            href={file.link}
                                                         >
-                                                            <file.icon className="w-4 h-4" />
+                                                            <link.icon className="w-4 h-4" />
                                                             <span>
-                                                                {file.title}
+                                                                {link.title}
                                                             </span>
-                                                        </a>
+                                                        </Link>
                                                     )
                                                 )}
                                             </div>
                                         </AccordionContent>
-                                    </AccordionContent>
-                                </AccordionItem>
-                                <AccordionItem
-                                    value="Project"
-                                    className="hover:bg-primary/10 px-3  rounded-md"
-                                >
-                                    <AccordionTrigger>
-                                        <div className="flex items-center gap-3 text-lg">
-                                            <Files className="w-4 h-4" />
-                                            <span>Syllabus</span>
-                                        </div>
-                                    </AccordionTrigger>
-                                    <AccordionContent>
-                                        <div className="flex flex-col gap-0">
-                                            <Link
-                                                className="text-base font-medium flex items-center gap-4 hover:bg-primary/10 py-4 px-3 rounded hover:underline"
-                                                href={"#"}
-                                            >
-                                                <Database className="w-4 h-4" />
-                                                <span>ADCA</span>
-                                            </Link>
-                                            <Link
-                                                className="text-base font-medium flex items-center gap-4 hover:bg-primary/10 py-4 px-3 rounded hover:underline"
-                                                href={"#"}
-                                            >
-                                                <Computer className="w-4 h-4" />
-                                                <span className="">DCA</span>
-                                            </Link>
-                                        </div>
-                                    </AccordionContent>
-                                </AccordionItem>
+                                    </AccordionItem>
+                                ))}
                             </Accordion>
                         </ScrollArea>
                     </SheetContent>
