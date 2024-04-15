@@ -10,49 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-
-interface CustomMotionDivProps extends HTMLAttributes<HTMLDivElement> {
-    children: ReactNode;
-    whileInView?: { x?: number; y?: number; opacity?: number; scale?: number };
-    initial?: { x?: number; y?: number; opacity?: number; scale?: number };
-    transition?: {
-        delay?: number;
-        duration?: number;
-    };
-    animate?: {
-        scale?: number;
-        opacity?: number;
-        x?: number;
-        y?: number;
-    };
-}
-
-export const AnimationDiv: FC<CustomMotionDivProps> = ({
-    children,
-    initial,
-    whileInView,
-    transition,
-    animate,
-    className,
-}) => {
-    return (
-        <motion.div
-            initial={initial}
-            whileInView={whileInView}
-            transition={{
-                type: "tween",
-                ...transition,
-            }}
-            viewport={{
-                once: true,
-            }}
-            animate={animate}
-            className={cn(className)}
-        >
-            {children}
-        </motion.div>
-    );
-};
+import { AnimationDiv } from "@/components/AnimatedDiv";
 
 export const HomeCarousel: FC<{
     carousel?: {

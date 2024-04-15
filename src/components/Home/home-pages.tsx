@@ -12,10 +12,8 @@ import {
 import { langar } from "@/lib/fonts";
 import { MAX_WIDTH } from "@/lib/styles";
 import Image from "next/image";
-import {
-    AnimationDiv,
-    HomeCarousel,
-} from "@/components/Home/home-animated-component";
+import { HomeCarousel } from "@/components/Home/home-carousel";
+import { AnimationDiv } from "@/components/AnimatedDiv";
 import { FC } from "react";
 
 interface familyType {
