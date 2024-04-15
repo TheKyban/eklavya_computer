@@ -5,7 +5,8 @@ import {
     franchiseSchema,
     studentAddmissionSchema,
     studentSchema,
-} from "./schema";
+    userApplicationSchema,
+} from "@/lib/schema";
 import { z } from "zod";
 import { IMAGE_SIZE } from "./constants";
 import axios from "axios";
@@ -16,7 +17,8 @@ export const ImageHandler = async (
         | UseFormReturn<z.infer<typeof franchiseEditSchema>>
         | UseFormReturn<z.infer<typeof franchiseSchema>>
         | UseFormReturn<z.infer<typeof studentSchema>>
-        | UseFormReturn<z.infer<typeof studentAddmissionSchema>>,
+        | UseFormReturn<z.infer<typeof studentAddmissionSchema>>
+        | UseFormReturn<z.infer<typeof userApplicationSchema>>,
     setIsUploading: (value: boolean) => void
 ) => {
     const file = e.target.files?.[0];

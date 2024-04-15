@@ -59,7 +59,6 @@ model UserApplication {
     name      String
     email     String?  @unique
     img       String
-    password  String
     phone     String
     address   Address
     branch    String

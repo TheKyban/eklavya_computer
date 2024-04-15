@@ -1,5 +1,5 @@
-import StudentAddmission from "@/components/student-zone/Addmission";
+import StudentApplication from "@/components/application/studentApplication";
 
 export default function Addmission() {
-    return <StudentAddmission />;
+    return <StudentApplication />;
 }

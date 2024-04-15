@@ -45,7 +45,7 @@ import { ImageHandler } from "@/lib/imageHandler";
 import { MAX_WIDTH } from "@/lib/styles";
 import { useBranch } from "@/hooks/useFetch";
 
-const StudentAddmission = () => {
+const StudentApplication = () => {
     const currentYear = new Date().getFullYear();
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
@@ -703,4 +703,4 @@ const StudentAddmission = () => {
     );
 };
 
-export default StudentAddmission;
+export default StudentApplication;
