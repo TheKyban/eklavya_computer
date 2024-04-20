@@ -34,7 +34,7 @@ import { states } from "@/lib/stateAndDistrict";
 import { ImageHandler } from "@/lib/imageHandler";
 import { MAX_WIDTH } from "@/lib/styles";
 
-const UserApplication = ({}) => {
+const UserApplicationForm = ({}) => {
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
 
@@ -406,4 +406,4 @@ const UserApplication = ({}) => {
     );
 };
 
-export default UserApplication;
+export default UserApplicationForm;

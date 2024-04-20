@@ -45,7 +45,7 @@ import { ImageHandler } from "@/lib/imageHandler";
 import { MAX_WIDTH } from "@/lib/styles";
 import { useBranch } from "@/hooks/useFetch";
 
-const StudentApplication = () => {
+const StudentApplicationForm = () => {
     const currentYear = new Date().getFullYear();
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
@@ -703,4 +703,4 @@ const StudentApplication = () => {
     );
 };
 
-export default StudentApplication;
+export default StudentApplicationForm;

@@ -1,5 +1,6 @@
 import {
     Album,
+    Dock,
     FileSpreadsheet,
     FormInput,
     GraduationCap,
@@ -64,7 +65,9 @@ export const links: LinkType[] = [
     {
         title: "Carousel",
         link: "/dashboard/carousel",
-        icon: <Album className="w-5 h-5 text-indigo-700 dark:text-indigo-500" />,
+        icon: (
+            <Album className="w-5 h-5 text-indigo-700 dark:text-indigo-500" />
+        ),
         role: "ADMIN",
     },
 ];
@@ -116,6 +119,23 @@ export const accordianLinks: accordianLinks[] = [
                 title: "Verification",
                 icon: <UserRoundCog className="w-5 h-5 text-pink-600" />,
                 link: "/dashboard/student/verification",
+                role: "ADMIN",
+            },
+        ],
+    },
+    {
+        title: "applications",
+        icon: <Dock className="w-5 h-5 text-gray-600" />,
+        links: [
+            {
+                title: "students",
+                icon: <GraduationCap className="w-5 h-5 text-orange-500" />,
+                link: "/dashboard/applications/student",
+            },
+            {
+                title: "users",
+                icon: <UserRoundCog className="w-5 h-5 text-red-600" />,
+                link: "/dashboard/applications/user",
                 role: "ADMIN",
             },
         ],
