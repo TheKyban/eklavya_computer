@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { NextRequest } from "next/server";
 
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
     try {
         /**
@@ -25,6 +26,7 @@ export const GET = async (req: NextRequest) => {
             take: page,
             skip: page * (page - 1),
         });
+        const total = await Prisma.studentApplication.count();
 
         if (!applications) {
             return Response.json({
@@ -35,6 +37,7 @@ export const GET = async (req: NextRequest) => {
 
         return Response.json({
             applications,
+            total,
             success: true,
         });
     } catch (error) {

@@ -130,7 +130,7 @@ export const accordianLinks: accordianLinks[] = [
             {
                 title: "students",
                 icon: <GraduationCap className="w-5 h-5 text-orange-500" />,
-                link: "/dashboard/applications/student",
+                link: "/dashboard/applications/students",
             },
             {
                 title: "users",

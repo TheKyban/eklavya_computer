@@ -62,7 +62,7 @@ const GeneralEntredMarks = ({
                     {/* TABLE BODY */}
                     <TableBody>
                         {/* SHIMMER */}
-                        {isLoading && <LoadingCells n={6} m={6} />}
+                        {isLoading && <LoadingCells rows={6} cols={6} />}
                         {!isLoading &&
                             data?.studentsWithMarks?.map((student) => (
                                 /**

@@ -250,7 +250,7 @@ const StudentVerificationManagement = ({
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {isLoading && <LoadingCells m={7} />}
+                        {isLoading && <LoadingCells cols={7} />}
 
                         {!isLoading &&
                             data?.students?.map((student: Student) => (

@@ -76,7 +76,7 @@ const CertificateList = ({
                     </TableHeader>
                     {/* TABLE BODY */}
                     <TableBody>
-                        {isLoading && <LoadingCells m={7} />}
+                        {isLoading && <LoadingCells cols={7} />}
                         {!isLoading &&
                             data?.certificates?.map((student: Student) => (
                                 <TableRow

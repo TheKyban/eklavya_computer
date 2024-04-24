@@ -172,3 +172,25 @@ export const useAssests = () => {
         staleTime: 60 * 1000 * 30,
     });
 };
+
+export const useStudentApplications = (page: string) => {
+    const url = `/api/student/application?page=${page}`;
+    return useQuery({
+        queryKey: ["student_application_list", page],
+        queryFn: async () => {
+            const { data } = await axios.get(url);
+            return data;
+        },
+    });
+};
+
+export const useUserApplications = (page: string) => {
+    const url = `/api/users/application?page=${page}`;
+    return useQuery({
+        queryKey: ["users_application_list", page],
+        queryFn: async () => {
+            const { data } = await axios.get(url);
+            return data;
+        },
+    });
+};

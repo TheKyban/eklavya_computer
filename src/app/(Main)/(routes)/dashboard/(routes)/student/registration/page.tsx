@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 export default function Registration() {
     return (
-        <Suspense fallback={<LoadingCells n={14}/>}>
+        <Suspense fallback={<LoadingCells rows={14} />}>
             <StudentRegistration />
         </Suspense>
     );

@@ -322,7 +322,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                 {/* TABLE BODY */}
                 <TableBody>
                     {/* SHIMMER */}
-                    {isLoading && <LoadingCells n={6} m={6} />}
+                    {isLoading && <LoadingCells rows={6} cols={6} />}
                     {!isLoading &&
                         fetchStudents?.studentsWithMarks?.map(
                             (student: student) => (

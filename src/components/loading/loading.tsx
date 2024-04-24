@@ -1,12 +1,18 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { TableCell, TableRow } from "@/components/ui/table";
 
-export const LoadingCells = ({ n = 10, m = 5 }: { n?: number; m?: number }) => {
-    return Array(n)
+export const LoadingCells = ({
+    rows = 10,
+    cols = 5,
+}: {
+    rows?: number;
+    cols?: number;
+}) => {
+    return Array(rows)
         .fill("")
         .map((v, idx) => (
             <TableRow key={idx}>
-                {Array(m)
+                {Array(cols)
                     .fill("")
                     .map((x, i) => (
                         <TableCell key={i} className="py-6">

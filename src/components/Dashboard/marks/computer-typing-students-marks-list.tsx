@@ -58,7 +58,7 @@ const ComputerTypingEnteredMarks = ({
                     {/* TABLE BODY */}
                     <TableBody>
                         {/* SHIMMER */}
-                        {isLoading && <LoadingCells n={6} m={4} />}
+                        {isLoading && <LoadingCells rows={6} cols={4} />}
                         {!isLoading &&
                             data?.studentsWithMarks?.map((student) => (
                                 /**
