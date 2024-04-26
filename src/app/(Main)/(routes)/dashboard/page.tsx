@@ -1,20 +1,20 @@
-"use client";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { authOptions } from "@/lib/auth-options";
+import {
+    fetchAdminDashboardData,
+    fetchUserDashboardData,
+} from "@/lib/fetchFunctions";
 import { UserType, details } from "@/lib/types";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import {
     BadgeAlert,
     GraduationCap,
-    Loader,
     LucideIcon,
     Medal,
     Ribbon,
@@ -22,6 +22,7 @@ import {
     ShieldCheck,
     Users,
 } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 
 const IconMap = {
@@ -32,24 +33,19 @@ const IconMap = {
     ShieldCheck: ShieldCheck,
     Users: Users,
 };
-const Dasboard = () => {
-    const { data, isLoading } = useQuery<{
+const Dasboard = async () => {
+    const session = await getServerSession(authOptions);
+    let data: {
         details: details[];
-        allUsers: UserType[];
-    }>({
-        queryKey: ["dashboard"],
-        queryFn: async () => {
-            const { data } = await axios("/api/dashboard");
-            return data;
-        },
-    });
+        allUsers?: UserType[];
+    };
+    if (session?.user.role === "ADMIN") {
+        data = await fetchAdminDashboardData();
+    } else {
+        data = await fetchUserDashboardData(session!.user.userId);
+    }
     return (
         <div className="px-3 h-full w-full flex flex-col gap-5">
-            {isLoading && (
-                <div className="flex w-full h-[70vh] items-center justify-center">
-                    <Loader className="w-10 h-10 text-blue-600 animate-spin" />
-                </div>
-            )}
             {!!data?.details?.[0] && (
                 <div className="flex gap-2 items-center px-5 bg-slate-200 w-fit py-3 rounded-lg">
                     <BadgeAlert className="w-8 h-8 text-indigo-600" />
@@ -63,7 +59,7 @@ const Dasboard = () => {
                 {data?.details?.map((info: details, idx: number) => (
                     <SmallCard
                         key={idx}
-                        Icon={IconMap[info.Logo]}
+                        Icon={info.Logo}
                         title={info.title}
                         number={info.count}
                         color={info.color!}

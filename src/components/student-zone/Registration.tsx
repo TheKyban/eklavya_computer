@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
-import { fetchStuddent } from "@/lib/fetchStudent";
+import { fetchStuddent } from "@/lib/fetchFunctions";
 import { SearchTemplate } from "@/components/student-zone/searchTemplate";
 import { MAX_WIDTH } from "@/lib/styles";
 

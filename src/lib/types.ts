@@ -1,13 +1,8 @@
 import { role } from "@prisma/client";
+import { LucideIcon } from "lucide-react";
 
 export interface details {
-    Logo:
-        | "GraduationCap"
-        | "Medal"
-        | "Ribbon"
-        | "ShieldAlert"
-        | "ShieldCheck"
-        | "Users";
+    Logo: LucideIcon;
     title: string;
     count: number;
     color?: string;

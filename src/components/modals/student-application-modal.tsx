@@ -46,76 +46,131 @@ import { useMutation } from "@tanstack/react-query";
 import { states } from "@/lib/stateAndDistrict";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { ImageHandler } from "@/lib/imageHandler";
+import { useSession } from "next-auth/react";
 
-export const EditStudentModal = () => {
+export const StudentApplicationModal = () => {
+    const { data: session } = useSession();
     const currentYear = new Date().getFullYear();
     const { isOpen, onClose, type, data } = useModal();
-    const isModalOpen = isOpen && type === "editStudent";
-    const { student, searchParams } = data;
+    const isModalOpen = isOpen && type === "studentApplication";
+    const { studentApplication, searchParams } = data;
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
 
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
+        defaultValues: {
+            address: "",
+            branch: "",
+            course: "",
+            district: "",
+            dob: new Date(),
+            dor: new Date(),
+            email: "",
+            fatherName: "",
+            formNumber: "",
+            gender: "",
+            img: "",
+            motherName: "",
+            name: "",
+            phone: "",
+            pincode: "",
+            qualification: "",
+            state: "",
+        },
     });
 
     useEffect(() => {
-        if (student?.name && student?.email && student?.img) {
+        if (
+            studentApplication?.name &&
+            studentApplication?.email &&
+            studentApplication?.img
+        ) {
             // personal information
-            form.setValue("formNumber", student.formNumber);
-            form.setValue("name", student?.name);
-            form.setValue("fatherName", student.fatherName);
-            form.setValue("motherName", student.motherName);
-            form.setValue("email", student?.email);
-            form.setValue("img", student?.img);
-            form.setValue("phone", student?.phone);
-            form.setValue("gender", student?.gender);
+            form.setValue("name", studentApplication?.name);
+            form.setValue("fatherName", studentApplication.fatherName);
+            form.setValue("motherName", studentApplication.motherName);
+            form.setValue("email", studentApplication?.email);
+            form.setValue("img", studentApplication?.img);
+            form.setValue("phone", studentApplication?.phone);
+            form.setValue("gender", studentApplication?.gender);
 
             // dates
-            form.setValue("dob", new Date(student?.dob));
-            form.setValue("dor", new Date(student?.dor));
+            form.setValue("dob", new Date(studentApplication?.dob));
+            form.setValue("dor", new Date(studentApplication?.dor));
 
-            form.setValue("qualification", student?.qualification!);
-            form.setValue("course", student?.course);
+            form.setValue("qualification", studentApplication?.qualification!);
+            form.setValue("course", studentApplication?.course);
 
             // address
-            form.setValue("address", student?.address?.street);
-            form.setValue("pincode", student?.address?.pincode);
-            form.setValue("district", student?.address.district);
-            form.setValue("state", student?.address.state);
-            setState(student.address.state);
+            form.setValue("address", studentApplication?.address?.street);
+            form.setValue("pincode", studentApplication?.address?.pincode);
+            form.setValue("district", studentApplication?.address.district);
+            form.setValue("state", studentApplication?.address.state);
+            setState(studentApplication.address.state);
 
             // Franchise
-            form.setValue("branch", student.branch);
+            form.setValue("branch", studentApplication.branch);
         }
-    }, [data, form, student]);
+    }, [data, form, studentApplication]);
 
-    const { updateStudent } = useCustumQuery();
+    const { removeApplication, addStudent } = useCustumQuery();
+    // delete application
+    const { mutate: deleteApplication, isPending: isDeleting } = useMutation({
+        mutationFn: async (id: string) => {
+            const { data } = await axios.delete(
+                `/api/student/application?id=${id}&img=yes`
+            );
+            return data;
+        },
+
+        onSuccess(data) {
+            if (data) {
+                toast({ description: data.message });
+            }
+            if (data.success) {
+                // remove from application list
+                removeApplication(
+                    ["student_application_list", searchParams?.page],
+                    studentApplication?.id!
+                );
+                form.reset();
+                onClose();
+            }
+        },
+        onError(error: AxiosError<{ message: string; succuss: boolean }>) {
+            toast({ description: error.response?.data?.message });
+        },
+    });
+
+    // accept application
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof studentSchema>) => {
-            const { data } = await axios.put("/api/student", values);
+            const { data } = await axios.post("/api/student", values);
             return data;
         },
         onError(error: AxiosError<{ message: string; succuss: boolean }>) {
             toast({ description: error.response?.data?.message });
         },
 
-        onSuccess(data) {
+        onSuccess: async (data) => {
             if (data) {
                 toast({ description: data.message });
                 form.reset();
                 onClose();
             }
-            if (data.success) {
-                updateStudent(
-                    [
-                        searchParams?.type,
-                        searchParams?.page,
-                        searchParams?.registration,
-                    ],
-                    data?.student
-                );
-            }
+            // add to pending list
+            addStudent(
+                ["pending_list", searchParams?.page, "none"],
+                data.student
+            );
+            // remove from application list
+            removeApplication(
+                ["student_application_list", searchParams?.page],
+                studentApplication?.id!
+            );
+            // delete application from database
+            deleteApplication(studentApplication?.id!);
         },
     });
 
@@ -188,13 +243,12 @@ export const EditStudentModal = () => {
                                 name="formNumber"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Registration Id</FormLabel>
+                                        <FormLabel>Form number</FormLabel>
 
                                         <FormControl>
                                             <Input
                                                 placeholder="Enter Form number"
                                                 {...field}
-                                                readOnly
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -663,7 +717,21 @@ export const EditStudentModal = () => {
                                 {isPending ? (
                                     <Loader className="animate-spin" />
                                 ) : (
-                                    "Update"
+                                    "Accept"
+                                )}
+                            </Button>
+                            <Button
+                                variant={"destructive"}
+                                disabled={isDeleting}
+                                type="button"
+                                onClick={() =>
+                                    deleteApplication(studentApplication?.id!)
+                                }
+                            >
+                                {isDeleting ? (
+                                    <Loader className="animate-spin" />
+                                ) : (
+                                    "Delete"
                                 )}
                             </Button>
                         </div>

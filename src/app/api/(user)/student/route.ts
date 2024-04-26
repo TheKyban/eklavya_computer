@@ -81,10 +81,15 @@ export const POST = async (req: Request) => {
         });
 
         if (!!isFormNumberExist) {
-            return NextResponse.json({
-                message: "Form number must be unique",
-                success: false,
-            });
+            return NextResponse.json(
+                {
+                    message: "Form number must be unique",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         /**
@@ -141,11 +146,16 @@ export const POST = async (req: Request) => {
             },
         });
 
-        return NextResponse.json({
-            message: "Student Registered Successfully",
-            success: true,
-            student,
-        });
+        return NextResponse.json(
+            {
+                message: "Student Registered Successfully",
+                success: true,
+                student,
+            },
+            {
+                status: 201,
+            }
+        );
     } catch (error) {
         console.log("[STUDENT]", error);
         return NextResponse.json({ message: "INTERNAL ERROR", success: false });

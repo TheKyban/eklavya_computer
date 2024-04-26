@@ -13,12 +13,13 @@ import { LoadingCells } from "../loading/loading";
 import { poppins } from "@/lib/fonts";
 import { StudentApplication } from "@prisma/client";
 import { format } from "date-fns";
-import { Button } from "../ui/button";
 import { per_page } from "@/lib/constants";
 import Pagination from "../pagination/pagination";
+import { useModal } from "@/hooks/use-modal-store";
 
 export default function StudentApplicationList({ page }: { page: string }) {
     const { data, isLoading } = useStudentApplications(page);
+    const { onOpen } = useModal();
     return (
         <div className="px-5 py-4 flex flex-col gap-4">
             <div className="flex justify-between">
@@ -48,13 +49,21 @@ export default function StudentApplicationList({ page }: { page: string }) {
                     </TableHeader>
                     {/* TABLE BODY */}
                     <TableBody>
-                        {isLoading && <LoadingCells cols={7} />}
+                        {isLoading && <LoadingCells cols={5} />}
                         {!isLoading &&
                             data?.applications?.map(
                                 (student: StudentApplication) => (
                                     <TableRow
                                         key={student.id}
-                                        className={poppins.className}
+                                        className={`${poppins.className} cursor-pointer`}
+                                        onClick={() =>
+                                            onOpen("studentApplication", {
+                                                studentApplication: student,
+                                                searchParams: {
+                                                    page: page || "1",
+                                                },
+                                            })
+                                        }
                                     >
                                         <TableCell className="text-xs md:text-sm">
                                             {student.name}

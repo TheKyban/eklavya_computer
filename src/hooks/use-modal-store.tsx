@@ -1,4 +1,4 @@
-import { Student, User } from "@prisma/client";
+import { Student, StudentApplication, User } from "@prisma/client";
 import { create } from "zustand";
 import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
 import { z } from "zod";
@@ -11,7 +11,8 @@ export type ModalType =
     | "editGeneralMarks"
     | "deleteGeneralMarks"
     | "editComputerTypingMarks"
-    | "deleteComputerTypingMarks";
+    | "deleteComputerTypingMarks"
+    | "studentApplication";
 
 interface ModalData {
     user?: User;
@@ -24,6 +25,7 @@ interface ModalData {
     };
     generalMarks?: z.infer<typeof generalMarksSchema>;
     computerTypingMarks?: z.infer<typeof typingSpeedMarkSchema>;
+    studentApplication?: StudentApplication;
 }
 
 interface modalStore {

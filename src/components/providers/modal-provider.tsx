@@ -6,6 +6,7 @@ import { EditGeneralMarks } from "@/components/modals/edit-general-marks-modal";
 import { EditComputerTypingMarksModal } from "@/components/modals/edit-computer-typing-marks-modal";
 import { DeleteComputerTypingMarksModal } from "@/components/modals/delete-computer-typing-marks-modal";
 import { DeleteGeneralMarksModal } from "@/components/modals/delete-general-marks-modal";
+import { StudentApplicationModal } from "../modals/student-application-modal";
 
 const ModalProvider = () => {
     return (
@@ -18,6 +19,7 @@ const ModalProvider = () => {
             <EditComputerTypingMarksModal />
             <DeleteComputerTypingMarksModal />
             <DeleteGeneralMarksModal />
+            <StudentApplicationModal />
         </>
     );
 };

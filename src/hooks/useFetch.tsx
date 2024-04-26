@@ -176,7 +176,7 @@ export const useAssests = () => {
 export const useStudentApplications = (page: string) => {
     const url = `/api/student/application?page=${page}`;
     return useQuery({
-        queryKey: ["student_application_list", page],
+        queryKey: ["student_application_list", page || "1"],
         queryFn: async () => {
             const { data } = await axios.get(url);
             return data;

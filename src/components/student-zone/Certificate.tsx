@@ -4,7 +4,7 @@ import qrcode from "qrcode";
 import { toast } from "@/components/ui/use-toast";
 import StudentStats from "@/lib/StudentStats";
 import { SearchTemplate } from "@/components/student-zone/searchTemplate";
-import { fetchStuddent } from "@/lib/fetchStudent";
+import { fetchStuddent } from "@/lib/fetchFunctions";
 import { MAX_WIDTH } from "@/lib/styles";
 import { Button } from "../ui/button";
 import { printHandler } from "@/lib/printHandler";

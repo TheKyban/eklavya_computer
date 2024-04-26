@@ -64,6 +64,7 @@ export const franchiseSchema = z
         },
         { message: "Password must match!", path: ["confirmPassword"] }
     );
+
 export const userApplicationSchema = z.object({
     img: z
         .string({ required_error: "Please select a picture" })

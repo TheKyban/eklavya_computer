@@ -2,8 +2,11 @@ import { authOptions } from "@/lib/auth-options";
 import { getServerSession } from "next-auth";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { NextRequest } from "next/server";
+import { role } from "@prisma/client";
+import { DELETE_FILE } from "@/lib/cloudinary";
 
 export const dynamic = "force-dynamic";
+
 export const GET = async (req: NextRequest) => {
     try {
         /**
@@ -51,5 +54,70 @@ export const GET = async (req: NextRequest) => {
                 status: 500,
             }
         );
+    }
+};
+
+/**
+ * DELETE Application
+ */
+
+export const DELETE = async (req: Request) => {
+    try {
+        /**
+         * CHECK ADMIN OR FRENCHISE IS LOGIN
+         */
+
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return Response.json({ message: "Unauthorized", success: false });
+        }
+
+        /**
+         * CHECK FRANCHISE IS ACTIVE OR NOT
+         */
+
+        if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
+            return Response.json({
+                message: "Unauthorized",
+                success: false,
+            });
+        }
+
+        const { searchParams } = new URL(req.url);
+        const id = searchParams.get("id");
+        const img: "yes" | "no" =
+            (searchParams.get("img") as "yes" | "no") || "no";
+
+        if (!id) {
+            return Response.json({
+                message: "id is required",
+                success: false,
+            });
+        }
+
+        const application = await Prisma.studentApplication.delete({
+            where: {
+                id,
+            },
+        });
+
+        if (!application) {
+            return Response.json({
+                message: "Invalid registration",
+                success: false,
+            });
+        }
+
+        if (img === "yes") {
+            DELETE_FILE(application.img);
+        }
+
+        return Response.json({
+            message: "application Deleted successfully",
+            success: true,
+        });
+    } catch (error) {
+        console.log(error);
+        return Response.json({ message: "Internal Error" });
     }
 };

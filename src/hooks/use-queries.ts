@@ -1,7 +1,10 @@
-import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
-import { Student, User } from "@prisma/client";
+import {
+    Student,
+    StudentApplication,
+    User,
+    UserApplication,
+} from "@prisma/client";
 import { QueryKey, useQueryClient } from "@tanstack/react-query";
-import { z } from "zod";
 
 type queryType = { _id: string; [key: string]: string };
 interface markType {
@@ -154,6 +157,24 @@ export const useCustumQuery = () => {
         });
     };
 
+    const removeApplication = (key: QueryKey, id: string) => {
+        queryClient.setQueryData(
+            key,
+            (old: {
+                total: number;
+                applications: UserApplication[] | StudentApplication[];
+            }) => {
+                const applications = old.applications.filter(
+                    (application) => application?.id !== id
+                );
+                return {
+                    total: old.total - 1,
+                    applications,
+                };
+            }
+        );
+    };
+
     return {
         addData,
         removeStudent,
@@ -167,5 +188,6 @@ export const useCustumQuery = () => {
         addUser,
         removeUser,
         updateUser,
+        removeApplication,
     };
 };

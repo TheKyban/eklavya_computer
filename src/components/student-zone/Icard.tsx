@@ -2,7 +2,7 @@
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { SearchTemplate } from "./searchTemplate";
-import { fetchStuddent } from "@/lib/fetchStudent";
+import { fetchStuddent } from "@/lib/fetchFunctions";
 import { MAX_WIDTH } from "@/lib/styles";
 import { Button } from "../ui/button";
 import { printHandler } from "@/lib/printHandler";
