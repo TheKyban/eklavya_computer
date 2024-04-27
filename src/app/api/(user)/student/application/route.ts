@@ -4,6 +4,7 @@ import { Prisma } from "../../../../../../prisma/prisma";
 import { NextRequest } from "next/server";
 import { role } from "@prisma/client";
 import { DELETE_FILE } from "@/lib/cloudinary";
+import { per_page } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
@@ -26,10 +27,17 @@ export const GET = async (req: NextRequest) => {
          */
 
         const applications = await Prisma.studentApplication.findMany({
-            take: page,
-            skip: page * (page - 1),
+            where: {
+                branch: session.user.userId,
+            },
+            take: per_page,
+            skip: per_page * (page - 1),
         });
-        const total = await Prisma.studentApplication.count();
+        const total = await Prisma.studentApplication.count({
+            where: {
+                branch: session.user.userId,
+            },
+        });
 
         if (!applications) {
             return Response.json({
@@ -85,7 +93,7 @@ export const DELETE = async (req: Request) => {
 
         const { searchParams } = new URL(req.url);
         const id = searchParams.get("id");
-        const img: "yes" | "no" =
+        const imgDelete: "yes" | "no" =
             (searchParams.get("img") as "yes" | "no") || "no";
 
         if (!id) {
@@ -107,9 +115,8 @@ export const DELETE = async (req: Request) => {
                 success: false,
             });
         }
-
-        if (img === "yes") {
-            DELETE_FILE(application.img);
+        if (imgDelete === "yes") {
+            await DELETE_FILE(application.img);
         }
 
         return Response.json({

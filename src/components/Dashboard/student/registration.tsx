@@ -29,7 +29,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CalendarIcon, GraduationCap, Loader, PlusCircle } from "lucide-react";
 import { studentSchema } from "@/lib/schema";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { Courses, IMAGE_SIZE } from "@/lib/constants";
 import { useSession } from "next-auth/react";
@@ -100,6 +100,11 @@ const StudentRegistration = () => {
             }
         } catch (error) {
             console.log(error);
+            toast({
+                description: (
+                    error as AxiosError<{ message: string; succuss: boolean }>
+                )?.response?.data?.message,
+            });
         }
     };
 

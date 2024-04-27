@@ -39,7 +39,7 @@ export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
                     <HomeFamily family={family} />
                 </div>
                 {/* CAROUSEL */}
-                <HomeCarousel carousel={carousel} />
+                {!!carousel?.[0] && <HomeCarousel carousel={carousel} />}
                 {/* FAMILY */}
                 <HomeFamily family={family} />
             </div>

@@ -50,8 +50,9 @@ export const DELETE_IMG = async (publicId: string) => {
 
 export const DELETE_FILE = async (url: string) => {
     let fileUrl = url.split("/");
-    let publicId = fileUrl[fileUrl.length - 1].split(".")[0];
-
+    let Id = fileUrl[fileUrl.length - 1].split(".")[0];
+    const publicId =
+        fileUrl.length === 8 ? Id : `${fileUrl[fileUrl.length - 2]}/${Id}`;
     const result = await DELETE_IMG(publicId);
     return result;
 };

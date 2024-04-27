@@ -1,8 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { FC, HTMLAttributes, ReactNode } from "react";
+import { FC } from "react";
 import {
     Carousel,
     CarouselContent,
