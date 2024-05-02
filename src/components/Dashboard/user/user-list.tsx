@@ -38,7 +38,11 @@ const UserList = ({
                     <UserCog className="text-red-600 w-5 h-5" />
                     Manage Users
                 </h1>
-                <Search placeholder="UserId" queryName="userId" className="text-xs lg:text-sm" />
+                <Search
+                    placeholder="UserId"
+                    queryName="userId"
+                    className="text-xs lg:text-sm"
+                />
             </div>
 
             <div>
@@ -69,14 +73,14 @@ const UserList = ({
                                     className={poppins.className}
                                 >
                                     <TableCell className="font-medium">
-                                        {user.userId}
+                                        {user?.userId}
                                     </TableCell>
-                                    <TableCell>{user.branch}</TableCell>
+                                    <TableCell>{user?.branch}</TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                        {user.name}
+                                        {user?.name}
                                     </TableCell>
                                     <TableCell>
-                                        {user.isActive ? "Yes" : "No"}
+                                        {user?.isActive ? "Yes" : "No"}
                                     </TableCell>
                                     <TableCell className="text-right flex justify-end gap-2">
                                         <>

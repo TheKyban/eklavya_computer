@@ -29,14 +29,19 @@ export const POST = async (req: Request) => {
         /**
          * VALIDATE DATA
          */
+        const dataVerify = franchiseSchema.safeParse(data);
 
-        const { success } = franchiseSchema.safeParse(data);
-
-        if (!success) {
-            return NextResponse.json({
-                message: "Please fill all requirements",
-                success: false,
-            });
+        if (!dataVerify.success) {
+            return NextResponse.json(
+                {
+                    message:
+                        dataVerify?.error! || "Please fill all requirements",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         /**
@@ -59,10 +64,15 @@ export const POST = async (req: Request) => {
         });
 
         if (isUserExist) {
-            return NextResponse.json({
-                message: "Franchise already exist with email Id or user Id",
-                success: false,
-            });
+            return NextResponse.json(
+                {
+                    message: "Franchise already exist with email Id or user Id",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         /**
@@ -99,14 +109,24 @@ export const POST = async (req: Request) => {
             },
         });
 
-        return NextResponse.json({
-            message: "Franchise Registered",
-            success: true,
-            user,
-        });
+        return NextResponse.json(
+            {
+                message: "Franchise Registered",
+                success: true,
+                user,
+            },
+            {
+                status: 201,
+            }
+        );
     } catch (error) {
         console.log("[USER POST]", error);
-        return NextResponse.json({ message: "INTERNAL ERROR", success: false });
+        return NextResponse.json(
+            { message: "INTERNAL ERROR", success: false },
+            {
+                status: 500,
+            }
+        );
     }
 };
 

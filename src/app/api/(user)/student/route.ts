@@ -42,16 +42,21 @@ export const POST = async (req: Request) => {
          */
 
         const data: z.infer<typeof studentSchema> = await req.json();
-        const { success } = studentSchema.safeParse({
+        const dataVerify = studentSchema.safeParse({
             ...data,
             dob: new Date(data.dob),
             dor: new Date(data.dor),
         });
-        if (!success) {
-            return NextResponse.json({
-                message: "All fields are required",
-                success: false,
-            });
+        if (!dataVerify?.success) {
+            return NextResponse.json(
+                {
+                    message:
+                        dataVerify.error?.errors?.[0].message ||
+                        "All fields are required",
+                    success: false,
+                },
+                { status: 400 }
+            );
         }
 
         /**
@@ -60,18 +65,28 @@ export const POST = async (req: Request) => {
 
         // form number and branch id should not to be same
         if (data.formNumber === data.branch) {
-            return NextResponse.json({
-                message: "Form number must be unique",
-                success: false,
-            });
+            return NextResponse.json(
+                {
+                    message: "Form number must be unique",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         // from number should be followed by branch userId
         if (!data.formNumber.startsWith(data.branch)) {
-            return NextResponse.json({
-                message: "Form number must be follow by branch id",
-                success: false,
-            });
+            return NextResponse.json(
+                {
+                    message: "Form number must be follow by branch id",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         const isFormNumberExist = await Prisma.student.findUnique({

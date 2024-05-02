@@ -119,7 +119,7 @@ export const StudentApplicationModal = () => {
     const { mutate: deleteApplication, isPending: isDeleting } = useMutation({
         mutationFn: async (id: string) => {
             const { data } = await axios.delete(
-                `/api/student/application?id=${id}&img=yes`
+                `/api/student/application?id=${id}`
             );
             return data;
         },
@@ -146,7 +146,10 @@ export const StudentApplicationModal = () => {
     // accept application
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof studentSchema>) => {
-            const { data } = await axios.post("/api/student", values);
+            const { data } = await axios.post(
+                `/api/student/application?id=${studentApplication?.id}`,
+                values
+            );
             return data;
         },
         onError(error: AxiosError<{ message: string; succuss: boolean }>) {
@@ -159,18 +162,23 @@ export const StudentApplicationModal = () => {
                 form.reset();
                 onClose();
             }
-            // add to pending list
-            addStudent(
-                ["pending_list", searchParams?.page, "none"],
-                data.student
-            );
-            // remove from application list
-            removeApplication(
-                ["student_application_list", searchParams?.page],
-                studentApplication?.id!
-            );
-            // delete application from database
-            deleteApplication(studentApplication?.id!);
+
+            try {
+                // remove from application list
+                removeApplication(
+                    ["student_application_list", searchParams?.page],
+                    studentApplication?.id!
+                );
+
+                // add to pending list
+                addStudent(
+                    ["pending_list", searchParams?.page, "none"],
+                    data.student
+                );
+            } catch (error) {
+                console.log("error in addStudent");
+                toast({ description: data.message });
+            }
         },
     });
 

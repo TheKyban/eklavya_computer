@@ -19,6 +19,28 @@ export const POST = async (req: Request) => {
         }
 
         /**
+         * CHECK USER IS REGISTERED OR NOT
+         */
+
+        const isExist = await Prisma.user.findUnique({
+            where: {
+                email: data.email,
+            },
+        });
+
+        if (isExist) {
+            return Response.json(
+                {
+                    message: "Already registered",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
+        }
+
+        /**
          * CREATE APPLICATION
          */
 

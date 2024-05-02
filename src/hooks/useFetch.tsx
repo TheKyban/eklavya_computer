@@ -187,7 +187,7 @@ export const useStudentApplications = (page: string) => {
 export const useUserApplications = (page: string) => {
     const url = `/api/users/application?page=${page}`;
     return useQuery({
-        queryKey: ["users_application_list", page],
+        queryKey: ["users_application_list", page || "1"],
         queryFn: async () => {
             const { data } = await axios.get(url);
             return data;

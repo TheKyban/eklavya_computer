@@ -89,14 +89,21 @@ const StudentRegistration = () => {
     const onSubmit = async (values: z.infer<typeof studentSchema>) => {
         try {
             const { data } = await axios.post("/api/student", values);
+
             if (data) {
-                toast({ description: data.message });
+                toast({ description: data?.message });
             }
+
             if (data.success) {
                 form.reset();
                 setState("");
                 form.setValue("branch", session?.user?.userId as string);
-                addStudent(["pending_list", "1", "none"], data?.student);
+                try {
+                    addStudent(["pending_list", "1", "none"], data?.student);
+                } catch (error) {
+                    console.log("Error in addStudent");
+                    toast({ description: data?.message });
+                }
             }
         } catch (error) {
             console.log(error);

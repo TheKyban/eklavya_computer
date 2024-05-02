@@ -28,7 +28,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CircleUser, Loader, Smile, Users } from "lucide-react";
 import { userApplicationSchema } from "@/lib/schema";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { states } from "@/lib/stateAndDistrict";
 import { ImageHandler } from "@/lib/imageHandler";
@@ -69,6 +69,11 @@ const UserApplicationForm = ({}) => {
             }
         } catch (error) {
             console.log(error);
+            toast({
+                description: (
+                    error as AxiosError<{ message: string; succuss: boolean }>
+                )?.response?.data?.message,
+            });
         }
     };
 

@@ -8,17 +8,18 @@ import {
     TableHeader,
     TableRow,
 } from "../ui/table";
-import { useStudentApplications, useUserApplications } from "@/hooks/useFetch";
+import { useUserApplications } from "@/hooks/useFetch";
 import { LoadingCells } from "../loading/loading";
 import { poppins } from "@/lib/fonts";
-import { StudentApplication, UserApplication } from "@prisma/client";
+import { UserApplication } from "@prisma/client";
 import { format } from "date-fns";
-import { Button } from "../ui/button";
 import { per_page } from "@/lib/constants";
 import Pagination from "../pagination/pagination";
+import { useModal } from "@/hooks/use-modal-store";
 
 export default function UserApplicationList({ page }: { page: string }) {
     const { data, isLoading } = useUserApplications(page);
+    const { onOpen } = useModal();
     return (
         <div className="px-5 py-4 flex flex-col gap-4">
             <div className="flex justify-between">
@@ -48,7 +49,15 @@ export default function UserApplicationList({ page }: { page: string }) {
                             data?.applications?.map((user: UserApplication) => (
                                 <TableRow
                                     key={user.id}
-                                    className={poppins.className}
+                                    className={`${poppins.className} cursor-pointer`}
+                                    onClick={() =>
+                                        onOpen("userApplication", {
+                                            userApplication: user,
+                                            searchParams: {
+                                                page: page || "1",
+                                            },
+                                        })
+                                    }
                                 >
                                     <TableCell className="text-xs md:text-sm">
                                         {user.name}

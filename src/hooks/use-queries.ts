@@ -24,8 +24,8 @@ export const useCustumQuery = () => {
             key,
             (old: { total: number; users: User[] }) => {
                 return {
-                    total: old.total + 1,
-                    users: [data, ...old.users],
+                    total: old?.total + 1,
+                    users: [data, ...old?.users],
                 };
             }
         );
@@ -35,9 +35,9 @@ export const useCustumQuery = () => {
         queryClient.setQueryData(
             key,
             (old: { total: number; users: User[] }) => {
-                const users = old.users.filter((user) => user?.id !== id);
+                const users = old?.users?.filter((user) => user?.id !== id);
                 return {
-                    total: old.total - 1,
+                    total: old?.total - 1,
                     users,
                 };
             }
@@ -47,12 +47,11 @@ export const useCustumQuery = () => {
         queryClient.setQueryData(
             key,
             (old: { total: number; users: User[] }) => {
-                const users = old.users.map((user) =>
-                    user.id === data.id ? data : user
+                const users = old?.users?.map((user) =>
+                    user?.id === data?.id ? data : user
                 );
-                console.log(old);
                 return {
-                    total: old.total,
+                    total: old?.total,
                     users,
                 };
             }
@@ -62,11 +61,11 @@ export const useCustumQuery = () => {
         queryClient.setQueryData(
             key,
             (old: { total: number; students: Student[] }) => {
-                const students = old.students.filter(
-                    (student) => student.formNumber !== formNumber
+                const students = old?.students.filter(
+                    (student) => student?.formNumber !== formNumber
                 );
                 return {
-                    total: old.total - 1,
+                    total: old?.total - 1,
                     students,
                 };
             }
@@ -77,8 +76,8 @@ export const useCustumQuery = () => {
             key,
             (oldData: { total: number; students: Student[] }) => {
                 return {
-                    total: oldData.total + 1,
-                    students: [data, ...oldData.students],
+                    total: oldData?.total + 1,
+                    students: [data, ...oldData?.students],
                 };
             }
         );
@@ -88,10 +87,10 @@ export const useCustumQuery = () => {
             key,
             (oldData: { total: number; students: Student[] }) => {
                 const students = oldData.students.map((student) =>
-                    student.formNumber === data.formNumber ? data : student
+                    student.formNumber === data?.formNumber ? data : student
                 );
                 return {
-                    total: oldData.total,
+                    total: oldData?.total,
                     students,
                 };
             }
@@ -100,7 +99,7 @@ export const useCustumQuery = () => {
 
     const removeFormNumber = (key: QueryKey, formNumber: number) => {
         queryClient.setQueryData(key, (oldData: queryType[]) => {
-            return oldData.filter(
+            return oldData?.filter(
                 (data) => Number(data?.formNumber) !== formNumber
             );
         });
@@ -125,11 +124,11 @@ export const useCustumQuery = () => {
         queryClient.setQueryData(
             key,
             (oldData: { total: number; studentsWithMarks: markType[] }) => {
-                const marks = oldData.studentsWithMarks.filter(
-                    (mark) => mark.formNumber !== formNumber
+                const marks = oldData?.studentsWithMarks.filter(
+                    (mark) => mark?.formNumber !== formNumber
                 );
                 return {
-                    total: oldData.total - 1,
+                    total: oldData?.total - 1,
                     studentsWithMarks: marks,
                 };
             }
@@ -139,11 +138,11 @@ export const useCustumQuery = () => {
         queryClient.setQueryData(
             key,
             (oldData: { total: number; studentsWithMarks: markType[] }) => {
-                const marks = oldData.studentsWithMarks.map((mark) =>
-                    mark.formNumber === data.formNumber ? data : mark
+                const marks = oldData?.studentsWithMarks?.map((mark) =>
+                    mark.formNumber === data?.formNumber ? data : mark
                 );
                 return {
-                    total: oldData.total,
+                    total: oldData?.total,
                     studentsWithMarks: marks,
                 };
             }
@@ -164,11 +163,11 @@ export const useCustumQuery = () => {
                 total: number;
                 applications: UserApplication[] | StudentApplication[];
             }) => {
-                const applications = old.applications.filter(
+                const applications = old.applications?.filter(
                     (application) => application?.id !== id
                 );
                 return {
-                    total: old.total - 1,
+                    total: old?.total - 1,
                     applications,
                 };
             }
