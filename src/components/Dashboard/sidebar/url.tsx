@@ -1,5 +1,6 @@
 import {
     Album,
+    Book,
     Dock,
     FileSpreadsheet,
     FormInput,
@@ -26,6 +27,12 @@ interface LinkType {
 }
 
 export const links: LinkType[] = [
+    {
+        title: "Course",
+        icon: <Book className="w-5 h-5 text-green-400" />,
+        link: "/dashboard/course",
+        role: "ADMIN",
+    },
     {
         title: "Marks Entry",
         icon: <FileSpreadsheet className="w-5 h-5 text-green-400" />,

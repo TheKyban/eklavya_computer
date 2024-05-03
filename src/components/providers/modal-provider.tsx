@@ -6,8 +6,9 @@ import { EditGeneralMarks } from "@/components/modals/edit-general-marks-modal";
 import { EditComputerTypingMarksModal } from "@/components/modals/edit-computer-typing-marks-modal";
 import { DeleteComputerTypingMarksModal } from "@/components/modals/delete-computer-typing-marks-modal";
 import { DeleteGeneralMarksModal } from "@/components/modals/delete-general-marks-modal";
-import { StudentApplicationModal } from "../modals/student-application-modal";
-import { UserApplicationModal } from "../modals/user-application-modal";
+import { StudentApplicationModal } from "@/components/modals/student-application-modal";
+import { UserApplicationModal } from "@/components/modals/user-application-modal";
+import { EditCourseModal } from "@/components/modals/edit-course-modal";
 
 const ModalProvider = () => {
     return (
@@ -22,6 +23,7 @@ const ModalProvider = () => {
             <DeleteGeneralMarksModal />
             <StudentApplicationModal />
             <UserApplicationModal />
+            <EditCourseModal />
         </>
     );
 };

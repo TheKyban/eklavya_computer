@@ -99,7 +99,7 @@ const TypingMarksEntry = ({
                         {/* REGISTRATION NUMBER */}
                         <FormField
                             control={form.control}
-                            name="formNumber"
+                            name="registration"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Registration Number</FormLabel>

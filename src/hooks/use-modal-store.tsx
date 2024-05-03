@@ -1,4 +1,5 @@
 import {
+    Course,
     Student,
     StudentApplication,
     User,
@@ -18,7 +19,8 @@ export type ModalType =
     | "editComputerTypingMarks"
     | "deleteComputerTypingMarks"
     | "studentApplication"
-    | "userApplication";
+    | "userApplication"
+    | "editCourse";
 
 interface ModalData {
     user?: User;
@@ -33,6 +35,7 @@ interface ModalData {
     computerTypingMarks?: z.infer<typeof typingSpeedMarkSchema>;
     studentApplication?: StudentApplication;
     userApplication?: UserApplication;
+    course?: Course;
 }
 
 interface modalStore {

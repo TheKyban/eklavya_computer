@@ -61,4 +61,18 @@ export const Courses = [
     "PDDTP",
 ];
 
+export const duration = [
+    "One Month",
+    "Two Months",
+    "Three Months",
+    "Four Months",
+    "Five Months",
+    "Six Months",
+    "Seven Months",
+    "Eight Months",
+    "Nine Months",
+    "Ten Months",
+    "Eleven Months",
+    "Twelve Months",
+];
 export const IMAGE_SIZE = 40000;

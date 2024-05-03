@@ -1,5 +1,6 @@
 "use client";
 import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
+import { Course } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { z } from "zod";
@@ -191,6 +192,16 @@ export const useUserApplications = (page: string) => {
         queryFn: async () => {
             const { data } = await axios.get(url);
             return data;
+        },
+    });
+};
+
+export const useCourse = () => {
+    return useQuery<Course[]>({
+        queryKey: ["courses_list"],
+        queryFn: async () => {
+            const { data } = await axios.get("/api/course");
+            return data?.data;
         },
     });
 };

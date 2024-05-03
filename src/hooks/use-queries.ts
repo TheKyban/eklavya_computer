@@ -6,7 +6,7 @@ import {
 } from "@prisma/client";
 import { QueryKey, useQueryClient } from "@tanstack/react-query";
 
-type queryType = { _id: string; [key: string]: string };
+type queryType = { id: string; [key: string]: string };
 interface markType {
     formNumber?: string;
     englishTyping?: number;
@@ -57,12 +57,12 @@ export const useCustumQuery = () => {
             }
         );
     };
-    const removeStudent = (key: QueryKey, formNumber: string) => {
+    const removeStudent = (key: QueryKey, registration: string) => {
         queryClient.setQueryData(
             key,
             (old: { total: number; students: Student[] }) => {
                 const students = old?.students.filter(
-                    (student) => student?.formNumber !== formNumber
+                    (student) => student?.registration !== registration
                 );
                 return {
                     total: old?.total - 1,
@@ -87,7 +87,7 @@ export const useCustumQuery = () => {
             key,
             (oldData: { total: number; students: Student[] }) => {
                 const students = oldData.students.map((student) =>
-                    student.formNumber === data?.formNumber ? data : student
+                    student.registration === data?.registration ? data : student
                 );
                 return {
                     total: oldData?.total,
@@ -155,6 +155,22 @@ export const useCustumQuery = () => {
             return allData;
         });
     };
+    const updateData = (key: QueryKey, data: queryType) => {
+        queryClient.setQueryData(key, (old: queryType[]) => {
+            const allData = old?.map((oldData) => {
+                return data?.id === oldData?.id ? data : oldData;
+            });
+            return allData;
+        });
+    };
+    const removeData = (key: QueryKey, id: string) => {
+        queryClient.setQueryData(key, (old: queryType[]) => {
+            const allData = old.filter((data) => {
+                return data?.id !== id;
+            });
+            return allData;
+        });
+    };
 
     const removeApplication = (key: QueryKey, id: string) => {
         queryClient.setQueryData(
@@ -188,5 +204,7 @@ export const useCustumQuery = () => {
         removeUser,
         updateUser,
         removeApplication,
+        updateData,
+        removeData,
     };
 };

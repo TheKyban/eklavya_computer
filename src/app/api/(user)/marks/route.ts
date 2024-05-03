@@ -1,6 +1,5 @@
 import { authOptions } from "@/lib/auth-options";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../prisma/prisma";
 import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
 import { z } from "zod";
@@ -18,7 +17,7 @@ export const GET = async (req: Request) => {
         const session = await getServerSession(authOptions);
 
         if (!session) {
-            return NextResponse.json({ message: "Unauthorized" });
+            return Response.json({ message: "Unauthorized" });
         }
 
         /**
@@ -32,41 +31,33 @@ export const GET = async (req: Request) => {
         const studentsWithoutMarks = await Prisma.student.findMany({
             where: {
                 branch: session.user.userId,
-                course: {
-                    startsWith: computerTyping ? "Computer Typing" : "",
-                    not: computerTyping ? "" : "Computer Typing",
-                },
 
-                englishTyping: {
-                    isSet: false,
+                Course: {
+                    name: {
+                        startsWith: computerTyping ? "Computer Typing" : "",
+                        not: computerTyping ? "" : "Computer Typing",
+                    },
                 },
-                hindiTyping: {
-                    isSet: false,
-                },
-                written: {
-                    isSet: false,
-                },
-                viva: {
-                    isSet: false,
-                },
-                practical: {
-                    isSet: false,
-                },
-                project: {
-                    isSet: false,
+                marks: {
+                    is: null,
                 },
             },
             select: {
-                formNumber: true,
+                registration: true,
             },
         });
 
-        return NextResponse.json(studentsWithoutMarks);
+        return Response.json(studentsWithoutMarks);
     } catch (error) {
         console.log(error);
-        return NextResponse.json({
-            message: "Internal error",
-        });
+        return Response.json(
+            {
+                message: "Internal error",
+            },
+            {
+                status: 500,
+            }
+        );
     }
 };
 
@@ -83,41 +74,51 @@ export const POST = async (req: Request) => {
         const session = await getServerSession(authOptions);
 
         if (!session) {
-            return NextResponse.json({ message: "Unauthorized" });
+            return Response.json({ message: "Unauthorized" });
         }
 
         const data: z.infer<
             typeof typingSpeedMarkSchema & typeof generalMarksSchema
         > = await req.json();
 
-        const { searchParams } = new URL(req.url);
-        const computerTyping =
-            Boolean(searchParams.get("computerTyping")) || false;
+        const student = await Prisma.student.findUnique({
+            where: {
+                registration: data.registration,
+            },
+            include: {
+                Course: true,
+            },
+        });
 
+        if (!student) {
+            return Response.json(
+                {
+                    message: "Invalid registration number.",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
+        }
         /**
          * VALIDATING DATA ACCORDINGLY COURSE
          * COMPUTER TYPING OR OTHER
          */
 
-        if (computerTyping) {
-            /**
-             * COMPUTER TYPING
-             */
+        if (student.Course.name === "computer typing") {
             const { success } = typingSpeedMarkSchema.safeParse({
-                formNumber: data.formNumber,
+                registration: data.registration,
                 englishTyping: Number(data.englishTyping),
                 hindiTyping: Number(data.hindiTyping),
             });
 
             if (!success) {
-                return NextResponse.json({ message: "Invalid data" });
+                return Response.json({ message: "Invalid data" });
             }
         } else {
-            /**
-             * OTHER COURSE
-             */
             const { success } = generalMarksSchema.safeParse({
-                formNumber: data.formNumber,
+                registration: data.registration,
                 written: Number(data?.practical),
                 practical: Number(data?.practical),
                 viva: Number(data?.viva),
@@ -125,7 +126,7 @@ export const POST = async (req: Request) => {
             });
 
             if (!success) {
-                return NextResponse.json({ message: "Invalid data" });
+                return Response.json({ message: "Invalid data" });
             }
         }
 
@@ -133,47 +134,99 @@ export const POST = async (req: Request) => {
          * CREATING MARKS
          */
 
-        const marks = await Prisma.student.update({
+        // const marks = await Prisma.marks.create({
+        //     data:
+        //         student.Course.name === "computer typing"
+        //             ? {
+        //                   studentRegistrationNumber: data.registration,
+        //                   typingMarks: {
+        //                       hindiTyping: data?.hindiTyping,
+        //                       englishTyping: data?.englishTyping,
+        //                   },
+        //               }
+        //             : {
+        //                   studentRegistrationNumber: data.registration,
+        //                   marks: {
+        //                       practical: data?.practical,
+        //                       viva: data?.viva,
+        //                       written: data?.written,
+        //                       project: data?.project,
+        //                   },
+        //               },
+        //     // select:
+        //     //     student.Course.name === "computer typing"
+        //     //         ? {
+        //     //               typingMarks: true,
+        //     //               branch: true,
+        //     //               registration: true,
+        //     //           }
+        //     //         : {
+        //     //               branch: true,
+        //     //               registration: true,
+        //     //               marks: true,
+        //     //           },
+        // });
+
+        const createdMarks = await Prisma.student.update({
             where: {
-                formNumber: data.formNumber,
-                branch: session.user.userId,
+                registration: data.registration,
             },
-            data: computerTyping
-                ? {
-                      hindiTyping: data?.hindiTyping,
-                      englishTyping: data?.englishTyping,
-                  }
-                : {
-                      practical: data?.practical,
-                      viva: data?.viva,
-                      written: data?.written,
-                      project: data?.project,
-                  },
-            select: computerTyping
-                ? {
-                      hindiTyping: true,
-                      englishTyping: true,
-                      branch: true,
-                      formNumber: true,
-                  }
-                : {
-                      branch: true,
-                      formNumber: true,
-                      viva: true,
-                      project: true,
-                      written: true,
-                      practical: true,
-                  },
+            data:
+                student.Course.name === "computer typing"
+                    ? {
+                          marks: {
+                              create: {
+                                  typingMarks: {
+                                      hindiTyping: data?.hindiTyping,
+                                      englishTyping: data?.englishTyping,
+                                  },
+                              },
+                          },
+                      }
+                    : {
+                          marks: {
+                              create: {
+                                  marks: {
+                                      practical: data?.practical,
+                                      viva: data?.viva,
+                                      written: data?.written,
+                                      project: data?.project,
+                                  },
+                              },
+                          },
+                      },
+            select: {
+                marks: true,
+                branch: true,
+                registration: true,
+            },
         });
 
-        return NextResponse.json({
-            message: "Marks registered",
-            success: true,
-            marks,
-        });
+        if (!createdMarks) {
+            return Response.json(
+                {
+                    message: "Invalid registration",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
+        }
+
+        return Response.json(
+            {
+                message: "Marks registered",
+                success: true,
+                // marks,
+            },
+            {
+                status: 201,
+            }
+        );
     } catch (error) {
         console.log(error);
-        return NextResponse.json({
+        return Response.json({
             message: "Internal Error",
         });
     }
@@ -191,41 +244,52 @@ export const PUT = async (req: Request) => {
         const session = await getServerSession(authOptions);
 
         if (!session) {
-            return NextResponse.json({ message: "Unauthorized" });
+            return Response.json({ message: "Unauthorized" });
         }
 
         const data: z.infer<
             typeof typingSpeedMarkSchema & typeof generalMarksSchema
         > = await req.json();
 
-        const { searchParams } = new URL(req.url);
-        const computerTyping =
-            Boolean(searchParams.get("computerTyping")) || false;
+        const student = await Prisma.student.findUnique({
+            where: {
+                registration: data.registration,
+            },
+            include: {
+                Course: true,
+            },
+        });
+
+        if (!student) {
+            return Response.json(
+                {
+                    message: "Invalid registration number.",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
+        }
 
         /**
          * VALIDATING DATA ACCORDINGLY COURSE
          * COMPUTER TYPING OR OTHER
          */
 
-        if (computerTyping) {
-            /**
-             * COMPUTER TYPING
-             */
+        if (student.Course.name === "computer typing") {
             const { success } = typingSpeedMarkSchema.safeParse({
-                formNumber: data.formNumber,
+                registration: data.registration,
                 englishTyping: Number(data.englishTyping),
                 hindiTyping: Number(data.hindiTyping),
             });
 
             if (!success) {
-                return NextResponse.json({ message: "Invalid data" });
+                return Response.json({ message: "Invalid data" });
             }
         } else {
-            /**
-             * OTHER COURSE
-             */
             const { success } = generalMarksSchema.safeParse({
-                formNumber: data.formNumber,
+                registration: data.registration,
                 written: Number(data?.practical),
                 practical: Number(data?.practical),
                 viva: Number(data?.viva),
@@ -233,7 +297,7 @@ export const PUT = async (req: Request) => {
             });
 
             if (!success) {
-                return NextResponse.json({ message: "Invalid data" });
+                return Response.json({ message: "Invalid data" });
             }
         }
 
@@ -241,46 +305,40 @@ export const PUT = async (req: Request) => {
          * UPDATE MARKS
          */
 
-        const marks = await Prisma.student.update({
+        const marks = await Prisma.marks.update({
             where: {
-                formNumber: data.formNumber,
-                branch: session.user.userId,
+                studentRegistrationNumber: data.registration,
             },
-            data: computerTyping
-                ? {
-                      hindiTyping: data?.hindiTyping,
-                      englishTyping: data?.englishTyping,
-                  }
-                : {
-                      practical: data?.practical,
-                      viva: data?.viva,
-                      written: data?.written,
-                      project: data?.project,
-                  },
-            select: computerTyping
-                ? {
-                      hindiTyping: true,
-                      englishTyping: true,
-                      branch: true,
-                      formNumber: true,
-                  }
-                : {
-                      branch: true,
-                      formNumber: true,
-                      viva: true,
-                      project: true,
-                      written: true,
-                      practical: true,
-                  },
+            data:
+                student.Course.name === "computer typing"
+                    ? {
+                          typingMarks: {
+                              hindiTyping: data?.hindiTyping,
+                              englishTyping: data?.englishTyping,
+                          },
+                      }
+                    : {
+                          marks: {
+                              practical: data?.practical,
+                              viva: data?.viva,
+                              written: data?.written,
+                              project: data?.project,
+                          },
+                      },
         });
 
-        return NextResponse.json({
-            message: "Marks Updated",
-            success: true,
-        });
+        return Response.json(
+            {
+                message: "Marks Updated",
+                success: true,
+            },
+            {
+                status: 202,
+            }
+        );
     } catch (error) {
         console.log(error);
-        return NextResponse.json({
+        return Response.json({
             message: "Internal Error",
         });
     }
@@ -298,68 +356,74 @@ export const DELETE = async (req: Request) => {
         const session = await getServerSession(authOptions);
 
         if (!session) {
-            return NextResponse.json({ message: "Unauthorized" });
+            return Response.json({ message: "Unauthorized" });
         }
 
         const { searchParams } = new URL(req.url);
-        const computerTyping =
-            Boolean(searchParams.get("computerTyping")) || false;
-        const formNumber = searchParams.get("formNumber");
+        const registration = searchParams.get("registration");
 
-        if (!formNumber) {
-            return NextResponse.json({ message: "FormNumber is required" });
+        if (!registration) {
+            return Response.json(
+                {
+                    message: "Registration Number is required",
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         /**
-         * UPDATE MARKS
+         * delete MARKS
          */
 
-        const marks = await Prisma.student.update({
+        const marks = await Prisma.marks.delete({
             where: {
-                formNumber: formNumber,
-                branch: session.user.userId,
+                studentRegistrationNumber: registration,
             },
-            data: computerTyping
-                ? {
-                      hindiTyping: {
-                          unset: true,
-                      },
-                      englishTyping: {
-                          unset: true,
-                      },
-                  }
-                : {
-                      practical: {
-                          unset: true,
-                      },
-                      viva: {
-                          unset: true,
-                      },
-                      written: {
-                          unset: true,
-                      },
-                      project: {
-                          unset: true,
-                      },
-                  },
-
             select: {
-                formNumber: true,
+                studentRegistrationNumber: true,
             },
         });
 
         if (!marks) {
-            return NextResponse.json({ message: "Invalid data" });
+            return Response.json(
+                { message: "Invalid data" },
+                {
+                    status: 400,
+                }
+            );
         }
 
-        return NextResponse.json({
-            message: "Marks deleted Successfully",
-            success: true,
+        await Prisma.student.update({
+            where: {
+                registration,
+            },
+            data: {
+                marks: {
+                    delete: true,
+                },
+            },
         });
+
+        return Response.json(
+            {
+                message: "Marks deleted Successfully",
+                success: true,
+            },
+            {
+                status: 202,
+            }
+        );
     } catch (error) {
         console.log(error);
-        return NextResponse.json({
-            message: "Internal Error",
-        });
+        return Response.json(
+            {
+                message: "Internal Error",
+            },
+            {
+                status: 500,
+            }
+        );
     }
 };

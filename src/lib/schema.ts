@@ -203,7 +203,7 @@ export const studentSchema = z.object({
     course: z
         .string({ required_error: "Course is required." })
         .min(2, { message: "Please select course" }),
-    formNumber: z
+    registration: z
         .string({ required_error: "Form number is required." })
         .min(4, { message: "Enter valid form number" }),
     qualification: z.string(),
@@ -263,7 +263,7 @@ export const studentAddmissionSchema = z.object({
 });
 
 export const typingSpeedMarkSchema = z.object({
-    formNumber: z
+    registration: z
         .string({ required_error: "Select Registration Number" })
         .min(5, { message: "Select registration number" }),
     englishTyping: z
@@ -277,7 +277,7 @@ export const typingSpeedMarkSchema = z.object({
 });
 
 export const generalMarksSchema = z.object({
-    formNumber: z
+    registration: z
         .string({ required_error: "Select Registration Number" })
         .min(5, { message: "Select registration number" }),
     written: z
@@ -323,3 +323,35 @@ export const changePasswordSchema = z
         },
         { message: "Password must match!", path: ["confirmPassword"] }
     );
+
+export const courseSchema = z.object({
+    name: z
+        .string({ required_error: "Enter course name." })
+        .min(3, { message: "Enter valid course name." })
+        .trim()
+        .toUpperCase(),
+    fullName: z
+        .string({ required_error: "Enter course full name." })
+        .min(10, { message: "Enter valid course full name." }),
+    duration: z
+        .string({ required_error: "Enter course duration." })
+        .min(10, { message: "Enter valid course duration" }),
+    modules: z.string({ required_error: "Enter course modules." }),
+});
+export const courseEditSchema = z.object({
+    name: z
+        .string({ required_error: "Enter course name." })
+        .min(3, { message: "Enter valid course name." })
+        .trim()
+        .toUpperCase(),
+    fullName: z
+        .string({ required_error: "Enter course full name." })
+        .min(10, { message: "Enter valid course full name." }),
+    duration: z
+        .string({ required_error: "Enter course duration." })
+        .min(10, { message: "Enter valid course duration" }),
+    id: z
+        .string({ required_error: "Id is required." })
+        .min(10, { message: "Id is required." }),
+    modules: z.string({ required_error: "Enter course modules." }),
+});

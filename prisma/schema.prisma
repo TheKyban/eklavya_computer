@@ -8,23 +8,30 @@ generator client {
 }
 
 model User {
-    id        String    @id @default(auto()) @map("_id") @db.ObjectId
-    userId    String    @unique
-    name      String
-    email     String?   @unique
-    img       String
-    password  String
-    phone     String
-    address   Address
-    role      role      @default(FRANCHISE)
-    isActive  Boolean   @default(true)
-    branch    String
-    Students  Student[]
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    // personal
+    name    String
+    email   String? @unique
+    img     String
+    phone   String
+    address Address
+
+    // branch
+    userId   String    @unique
+    password String
+    role     role      @default(FRANCHISE)
+    isActive Boolean   @default(true)
+    branch   String
+    Students Student[]
+
+    // dates
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Student {
+    // personal
     id            String   @id @default(auto()) @map("_id") @db.ObjectId
     name          String
     img           String
@@ -32,26 +39,59 @@ model Student {
     motherName    String
     gender        gender
     qualification String?
-    formNumber    String   @unique
     dob           DateTime
     phone         String
     email         String?
-    dor           DateTime
-    course        String
     address       Address
-    branch        String
-    Branch        User     @relation(fields: [branch], references: [userId], onDelete: Cascade)
-    isVerified    Boolean  @default(false)
-    certificate   Boolean  @default(false)
-    serialNumber  Int?
-    written       Int?
-    practical     Int?
-    project       Int?
-    viva          Int?
-    englishTyping Int?
-    hindiTyping   Int?
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
+
+    // branch 
+    registration String @unique
+    branch       String
+    course       String @db.ObjectId
+    marks        Marks?
+    serialNumber Int?
+
+    // verification
+    isVerified  Boolean @default(false)
+    icard       Boolean @default(false)
+    marksheet   Boolean @default(false)
+    certificate Boolean @default(false)
+
+    // dates
+    dor       DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // relations
+    Branch User   @relation(fields: [branch], references: [userId], onDelete: Cascade, onUpdate: Cascade)
+    Course Course @relation(fields: [course], references: [id])
+}
+
+model Marks {
+    id                        String       @id @default(auto()) @map("_id") @db.ObjectId
+    studentRegistrationNumber String       @unique
+    Student                   Student      @relation(fields: [studentRegistrationNumber], references: [registration], onDelete: Cascade, onUpdate: Cascade)
+    marks                     GenralMarks?
+    typingMarks               TypingMarks?
+    createdAt                 DateTime     @default(now())
+    updatedAt                 DateTime     @updatedAt
+}
+
+model Course {
+    id                  String               @id @default(auto()) @map("_id") @db.ObjectId
+    name                String               @unique
+    fullName            String
+    duration            String
+    modules             String?
+    createdAt           DateTime             @default(now())
+    updatedAt           DateTime             @updatedAt
+    StudentApplications StudentApplication[]
+    Students            Student[]
+}
+
+model StudentSerialNumber {
+    id           String @id @default(auto()) @map("_id") @db.ObjectId
+    serialNumber Int
 }
 
 model UserApplication {
@@ -78,16 +118,12 @@ model StudentApplication {
     phone         String
     email         String?
     dor           DateTime
-    course        String
+    course        String   @db.ObjectId
+    Course        Course   @relation(fields: [course], references: [id])
     address       Address
     branch        String
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
-}
-
-model StudentSerialNumber {
-    id           String @id @default(auto()) @map("_id") @db.ObjectId
-    serialNumber Int
 }
 
 type Address {
@@ -95,6 +131,18 @@ type Address {
     district String
     pincode  String
     street   String
+}
+
+type GenralMarks {
+    written   Int
+    practical Int
+    project   Int
+    viva      Int
+}
+
+type TypingMarks {
+    englishTyping Int
+    hindiTyping   Int
 }
 
 enum gender {
