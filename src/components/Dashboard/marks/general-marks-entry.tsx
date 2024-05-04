@@ -43,7 +43,8 @@ const GeneralMarksEntry = () => {
     });
 
     const { data, isLoading } = useStudentMark();
-    const { removeFormNumber, addMark } = useCustumQuery();
+    const { removeRegistrationNumberFromUnMarkedList, addMark } =
+        useCustumQuery();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof generalMarksSchema>) => {
@@ -65,7 +66,7 @@ const GeneralMarksEntry = () => {
             /**
              * Removing registration number from entry list
              */
-            removeFormNumber(
+            removeRegistrationNumberFromUnMarkedList(
                 ["computer-students-mark", false],
                 Number(data?.marks?.studentRegistrationNumber)
             );

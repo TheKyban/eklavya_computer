@@ -36,7 +36,7 @@ export const EditComputerTypingMarksModal = () => {
     const form = useForm<z.infer<typeof typingSpeedMarkSchema>>({
         resolver: zodResolver(typingSpeedMarkSchema),
         defaultValues: {
-            formNumber: "",
+            registration: "",
             hindiTyping: 0,
             englishTyping: 0,
         },
@@ -44,7 +44,7 @@ export const EditComputerTypingMarksModal = () => {
 
     useEffect(() => {
         if (computerTypingMarks) {
-            form.setValue("formNumber", computerTypingMarks.formNumber);
+            form.setValue("registration", computerTypingMarks.registration);
             form.setValue("hindiTyping", computerTypingMarks.hindiTyping);
             form.setValue("englishTyping", computerTypingMarks.englishTyping);
         }
@@ -80,7 +80,7 @@ export const EditComputerTypingMarksModal = () => {
                     searchParams?.registration || "none",
                     true,
                 ],
-                variables
+                { marks: data?.marks }
             );
         },
     });
@@ -100,7 +100,7 @@ export const EditComputerTypingMarksModal = () => {
                         {/* REGISTRATION NUMBER */}
                         <FormField
                             control={form.control}
-                            name="formNumber"
+                            name="registration"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Registration Number</FormLabel>

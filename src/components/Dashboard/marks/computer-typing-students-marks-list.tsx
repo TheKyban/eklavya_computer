@@ -65,16 +65,30 @@ const ComputerTypingEnteredMarks = ({
                                  * TABLE ROW
                                  */
                                 <TableRow
-                                    key={student.formNumber}
+                                    key={
+                                        student?.marks
+                                            ?.studentRegistrationNumber
+                                    }
                                     className={poppins.className}
                                 >
                                     <TableCell className="font-medium">
-                                        {student.formNumber}
+                                        {
+                                            student?.marks
+                                                ?.studentRegistrationNumber
+                                        }
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        {student.englishTyping}
+                                        {
+                                            student?.marks?.typingMarks
+                                                ?.englishTyping
+                                        }
                                     </TableCell>
-                                    <TableCell>{student.hindiTyping}</TableCell>
+                                    <TableCell>
+                                        {
+                                            student?.marks?.typingMarks
+                                                ?.hindiTyping
+                                        }
+                                    </TableCell>
                                     <TableCell className="text-right flex gap-2">
                                         {/* EDIT BTN */}
                                         <Button
@@ -84,8 +98,13 @@ const ComputerTypingEnteredMarks = ({
                                                 onOpen(
                                                     "editComputerTypingMarks",
                                                     {
-                                                        computerTypingMarks:
-                                                            student,
+                                                        computerTypingMarks: {
+                                                            registration:
+                                                                student?.marks
+                                                                    ?.studentRegistrationNumber,
+                                                            ...student?.marks
+                                                                ?.typingMarks!,
+                                                        },
                                                         searchParams: {
                                                             page: page
                                                                 ? page
@@ -110,8 +129,13 @@ const ComputerTypingEnteredMarks = ({
                                                 onOpen(
                                                     "deleteComputerTypingMarks",
                                                     {
-                                                        computerTypingMarks:
-                                                            student,
+                                                        computerTypingMarks: {
+                                                            registration:
+                                                                student?.marks
+                                                                    ?.studentRegistrationNumber,
+                                                            ...student?.marks
+                                                                ?.typingMarks!,
+                                                        },
                                                         searchParams: {
                                                             page: page
                                                                 ? page

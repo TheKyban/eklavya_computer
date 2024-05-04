@@ -90,7 +90,10 @@ export const useCustumQuery = () => {
         );
     };
 
-    const removeFormNumber = (key: QueryKey, registration: number) => {
+    const removeRegistrationNumberFromUnMarkedList = (
+        key: QueryKey,
+        registration: number
+    ) => {
         queryClient.setQueryData(key, (oldData: queryType[]) => {
             return oldData?.filter(
                 (data) => Number(data?.registration) !== registration
@@ -201,7 +204,7 @@ export const useCustumQuery = () => {
         removeStudent,
         addStudent,
         updateStudent,
-        removeFormNumber,
+        removeRegistrationNumberFromUnMarkedList,
         addRegistrationNumberToUnMarkedList,
         addMark,
         removeMark,

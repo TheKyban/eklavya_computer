@@ -20,12 +20,13 @@ export const DeleteComputerTypingMarksModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "deleteComputerTypingMarks";
     const { computerTypingMarks, searchParams } = data;
-    const { addFormNumber, removeMark } = useCustumQuery();
+    const { addRegistrationNumberToUnMarkedList, removeMark } =
+        useCustumQuery();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             const { data } = await axios.delete(
-                `/api/marks?computerTyping=true&formNumber=${computerTypingMarks?.formNumber}`
+                `/api/marks?computerTyping=true&registration=${computerTypingMarks?.registration}`
             );
             return data;
         },
@@ -49,16 +50,16 @@ export const DeleteComputerTypingMarksModal = () => {
                     searchParams?.registration || "none",
                     true,
                 ],
-                computerTypingMarks?.formNumber as string
+                computerTypingMarks?.registration as string
             );
 
             /**
              * ADD REGISTRATION NUMBER TO ENTERY LIST
              */
 
-            addFormNumber(
+            addRegistrationNumberToUnMarkedList(
                 ["computer-students-mark", true],
-                Number(computerTypingMarks?.formNumber)
+                Number(computerTypingMarks?.registration)
             );
         },
     });
@@ -73,7 +74,7 @@ export const DeleteComputerTypingMarksModal = () => {
                     <DialogDescription className="text-center text-zinc-500">
                         Are you sure you want to do this? <br />
                         <span className="font-semibold text-indigo-500">
-                            {computerTypingMarks?.formNumber}
+                            {computerTypingMarks?.registration}
                         </span>{" "}
                     </DialogDescription>
                 </DialogHeader>

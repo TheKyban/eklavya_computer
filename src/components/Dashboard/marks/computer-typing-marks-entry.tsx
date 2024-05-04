@@ -39,7 +39,8 @@ const TypingMarksEntry = () => {
         },
     });
     const { data, isLoading } = useStudentMark(true);
-    const { removeFormNumber, addMark } = useCustumQuery();
+    const { removeRegistrationNumberFromUnMarkedList, addMark } =
+        useCustumQuery();
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof typingSpeedMarkSchema>) => {
             const { data } = await axios.post(
@@ -64,7 +65,7 @@ const TypingMarksEntry = () => {
              * Removing registration number from entry list
              */
 
-            removeFormNumber(
+            removeRegistrationNumberFromUnMarkedList(
                 ["computer-students-mark", true],
                 Number(variables.registration)
             );
@@ -72,7 +73,9 @@ const TypingMarksEntry = () => {
             /**
              * Adding registration number and marks to entered list
              */
-            addMark(["general-students-entered", "1", "none", true], variables);
+            addMark(["general-students-entered", "1", "none", true], {
+                marks: data?.marks,
+            });
         },
     });
 
@@ -121,9 +124,7 @@ const TypingMarksEntry = () => {
                                                             key={
                                                                 student.registration
                                                             }
-                                                            value={
-                                                                student.registration
-                                                            }
+                                                            value={`${student.registration}`}
                                                         >
                                                             {
                                                                 student.registration
