@@ -37,7 +37,7 @@ import { toast } from "@/components/ui/use-toast";
 import { courseEditSchema } from "@/lib/schema";
 import { useMutation } from "@tanstack/react-query";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "../../ui/textarea";
 import { duration } from "@/lib/constants";
 
 export const EditCourseModal = () => {
@@ -219,7 +219,7 @@ export const EditCourseModal = () => {
                         <div className="flex flex-col sm:flex-row gap-3 mt-3">
                             <Button
                                 variant={"primary"}
-                                disabled={isPending}
+                                disabled={isPending || !form.formState.isDirty}
                                 type="submit"
                                 className="w-full"
                             >

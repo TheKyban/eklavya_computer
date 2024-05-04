@@ -1,4 +1,5 @@
 "use client";
+import { useModal } from "@/hooks/use-modal-store";
 import {
     Dialog,
     DialogContent,
@@ -8,58 +9,41 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-
-import { toast } from "@/components/ui/use-toast";
 import { Loader } from "lucide-react";
 import axios from "axios";
-import { useModal } from "@/hooks/use-modal-store";
+import { toast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useCustumQuery } from "@/hooks/use-queries";
 
-export const DeleteGeneralMarksModal = () => {
+export const DeleteStudentModal = () => {
     const { isOpen, onClose, type, data } = useModal();
-    const isModalOpen = isOpen && type === "deleteGeneralMarks";
-    const { generalMarks, searchParams } = data;
+    const isModalOpen = isOpen && type === "deleteStudent";
+    const { student, searchParams } = data;
 
-    const { removeMark, addFormNumber } = useCustumQuery();
+    const { removeStudent } = useCustumQuery();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             const { data } = await axios.delete(
-                `/api/marks?formNumber=${generalMarks?.formNumber}`
+                `/api/student?registration=${student?.registration}`
             );
             return data;
         },
-        onSuccess(data, variables, context) {
+        onSuccess(data) {
             if (data) {
                 toast({ description: data?.message });
-            }
-
-            if (data?.success) {
                 onClose();
             }
-
-            /**
-             * REMOVING MARKS FROM ENTERED LIST
-             */
-            removeMark(
-                [
-                    "general-students-entered",
-                    searchParams?.page || "1",
-                    searchParams?.registration || "none",
-                    false,
-                ],
-                generalMarks?.formNumber as string
-            );
-
-            /**
-             * ADD REGISTRATION NUMBER TO ENTERY LIST
-             */
-
-            addFormNumber(
-                ["computer-students-mark", false],
-                Number(generalMarks?.formNumber)
-            );
+            if (!!data?.success) {
+                removeStudent(
+                    [
+                        searchParams?.type,
+                        searchParams?.page || "1",
+                        searchParams?.registration,
+                    ],
+                    student?.registration as string
+                );
+            }
         },
     });
 
@@ -68,12 +52,12 @@ export const DeleteGeneralMarksModal = () => {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Delete Marks
+                        Delete Student
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
                         Are you sure you want to do this? <br />
                         <span className="font-semibold text-indigo-500">
-                            {generalMarks?.formNumber}
+                            {student?.name}
                         </span>{" "}
                     </DialogDescription>
                 </DialogHeader>

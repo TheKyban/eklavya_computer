@@ -27,40 +27,6 @@ export const info = [
  */
 export const per_page = 50;
 
-/**
- * COURSE
- */
-export const Courses = [
-    "C",
-    "ADCA",
-    "ADCA Plus",
-    "ADCTT",
-    "ADHN",
-    "ADIT",
-    "ADIT+",
-    "Advance Excel",
-    "CCA",
-    "CFA",
-    "CFA Plus",
-    "Computer Typing",
-    "DAA",
-    "DCA",
-    "DCP",
-    "DCTT",
-    "DDEO",
-    "DFA",
-    "DHN",
-    "DHT",
-    "DOA",
-    "DTP",
-    "DWD",
-    "HDCA",
-    "HDIT",
-    "Java",
-    "MRC",
-    "PDDTP",
-];
-
 export const duration = [
     "One Month",
     "Two Months",

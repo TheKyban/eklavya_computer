@@ -73,16 +73,16 @@ const StudentVerificationManagement = ({
     const { mutate } = useMutation({
         mutationFn: async ({
             isVerified,
-            formNumber,
+            registration,
         }: {
             isVerified: boolean;
-            formNumber: string;
+            registration: string;
         }) => {
             const { data } = await axios.put(
                 `/api/student-verification/${user}`,
                 {
                     isVerified,
-                    formNumber,
+                    registration,
                 }
             );
             return data;
@@ -102,7 +102,7 @@ const StudentVerificationManagement = ({
                     registration ? registration : "",
                     type,
                 ],
-                data.student.formNumber
+                data.student.registration
             );
 
             //Add To other list
@@ -255,11 +255,11 @@ const StudentVerificationManagement = ({
                         {!isLoading &&
                             data?.students?.map((student: Student) => (
                                 <TableRow
-                                    key={student.formNumber}
+                                    key={student.registration}
                                     className={poppins.className}
                                 >
                                     <TableCell className="font-medium text-xs md:text-sm">
-                                        {student.formNumber}
+                                        {student.registration}
                                     </TableCell>
                                     <TableCell className="text-xs md:text-sm">
                                         {student.name}
@@ -279,14 +279,14 @@ const StudentVerificationManagement = ({
                                     <TableCell className="text-center">
                                         <Checkbox
                                             defaultChecked={student.isVerified}
-                                            id={student.formNumber}
+                                            id={student.registration}
                                             className="box-content"
                                             onCheckedChange={(value) =>
                                                 mutate({
                                                     isVerified:
                                                         value as boolean,
-                                                    formNumber:
-                                                        student.formNumber,
+                                                    registration:
+                                                        student.registration,
                                                 })
                                             }
                                         />

@@ -30,13 +30,7 @@ import { Loader2, TextCursorInput } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const TypingMarksEntry = ({
-    page,
-    registration,
-}: {
-    registration: string | null;
-    page: string | null;
-}) => {
+const TypingMarksEntry = () => {
     const form = useForm<z.infer<typeof typingSpeedMarkSchema>>({
         resolver: zodResolver(typingSpeedMarkSchema),
         defaultValues: {
@@ -72,7 +66,7 @@ const TypingMarksEntry = ({
 
             removeFormNumber(
                 ["computer-students-mark", true],
-                Number(variables.formNumber)
+                Number(variables.registration)
             );
 
             /**
@@ -125,13 +119,15 @@ const TypingMarksEntry = ({
                                                     {data?.map((student) => (
                                                         <SelectItem
                                                             key={
-                                                                student.formNumber
+                                                                student.registration
                                                             }
                                                             value={
-                                                                student.formNumber
+                                                                student.registration
                                                             }
                                                         >
-                                                            {student.formNumber}
+                                                            {
+                                                                student.registration
+                                                            }
                                                         </SelectItem>
                                                     ))}
                                                 </SelectGroup>

@@ -7,6 +7,7 @@ import { studentSchema } from "@/lib/schema";
 import { z } from "zod";
 import { per_page } from "@/lib/constants";
 import { DELETE_FILE } from "@/lib/cloudinary";
+import { tree } from "next/dist/build/templates/app-page";
 
 /**
  * REGISTER STUDENTS
@@ -19,22 +20,19 @@ export const POST = async (req: Request) => {
 
         const session = await getServerSession(authOptions);
 
-        if (!session?.user) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
-        }
-
-        /**
-         * CHECK FRANCHISE IS ACTIVE OR NOT
-         */
-
-        if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
+        if (
+            !session?.user ||
+            (session?.user.role === role.FRANCHISE && !session?.user?.isActive)
+        ) {
+            return NextResponse.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                {
+                    status: 401,
+                }
+            );
         }
 
         /**
@@ -64,7 +62,7 @@ export const POST = async (req: Request) => {
          */
 
         // form number and branch id should not to be same
-        if (data.formNumber === data.branch) {
+        if (data.registration === data.branch) {
             return NextResponse.json(
                 {
                     message: "Form number must be unique",
@@ -77,7 +75,7 @@ export const POST = async (req: Request) => {
         }
 
         // from number should be followed by branch userId
-        if (!data.formNumber.startsWith(data.branch)) {
+        if (!data.registration.startsWith(data.branch)) {
             return NextResponse.json(
                 {
                     message: "Form number must be follow by branch id",
@@ -91,7 +89,7 @@ export const POST = async (req: Request) => {
 
         const isFormNumberExist = await Prisma.student.findUnique({
             where: {
-                formNumber: data.formNumber,
+                registration: data.registration,
             },
         });
 
@@ -156,7 +154,7 @@ export const POST = async (req: Request) => {
                 qualification: data.qualification,
                 course: data.course,
                 branch: data.branch,
-                formNumber: data.formNumber,
+                registration: data.registration,
                 serialNumber: StudentSerialNumber,
             },
         });
@@ -173,7 +171,12 @@ export const POST = async (req: Request) => {
         );
     } catch (error) {
         console.log("[STUDENT]", error);
-        return NextResponse.json({ message: "INTERNAL ERROR", success: false });
+        return NextResponse.json(
+            { message: "INTERNAL ERROR", success: false },
+            {
+                status: 500,
+            }
+        );
     }
 };
 /**
@@ -187,22 +190,19 @@ export const PUT = async (req: Request) => {
 
         const session = await getServerSession(authOptions);
 
-        if (!session?.user) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
-        }
-
-        /**
-         * CHECK FRANCHISE IS ACTIVE OR NOT
-         */
-
-        if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
+        if (
+            !session?.user ||
+            (session?.user.role === role.FRANCHISE && !session?.user?.isActive)
+        ) {
+            return NextResponse.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                {
+                    status: 401,
+                }
+            );
         }
 
         /**
@@ -216,10 +216,15 @@ export const PUT = async (req: Request) => {
             dor: new Date(data.dor),
         });
         if (!success) {
-            return NextResponse.json({
-                message: "Invalid data",
-                success: false,
-            });
+            return NextResponse.json(
+                {
+                    message: "Invalid data",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         /**
@@ -227,19 +232,29 @@ export const PUT = async (req: Request) => {
          */
 
         // form number and branch id should not to be same
-        if (data.formNumber === data.branch) {
-            return NextResponse.json({
-                message: "Invalid form number",
-                success: false,
-            });
+        if (data.registration === data.branch) {
+            return NextResponse.json(
+                {
+                    message: "Invalid form number",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         // from number should be followed by branch userId
-        if (!data.formNumber.startsWith(data.branch)) {
-            return NextResponse.json({
-                message: "Invalid form number",
-                success: false,
-            });
+        if (!data.registration.startsWith(data.branch)) {
+            return NextResponse.json(
+                {
+                    message: "Invalid form number",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         /**
@@ -248,7 +263,7 @@ export const PUT = async (req: Request) => {
 
         const student = await Prisma.student.update({
             where: {
-                formNumber: data.formNumber,
+                registration: data.registration,
                 branch: data.branch,
             },
             data: {
@@ -270,24 +285,42 @@ export const PUT = async (req: Request) => {
                 qualification: data.qualification,
                 course: data.course,
             },
+            include: {
+                Course: true,
+            },
         });
 
         if (!student) {
-            return NextResponse.json({
-                message: "Invalid details",
-                success: false,
-                student,
-            });
+            return NextResponse.json(
+                {
+                    message: "Invalid details",
+                    success: false,
+                    student,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
-        return NextResponse.json({
-            message: "Student Updated Successfully",
-            success: true,
-            student,
-        });
+        return NextResponse.json(
+            {
+                message: "Student Updated Successfully",
+                success: true,
+                student,
+            },
+            {
+                status: 202,
+            }
+        );
     } catch (error) {
         console.log("[STUDENT UPDATE]", error);
-        return NextResponse.json({ message: "INTERNAL ERROR", success: false });
+        return NextResponse.json(
+            { message: "INTERNAL ERROR", success: false },
+            {
+                status: 500,
+            }
+        );
     }
 };
 
@@ -303,27 +336,25 @@ export const GET = async (req: Request) => {
 
         const session = await getServerSession(authOptions);
 
-        if (!session?.user) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
+        if (
+            !session?.user ||
+            (session?.user.role === role.FRANCHISE && !session?.user?.isActive)
+        ) {
+            return NextResponse.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                {
+                    status: 401,
+                }
+            );
         }
 
-        /**
-         * CHECK FRANCHISE IS ACTIVE OR NOT
-         */
-
-        if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
-        }
         const { searchParams } = new URL(req.url);
         const page = Number(searchParams.get("page")) || 1;
         const pending = !!searchParams.get("pending") ? false : true;
-        const formNumber = searchParams.get("formNumber") || "";
+        const registration = searchParams.get("registration") || "";
 
         /**
          * FINDING STUDENTS
@@ -334,13 +365,16 @@ export const GET = async (req: Request) => {
             skip: per_page * (page - 1),
             where: {
                 branch: session.user.userId,
-                formNumber: {
-                    contains: formNumber,
+                registration: {
+                    contains: registration,
                 },
                 isVerified: pending,
             },
             orderBy: {
                 id: "desc",
+            },
+            include: {
+                Course: true,
             },
         });
 
@@ -351,17 +385,24 @@ export const GET = async (req: Request) => {
         const total = await Prisma.student.count({
             where: {
                 branch: session.user.userId,
-                formNumber: {
-                    contains: formNumber,
+                registration: {
+                    contains: registration,
                 },
                 isVerified: pending,
             },
         });
 
-        return NextResponse.json({ total, students });
+        return NextResponse.json(
+            { total, students },
+            {
+                status: 200,
+            }
+        );
     } catch (error) {
         console.log("[GET STUDENT]", error);
-        return new NextResponse("Internal Error");
+        return new NextResponse("Internal Error", {
+            status: 500,
+        });
     }
 };
 
@@ -377,55 +418,72 @@ export const DELETE = async (req: Request) => {
 
         const session = await getServerSession(authOptions);
 
-        if (!session?.user) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
-        }
-
-        /**
-         * CHECK FRANCHISE IS ACTIVE OR NOT
-         */
-
-        if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
+        if (
+            !session?.user ||
+            (session?.user.role === role.FRANCHISE && !session?.user?.isActive)
+        ) {
+            return NextResponse.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                {
+                    status: 401,
+                }
+            );
         }
 
         const { searchParams } = new URL(req.url);
-        const formNumber = searchParams.get("formNumber");
+        const registration = searchParams.get("registration");
 
-        if (!formNumber) {
-            return NextResponse.json({
-                message: "Required formNumber",
-                success: false,
-            });
+        if (!registration) {
+            return NextResponse.json(
+                {
+                    message: "Required registration",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         const student = await Prisma.student.delete({
             where: {
-                formNumber,
+                registration,
             },
         });
 
         if (!student) {
-            return NextResponse.json({
-                message: "Invalid registration",
-                success: false,
-            });
+            return NextResponse.json(
+                {
+                    message: "Invalid registration",
+                    success: false,
+                },
+                {
+                    status: 400,
+                }
+            );
         }
 
         DELETE_FILE(student.img);
 
-        return NextResponse.json({
-            message: "Student Deleted successfully",
-            success: true,
-        });
+        return NextResponse.json(
+            {
+                message: "Student Deleted successfully",
+                success: true,
+            },
+            {
+                status: 202,
+            }
+        );
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Internal Error" });
+        return NextResponse.json(
+            { message: "Internal Error" },
+            {
+                status: 500,
+            }
+        );
     }
 };

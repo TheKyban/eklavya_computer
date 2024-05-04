@@ -3,6 +3,7 @@ import { courseEditSchema, courseSchema } from "@/lib/schema";
 import { role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { Prisma } from "../../../../../prisma/prisma";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export const POST = async (req: Request) => {
     try {
@@ -272,7 +273,9 @@ export const DELETE = async (req: Request) => {
         console.log("COURSE", err);
         return Response.json(
             {
-                message: "Internal error`",
+                message:
+                    (err as PrismaClientKnownRequestError)?.message ||
+                    "Internal error",
                 success: false,
             },
             {

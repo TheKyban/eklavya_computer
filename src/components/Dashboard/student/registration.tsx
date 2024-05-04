@@ -31,7 +31,6 @@ import { CalendarIcon, GraduationCap, Loader, PlusCircle } from "lucide-react";
 import { studentSchema } from "@/lib/schema";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { Courses, IMAGE_SIZE } from "@/lib/constants";
 import { useSession } from "next-auth/react";
 import {
     Popover,
@@ -45,6 +44,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { states } from "@/lib/stateAndDistrict";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { ImageHandler } from "@/lib/imageHandler";
+import { useCourse } from "@/hooks/useFetch";
 
 const StudentRegistration = () => {
     const currentYear = new Date().getFullYear();
@@ -68,17 +68,14 @@ const StudentRegistration = () => {
             fatherName: "",
             motherName: "",
             dob: new Date(),
-            formNumber: "",
+            registration: "",
             gender: "MALE",
             qualification: "",
         },
     });
 
-    /**
-     * SETTING USER ID
-     */
-
     const { addStudent } = useCustumQuery();
+    const { data: courses, isLoading } = useCourse();
 
     useEffect(() => {
         if (session?.user?.userId) {
@@ -187,7 +184,7 @@ const StudentRegistration = () => {
                         {/* FORM NUMBER */}
                         <FormField
                             control={form.control}
-                            name="formNumber"
+                            name="registration"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Form Number</FormLabel>
@@ -206,6 +203,7 @@ const StudentRegistration = () => {
                                 </FormItem>
                             )}
                         />
+
                         {/* NAME */}
                         <FormField
                             control={form.control}
@@ -223,6 +221,7 @@ const StudentRegistration = () => {
                                 </FormItem>
                             )}
                         />
+
                         {/* FNAME */}
                         <FormField
                             control={form.control}
@@ -240,6 +239,7 @@ const StudentRegistration = () => {
                                 </FormItem>
                             )}
                         />
+
                         {/* MNAME */}
                         <FormField
                             control={form.control}
@@ -368,6 +368,7 @@ const StudentRegistration = () => {
                                 </FormItem>
                             )}
                         />
+
                         {/* Phone */}
                         <FormField
                             control={form.control}
@@ -566,12 +567,17 @@ const StudentRegistration = () => {
                                                     <SelectLabel>
                                                         Courses
                                                     </SelectLabel>
-                                                    {Courses.map((course) => (
+                                                    {isLoading && (
+                                                        <SelectLabel>
+                                                            Loading...
+                                                        </SelectLabel>
+                                                    )}
+                                                    {courses?.map((course) => (
                                                         <SelectItem
-                                                            key={course}
-                                                            value={course}
+                                                            key={course?.id}
+                                                            value={course?.id!}
                                                         >
-                                                            {course}
+                                                            {course?.name}
                                                         </SelectItem>
                                                     ))}
                                                 </SelectGroup>

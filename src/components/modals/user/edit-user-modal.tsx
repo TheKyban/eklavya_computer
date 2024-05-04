@@ -522,7 +522,7 @@ export const UserModal = () => {
                         <div className="flex flex-col gap-3">
                             <Button
                                 variant={"primary"}
-                                disabled={isPending}
+                                disabled={isPending || !form.formState.isDirty}
                                 type="submit"
                             >
                                 {isPending ? (

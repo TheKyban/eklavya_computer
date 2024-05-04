@@ -24,6 +24,7 @@ import { useCustumQuery } from "@/hooks/use-queries";
 import { useStudentMark } from "@/hooks/useFetch";
 import { generalMarksSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Marks } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { FileSpreadsheet, Loader2 } from "lucide-react";
@@ -46,7 +47,11 @@ const GeneralMarksEntry = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: z.infer<typeof generalMarksSchema>) => {
-            const { data } = await axios.post("/api/marks", values);
+            const { data } = await axios.post<{
+                message: string;
+                success: boolean;
+                marks?: Marks;
+            }>("/api/marks", values);
             return data;
         },
         onSuccess: (data, variables) => {
@@ -62,16 +67,15 @@ const GeneralMarksEntry = () => {
              */
             removeFormNumber(
                 ["computer-students-mark", false],
-                Number(variables.formNumber)
+                Number(data?.marks?.studentRegistrationNumber)
             );
 
             /**
              * Adding registration and marks to entered list
              */
-            addMark(
-                ["general-students-entered", "1", "none", false],
-                variables
-            );
+            addMark(["general-students-entered", "1", "none", false], {
+                marks: data?.marks!,
+            });
         },
     });
     return (
@@ -90,7 +94,7 @@ const GeneralMarksEntry = () => {
                         {/* REGISTRATION NUMBER */}
                         <FormField
                             control={form.control}
-                            name="formNumber"
+                            name="registration"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Registration Number</FormLabel>
@@ -116,13 +120,13 @@ const GeneralMarksEntry = () => {
                                                     {data?.map((student) => (
                                                         <SelectItem
                                                             key={
-                                                                student.formNumber
+                                                                student?.registration!
                                                             }
-                                                            value={
-                                                                student.formNumber
-                                                            }
+                                                            value={`${student?.registration}`}
                                                         >
-                                                            {student.formNumber}
+                                                            {
+                                                                student?.registration
+                                                            }
                                                         </SelectItem>
                                                     ))}
                                                 </SelectGroup>

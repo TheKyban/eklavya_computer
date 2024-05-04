@@ -36,17 +36,17 @@ import { CalendarIcon, GraduationCap, Loader } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { studentSchema } from "@/lib/schema";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Calendar } from "../ui/calendar";
-import { Courses, IMAGE_SIZE } from "@/lib/constants";
+import { Calendar } from "../../ui/calendar";
 import { useMutation } from "@tanstack/react-query";
 import { states } from "@/lib/stateAndDistrict";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { ImageHandler } from "@/lib/imageHandler";
 import { useSession } from "next-auth/react";
+import { useCourse } from "@/hooks/useFetch";
 
 export const StudentApplicationModal = () => {
     const { data: session } = useSession();
@@ -56,6 +56,7 @@ export const StudentApplicationModal = () => {
     const { studentApplication, searchParams } = data;
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
+    const { data: courses, isLoading: isCourseLoading } = useCourse();
 
     const form = useForm<z.infer<typeof studentSchema>>({
         resolver: zodResolver(studentSchema),
@@ -68,7 +69,7 @@ export const StudentApplicationModal = () => {
             dor: new Date(),
             email: "",
             fatherName: "",
-            formNumber: "",
+            registration: "",
             gender: "",
             img: "",
             motherName: "",
@@ -248,7 +249,7 @@ export const StudentApplicationModal = () => {
                             {/* FORM NUMBER */}
                             <FormField
                                 control={form.control}
-                                name="formNumber"
+                                name="registration"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Form number</FormLabel>
@@ -639,15 +640,24 @@ export const StudentApplicationModal = () => {
                                                         <SelectLabel>
                                                             Courses
                                                         </SelectLabel>
-                                                        {Courses.map(
+                                                        {isCourseLoading && (
+                                                            <SelectLabel>
+                                                                Loading...
+                                                            </SelectLabel>
+                                                        )}
+                                                        {courses?.map(
                                                             (course) => (
                                                                 <SelectItem
-                                                                    key={course}
+                                                                    key={
+                                                                        course?.id
+                                                                    }
                                                                     value={
-                                                                        course
+                                                                        course?.id!
                                                                     }
                                                                 >
-                                                                    {course}
+                                                                    {
+                                                                        course?.name
+                                                                    }
                                                                 </SelectItem>
                                                             )
                                                         )}

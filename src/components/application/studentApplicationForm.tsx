@@ -30,7 +30,6 @@ import { CalendarIcon, GraduationCap, Loader, PlusCircle } from "lucide-react";
 import { studentAddmissionSchema } from "@/lib/schema";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { Courses } from "@/lib/constants";
 import {
     Popover,
     PopoverContent,
@@ -43,13 +42,14 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { states } from "@/lib/stateAndDistrict";
 import { ImageHandler } from "@/lib/imageHandler";
 import { MAX_WIDTH } from "@/lib/styles";
-import { useBranch } from "@/hooks/useFetch";
+import { useBranch, useCourse } from "@/hooks/useFetch";
 
 const StudentApplicationForm = () => {
     const currentYear = new Date().getFullYear();
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
     const { data, isLoading } = useBranch();
+    const { data: courses, isLoading: isCourseLoading } = useCourse();
 
     const form = useForm<z.infer<typeof studentAddmissionSchema>>({
         resolver: zodResolver(studentAddmissionSchema),
@@ -599,15 +599,24 @@ const StudentApplicationForm = () => {
                                                         <SelectLabel>
                                                             Courses
                                                         </SelectLabel>
-                                                        {Courses.map(
+                                                        {isCourseLoading && (
+                                                            <SelectLabel>
+                                                                Loading...
+                                                            </SelectLabel>
+                                                        )}
+                                                        {courses?.map(
                                                             (course) => (
                                                                 <SelectItem
-                                                                    key={course}
+                                                                    key={
+                                                                        course?.id
+                                                                    }
                                                                     value={
-                                                                        course
+                                                                        course?.id!
                                                                     }
                                                                 >
-                                                                    {course}
+                                                                    {
+                                                                        course?.name
+                                                                    }
                                                                 </SelectItem>
                                                             )
                                                         )}

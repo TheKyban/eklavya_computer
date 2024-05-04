@@ -46,7 +46,7 @@ export const EditGeneralMarks = () => {
 
     useEffect(() => {
         if (generalMarks) {
-            form.setValue("formNumber", generalMarks.formNumber);
+            form.setValue("registration", generalMarks.registration);
             form.setValue("practical", generalMarks.practical);
             form.setValue("written", generalMarks.written);
             form.setValue("viva", generalMarks.viva);
@@ -60,7 +60,7 @@ export const EditGeneralMarks = () => {
             return data;
         },
 
-        onSuccess(data, variables) {
+        onSuccess(data) {
             if (data) {
                 toast({ description: data.message });
             }
@@ -79,7 +79,9 @@ export const EditGeneralMarks = () => {
                     searchParams?.registration || "none",
                     false,
                 ],
-                variables
+                {
+                    marks: data?.marks,
+                }
             );
         },
     });
@@ -99,7 +101,7 @@ export const EditGeneralMarks = () => {
                         {/* REGISTRATION NUMBER */}
                         <FormField
                             control={form.control}
-                            name="formNumber"
+                            name="registration"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Registration Number</FormLabel>

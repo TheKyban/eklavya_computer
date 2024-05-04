@@ -52,10 +52,7 @@ const Marks = () => {
                         <GeneralMarksEntry />
                     </TabsContent>
                     <TabsContent value="typing">
-                        <TypingMarksEntry
-                            page={page}
-                            registration={registration}
-                        />
+                        <TypingMarksEntry />
                     </TabsContent>
                 </Tabs>
                 <Tabs

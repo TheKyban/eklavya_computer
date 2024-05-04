@@ -338,6 +338,7 @@ export const courseSchema = z.object({
         .min(10, { message: "Enter valid course duration" }),
     modules: z.string({ required_error: "Enter course modules." }),
 });
+
 export const courseEditSchema = z.object({
     name: z
         .string({ required_error: "Enter course name." })

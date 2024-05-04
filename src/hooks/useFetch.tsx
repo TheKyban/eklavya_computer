@@ -1,6 +1,6 @@
 "use client";
 import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
-import { Course } from "@prisma/client";
+import { Course, Marks } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { z } from "zod";
@@ -33,7 +33,7 @@ export const useStudents = (
     registration: string
 ) => {
     const url = `/api/student?${pending ? "pending=true&" : ""}page=${page}${
-        !!registration ? "&formNumber=" + registration : ""
+        !!registration ? "&registration=" + registration : ""
     }`;
     return useQuery({
         queryKey: [
@@ -55,7 +55,7 @@ export const useStudentVerification = (
     type: string
 ) => {
     const url = `/api/student-verification/${user}?pending=${type}&page=${page}${
-        !!registration ? "&formNumber=" + registration : ""
+        !!registration ? "&registration=" + registration : ""
     }`;
     return useQuery({
         queryKey: [
@@ -73,7 +73,7 @@ export const useStudentVerification = (
 };
 
 export const useStudentMark = (typing: boolean = false) => {
-    return useQuery<{ formNumber: string }[]>({
+    return useQuery<{ registration: string }[]>({
         queryKey: ["computer-students-mark", typing],
         queryFn: async () => {
             const { data } = await axios(
@@ -89,11 +89,9 @@ export const useStudentMarkEntered = (
     registration: string,
     typing: boolean
 ) => {
-    type studentsWithMarks = z.infer<typeof typingSpeedMarkSchema> &
-        z.infer<typeof generalMarksSchema>;
     return useQuery<{
         total: number;
-        studentsWithMarks: studentsWithMarks[];
+        studentsWithMarks: { marks: Marks }[];
     }>({
         queryKey: [
             "general-students-entered",
@@ -104,7 +102,7 @@ export const useStudentMarkEntered = (
         queryFn: async () => {
             const { data } = await axios(
                 `/api/marks/entered?&page=${page}${
-                    !!registration ? "&formNumber=" + registration : ""
+                    !!registration ? "&registration=" + registration : ""
                 }${typing ? "&computerTyping=true" : ""}`
             );
 
@@ -120,7 +118,7 @@ export const useCertificate = (
 ) => {
     const url = `/api/certificate?${
         pending ? "pending=true&" : ""
-    }page=${page}${!!registration ? "&formNumber=" + registration : ""}`;
+    }page=${page}${!!registration ? "&registration=" + registration : ""}`;
     return useQuery({
         queryKey: [
             pending ? "pending_certificate" : "verified_certificate",
@@ -155,7 +153,7 @@ export const useVerifyCertificate = (
                 `/api/verify/marks?userId=${user}&${
                     course === "computerTyping" ? "computerTyping=true&" : "&"
                 }verified=${type}&page=${page ? page : "1"}${
-                    !!registration ? "&formNumber=" + registration : ""
+                    !!registration ? "&registration=" + registration : ""
                 }`
             );
             return data;

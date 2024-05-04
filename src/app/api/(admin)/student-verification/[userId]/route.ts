@@ -31,7 +31,7 @@ export const GET = async (
 
         const { searchParams } = new URL(req.url);
         const page = Number(searchParams.get("page")) || 1;
-        const formNumber = searchParams.get("formNumber") || "";
+        const registration = searchParams.get("registration") || "";
         const pending = searchParams.get("pending") === "true" ? true : false;
         /**
          * FINDING STUDENTS
@@ -42,8 +42,8 @@ export const GET = async (
             skip: per_page * (page - 1),
             where: {
                 branch: params.userId,
-                formNumber: {
-                    contains: formNumber,
+                registration: {
+                    contains: registration,
                 },
                 isVerified: pending,
             },
@@ -51,7 +51,7 @@ export const GET = async (
                 id: "desc",
             },
             select: {
-                formNumber: true,
+                registration: true,
                 name: true,
                 fatherName: true,
                 motherName: true,
@@ -68,8 +68,8 @@ export const GET = async (
         const total = await Prisma.student.count({
             where: {
                 branch: params.userId,
-                formNumber: {
-                    contains: formNumber,
+                registration: {
+                    contains: registration,
                 },
                 isVerified: pending,
             },
@@ -117,13 +117,13 @@ export const PUT = async (
         const student = await Prisma.student.update({
             where: {
                 branch: params.userId,
-                formNumber: data.formNumber,
+                registration: data.registration,
             },
             data: {
                 isVerified: data.isVerified,
             },
             select: {
-                formNumber: true,
+                registration: true,
                 name: true,
                 fatherName: true,
                 motherName: true,

@@ -34,8 +34,8 @@ export const GET = async (req: Request) => {
 
                 Course: {
                     name: {
-                        startsWith: computerTyping ? "Computer Typing" : "",
-                        not: computerTyping ? "" : "Computer Typing",
+                        startsWith: computerTyping ? "COMPUTER TYPING" : "",
+                        not: computerTyping ? "" : "COMPUTER TYPING",
                     },
                 },
                 marks: {
@@ -105,101 +105,37 @@ export const POST = async (req: Request) => {
          * VALIDATING DATA ACCORDINGLY COURSE
          * COMPUTER TYPING OR OTHER
          */
+        const { success: isTypingMarksValid } =
+            typingSpeedMarkSchema.safeParse(data);
 
-        if (student.Course.name === "computer typing") {
-            const { success } = typingSpeedMarkSchema.safeParse({
-                registration: data.registration,
-                englishTyping: Number(data.englishTyping),
-                hindiTyping: Number(data.hindiTyping),
-            });
+        const { success: isMarksValid } = generalMarksSchema.safeParse(data);
 
-            if (!success) {
-                return Response.json({ message: "Invalid data" });
-            }
-        } else {
-            const { success } = generalMarksSchema.safeParse({
-                registration: data.registration,
-                written: Number(data?.practical),
-                practical: Number(data?.practical),
-                viva: Number(data?.viva),
-                project: Number(data?.project),
-            });
-
-            if (!success) {
-                return Response.json({ message: "Invalid data" });
-            }
+        if (!isTypingMarksValid && !isMarksValid) {
+            return Response.json({ message: "Invalid data" });
         }
 
         /**
          * CREATING MARKS
          */
 
-        // const marks = await Prisma.marks.create({
-        //     data:
-        //         student.Course.name === "computer typing"
-        //             ? {
-        //                   studentRegistrationNumber: data.registration,
-        //                   typingMarks: {
-        //                       hindiTyping: data?.hindiTyping,
-        //                       englishTyping: data?.englishTyping,
-        //                   },
-        //               }
-        //             : {
-        //                   studentRegistrationNumber: data.registration,
-        //                   marks: {
-        //                       practical: data?.practical,
-        //                       viva: data?.viva,
-        //                       written: data?.written,
-        //                       project: data?.project,
-        //                   },
-        //               },
-        //     // select:
-        //     //     student.Course.name === "computer typing"
-        //     //         ? {
-        //     //               typingMarks: true,
-        //     //               branch: true,
-        //     //               registration: true,
-        //     //           }
-        //     //         : {
-        //     //               branch: true,
-        //     //               registration: true,
-        //     //               marks: true,
-        //     //           },
-        // });
-
-        const createdMarks = await Prisma.student.update({
-            where: {
-                registration: data.registration,
-            },
-            data:
-                student.Course.name === "computer typing"
-                    ? {
-                          marks: {
-                              create: {
-                                  typingMarks: {
-                                      hindiTyping: data?.hindiTyping,
-                                      englishTyping: data?.englishTyping,
-                                  },
-                              },
-                          },
-                      }
-                    : {
-                          marks: {
-                              create: {
-                                  marks: {
-                                      practical: data?.practical,
-                                      viva: data?.viva,
-                                      written: data?.written,
-                                      project: data?.project,
-                                  },
-                              },
-                          },
+        const createdMarks = await Prisma.marks.create({
+            data: isTypingMarksValid
+                ? {
+                      studentRegistrationNumber: data.registration,
+                      typingMarks: {
+                          hindiTyping: data?.hindiTyping,
+                          englishTyping: data?.englishTyping,
                       },
-            select: {
-                marks: true,
-                branch: true,
-                registration: true,
-            },
+                  }
+                : {
+                      studentRegistrationNumber: data.registration,
+                      marks: {
+                          practical: data?.practical,
+                          viva: data?.viva,
+                          written: data?.written,
+                          project: data?.project,
+                      },
+                  },
         });
 
         if (!createdMarks) {
@@ -218,7 +154,7 @@ export const POST = async (req: Request) => {
             {
                 message: "Marks registered",
                 success: true,
-                // marks,
+                marks: createdMarks,
             },
             {
                 status: 201,
@@ -277,60 +213,43 @@ export const PUT = async (req: Request) => {
          * COMPUTER TYPING OR OTHER
          */
 
-        if (student.Course.name === "computer typing") {
-            const { success } = typingSpeedMarkSchema.safeParse({
-                registration: data.registration,
-                englishTyping: Number(data.englishTyping),
-                hindiTyping: Number(data.hindiTyping),
-            });
+        const { success: isTypingMarksValid } =
+            typingSpeedMarkSchema.safeParse(data);
 
-            if (!success) {
-                return Response.json({ message: "Invalid data" });
-            }
-        } else {
-            const { success } = generalMarksSchema.safeParse({
-                registration: data.registration,
-                written: Number(data?.practical),
-                practical: Number(data?.practical),
-                viva: Number(data?.viva),
-                project: Number(data?.project),
-            });
+        const { success: isMarksValid } = generalMarksSchema.safeParse(data);
 
-            if (!success) {
-                return Response.json({ message: "Invalid data" });
-            }
+        if (!isTypingMarksValid && !isMarksValid) {
+            return Response.json({ message: "Invalid data" });
         }
-
         /**
          * UPDATE MARKS
          */
-
         const marks = await Prisma.marks.update({
             where: {
                 studentRegistrationNumber: data.registration,
             },
-            data:
-                student.Course.name === "computer typing"
-                    ? {
-                          typingMarks: {
-                              hindiTyping: data?.hindiTyping,
-                              englishTyping: data?.englishTyping,
-                          },
-                      }
-                    : {
-                          marks: {
-                              practical: data?.practical,
-                              viva: data?.viva,
-                              written: data?.written,
-                              project: data?.project,
-                          },
+            data: isTypingMarksValid
+                ? {
+                      typingMarks: {
+                          hindiTyping: data?.hindiTyping,
+                          englishTyping: data?.englishTyping,
                       },
+                  }
+                : {
+                      marks: {
+                          practical: data?.practical,
+                          viva: data?.viva,
+                          written: data?.written,
+                          project: data?.project,
+                      },
+                  },
         });
 
         return Response.json(
             {
                 message: "Marks Updated",
                 success: true,
+                marks,
             },
             {
                 status: 202,
@@ -394,17 +313,6 @@ export const DELETE = async (req: Request) => {
                 }
             );
         }
-
-        await Prisma.student.update({
-            where: {
-                registration,
-            },
-            data: {
-                marks: {
-                    delete: true,
-                },
-            },
-        });
 
         return Response.json(
             {

@@ -64,25 +64,34 @@ const GeneralEntredMarks = ({
                         {/* SHIMMER */}
                         {isLoading && <LoadingCells rows={6} cols={6} />}
                         {!isLoading &&
-                            data?.studentsWithMarks?.map((student) => (
+                            data?.studentsWithMarks?.map((marks) => (
                                 /**
                                  * TABLE ROW
                                  */
                                 <TableRow
-                                    key={student.formNumber}
+                                    key={
+                                        marks?.marks?.studentRegistrationNumber
+                                    }
                                     className={poppins.className}
                                 >
                                     <TableCell className="font-medium">
-                                        {student?.formNumber}
+                                        {
+                                            marks?.marks
+                                                ?.studentRegistrationNumber
+                                        }
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        {student?.written}
+                                        {marks?.marks?.marks?.written}
                                     </TableCell>
-                                    <TableCell>{student?.viva}</TableCell>
+                                    <TableCell>
+                                        {marks?.marks?.marks?.viva}
+                                    </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                        {student?.practical}
+                                        {marks?.marks?.marks?.practical}
                                     </TableCell>
-                                    <TableCell>{student?.project}</TableCell>
+                                    <TableCell>
+                                        {marks?.marks?.marks?.project}
+                                    </TableCell>
                                     <TableCell className="text-right flex gap-2">
                                         {/* EDIT BTN */}
                                         <Button
@@ -90,7 +99,12 @@ const GeneralEntredMarks = ({
                                             size={"sm"}
                                             onClick={() =>
                                                 onOpen("editGeneralMarks", {
-                                                    generalMarks: student,
+                                                    generalMarks: {
+                                                        registration:
+                                                            marks?.marks
+                                                                .studentRegistrationNumber,
+                                                        ...marks?.marks?.marks!,
+                                                    },
                                                     searchParams: {
                                                         page: page ? page : "1",
                                                         registration:
@@ -110,7 +124,12 @@ const GeneralEntredMarks = ({
                                             variant={"outline"}
                                             onClick={() =>
                                                 onOpen("deleteGeneralMarks", {
-                                                    generalMarks: student,
+                                                    generalMarks: {
+                                                        registration:
+                                                            marks?.marks
+                                                                .studentRegistrationNumber,
+                                                        ...marks?.marks?.marks!,
+                                                    },
                                                     searchParams: {
                                                         page: page ? page : "1",
                                                         registration:

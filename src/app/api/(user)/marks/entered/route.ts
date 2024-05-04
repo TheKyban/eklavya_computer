@@ -29,7 +29,7 @@ export const GET = async (req: Request) => {
         const { searchParams } = new URL(req.url);
         const computerTyping =
             Boolean(searchParams.get("computerTyping")) || false;
-        const formNumber = searchParams.get("formNumber") || "";
+        const registration = searchParams.get("registration") || "";
         const page = Number(searchParams.get("page")) || 1;
 
         const studentsWithMarks = await Prisma.student.findMany({
@@ -37,73 +37,36 @@ export const GET = async (req: Request) => {
             skip: per_page * (page - 1),
             where: {
                 branch: session.user.userId,
-                course: {
-                    startsWith: computerTyping ? "Computer Typing" : "",
-                    not: computerTyping ? "" : "Computer Typing",
+                Course: {
+                    name: {
+                        startsWith: computerTyping ? "COMPUTER TYPING" : "",
+                        not: computerTyping ? "" : "COMPUTER TYPING",
+                    },
                 },
-
-                formNumber: {
-                    startsWith: formNumber,
+                registration: {
+                    startsWith: registration,
                 },
-                englishTyping: {
-                    isSet: computerTyping,
-                },
-                hindiTyping: {
-                    isSet: computerTyping,
-                },
-                written: {
-                    isSet: !computerTyping,
-                },
-                viva: {
-                    isSet: !computerTyping,
-                },
-                practical: {
-                    isSet: !computerTyping,
-                },
-                project: {
-                    isSet: !computerTyping,
+                marks: {
+                    isNot: null,
                 },
             },
-            select: {
-                formNumber: true,
-                englishTyping: computerTyping,
-                hindiTyping: computerTyping,
-                written: !computerTyping,
-                viva: !computerTyping,
-                practical: !computerTyping,
-                project: !computerTyping,
+            include: {
+                marks: true,
             },
         });
 
         const total = await Prisma.student.count({
             where: {
                 branch: session.user.userId,
-                course: {
-                    startsWith: computerTyping ? "Computer Typing" : "",
-                    not: computerTyping ? "" : "Computer Typing",
+                Course: {
+                    name: {
+                        startsWith: computerTyping ? "COMPUTER TYPING" : "",
+                        not: computerTyping ? "" : "COMPUTER TYPING",
+                    },
                 },
 
-                formNumber: {
-                    startsWith: formNumber,
-                },
-
-                englishTyping: {
-                    isSet: computerTyping,
-                },
-                hindiTyping: {
-                    isSet: computerTyping,
-                },
-                written: {
-                    isSet: !computerTyping,
-                },
-                viva: {
-                    isSet: !computerTyping,
-                },
-                practical: {
-                    isSet: !computerTyping,
-                },
-                project: {
-                    isSet: !computerTyping,
+                registration: {
+                    startsWith: registration,
                 },
             },
         });

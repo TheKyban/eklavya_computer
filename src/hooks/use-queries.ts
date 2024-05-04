@@ -1,4 +1,5 @@
 import {
+    Marks,
     Student,
     StudentApplication,
     User,
@@ -7,15 +8,7 @@ import {
 import { QueryKey, useQueryClient } from "@tanstack/react-query";
 
 type queryType = { id: string; [key: string]: string };
-interface markType {
-    formNumber?: string;
-    englishTyping?: number;
-    hindiTyping?: number;
-    written?: number;
-    practical?: number;
-    viva?: number;
-    project?: number;
-}
+
 export const useCustumQuery = () => {
     const queryClient = useQueryClient();
 
@@ -97,22 +90,25 @@ export const useCustumQuery = () => {
         );
     };
 
-    const removeFormNumber = (key: QueryKey, formNumber: number) => {
+    const removeFormNumber = (key: QueryKey, registration: number) => {
         queryClient.setQueryData(key, (oldData: queryType[]) => {
             return oldData?.filter(
-                (data) => Number(data?.formNumber) !== formNumber
+                (data) => Number(data?.registration) !== registration
             );
         });
     };
-    const addFormNumber = (key: QueryKey, formNumber: number) => {
+    const addRegistrationNumberToUnMarkedList = (
+        key: QueryKey,
+        registration: number
+    ) => {
         queryClient.setQueryData(key, (oldData: queryType[]) => {
-            return [{ formNumber }, ...oldData];
+            return [{ registration }, ...oldData];
         });
     };
-    const addMark = (key: QueryKey, data: markType) => {
+    const addMark = (key: QueryKey, data: { marks: Marks }) => {
         queryClient.setQueryData(
             key,
-            (oldData: { total: number; studentsWithMarks: markType[] }) => {
+            (oldData: { total: number; studentsWithMarks: Marks[] }) => {
                 return {
                     total: oldData.total + 1,
                     studentsWithMarks: [data, ...oldData?.studentsWithMarks],
@@ -120,12 +116,16 @@ export const useCustumQuery = () => {
             }
         );
     };
-    const removeMark = (key: QueryKey, formNumber: string) => {
+    const removeMark = (key: QueryKey, registration: string) => {
         queryClient.setQueryData(
             key,
-            (oldData: { total: number; studentsWithMarks: markType[] }) => {
+            (oldData: {
+                total: number;
+                studentsWithMarks: { marks: Marks }[];
+            }) => {
                 const marks = oldData?.studentsWithMarks.filter(
-                    (mark) => mark?.formNumber !== formNumber
+                    (mark) =>
+                        mark?.marks?.studentRegistrationNumber !== registration
                 );
                 return {
                     total: oldData?.total - 1,
@@ -134,12 +134,18 @@ export const useCustumQuery = () => {
             }
         );
     };
-    const updateMark = (key: QueryKey, data: markType) => {
+    const updateMark = (key: QueryKey, data: { marks: Marks }) => {
         queryClient.setQueryData(
             key,
-            (oldData: { total: number; studentsWithMarks: markType[] }) => {
+            (oldData: {
+                total: number;
+                studentsWithMarks: { marks: Marks }[];
+            }) => {
                 const marks = oldData?.studentsWithMarks?.map((mark) =>
-                    mark.formNumber === data?.formNumber ? data : mark
+                    mark?.marks.studentRegistrationNumber ===
+                    data?.marks?.studentRegistrationNumber
+                        ? data
+                        : mark
                 );
                 return {
                     total: oldData?.total,
@@ -196,7 +202,7 @@ export const useCustumQuery = () => {
         addStudent,
         updateStudent,
         removeFormNumber,
-        addFormNumber,
+        addRegistrationNumberToUnMarkedList,
         addMark,
         removeMark,
         updateMark,
