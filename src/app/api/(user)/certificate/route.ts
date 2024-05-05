@@ -28,7 +28,7 @@ export const GET = async (req: Request) => {
         const { searchParams } = new URL(req.url);
         const page = Number(searchParams.get("page")) || 1;
         const pending = !!searchParams.get("pending") ? false : true;
-        const formNumber = searchParams.get("formNumber") || "";
+        const registration = searchParams.get("registration") || "";
 
         /**
          * FINDING CERTIFICATES
@@ -39,13 +39,16 @@ export const GET = async (req: Request) => {
             skip: per_page * (page - 1),
             where: {
                 branch: session.user.userId,
-                formNumber: {
-                    contains: formNumber,
+                registration: {
+                    contains: registration,
                 },
                 certificate: pending,
             },
             orderBy: {
                 id: "desc",
+            },
+            include: {
+                Course: true,
             },
         });
 
@@ -56,8 +59,8 @@ export const GET = async (req: Request) => {
         const total = await Prisma.student.count({
             where: {
                 branch: session.user.userId,
-                formNumber: {
-                    contains: formNumber,
+                registration: {
+                    contains: registration,
                 },
                 certificate: pending,
             },

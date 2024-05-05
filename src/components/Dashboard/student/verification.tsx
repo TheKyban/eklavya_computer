@@ -25,7 +25,7 @@ import { useCustumQuery } from "@/hooks/use-queries";
 import { useStudentVerification, useUsers } from "@/hooks/useFetch";
 import { per_page } from "@/lib/constants";
 import { poppins } from "@/lib/fonts";
-import { Student, role } from "@prisma/client";
+import { Course, Student, role } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { format } from "date-fns";
@@ -191,10 +191,10 @@ const StudentVerificationManagement = ({
                                     (user: userType) =>
                                         user.role === "FRANCHISE" && (
                                             <SelectItem
-                                                key={user.userId}
-                                                value={user.userId}
+                                                key={user?.userId}
+                                                value={user?.userId}
                                             >
-                                                {user.userId}
+                                                {user?.userId}
                                             </SelectItem>
                                         )
                                 )}
@@ -220,8 +220,8 @@ const StudentVerificationManagement = ({
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>courses</SelectLabel>
-                                <SelectItem value="true">Verified</SelectItem>
-                                <SelectItem value="false">Pending</SelectItem>
+                                <SelectItem value="true">VERIFIED</SelectItem>
+                                <SelectItem value="false">PENDING</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -253,46 +253,53 @@ const StudentVerificationManagement = ({
                         {isLoading && <LoadingCells cols={7} />}
 
                         {!isLoading &&
-                            data?.students?.map((student: Student) => (
-                                <TableRow
-                                    key={student.registration}
-                                    className={poppins.className}
-                                >
-                                    <TableCell className="font-medium text-xs md:text-sm">
-                                        {student.registration}
-                                    </TableCell>
-                                    <TableCell className="text-xs md:text-sm">
-                                        {student.name}
-                                    </TableCell>
-                                    <TableCell className="hidden md:table-cell text-xs md:text-sm">
-                                        {student.fatherName}
-                                    </TableCell>
-                                    <TableCell className="hidden xl:table-cell text-xs md:text-sm">
-                                        {student.motherName}
-                                    </TableCell>
-                                    <TableCell className="hidden sm:table-cell text-xs md:text-sm">
-                                        {format(new Date(student.dor), "PP")}
-                                    </TableCell>
-                                    <TableCell className="text-xs md:text-sm">
-                                        {student.course}
-                                    </TableCell>
-                                    <TableCell className="text-center">
-                                        <Checkbox
-                                            defaultChecked={student.isVerified}
-                                            id={student.registration}
-                                            className="box-content"
-                                            onCheckedChange={(value) =>
-                                                mutate({
-                                                    isVerified:
-                                                        value as boolean,
-                                                    registration:
-                                                        student.registration,
-                                                })
-                                            }
-                                        />
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                            data?.students?.map(
+                                (student: Student & { Course: Course }) => (
+                                    <TableRow
+                                        key={student?.registration}
+                                        className={poppins.className}
+                                    >
+                                        <TableCell className="font-medium text-xs md:text-sm">
+                                            {student?.registration}
+                                        </TableCell>
+                                        <TableCell className="text-xs md:text-sm">
+                                            {student?.name}
+                                        </TableCell>
+                                        <TableCell className="hidden md:table-cell text-xs md:text-sm">
+                                            {student?.fatherName}
+                                        </TableCell>
+                                        <TableCell className="hidden xl:table-cell text-xs md:text-sm">
+                                            {student?.motherName}
+                                        </TableCell>
+                                        <TableCell className="hidden sm:table-cell text-xs md:text-sm">
+                                            {format(
+                                                new Date(student?.dor),
+                                                "PP"
+                                            )}
+                                        </TableCell>
+                                        <TableCell className="text-xs md:text-sm">
+                                            {student?.Course?.name}
+                                        </TableCell>
+                                        <TableCell className="text-center">
+                                            <Checkbox
+                                                defaultChecked={
+                                                    student?.isVerified
+                                                }
+                                                id={student?.registration}
+                                                className="box-content"
+                                                onCheckedChange={(value) =>
+                                                    mutate({
+                                                        isVerified:
+                                                            value as boolean,
+                                                        registration:
+                                                            student?.registration,
+                                                    })
+                                                }
+                                            />
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            )}
                     </TableBody>
                 </Table>
                 {data?.total > per_page && (

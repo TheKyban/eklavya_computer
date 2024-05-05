@@ -1,5 +1,5 @@
 "use client";
-import { Student } from "@prisma/client";
+import { Course, Marks, Student } from "@prisma/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
@@ -12,7 +12,14 @@ import { MAX_WIDTH } from "@/lib/styles";
 const Registration = () => {
     const [registration, setRegistration] = useState("");
     const [data, setData] = useState<{
-        student: Student & { branchName: string };
+        student: Student & {
+            Course: Course;
+            Branch: {
+                branch: string;
+                userId: string;
+            };
+            marks?: Marks;
+        };
     }>();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -31,7 +38,7 @@ const Registration = () => {
             if (!!data?.message) {
                 toast({ description: (data.message as string).toUpperCase() });
             }
-            setData(data);
+            setData({ student: data?.student! });
         } catch (error) {
             console.log(error);
         } finally {
@@ -97,7 +104,7 @@ const Registration = () => {
                                             Branch Name
                                         </TableCell>
                                         <TableCell className="capitalize">
-                                            {data?.student?.branchName}
+                                            {data?.student?.Branch?.branch}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>

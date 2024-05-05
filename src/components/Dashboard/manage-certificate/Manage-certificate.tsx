@@ -34,7 +34,7 @@ import { FC, useEffect, useState } from "react";
 interface pageProps {}
 
 interface student {
-    formNumber: string;
+    registration: string;
     name: string;
     course: string;
     written: string;
@@ -52,7 +52,7 @@ interface userType {
 }
 
 interface updateType {
-    formNumber: string;
+    registration: string;
     verified: boolean;
     userId: string;
     course: string;
@@ -99,7 +99,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
     const { mutate } = useMutation({
         mutationKey: ["mutateMarksVerification"],
         mutationFn: async ({
-            formNumber,
+            registration,
             verified,
             course,
             userId,
@@ -108,7 +108,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                 return;
             }
             const { data } = await axios.put(`/api/verify/marks`, {
-                formNumber,
+                registration,
                 verified,
                 course,
                 userId,
@@ -131,7 +131,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                     course,
                     type,
                 ],
-                data?.student?.formNumber
+                data?.student?.registration
             );
 
             //Add To other type
@@ -247,9 +247,9 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>courses</SelectLabel>
-                                <SelectItem value="other">Others</SelectItem>
+                                <SelectItem value="other">OTHERS</SelectItem>
                                 <SelectItem value="computerTyping">
-                                    Computer Typing
+                                    TYPING
                                 </SelectItem>
                             </SelectGroup>
                         </SelectContent>
@@ -272,8 +272,8 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>courses</SelectLabel>
-                                <SelectItem value="true">Verified</SelectItem>
-                                <SelectItem value="false">Pending</SelectItem>
+                                <SelectItem value="true">VERIFIED</SelectItem>
+                                <SelectItem value="false">PENDING</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -284,7 +284,8 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                 {/* TABLE HEADER */}
                 <TableHeader>
                     <TableRow>
-                        {fetchStudents?.studentsWithMarks?.[0]?.formNumber && (
+                        {fetchStudents?.studentsWithMarks?.[0]
+                            ?.registration && (
                             <TableHead>Registration No.</TableHead>
                         )}
                         {fetchStudents?.studentsWithMarks?.[0]?.name && (
@@ -293,23 +294,24 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                         {fetchStudents?.studentsWithMarks?.[0]?.course && (
                             <TableHead>Course</TableHead>
                         )}
-                        {fetchStudents?.studentsWithMarks?.[0]?.written && (
-                            <TableHead>Written</TableHead>
-                        )}
-                        {fetchStudents?.studentsWithMarks?.[0]?.viva && (
+                        {fetchStudents?.studentsWithMarks?.[0]?.marks?.marks
+                            ?.written && <TableHead>Written</TableHead>}
+                        {fetchStudents?.studentsWithMarks?.[0]?.marks?.marks
+                            ?.viva && (
                             <TableHead className="hidden md:table-cell">
                                 Viva
                             </TableHead>
                         )}
-                        {fetchStudents?.studentsWithMarks?.[0]?.practical && (
-                            <TableHead>Practical</TableHead>
+                        {fetchStudents?.studentsWithMarks?.[0]?.marks?.marks
+                            ?.practical && <TableHead>Practical</TableHead>}
+                        {fetchStudents?.studentsWithMarks?.[0]?.marks?.marks
+                            ?.project && <TableHead>Projects</TableHead>}
+                        {fetchStudents?.studentsWithMarks?.[0]?.marks
+                            ?.typingMarks?.englishTyping && (
+                            <TableHead>English</TableHead>
                         )}
-                        {fetchStudents?.studentsWithMarks?.[0]?.project && (
-                            <TableHead>Projects</TableHead>
-                        )}
-                        {fetchStudents?.studentsWithMarks?.[0]
-                            ?.englishTyping && <TableHead>English</TableHead>}
-                        {fetchStudents?.studentsWithMarks?.[0]?.hindiTyping && (
+                        {fetchStudents?.studentsWithMarks?.[0]?.marks
+                            ?.typingMarks?.hindiTyping && (
                             <TableHead>Hindi</TableHead>
                         )}
                         {fetchStudents?.studentsWithMarks?.[0] && (
@@ -324,81 +326,89 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                     {/* SHIMMER */}
                     {isLoading && <LoadingCells rows={6} cols={6} />}
                     {!isLoading &&
-                        fetchStudents?.studentsWithMarks?.map(
-                            (student: student) => (
-                                /**
-                                 * TABLE ROW
-                                 */
-                                <TableRow
-                                    key={student.formNumber}
-                                    className={poppins.className}
-                                >
-                                    {student?.formNumber && (
-                                        <TableCell className="font-medium">
-                                            {student.formNumber}
-                                        </TableCell>
-                                    )}
-
-                                    {student?.name && (
-                                        <TableCell className="font-medium">
-                                            {student.name}
-                                        </TableCell>
-                                    )}
-
-                                    {student?.course && (
-                                        <TableCell className="font-medium">
-                                            {student.course}
-                                        </TableCell>
-                                    )}
-
-                                    {student?.written && (
-                                        <TableCell className="font-medium">
-                                            {student.written}
-                                        </TableCell>
-                                    )}
-
-                                    {student?.viva && (
-                                        <TableCell>{student.viva}</TableCell>
-                                    )}
-
-                                    {student?.practical && (
-                                        <TableCell className="hidden md:table-cell">
-                                            {student.practical}
-                                        </TableCell>
-                                    )}
-
-                                    {student?.project && (
-                                        <TableCell>{student.project}</TableCell>
-                                    )}
-
-                                    {student?.englishTyping && (
-                                        <TableCell>
-                                            {student.englishTyping}
-                                        </TableCell>
-                                    )}
-                                    {student?.hindiTyping && (
-                                        <TableCell>
-                                            {student.hindiTyping}
-                                        </TableCell>
-                                    )}
-                                    <TableCell className="text-center">
-                                        <Checkbox
-                                            className="box-content"
-                                            defaultChecked={student.certificate}
-                                            onCheckedChange={(value) =>
-                                                mutate({
-                                                    formNumber:
-                                                        student.formNumber,
-                                                    course: student.course,
-                                                    userId: user as string,
-                                                    verified: value as boolean,
-                                                })
-                                            }
-                                        />
+                        fetchStudents?.studentsWithMarks?.map((student) => (
+                            /**
+                             * TABLE ROW
+                             */
+                            <TableRow
+                                key={student.registration}
+                                className={poppins.className}
+                            >
+                                {student?.registration && (
+                                    <TableCell className="font-medium">
+                                        {student?.registration}
                                     </TableCell>
-                                </TableRow>
-                            )
-                        )}
+                                )}
+
+                                {student?.name && (
+                                    <TableCell className="font-medium">
+                                        {student?.name}
+                                    </TableCell>
+                                )}
+
+                                {student?.course && (
+                                    <TableCell className="font-medium">
+                                        {student?.Course?.name}
+                                    </TableCell>
+                                )}
+
+                                {student?.marks?.marks?.written && (
+                                    <TableCell className="font-medium">
+                                        {student?.marks?.marks?.written}
+                                    </TableCell>
+                                )}
+
+                                {student?.marks?.marks?.viva && (
+                                    <TableCell>
+                                        {student?.marks?.marks?.viva}
+                                    </TableCell>
+                                )}
+
+                                {student?.marks?.marks?.practical && (
+                                    <TableCell className="hidden md:table-cell">
+                                        {student?.marks?.marks?.practical}
+                                    </TableCell>
+                                )}
+
+                                {student?.marks?.marks?.project && (
+                                    <TableCell>
+                                        {student?.marks?.marks?.project}
+                                    </TableCell>
+                                )}
+
+                                {student?.marks?.typingMarks?.englishTyping && (
+                                    <TableCell>
+                                        {
+                                            student?.marks?.typingMarks
+                                                ?.englishTyping
+                                        }
+                                    </TableCell>
+                                )}
+                                {student?.marks?.typingMarks?.hindiTyping && (
+                                    <TableCell>
+                                        {
+                                            student?.marks?.typingMarks
+                                                ?.hindiTyping
+                                        }
+                                    </TableCell>
+                                )}
+                                <TableCell className="text-center">
+                                    <Checkbox
+                                        className="box-content"
+                                        defaultChecked={student.certificate}
+                                        onCheckedChange={(value) =>
+                                            mutate({
+                                                registration:
+                                                    student.registration,
+                                                course: student.course,
+                                                userId: user as string,
+                                                verified: value as boolean,
+                                            })
+                                        }
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
         </div>

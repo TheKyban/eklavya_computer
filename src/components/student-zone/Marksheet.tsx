@@ -28,22 +28,12 @@ const MarkSheet = () => {
                 toast({ description: (data.message as string).toUpperCase() });
             }
 
-            if (
-                data?.student?.course === "Computer Typing" ||
-                (data?.student?.course !== "Computer Typing" &&
-                    (!data?.student?.viva ||
-                        !data?.student?.written ||
-                        !data?.student?.project ||
-                        !data?.student?.practical))
-            ) {
+            if (data?.student?.Course?.name === "COMPUTER TYPING") {
                 toast({ description: "NOT GENERATED" });
                 return;
             } else if (
-                data?.student?.course !== "Computer Typing" &&
-                !!data?.student?.viva &&
-                !!data?.student?.written &&
-                !!data?.student?.project &&
-                !!data?.student?.practical
+                data?.student?.course !== "COMPUTER TYPING" &&
+                !!data?.student?.marks?.marks
             ) {
                 setStudent(true);
                 const canvas = ref.current!;
@@ -66,13 +56,13 @@ const MarkSheet = () => {
                         const createQR = new Promise((resolve) => {
                             qrcode.toDataURL(
                                 `${{
-                                    name: student.name,
-                                    registration: student.formNumber,
-                                    father: student.fatherName,
-                                    mother: student.motherName,
-                                    course: student.course,
-                                    branch: student.branch,
-                                    branchName: student?.branchName,
+                                    name: student?.name!,
+                                    registration: student?.registration,
+                                    father: student?.fatherName,
+                                    mother: student?.motherName,
+                                    course: student?.Course?.name,
+                                    branch: student?.branch,
+                                    branchName: student?.Branch?.userId,
                                 }}`,
                                 {
                                     width: 80,
@@ -97,24 +87,24 @@ const MarkSheet = () => {
 
                     // candidate details
                     ctx!.font = "bold 20px Arial";
-                    ctx?.fillText(`EUPL/${student.serialNumber}`, 180, 268); // serial number
-                    ctx?.fillText(`${student.formNumber}`, 880, 268); // serial number
+                    ctx?.fillText(`EUPL/${student?.serialNumber}`, 180, 268); // serial number
+                    ctx?.fillText(`${student?.registration}`, 880, 268); // serial number
 
                     ctx!.font = "bold 24px Arial";
-                    ctx?.fillText(student.name, 380, 410); // name
-                    ctx?.fillText(student.motherName, 380, 450); // Mname
-                    ctx?.fillText(student.fatherName, 380, 490); // fname
-                    ctx?.fillText(student.course, 380, 530); // course
-                    ctx?.fillText("6 months", 380, 570); // duration
-                    ctx?.fillText(student.branchName, 380, 610); // branch
-                    ctx?.fillText(student.branch, 380, 650); // branch
+                    ctx?.fillText(student?.name!, 380, 410); // name
+                    ctx?.fillText(student?.motherName!, 380, 450); // Mname
+                    ctx?.fillText(student?.fatherName!, 380, 490); // fname
+                    ctx?.fillText(student?.Course?.name!, 380, 530); // course
+                    ctx?.fillText(student?.Course?.duration!, 380, 570); // duration
+                    ctx?.fillText(student?.Branch?.branch!, 380, 610); // branch
+                    ctx?.fillText(student?.Branch?.userId!, 380, 650); // branch code
 
                     const studentStats = new StudentStats(
                         [
-                            student.written!,
-                            student.practical!,
-                            student.project!,
-                            student.viva!,
+                            student?.marks?.marks?.written!,
+                            student?.marks?.marks?.practical!,
+                            student?.marks?.marks?.project!,
+                            student?.marks?.marks?.viva!,
                         ],
                         400
                     );
@@ -132,10 +122,26 @@ const MarkSheet = () => {
                     ctx?.fillText("40", 610, 1130); // viva
 
                     // marks
-                    ctx?.fillText(student?.written?.toString()!, 830, 1003); // written
-                    ctx?.fillText(student?.practical?.toString()!, 830, 1043); // practical
-                    ctx?.fillText(student?.project?.toString()!, 830, 1090); // project
-                    ctx?.fillText(student?.viva?.toString()!, 830, 1130); // viva
+                    ctx?.fillText(
+                        student?.marks?.marks?.written!?.toString()!,
+                        830,
+                        1003
+                    ); // written
+                    ctx?.fillText(
+                        student?.marks?.marks?.practical!?.toString()!,
+                        830,
+                        1043
+                    ); // practical
+                    ctx?.fillText(
+                        student?.marks?.marks?.project!?.toString()!,
+                        830,
+                        1090
+                    ); // project
+                    ctx?.fillText(
+                        student?.marks?.marks?.viva!?.toString()!,
+                        830,
+                        1130
+                    ); // viva
 
                     // stats
                     ctx?.fillText(

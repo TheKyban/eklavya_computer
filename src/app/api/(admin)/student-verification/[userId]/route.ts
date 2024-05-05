@@ -50,14 +50,8 @@ export const GET = async (
             orderBy: {
                 id: "desc",
             },
-            select: {
-                registration: true,
-                name: true,
-                fatherName: true,
-                motherName: true,
-                course: true,
-                isVerified: true,
-                dor: true,
+            include: {
+                Course: true,
             },
         });
 
@@ -122,14 +116,8 @@ export const PUT = async (
             data: {
                 isVerified: data.isVerified,
             },
-            select: {
-                registration: true,
-                name: true,
-                fatherName: true,
-                motherName: true,
-                course: true,
-                isVerified: true,
-                dor: true,
+            include: {
+                Course: true,
             },
         });
 

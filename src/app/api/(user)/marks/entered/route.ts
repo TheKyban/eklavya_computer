@@ -64,9 +64,11 @@ export const GET = async (req: Request) => {
                         not: computerTyping ? "" : "COMPUTER TYPING",
                     },
                 },
-
                 registration: {
                     startsWith: registration,
+                },
+                marks: {
+                    isNot: null,
                 },
             },
         });

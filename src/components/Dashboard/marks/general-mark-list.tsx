@@ -92,7 +92,7 @@ const GeneralEntredMarks = ({
                                     <TableCell>
                                         {marks?.marks?.marks?.project}
                                     </TableCell>
-                                    <TableCell className="text-right flex gap-2">
+                                    <TableCell className="text-right flex justify-end gap-2">
                                         {/* EDIT BTN */}
                                         <Button
                                             variant={"outline"}

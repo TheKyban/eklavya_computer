@@ -72,7 +72,7 @@ export const POST = async (req: Request) => {
          */
 
         // form number and branch id should not to be same
-        if (data.formNumber === data.branch) {
+        if (data.registration === data.branch) {
             return Response.json(
                 {
                     message: "Form number must be unique",
@@ -85,7 +85,7 @@ export const POST = async (req: Request) => {
         }
 
         // from number should be followed by branch userId
-        if (!data.formNumber.startsWith(data.branch)) {
+        if (!data.registration.startsWith(data.branch)) {
             return Response.json(
                 {
                     message: "Form number must be follow by branch id",
@@ -99,7 +99,7 @@ export const POST = async (req: Request) => {
 
         const isFormNumberExist = await Prisma.student.findUnique({
             where: {
-                formNumber: data.formNumber,
+                registration: data.registration,
             },
         });
 
@@ -164,7 +164,7 @@ export const POST = async (req: Request) => {
                 qualification: data.qualification,
                 course: data.course,
                 branch: data.branch,
-                formNumber: data.formNumber,
+                registration: data.registration,
                 serialNumber: StudentSerialNumber,
             },
         });

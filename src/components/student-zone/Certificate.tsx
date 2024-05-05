@@ -28,7 +28,7 @@ const Certificate = () => {
                 toast({ description: (data.message as string).toUpperCase() });
             }
 
-            if (!data?.student.certificate) {
+            if (!data?.student?.certificate) {
                 toast({ description: "NOT GENERATED" });
                 return;
             } else {
@@ -50,8 +50,8 @@ const Certificate = () => {
                     ctx!.font = "bold 32px Arial";
                     ctx?.fillText(student.name, 600, 500); // name
                     ctx?.fillText(student.fatherName, 400, 560); // fname
-                    ctx?.fillText(student.course, 700, 630); // course
-                    ctx?.fillText(student.branchName, 550, 690); // branch
+                    ctx?.fillText(student?.Course?.name, 700, 630); // course
+                    ctx?.fillText(student?.Branch?.branch, 550, 690); // branch
                     ctx?.fillText(student.branch, 350, 750); // branch code
                     ctx?.fillText("6 months", 750, 750); // duration
                     ctx?.fillText("Jan 2023", 1150, 750); // completed date
@@ -65,7 +65,7 @@ const Certificate = () => {
                     ); // date of creation
 
                     ctx?.fillText(`EUPL/${student.serialNumber}`, 1350, 185); // serial number
-                    ctx?.fillText(student.formNumber, 1350, 265); // registration number
+                    ctx?.fillText(student.registration, 1350, 265); // registration number
 
                     // qr
                     const CreateQR = async () => {
@@ -73,12 +73,12 @@ const Certificate = () => {
                             qrcode.toDataURL(
                                 `${{
                                     name: student.name,
-                                    registration: student.formNumber,
+                                    registration: student.registration,
                                     father: student.fatherName,
                                     mother: student.motherName,
                                     course: student.course,
                                     branch: student.branch,
-                                    branchName: student?.branchName,
+                                    branchName: student?.Course?.name,
                                 }}`,
                                 {
                                     width: 80,
@@ -145,7 +145,10 @@ const Certificate = () => {
             )}
 
             <div className="w-full overflow-x-auto">
-                <canvas ref={ref} className="mx-auto max-w-2xl max-h-fit"></canvas>
+                <canvas
+                    ref={ref}
+                    className="mx-auto max-w-2xl max-h-fit"
+                ></canvas>
             </div>
         </div>
     );

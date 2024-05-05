@@ -1,4 +1,4 @@
-import { Student } from "@prisma/client";
+import { Course, Marks, Student } from "@prisma/client";
 import axios from "axios";
 import { UserType, details } from "./types";
 import { Prisma } from "../../prisma/prisma";
@@ -13,9 +13,14 @@ import {
 
 export const fetchStuddent = async (registration: string) => {
     const { data } = await axios.get<{
-        message: string;
-        student: Student & {
-            branchName: string;
+        message?: string;
+        student?: Student & {
+            Course: Course;
+            Branch: {
+                branch: string;
+                userId: string;
+            };
+            marks?: Marks;
         };
     }>(`/api/student/${registration}`);
 

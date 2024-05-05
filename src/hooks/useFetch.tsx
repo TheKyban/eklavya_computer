@@ -1,6 +1,6 @@
 "use client";
 import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
-import { Course, Marks } from "@prisma/client";
+import { Course, Marks, Student } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { z } from "zod";
@@ -132,6 +132,7 @@ export const useCertificate = (
     });
 };
 
+type studentsWithMarks = Student & { Course: Course; marks: Marks };
 export const useVerifyCertificate = (
     registration: string,
     page: string,
@@ -139,7 +140,10 @@ export const useVerifyCertificate = (
     course: string,
     type: string
 ) => {
-    return useQuery({
+    return useQuery<{
+        studentsWithMarks: studentsWithMarks[];
+        total: number;
+    }>({
         queryKey: [
             "students",
             registration || "none",

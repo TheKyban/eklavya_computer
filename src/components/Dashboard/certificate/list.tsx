@@ -10,7 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { poppins } from "@/lib/fonts";
-import { Student } from "@prisma/client";
+import { Course, Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Eye, UserRoundCheck } from "lucide-react";
 import { LoadingCells } from "@/components/loading/loading";
@@ -78,58 +78,63 @@ const CertificateList = ({
                     <TableBody>
                         {isLoading && <LoadingCells cols={7} />}
                         {!isLoading &&
-                            data?.certificates?.map((student: Student) => (
-                                <TableRow
-                                    key={student.formNumber}
-                                    className={poppins.className}
-                                >
-                                    <TableCell className="font-medium text-xs md:text-sm">
-                                        {student.formNumber}
-                                    </TableCell>
-                                    <TableCell className="text-xs md:text-sm">
-                                        {student.name}
-                                    </TableCell>
-                                    <TableCell className="hidden md:table-cell text-xs md:text-sm">
-                                        {student.fatherName}
-                                    </TableCell>
-                                    <TableCell className="hidden xl:table-cell text-xs md:text-sm">
-                                        {student.motherName}
-                                    </TableCell>
-                                    <TableCell className="hidden sm:table-cell text-xs md:text-sm">
-                                        {format(new Date(student.dor), "PP")}
-                                    </TableCell>
-                                    <TableCell className="text-xs md:text-sm">
-                                        {student.course}
-                                    </TableCell>
-                                    <TableCell className="text-left sm:text-right text-xs md:text-sm">
-                                        {/* EDIT BTN */}
-                                        <Button
-                                            variant={"outline"}
-                                            onClick={() =>
-                                                onOpen("editStudent", {
-                                                    student,
-                                                    searchParams: {
-                                                        type: searchParams?.pending
-                                                            ? "pending_certificate"
-                                                            : "verified_certificate",
+                            data?.certificates?.map(
+                                (student: Student & { Course: Course }) => (
+                                    <TableRow
+                                        key={student?.registration}
+                                        className={poppins.className}
+                                    >
+                                        <TableCell className="font-medium text-xs md:text-sm">
+                                            {student?.registration}
+                                        </TableCell>
+                                        <TableCell className="text-xs md:text-sm">
+                                            {student?.name}
+                                        </TableCell>
+                                        <TableCell className="hidden md:table-cell text-xs md:text-sm">
+                                            {student?.fatherName}
+                                        </TableCell>
+                                        <TableCell className="hidden xl:table-cell text-xs md:text-sm">
+                                            {student?.motherName}
+                                        </TableCell>
+                                        <TableCell className="hidden sm:table-cell text-xs md:text-sm">
+                                            {format(
+                                                new Date(student?.dor),
+                                                "PP"
+                                            )}
+                                        </TableCell>
+                                        <TableCell className="text-xs md:text-sm">
+                                            {student?.Course?.name}
+                                        </TableCell>
+                                        <TableCell className="text-left sm:text-right text-xs md:text-sm">
+                                            {/* EDIT BTN */}
+                                            <Button
+                                                variant={"outline"}
+                                                onClick={() =>
+                                                    onOpen("editStudent", {
+                                                        student,
+                                                        searchParams: {
+                                                            type: searchParams?.pending
+                                                                ? "pending_certificate"
+                                                                : "verified_certificate",
 
-                                                        page:
-                                                            searchParams.page ||
-                                                            "1",
-                                                        registration:
-                                                            searchParams.registration
-                                                                ? searchParams.registration
-                                                                : "none",
-                                                    },
-                                                })
-                                            }
-                                            className="px-2 py-0"
-                                        >
-                                            <Eye className="w-5 h-5" />
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                                                            page:
+                                                                searchParams.page ||
+                                                                "1",
+                                                            registration:
+                                                                searchParams.registration
+                                                                    ? searchParams.registration
+                                                                    : "none",
+                                                        },
+                                                    })
+                                                }
+                                                className="px-2 py-0"
+                                            >
+                                                <Eye className="w-5 h-5" />
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            )}
                     </TableBody>
                 </Table>
                 {/* PAGINATION */}

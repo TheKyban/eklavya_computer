@@ -26,9 +26,8 @@ export const GET = async (req: Request) => {
             });
         }
         const { searchParams } = new URL(req.url);
-        const computerTyping =
-            Boolean(searchParams.get("computerTyping")) || false;
-        const formNumber = searchParams.get("formNumber") || "";
+        const computerTyping = !!searchParams.get("computerTyping") || false;
+        const registration = searchParams.get("registration") || "";
         const page = Number(searchParams.get("page")) || 1;
         const userId = searchParams.get("userId");
         const verified = searchParams.get("verified") === "true" ? true : false;
@@ -37,6 +36,7 @@ export const GET = async (req: Request) => {
                 message: "UserId is required",
             });
         }
+
         /**
          * FIND STUDENTS WITH MARKS
          */
@@ -46,46 +46,24 @@ export const GET = async (req: Request) => {
             skip: per_page * (page - 1),
             where: {
                 branch: userId,
-                course: {
-                    startsWith: computerTyping ? "Computer Typing" : "",
-                    not: computerTyping ? "" : "Computer Typing",
+                Course: {
+                    name: {
+                        startsWith: computerTyping ? "COMPUTER TYPING" : "",
+                        not: computerTyping ? "" : "COMPUTER TYPING",
+                    },
                 },
                 certificate: verified,
-
                 isVerified: true,
-
-                formNumber: {
-                    startsWith: formNumber,
+                registration: {
+                    startsWith: registration,
                 },
-                englishTyping: {
-                    isSet: computerTyping,
-                },
-                hindiTyping: {
-                    isSet: computerTyping,
-                },
-                written: {
-                    isSet: !computerTyping,
-                },
-                viva: {
-                    isSet: !computerTyping,
-                },
-                practical: {
-                    isSet: !computerTyping,
-                },
-                project: {
-                    isSet: !computerTyping,
+                marks: {
+                    isNot: null,
                 },
             },
-            select: {
-                formNumber: true,
-                englishTyping: computerTyping,
-                hindiTyping: computerTyping,
-                written: !computerTyping,
-                viva: !computerTyping,
-                practical: !computerTyping,
-                project: !computerTyping,
-                certificate: true,
-                course: true,
+            include: {
+                marks: true,
+                Course: true,
             },
         });
 
@@ -93,34 +71,18 @@ export const GET = async (req: Request) => {
             where: {
                 branch: userId,
                 certificate: verified,
-                course: {
-                    startsWith: computerTyping ? "Computer Typing" : "",
-                    not: computerTyping ? "" : "Computer Typing",
+                Course: {
+                    name: {
+                        startsWith: computerTyping ? "COMPUTER TYPING" : "",
+                        not: computerTyping ? "" : "COMPUTER TYPING",
+                    },
                 },
-
-                formNumber: {
-                    startsWith: formNumber,
+                registration: {
+                    startsWith: registration,
                 },
-
                 isVerified: true,
-
-                englishTyping: {
-                    isSet: computerTyping,
-                },
-                hindiTyping: {
-                    isSet: computerTyping,
-                },
-                written: {
-                    isSet: !computerTyping,
-                },
-                viva: {
-                    isSet: !computerTyping,
-                },
-                practical: {
-                    isSet: !computerTyping,
-                },
-                project: {
-                    isSet: !computerTyping,
+                marks: {
+                    isNot: null,
                 },
             },
         });
@@ -151,8 +113,8 @@ export const PUT = async (req: Request) => {
             });
         }
 
-        const { userId, verified, course, formNumber } = await req.json();
-        if (!userId || !course || !formNumber) {
+        const { userId, verified, course, registration } = await req.json();
+        if (!userId || !course || !registration) {
             return NextResponse.json({ message: "All fields are required" });
         }
 
@@ -163,22 +125,15 @@ export const PUT = async (req: Request) => {
         const student = await Prisma.student.update({
             where: {
                 branch: userId,
-                formNumber: formNumber,
+                registration: registration,
                 course: course,
             },
             data: {
                 certificate: verified,
             },
-            select: {
-                formNumber: true,
-                written: true,
-                viva: true,
-                practical: true,
-                project: true,
-                certificate: true,
-                hindiTyping: true,
-                englishTyping: true,
-                course: true,
+            include: {
+                Course: true,
+                marks: true,
             },
         });
 
