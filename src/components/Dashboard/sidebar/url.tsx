@@ -1,7 +1,9 @@
 import {
     Album,
     Book,
+    BookCheck,
     Dock,
+    FileScan,
     FileSpreadsheet,
     FormInput,
     GraduationCap,
@@ -28,37 +30,18 @@ interface LinkType {
 
 export const links: LinkType[] = [
     {
+        title: "Manage ICard",
+        icon: <BookCheck className="w-5 h-5 text-green-400" />,
+        link: "/dashboard/icard",
+        role: "ADMIN",
+    },
+    {
         title: "Course",
         icon: <Book className="w-5 h-5 text-green-400" />,
         link: "/dashboard/course",
         role: "ADMIN",
     },
-    {
-        title: "Marks Entry",
-        icon: <FileSpreadsheet className="w-5 h-5 text-green-400" />,
-        link: "/dashboard/marks",
-    },
-    {
-        title: "Typing Entry",
-        icon: <TextCursorInput className="w-5 h-5 text-orange-400" />,
-        link: "/dashboard/marks?typing=true",
-    },
-    {
-        title: "Issued Certificate",
-        icon: <Medal className="w-5 h-5 text-blue-400" />,
-        link: "/dashboard/certificate",
-    },
-    {
-        title: "Pending Certificate",
-        icon: <Ribbon className="w-5 h-5 text-red-400" />,
-        link: "/dashboard/certificate?pending=true",
-    },
-    {
-        title: "Manage Certificate",
-        icon: <Layers3 className="w-5 h-5 text-cyan-400" />,
-        link: "/dashboard/certificate/manage",
-        role: "ADMIN",
-    },
+
     {
         title: "Payment",
         icon: <IndianRupee className="w-5 h-5 text-rose-400" />,
@@ -143,6 +126,50 @@ export const accordianLinks: accordianLinks[] = [
                 title: "users",
                 icon: <UserRoundCog className="w-5 h-5 text-red-600" />,
                 link: "/dashboard/applications/user",
+                role: "ADMIN",
+            },
+        ],
+    },
+    {
+        title: "Marks",
+        icon: <TextCursorInput className="w-5 h-5 text-gray-600" />,
+        links: [
+            {
+                title: "Marks Entry",
+                icon: <FileSpreadsheet className="w-5 h-5 text-green-400" />,
+                link: "/dashboard/marks",
+            },
+            {
+                title: "Typing Entry",
+                icon: <TextCursorInput className="w-5 h-5 text-orange-400" />,
+                link: "/dashboard/marks?typing=true",
+            },
+            {
+                title: "Manage Marks",
+                icon: <FileScan className="w-5 h-5 text-red-400" />,
+                link: "/dashboard/marks/manage",
+                role: "ADMIN",
+            },
+        ],
+    },
+    {
+        title: "Certificates",
+        icon: <Medal className="w-5 h-5 text-gray-600" />,
+        links: [
+            {
+                title: "Issued Certificates",
+                icon: <Medal className="w-5 h-5 text-blue-400" />,
+                link: "/dashboard/certificates",
+            },
+            {
+                title: "Pending Certificates",
+                icon: <Ribbon className="w-5 h-5 text-red-400" />,
+                link: "/dashboard/certificates?pending=true",
+            },
+            {
+                title: "Manage Certificates",
+                icon: <Layers3 className="w-5 h-5 text-cyan-400" />,
+                link: "/dashboard/certificates/manage",
                 role: "ADMIN",
             },
         ],
