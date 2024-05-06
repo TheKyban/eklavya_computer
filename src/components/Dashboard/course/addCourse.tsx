@@ -73,7 +73,7 @@ export const AddCourse = () => {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit((values) =>
-                            onSubmit(values)
+                            onSubmit(values),
                         )}
                     >
                         {/* Name */}
@@ -141,7 +141,7 @@ export const AddCourse = () => {
                                                             >
                                                                 {duration}
                                                             </SelectItem>
-                                                        )
+                                                        ),
                                                     )}
                                                 </SelectGroup>
                                             </SelectContent>

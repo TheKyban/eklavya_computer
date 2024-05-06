@@ -45,7 +45,7 @@ const TypingMarksEntry = () => {
         mutationFn: async (values: z.infer<typeof typingSpeedMarkSchema>) => {
             const { data } = await axios.post(
                 "/api/marks?computerTyping=true",
-                values
+                values,
             );
             return data;
         },
@@ -67,7 +67,7 @@ const TypingMarksEntry = () => {
 
             removeRegistrationNumberFromUnMarkedList(
                 ["computer-students-mark", true],
-                Number(variables.registration)
+                Number(variables.registration),
             );
 
             /**
@@ -151,7 +151,7 @@ const TypingMarksEntry = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Hindi typing marks"
@@ -174,7 +174,7 @@ const TypingMarksEntry = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Hindi typing marks"

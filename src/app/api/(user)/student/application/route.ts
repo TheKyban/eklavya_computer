@@ -80,7 +80,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -93,7 +93,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -111,7 +111,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -183,7 +183,7 @@ export const POST = async (req: Request) => {
             },
             {
                 status: 201,
-            }
+            },
         );
     } catch (error) {
         console.log("[STUDENT APPLICATION]", error);
@@ -243,7 +243,7 @@ export const GET = async (req: NextRequest) => {
             },
             {
                 status: 500,
-            }
+            },
         );
     }
 };

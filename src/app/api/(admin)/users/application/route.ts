@@ -52,7 +52,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -83,7 +83,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -115,7 +115,7 @@ export const POST = async (req: Request) => {
                     message: "User not registered. some error occurred",
                     success: false,
                 },
-                { status: 500 }
+                { status: 500 },
             );
         }
 
@@ -133,7 +133,7 @@ export const POST = async (req: Request) => {
             },
             {
                 status: 201,
-            }
+            },
         );
     } catch (error) {
         console.log("user application accept", error);
@@ -144,7 +144,7 @@ export const POST = async (req: Request) => {
                     "Internal error",
                 success: false,
             },
-            { status: 500 }
+            { status: 500 },
         );
     }
 };
@@ -197,7 +197,7 @@ export const GET = async (req: NextRequest) => {
             },
             {
                 status: 500,
-            }
+            },
         );
     }
 };

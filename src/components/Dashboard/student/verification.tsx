@@ -59,13 +59,13 @@ const StudentVerificationManagement = ({
     const { data: fetchUsers, isLoading: isUserLoading } = useUsers(
         "all",
         undefined,
-        "userId,role"
+        "userId,role",
     );
     const { data, isLoading } = useStudentVerification(
         page,
         user,
         registration,
-        type
+        type,
     );
 
     const { removeStudent, addStudent } = useCustumQuery();
@@ -83,7 +83,7 @@ const StudentVerificationManagement = ({
                 {
                     isVerified,
                     registration,
-                }
+                },
             );
             return data;
         },
@@ -102,7 +102,7 @@ const StudentVerificationManagement = ({
                     registration ? registration : "",
                     type,
                 ],
-                data.student.registration
+                data.student.registration,
             );
 
             //Add To other list
@@ -114,7 +114,7 @@ const StudentVerificationManagement = ({
                     registration ? registration : "",
                     type === "false" ? "true" : "false",
                 ],
-                data.student
+                data.student,
             );
         },
     });
@@ -177,7 +177,7 @@ const StudentVerificationManagement = ({
                                             >
                                                 {user.userId}
                                             </SelectItem>
-                                        )
+                                        ),
                                 )}
 
                                 <SelectLabel>Users</SelectLabel>
@@ -196,7 +196,7 @@ const StudentVerificationManagement = ({
                                             >
                                                 {user?.userId}
                                             </SelectItem>
-                                        )
+                                        ),
                                 )}
                             </SelectGroup>
                         </SelectContent>
@@ -274,7 +274,7 @@ const StudentVerificationManagement = ({
                                         <TableCell className="hidden sm:table-cell text-xs md:text-sm">
                                             {format(
                                                 new Date(student?.dor),
-                                                "PP"
+                                                "PP",
                                             )}
                                         </TableCell>
                                         <TableCell className="text-xs md:text-sm">
@@ -298,7 +298,7 @@ const StudentVerificationManagement = ({
                                             />
                                         </TableCell>
                                     </TableRow>
-                                )
+                                ),
                             )}
                     </TableBody>
                 </Table>

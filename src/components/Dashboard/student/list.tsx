@@ -33,7 +33,7 @@ const StudentList = ({
     const { data, isLoading } = useStudents(
         searchParams.page || "1",
         searchParams.pending,
-        searchParams.registration
+        searchParams.registration,
     );
 
     return (
@@ -99,7 +99,7 @@ const StudentList = ({
                                         <TableCell className="hidden sm:table-cell text-xs md:text-sm">
                                             {format(
                                                 new Date(student?.dor),
-                                                "PP"
+                                                "PP",
                                             )}
                                         </TableCell>
                                         <TableCell className="text-xs md:text-sm">
@@ -158,7 +158,7 @@ const StudentList = ({
                                             </Button>
                                         </TableCell>
                                     </TableRow>
-                                )
+                                ),
                             )}
                     </TableBody>
                 </Table>

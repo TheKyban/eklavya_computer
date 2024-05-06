@@ -31,7 +31,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 401,
-                }
+                },
             );
         }
 
@@ -53,7 +53,7 @@ export const POST = async (req: Request) => {
                         "All fields are required",
                     success: false,
                 },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -70,7 +70,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -83,7 +83,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -101,7 +101,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -167,7 +167,7 @@ export const POST = async (req: Request) => {
             },
             {
                 status: 201,
-            }
+            },
         );
     } catch (error) {
         console.log("[STUDENT]", error);
@@ -175,7 +175,7 @@ export const POST = async (req: Request) => {
             { message: "INTERNAL ERROR", success: false },
             {
                 status: 500,
-            }
+            },
         );
     }
 };
@@ -201,7 +201,7 @@ export const PUT = async (req: Request) => {
                 },
                 {
                     status: 401,
-                }
+                },
             );
         }
 
@@ -223,7 +223,7 @@ export const PUT = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -240,7 +240,7 @@ export const PUT = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -253,7 +253,7 @@ export const PUT = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -299,7 +299,7 @@ export const PUT = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -311,7 +311,7 @@ export const PUT = async (req: Request) => {
             },
             {
                 status: 202,
-            }
+            },
         );
     } catch (error) {
         console.log("[STUDENT UPDATE]", error);
@@ -319,7 +319,7 @@ export const PUT = async (req: Request) => {
             { message: "INTERNAL ERROR", success: false },
             {
                 status: 500,
-            }
+            },
         );
     }
 };
@@ -347,7 +347,7 @@ export const GET = async (req: Request) => {
                 },
                 {
                     status: 401,
-                }
+                },
             );
         }
 
@@ -396,7 +396,7 @@ export const GET = async (req: Request) => {
             { total, students },
             {
                 status: 200,
-            }
+            },
         );
     } catch (error) {
         console.log("[GET STUDENT]", error);
@@ -429,7 +429,7 @@ export const DELETE = async (req: Request) => {
                 },
                 {
                     status: 401,
-                }
+                },
             );
         }
 
@@ -444,7 +444,7 @@ export const DELETE = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -462,7 +462,7 @@ export const DELETE = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -475,7 +475,7 @@ export const DELETE = async (req: Request) => {
             },
             {
                 status: 202,
-            }
+            },
         );
     } catch (error) {
         console.log(error);
@@ -483,7 +483,7 @@ export const DELETE = async (req: Request) => {
             { message: "Internal Error" },
             {
                 status: 500,
-            }
+            },
         );
     }
 };

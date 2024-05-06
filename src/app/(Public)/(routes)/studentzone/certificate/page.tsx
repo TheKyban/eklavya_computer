@@ -3,7 +3,7 @@ const Certificate = dynamic(
     () => import("@/components/student-zone/Certificate"),
     {
         ssr: false,
-    }
+    },
 );
 
 export default function CertificatePage() {

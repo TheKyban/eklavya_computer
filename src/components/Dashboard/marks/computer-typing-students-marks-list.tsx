@@ -27,7 +27,7 @@ const ComputerTypingEnteredMarks = ({
     const { data, isLoading } = useStudentMarkEntered(
         page || "1",
         registration || "",
-        true
+        true,
     );
 
     return (
@@ -114,7 +114,7 @@ const ComputerTypingEnteredMarks = ({
                                                                     ? registration
                                                                     : "none",
                                                         },
-                                                    }
+                                                    },
                                                 );
                                             }}
                                             className="px-2 py-0"
@@ -145,7 +145,7 @@ const ComputerTypingEnteredMarks = ({
                                                                     ? registration
                                                                     : "none",
                                                         },
-                                                    }
+                                                    },
                                                 )
                                             }
                                             className="px-2 py-0"

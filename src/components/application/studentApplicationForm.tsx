@@ -74,12 +74,12 @@ const StudentApplicationForm = () => {
     });
 
     const onSubmit = async (
-        values: z.infer<typeof studentAddmissionSchema>
+        values: z.infer<typeof studentAddmissionSchema>,
     ) => {
         try {
             const { data } = await axios.post(
                 "/api/application/studentApplication",
-                values
+                values,
             );
             if (data) {
                 toast({ description: data.message });
@@ -153,7 +153,7 @@ const StudentApplicationForm = () => {
                                                 ImageHandler(
                                                     e,
                                                     form,
-                                                    setIsUploading
+                                                    setIsUploading,
                                                 )
                                             }
                                         />
@@ -208,7 +208,7 @@ const StudentApplicationForm = () => {
                                                                 >
                                                                     {`${branch.branch} (${branch.userId})`}
                                                                 </SelectItem>
-                                                            )
+                                                            ),
                                                         )}
                                                     </SelectGroup>
                                                 </SelectContent>
@@ -333,14 +333,14 @@ const StudentApplicationForm = () => {
                                                         className={cn(
                                                             "w-[240px] justify-start text-left font-normal",
                                                             !field.value &&
-                                                                "text-muted-foreground"
+                                                                "text-muted-foreground",
                                                         )}
                                                     >
                                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                                         {field.value ? (
                                                             format(
                                                                 field.value,
-                                                                "PPP"
+                                                                "PPP",
                                                             )
                                                         ) : (
                                                             <span>
@@ -420,7 +420,7 @@ const StudentApplicationForm = () => {
                                                 onValueChange={(e) => {
                                                     form.setValue(
                                                         "district",
-                                                        ""
+                                                        "",
                                                     );
                                                     setState(e);
                                                     field.onChange(e);
@@ -493,7 +493,7 @@ const StudentApplicationForm = () => {
                                                             ) {
                                                                 return s.districts?.map(
                                                                     (
-                                                                        district: string
+                                                                        district: string,
                                                                     ) => (
                                                                         <SelectItem
                                                                             key={
@@ -507,7 +507,7 @@ const StudentApplicationForm = () => {
                                                                                 district
                                                                             }
                                                                         </SelectItem>
-                                                                    )
+                                                                    ),
                                                                 );
                                                             }
                                                         })}
@@ -618,7 +618,7 @@ const StudentApplicationForm = () => {
                                                                         course?.name
                                                                     }
                                                                 </SelectItem>
-                                                            )
+                                                            ),
                                                         )}
                                                     </SelectGroup>
                                                 </SelectContent>
@@ -646,14 +646,14 @@ const StudentApplicationForm = () => {
                                                         className={cn(
                                                             "w-[240px] justify-start text-left font-normal",
                                                             !field.value &&
-                                                                "text-muted-foreground"
+                                                                "text-muted-foreground",
                                                         )}
                                                     >
                                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                                         {field.value ? (
                                                             format(
                                                                 field.value,
-                                                                "PPP"
+                                                                "PPP",
                                                             )
                                                         ) : (
                                                             <span>

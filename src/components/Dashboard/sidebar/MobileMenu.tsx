@@ -128,11 +128,11 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                                                                 className={cn(
                                                                     LinkStyle,
                                                                     LinkStyle2,
-                                                                    "text-base uppercase"
+                                                                    "text-base uppercase",
                                                                 )}
                                                                 onClick={() =>
                                                                     setOpen(
-                                                                        false
+                                                                        false,
                                                                     )
                                                                 }
                                                             >
@@ -156,7 +156,7 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                                             className={cn(
                                                 LinkStyle,
                                                 LinkStyle3,
-                                                "uppercase"
+                                                "uppercase",
                                             )}
                                             onClick={() => setOpen(false)}
                                         >

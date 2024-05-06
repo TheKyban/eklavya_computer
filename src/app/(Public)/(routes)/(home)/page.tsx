@@ -21,11 +21,11 @@ const fetchCarousels = async () => {
             public_id: string;
             created_at: "2024-03-14T04:12:25Z";
             secure_url: string;
-        }[]
+        }[],
     ).sort(
         (a, b) =>
             new Date(a?.created_at).getTime() -
-            new Date(b?.created_at).getTime()
+            new Date(b?.created_at).getTime(),
     );
 };
 

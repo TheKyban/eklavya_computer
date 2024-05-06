@@ -2,7 +2,7 @@ import { Prisma } from "../../../../../../prisma/prisma";
 
 export const GET = async (
     req: Request,
-    { params }: { params: { registration: string } }
+    { params }: { params: { registration: string } },
 ) => {
     try {
         if (!params.registration) {
@@ -10,7 +10,7 @@ export const GET = async (
                 {
                     message: "Regisatration number is required.",
                 },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -44,7 +44,7 @@ export const GET = async (
         if (!student) {
             return Response.json(
                 { message: "Student not found." },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -54,7 +54,7 @@ export const GET = async (
                     message: "Not Verified.",
                     success: false,
                 },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -64,7 +64,7 @@ export const GET = async (
             },
             {
                 status: 200,
-            }
+            },
         );
     } catch (error) {
         console.log("[STUDENT ZONE]", error);

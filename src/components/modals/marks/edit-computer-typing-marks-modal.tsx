@@ -56,7 +56,7 @@ export const EditComputerTypingMarksModal = () => {
         mutationFn: async (values: z.infer<typeof typingSpeedMarkSchema>) => {
             const { data } = await axios.put(
                 "/api/marks?computerTyping=true",
-                values
+                values,
             );
             return data;
         },
@@ -80,7 +80,7 @@ export const EditComputerTypingMarksModal = () => {
                     searchParams?.registration || "none",
                     true,
                 ],
-                { marks: data?.marks }
+                { marks: data?.marks },
             );
         },
     });
@@ -127,7 +127,7 @@ export const EditComputerTypingMarksModal = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Hindi typing marks"
@@ -150,7 +150,7 @@ export const EditComputerTypingMarksModal = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Hindi typing marks"

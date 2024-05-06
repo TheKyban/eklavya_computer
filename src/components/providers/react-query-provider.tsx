@@ -13,7 +13,7 @@ const QueryProvider = ({ children }: { children: ReactNode }) => {
                         staleTime: 60 * 1000,
                     },
                 },
-            })
+            }),
     );
     return (
         <QueryClientProvider client={queryclient}>

@@ -120,7 +120,7 @@ export const StudentApplicationModal = () => {
     const { mutate: deleteApplication, isPending: isDeleting } = useMutation({
         mutationFn: async (id: string) => {
             const { data } = await axios.delete(
-                `/api/student/application?id=${id}`
+                `/api/student/application?id=${id}`,
             );
             return data;
         },
@@ -133,7 +133,7 @@ export const StudentApplicationModal = () => {
                 // remove from application list
                 removeApplication(
                     ["student_application_list", searchParams?.page],
-                    studentApplication?.id!
+                    studentApplication?.id!,
                 );
                 form.reset();
                 onClose();
@@ -149,7 +149,7 @@ export const StudentApplicationModal = () => {
         mutationFn: async (values: z.infer<typeof studentSchema>) => {
             const { data } = await axios.post(
                 `/api/student/application?id=${studentApplication?.id}`,
-                values
+                values,
             );
             return data;
         },
@@ -168,13 +168,13 @@ export const StudentApplicationModal = () => {
                 // remove from application list
                 removeApplication(
                     ["student_application_list", searchParams?.page],
-                    studentApplication?.id!
+                    studentApplication?.id!,
                 );
 
                 // add to pending list
                 addStudent(
                     ["pending_list", searchParams?.page, "none"],
-                    data.student
+                    data.student,
                 );
             } catch (error) {
                 console.log("error in addStudent");
@@ -235,7 +235,7 @@ export const StudentApplicationModal = () => {
                                                 ImageHandler(
                                                     e,
                                                     form,
-                                                    setIsUploading
+                                                    setIsUploading,
                                                 )
                                             }
                                         />
@@ -375,14 +375,14 @@ export const StudentApplicationModal = () => {
                                                         className={cn(
                                                             "w-[240px] justify-start text-left font-normal",
                                                             !field.value &&
-                                                                "text-muted-foreground"
+                                                                "text-muted-foreground",
                                                         )}
                                                     >
                                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                                         {field.value ? (
                                                             format(
                                                                 field.value,
-                                                                "PPP"
+                                                                "PPP",
                                                             )
                                                         ) : (
                                                             <span>
@@ -461,7 +461,7 @@ export const StudentApplicationModal = () => {
                                                 onValueChange={(e) => {
                                                     form.setValue(
                                                         "district",
-                                                        ""
+                                                        "",
                                                     );
                                                     setState(e);
                                                     field.onChange(e);
@@ -534,7 +534,7 @@ export const StudentApplicationModal = () => {
                                                             ) {
                                                                 return s.districts?.map(
                                                                     (
-                                                                        district: string
+                                                                        district: string,
                                                                     ) => (
                                                                         <SelectItem
                                                                             key={
@@ -548,7 +548,7 @@ export const StudentApplicationModal = () => {
                                                                                 district
                                                                             }
                                                                         </SelectItem>
-                                                                    )
+                                                                    ),
                                                                 );
                                                             }
                                                         })}
@@ -659,7 +659,7 @@ export const StudentApplicationModal = () => {
                                                                         course?.name
                                                                     }
                                                                 </SelectItem>
-                                                            )
+                                                            ),
                                                         )}
                                                     </SelectGroup>
                                                 </SelectContent>
@@ -687,14 +687,14 @@ export const StudentApplicationModal = () => {
                                                         className={cn(
                                                             "w-[240px] justify-start text-left font-normal",
                                                             !field.value &&
-                                                                "text-muted-foreground"
+                                                                "text-muted-foreground",
                                                         )}
                                                     >
                                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                                         {field.value ? (
                                                             format(
                                                                 field.value,
-                                                                "PPP"
+                                                                "PPP",
                                                             )
                                                         ) : (
                                                             <span>

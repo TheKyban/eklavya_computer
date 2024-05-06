@@ -186,7 +186,7 @@ export const EditCourseModal = () => {
                                                             >
                                                                 {duration}
                                                             </SelectItem>
-                                                        )
+                                                        ),
                                                     )}
                                                 </SelectGroup>
                                             </SelectContent>

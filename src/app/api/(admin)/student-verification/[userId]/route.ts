@@ -9,7 +9,7 @@ import { per_page } from "@/lib/constants";
  */
 export const GET = async (
     req: Request,
-    { params }: { params: { userId: string } }
+    { params }: { params: { userId: string } },
 ) => {
     try {
         /**
@@ -82,7 +82,7 @@ export const GET = async (
 
 export const PUT = async (
     req: Request,
-    { params }: { params: { userId: string } }
+    { params }: { params: { userId: string } },
 ) => {
     try {
         /**

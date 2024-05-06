@@ -26,7 +26,7 @@ export const DeleteComputerTypingMarksModal = () => {
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             const { data } = await axios.delete(
-                `/api/marks?computerTyping=true&registration=${computerTypingMarks?.registration}`
+                `/api/marks?computerTyping=true&registration=${computerTypingMarks?.registration}`,
             );
             return data;
         },
@@ -50,7 +50,7 @@ export const DeleteComputerTypingMarksModal = () => {
                     searchParams?.registration || "none",
                     true,
                 ],
-                computerTypingMarks?.registration as string
+                computerTypingMarks?.registration as string,
             );
 
             /**
@@ -59,7 +59,7 @@ export const DeleteComputerTypingMarksModal = () => {
 
             addRegistrationNumberToUnMarkedList(
                 ["computer-students-mark", true],
-                Number(computerTypingMarks?.registration)
+                Number(computerTypingMarks?.registration),
             );
         },
     });

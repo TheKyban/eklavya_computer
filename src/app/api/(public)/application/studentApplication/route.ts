@@ -52,19 +52,19 @@ export const POST = async (req: Request) => {
                         "Something went wrong while submitting application",
                     success: false,
                 },
-                { status: 500 }
+                { status: 500 },
             );
         }
 
         return Response.json(
             { message: "Application submited", success: true },
-            { status: 201 }
+            { status: 201 },
         );
     } catch (error) {
         console.error("studentApplication ", error);
         return Response.json(
             { message: "Internal Error", success: false },
-            { status: 500 }
+            { status: 500 },
         );
     }
 };

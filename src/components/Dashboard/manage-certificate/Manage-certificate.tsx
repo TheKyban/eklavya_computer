@@ -78,7 +78,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
     const { data: fetchUsers, isLoading: isUserLoading } = useUsers(
         "all",
         undefined,
-        "userId,role"
+        "userId,role",
     );
 
     /**
@@ -89,7 +89,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
         page || "1",
         user || "",
         course,
-        type
+        type,
     );
     useEffect(() => {
         setUser(session?.user.userId);
@@ -131,7 +131,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                     course,
                     type,
                 ],
-                data?.student?.registration
+                data?.student?.registration,
             );
 
             //Add To other type
@@ -144,7 +144,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                     course,
                     type === "false" ? "true" : "false",
                 ],
-                data?.student
+                data?.student,
             );
         },
     });
@@ -204,7 +204,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                                             >
                                                 {user.userId}
                                             </SelectItem>
-                                        )
+                                        ),
                                 )}
 
                                 <SelectLabel>Users</SelectLabel>
@@ -223,7 +223,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                                             >
                                                 {user.userId}
                                             </SelectItem>
-                                        )
+                                        ),
                                 )}
                             </SelectGroup>
                         </SelectContent>

@@ -26,7 +26,7 @@ export async function GET() {
                 {
                     message: "Something went wrong while fetching assets",
                 },
-                { status: 500 }
+                { status: 500 },
             );
         }
     } catch (err) {
@@ -68,7 +68,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     } catch (error) {
         return NextResponse.json(
             { message: "some error occured while uploading" },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }
@@ -105,11 +105,11 @@ export async function DELETE(request: Request) {
     if (result?.result) {
         return NextResponse.json(
             { message: "Image deleted", success: true },
-            { status: 200 }
+            { status: 200 },
         );
     }
     return NextResponse.json(
         { message: "Somethinge went wrong." },
-        { status: 500 }
+        { status: 500 },
     );
 }

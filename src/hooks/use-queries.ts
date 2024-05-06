@@ -20,7 +20,7 @@ export const useCustumQuery = () => {
                     total: old?.total + 1,
                     users: [data, ...old?.users],
                 };
-            }
+            },
         );
     };
 
@@ -33,7 +33,7 @@ export const useCustumQuery = () => {
                     total: old?.total - 1,
                     users,
                 };
-            }
+            },
         );
     };
     const updateUser = (key: QueryKey, data: User) => {
@@ -41,13 +41,13 @@ export const useCustumQuery = () => {
             key,
             (old: { total: number; users: User[] }) => {
                 const users = old?.users?.map((user) =>
-                    user?.id === data?.id ? data : user
+                    user?.id === data?.id ? data : user,
                 );
                 return {
                     total: old?.total,
                     users,
                 };
-            }
+            },
         );
     };
     const removeStudent = (key: QueryKey, registration: string) => {
@@ -55,13 +55,13 @@ export const useCustumQuery = () => {
             key,
             (old: { total: number; students: Student[] }) => {
                 const students = old?.students.filter(
-                    (student) => student?.registration !== registration
+                    (student) => student?.registration !== registration,
                 );
                 return {
                     total: old?.total - 1,
                     students,
                 };
-            }
+            },
         );
     };
     const addStudent = (key: QueryKey, data: Student) => {
@@ -72,7 +72,7 @@ export const useCustumQuery = () => {
                     total: oldData?.total + 1,
                     students: [data, ...oldData?.students],
                 };
-            }
+            },
         );
     };
     const updateStudent = (key: QueryKey, data: Student) => {
@@ -80,29 +80,31 @@ export const useCustumQuery = () => {
             key,
             (oldData: { total: number; students: Student[] }) => {
                 const students = oldData.students.map((student) =>
-                    student.registration === data?.registration ? data : student
+                    student.registration === data?.registration
+                        ? data
+                        : student,
                 );
                 return {
                     total: oldData?.total,
                     students,
                 };
-            }
+            },
         );
     };
 
     const removeRegistrationNumberFromUnMarkedList = (
         key: QueryKey,
-        registration: number
+        registration: number,
     ) => {
         queryClient.setQueryData(key, (oldData: queryType[]) => {
             return oldData?.filter(
-                (data) => Number(data?.registration) !== registration
+                (data) => Number(data?.registration) !== registration,
             );
         });
     };
     const addRegistrationNumberToUnMarkedList = (
         key: QueryKey,
-        registration: number
+        registration: number,
     ) => {
         queryClient.setQueryData(key, (oldData: queryType[]) => {
             return [{ registration }, ...oldData];
@@ -116,7 +118,7 @@ export const useCustumQuery = () => {
                     total: oldData.total + 1,
                     studentsWithMarks: [data, ...oldData?.studentsWithMarks],
                 };
-            }
+            },
         );
     };
     const removeMark = (key: QueryKey, registration: string) => {
@@ -128,13 +130,13 @@ export const useCustumQuery = () => {
             }) => {
                 const marks = oldData?.studentsWithMarks.filter(
                     (mark) =>
-                        mark?.marks?.studentRegistrationNumber !== registration
+                        mark?.marks?.studentRegistrationNumber !== registration,
                 );
                 return {
                     total: oldData?.total - 1,
                     studentsWithMarks: marks,
                 };
-            }
+            },
         );
     };
     const updateMark = (key: QueryKey, data: { marks: Marks }) => {
@@ -148,13 +150,13 @@ export const useCustumQuery = () => {
                     mark?.marks.studentRegistrationNumber ===
                     data?.marks?.studentRegistrationNumber
                         ? data
-                        : mark
+                        : mark,
                 );
                 return {
                     total: oldData?.total,
                     studentsWithMarks: marks,
                 };
-            }
+            },
         );
     };
 
@@ -189,13 +191,13 @@ export const useCustumQuery = () => {
                 applications: UserApplication[] | StudentApplication[];
             }) => {
                 const applications = old.applications?.filter(
-                    (application) => application?.id !== id
+                    (application) => application?.id !== id,
                 );
                 return {
                     total: old?.total - 1,
                     applications,
                 };
-            }
+            },
         );
     };
 

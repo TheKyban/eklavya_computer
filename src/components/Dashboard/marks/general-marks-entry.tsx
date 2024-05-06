@@ -68,7 +68,7 @@ const GeneralMarksEntry = () => {
              */
             removeRegistrationNumberFromUnMarkedList(
                 ["computer-students-mark", false],
-                Number(data?.marks?.studentRegistrationNumber)
+                Number(data?.marks?.studentRegistrationNumber),
             );
 
             /**
@@ -150,7 +150,7 @@ const GeneralMarksEntry = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Written marks"
@@ -173,7 +173,7 @@ const GeneralMarksEntry = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Practical marks"
@@ -196,7 +196,7 @@ const GeneralMarksEntry = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Viva marks"
@@ -219,7 +219,7 @@ const GeneralMarksEntry = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Project marks"

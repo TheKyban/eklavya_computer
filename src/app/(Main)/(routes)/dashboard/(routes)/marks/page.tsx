@@ -14,7 +14,7 @@ const Marks = () => {
     const typing = Boolean(searchParams.get("typing")) || false;
     const [tab, setTab] = useState(typing ? "typing" : "general");
     const [tabM, setTabM] = useState(
-        typing ? "typingEntered" : "generalEntered"
+        typing ? "typingEntered" : "generalEntered",
     );
     const page = searchParams.get("page");
     const registration = searchParams.get("registration");

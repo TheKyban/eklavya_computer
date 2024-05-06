@@ -78,7 +78,7 @@ const MarkSheet = () => {
                                         ctx?.drawImage(qr, 927, 100, 80, 80);
                                         resolve(qr);
                                     };
-                                }
+                                },
                             );
                         });
                         await createQR;
@@ -106,7 +106,7 @@ const MarkSheet = () => {
                             student?.marks?.marks?.project!,
                             student?.marks?.marks?.viva!,
                         ],
-                        400
+                        400,
                     );
 
                     // full marks
@@ -125,29 +125,29 @@ const MarkSheet = () => {
                     ctx?.fillText(
                         student?.marks?.marks?.written!?.toString()!,
                         830,
-                        1003
+                        1003,
                     ); // written
                     ctx?.fillText(
                         student?.marks?.marks?.practical!?.toString()!,
                         830,
-                        1043
+                        1043,
                     ); // practical
                     ctx?.fillText(
                         student?.marks?.marks?.project!?.toString()!,
                         830,
-                        1090
+                        1090,
                     ); // project
                     ctx?.fillText(
                         student?.marks?.marks?.viva!?.toString()!,
                         830,
-                        1130
+                        1130,
                     ); // viva
 
                     // stats
                     ctx?.fillText(
                         `${studentStats.getPercentage()}%`,
                         420,
-                        1200
+                        1200,
                     );
                     ctx?.fillText(studentStats.getPerformance(), 850, 1201);
                 };
@@ -184,7 +184,7 @@ const MarkSheet = () => {
                         onClick={() =>
                             downloadHandler(
                                 ref.current!,
-                                `marksheet_${registration}.pdf`
+                                `marksheet_${registration}.pdf`,
                             )
                         }
                     >

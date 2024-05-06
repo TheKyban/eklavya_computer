@@ -111,7 +111,7 @@ export const UserModal = () => {
                         searchParams?.page || "1",
                         searchParams?.registration || "",
                     ],
-                    data?.user
+                    data?.user,
                 );
 
                 form.reset();
@@ -174,7 +174,7 @@ export const UserModal = () => {
                                                     ImageHandler(
                                                         e,
                                                         form,
-                                                        setIsUploading
+                                                        setIsUploading,
                                                     )
                                                 }
                                             />
@@ -248,7 +248,7 @@ export const UserModal = () => {
                                                 onValueChange={(e) => {
                                                     form.setValue(
                                                         "district",
-                                                        ""
+                                                        "",
                                                     );
                                                     setState(e);
                                                     field.onChange(e);
@@ -321,7 +321,7 @@ export const UserModal = () => {
                                                             ) {
                                                                 return s.districts?.map(
                                                                     (
-                                                                        district: string
+                                                                        district: string,
                                                                     ) => (
                                                                         <SelectItem
                                                                             key={
@@ -335,7 +335,7 @@ export const UserModal = () => {
                                                                                 district
                                                                             }
                                                                         </SelectItem>
-                                                                    )
+                                                                    ),
                                                                 );
                                                             }
                                                         })}

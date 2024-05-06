@@ -28,7 +28,7 @@ const UserList = ({
 
     const { data, isLoading } = useUsers(
         searchParams.page || "1",
-        searchParams.userId || ""
+        searchParams.userId || "",
     );
 
     return (

@@ -30,7 +30,7 @@ export const useBranch = () => {
 export const useStudents = (
     page: string,
     pending: boolean | undefined,
-    registration: string
+    registration: string,
 ) => {
     const url = `/api/student?${pending ? "pending=true&" : ""}page=${page}${
         !!registration ? "&registration=" + registration : ""
@@ -52,7 +52,7 @@ export const useStudentVerification = (
     page: string,
     user: string | undefined,
     registration: string,
-    type: string
+    type: string,
 ) => {
     const url = `/api/student-verification/${user}?pending=${type}&page=${page}${
         !!registration ? "&registration=" + registration : ""
@@ -77,7 +77,7 @@ export const useStudentMark = (typing: boolean = false) => {
         queryKey: ["computer-students-mark", typing],
         queryFn: async () => {
             const { data } = await axios(
-                `/api/marks?${typing ? "computerTyping=true" : ""}`
+                `/api/marks?${typing ? "computerTyping=true" : ""}`,
             );
             return data;
         },
@@ -87,7 +87,7 @@ export const useStudentMark = (typing: boolean = false) => {
 export const useStudentMarkEntered = (
     page: string,
     registration: string,
-    typing: boolean
+    typing: boolean,
 ) => {
     return useQuery<{
         total: number;
@@ -103,7 +103,7 @@ export const useStudentMarkEntered = (
             const { data } = await axios(
                 `/api/marks/entered?&page=${page}${
                     !!registration ? "&registration=" + registration : ""
-                }${typing ? "&computerTyping=true" : ""}`
+                }${typing ? "&computerTyping=true" : ""}`,
             );
 
             return data;
@@ -114,7 +114,7 @@ export const useStudentMarkEntered = (
 export const useCertificate = (
     pending: boolean,
     page: string,
-    registration: string
+    registration: string,
 ) => {
     const url = `/api/certificate?${
         pending ? "pending=true&" : ""
@@ -138,7 +138,7 @@ export const useVerifyCertificate = (
     page: string,
     user: string,
     course: string,
-    type: string
+    type: string,
 ) => {
     return useQuery<{
         studentsWithMarks: studentsWithMarks[];
@@ -158,7 +158,7 @@ export const useVerifyCertificate = (
                     course === "computerTyping" ? "computerTyping=true&" : "&"
                 }verified=${type}&page=${page ? page : "1"}${
                     !!registration ? "&registration=" + registration : ""
-                }`
+                }`,
             );
             return data;
         },

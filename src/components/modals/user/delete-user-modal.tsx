@@ -28,7 +28,7 @@ export const DeleteUserModal = () => {
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             const { data } = await axios.delete(
-                `/api/users?userId=${user?.userId}`
+                `/api/users?userId=${user?.userId}`,
             );
             return data;
         },
@@ -44,7 +44,7 @@ export const DeleteUserModal = () => {
                         searchParams?.page || "1",
                         searchParams?.userId || "",
                     ],
-                    user?.id as string
+                    user?.id as string,
                 );
             }
         },

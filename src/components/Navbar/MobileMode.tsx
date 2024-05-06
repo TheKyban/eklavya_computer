@@ -111,7 +111,7 @@ const MobileMode = () => {
                                                             key={idx}
                                                             className={cn(
                                                                 LinkStyle,
-                                                                LinkStyle2
+                                                                LinkStyle2,
                                                             )}
                                                             href={link.link}
                                                             onClick={() =>
@@ -123,7 +123,7 @@ const MobileMode = () => {
                                                                 {link.title}
                                                             </span>
                                                         </Link>
-                                                    )
+                                                    ),
                                                 )}
                                             </div>
                                         </AccordionContent>

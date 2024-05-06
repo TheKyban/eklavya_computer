@@ -77,14 +77,14 @@ export default function StudentApplicationList({ page }: { page: string }) {
                                         <TableCell className="hidden sm:table-cell text-xs md:text-sm">
                                             {format(
                                                 new Date(student.dor),
-                                                "PP"
+                                                "PP",
                                             )}
                                         </TableCell>
                                         <TableCell className="text-xs md:text-sm">
                                             {student.course}
                                         </TableCell>
                                     </TableRow>
-                                )
+                                ),
                             )}
                     </TableBody>
                 </Table>

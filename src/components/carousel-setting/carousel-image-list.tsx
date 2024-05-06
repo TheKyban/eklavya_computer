@@ -38,7 +38,7 @@ const ImageCard = ({ link, publicId }: { link: string; publicId: string }) => {
             setIsLoading(true);
 
             const { data } = await axios.delete(
-                `/api/media?publicId=${publicId}`
+                `/api/media?publicId=${publicId}`,
             );
             if (data?.message) {
                 toast({ description: data.message });
@@ -48,10 +48,10 @@ const ImageCard = ({ link, publicId }: { link: string; publicId: string }) => {
                     ["assets"],
                     (old: { public_id: string }[]) => {
                         const allData = old?.filter(
-                            (data) => data?.public_id !== publicId
+                            (data) => data?.public_id !== publicId,
                         );
                         return allData;
-                    }
+                    },
                 );
             }
         } catch (error: any) {

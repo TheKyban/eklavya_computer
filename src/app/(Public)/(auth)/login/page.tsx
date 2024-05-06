@@ -28,7 +28,9 @@ const Login = () => {
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <Image
                         className="mx-auto h-auto w-[100px]"
-                        src={"https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900852/ekavaya_assets/f5tpu1skpaewn1gp0e6g.png"}
+                        src={
+                            "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900852/ekavaya_assets/f5tpu1skpaewn1gp0e6g.png"
+                        }
                         alt="Your Company"
                         width={100}
                         height={100}

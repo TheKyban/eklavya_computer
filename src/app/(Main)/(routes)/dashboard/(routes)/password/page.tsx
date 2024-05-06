@@ -30,7 +30,7 @@ const Password = () => {
     });
 
     const ChangeHandler = async (
-        values: z.infer<typeof changePasswordSchema>
+        values: z.infer<typeof changePasswordSchema>,
     ) => {
         try {
             const { data } = await axios.post("/api/password", values);

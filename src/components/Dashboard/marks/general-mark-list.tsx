@@ -27,7 +27,7 @@ const GeneralEntredMarks = ({
     const { data, isLoading } = useStudentMarkEntered(
         page || "1",
         registration || "",
-        false
+        false,
     );
 
     return (

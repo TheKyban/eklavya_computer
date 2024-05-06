@@ -97,7 +97,7 @@ export const UserApplicationModal = () => {
     const { mutate: deleteApplication, isPending: isDeleting } = useMutation({
         mutationFn: async (id: string) => {
             const { data } = await axios.delete(
-                `/api/users/application?id=${id}`
+                `/api/users/application?id=${id}`,
             );
             console.log(data);
             return data;
@@ -114,7 +114,7 @@ export const UserApplicationModal = () => {
                     // remove from application list
                     removeApplication(
                         ["users_application_list", searchParams?.page],
-                        userApplication?.id!
+                        userApplication?.id!,
                     );
                 } catch (error) {
                     toast({
@@ -134,7 +134,7 @@ export const UserApplicationModal = () => {
         mutationFn: async (values: z.infer<typeof franchiseSchema>) => {
             const { data } = await axios.post(
                 `/api/users/application?id=${userApplication?.id}`,
-                values
+                values,
             );
             return data;
         },
@@ -151,7 +151,7 @@ export const UserApplicationModal = () => {
                 // delete application
                 removeApplication(
                     ["users_application_list", searchParams?.page],
-                    userApplication?.id!
+                    userApplication?.id!,
                 );
                 // add to user list
                 addUser(["users", searchParams?.page || "1", ""], data?.user);
@@ -221,7 +221,7 @@ export const UserApplicationModal = () => {
                                                     ImageHandler(
                                                         e,
                                                         form,
-                                                        setIsUploading
+                                                        setIsUploading,
                                                     )
                                                 }
                                             />
@@ -296,7 +296,7 @@ export const UserApplicationModal = () => {
                                                 onValueChange={(e) => {
                                                     form.setValue(
                                                         "district",
-                                                        ""
+                                                        "",
                                                     );
                                                     setState(e);
                                                     field.onChange(e);
@@ -369,7 +369,7 @@ export const UserApplicationModal = () => {
                                                             ) {
                                                                 return s.districts?.map(
                                                                     (
-                                                                        district: string
+                                                                        district: string,
                                                                     ) => (
                                                                         <SelectItem
                                                                             key={
@@ -383,7 +383,7 @@ export const UserApplicationModal = () => {
                                                                                 district
                                                                             }
                                                                         </SelectItem>
-                                                                    )
+                                                                    ),
                                                                 );
                                                             }
                                                         })}

@@ -19,7 +19,7 @@ export const GET = async (req: Request) => {
         console.log("[STUDENT ZONE]", error);
         return NextResponse.json(
             { message: "Internal Error" },
-            { status: 500 }
+            { status: 500 },
         );
     }
 };

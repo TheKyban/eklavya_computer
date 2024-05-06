@@ -25,7 +25,7 @@ export const DeleteStudentModal = () => {
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             const { data } = await axios.delete(
-                `/api/student?registration=${student?.registration}`
+                `/api/student?registration=${student?.registration}`,
             );
             return data;
         },
@@ -41,7 +41,7 @@ export const DeleteStudentModal = () => {
                         searchParams?.page || "1",
                         searchParams?.registration,
                     ],
-                    student?.registration as string
+                    student?.registration as string,
                 );
             }
         },

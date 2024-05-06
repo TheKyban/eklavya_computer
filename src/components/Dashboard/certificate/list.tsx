@@ -33,7 +33,7 @@ const CertificateList = ({
     const { data, isLoading } = useCertificate(
         searchParams.pending || false,
         searchParams.page,
-        searchParams.registration
+        searchParams.registration,
     );
 
     return (
@@ -99,7 +99,7 @@ const CertificateList = ({
                                         <TableCell className="hidden sm:table-cell text-xs md:text-sm">
                                             {format(
                                                 new Date(student?.dor),
-                                                "PP"
+                                                "PP",
                                             )}
                                         </TableCell>
                                         <TableCell className="text-xs md:text-sm">
@@ -133,7 +133,7 @@ const CertificateList = ({
                                             </Button>
                                         </TableCell>
                                     </TableRow>
-                                )
+                                ),
                             )}
                     </TableBody>
                 </Table>

@@ -36,7 +36,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
             {...props}
             className={cn(
                 "flex flex-col min-h-full h-full min-w-[300px] bg-zinc-50 dark:bg-black px-4 py-3",
-                className
+                className,
             )}
         >
             <div className="flex gap-3 items-center justify-center py-2 mb-2 select-none">
@@ -52,7 +52,10 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
 
             <Separator className="mb-4" />
             <ScrollArea className="flex flex-col gap-1">
-                <Link href={"/"} className={cn(LinkStyle3, "uppercase text-base")}>
+                <Link
+                    href={"/"}
+                    className={cn(LinkStyle3, "uppercase text-base")}
+                >
                     <Home className="w-5 h-5 text-teal-600" />
                     Home
                 </Link>
@@ -62,7 +65,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                         LinkStyle3,
                         "transition-all text-base",
                         fullPath === "/dashboard" && "bg-black/5",
-                        "uppercase"
+                        "uppercase",
                     )}
                 >
                     <LayoutDashboard className="w-5 h-5 text-orange-600" />
@@ -82,7 +85,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                     pathname
                                         .split("/")
                                         .includes(link.title.toLowerCase()) &&
-                                        "bg-black/5"
+                                        "bg-black/5",
                                 )}
                             >
                                 <AccordionTrigger>
@@ -103,7 +106,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                                     LinkStyle2,
                                                     "uppercase text-sm",
                                                     link.link === fullPath &&
-                                                        "bg-primary/10"
+                                                        "bg-primary/10",
                                                 )}
                                             >
                                                 {link.icon}
@@ -126,7 +129,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                 LinkStyle,
                                 LinkStyle3,
                                 "uppercase text-base",
-                                link.link === fullPath && "bg-black/5"
+                                link.link === fullPath && "bg-black/5",
                             )}
                         >
                             {link.icon} {link.title}

@@ -20,7 +20,7 @@ export const Icon: FC<IconProp> = ({ text, number, Icon, color, ...props }) => {
                         "w-10 h-10 md:w-16 md:h-16 select-none",
                         color === "zinc"
                             ? "text-zinc-600 dark:text-yellow-500"
-                            : "text-orange-600 dark:text-cyan-400"
+                            : "text-orange-600 dark:text-cyan-400",
                     )}
                 />
                 <span
@@ -28,7 +28,7 @@ export const Icon: FC<IconProp> = ({ text, number, Icon, color, ...props }) => {
                         "font-medium uppercase",
                         color === "zinc"
                             ? "text-zinc-600 dark:text-yellow-500"
-                            : "text-orange-600 dark:text-cyan-400"
+                            : "text-orange-600 dark:text-cyan-400",
                     )}
                 >
                     {text}
@@ -39,7 +39,7 @@ export const Icon: FC<IconProp> = ({ text, number, Icon, color, ...props }) => {
                     "text-3xl font-semibold",
                     color === "zinc"
                         ? "text-zinc-600 dark:text-yellow-500"
-                        : "text-orange-600 dark:text-cyan-400"
+                        : "text-orange-600 dark:text-cyan-400",
                 )}
             >
                 {number}

@@ -33,7 +33,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -51,7 +51,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -72,7 +72,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 500,
-                }
+                },
             );
         }
 
@@ -84,7 +84,7 @@ export const POST = async (req: Request) => {
             },
             {
                 status: 201,
-            }
+            },
         );
     } catch (err) {
         console.log("COURSE", err);
@@ -95,7 +95,7 @@ export const POST = async (req: Request) => {
             },
             {
                 status: 500,
-            }
+            },
         );
     }
 };
@@ -111,7 +111,7 @@ export const GET = async () => {
             },
             {
                 status: 200,
-            }
+            },
         );
     } catch (err) {
         console.log("COURSE", err);
@@ -122,7 +122,7 @@ export const GET = async () => {
             },
             {
                 status: 500,
-            }
+            },
         );
     }
 };
@@ -155,7 +155,7 @@ export const PUT = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -173,7 +173,7 @@ export const PUT = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -197,7 +197,7 @@ export const PUT = async (req: Request) => {
             },
             {
                 status: 202,
-            }
+            },
         );
     } catch (err) {
         console.log("COURSE", err);
@@ -208,7 +208,7 @@ export const PUT = async (req: Request) => {
             },
             {
                 status: 500,
-            }
+            },
         );
     }
 };
@@ -238,7 +238,7 @@ export const DELETE = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -256,7 +256,7 @@ export const DELETE = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -267,7 +267,7 @@ export const DELETE = async (req: Request) => {
             },
             {
                 status: 202,
-            }
+            },
         );
     } catch (err) {
         console.log("COURSE", err);
@@ -280,7 +280,7 @@ export const DELETE = async (req: Request) => {
             },
             {
                 status: 500,
-            }
+            },
         );
     }
 };

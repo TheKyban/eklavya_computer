@@ -57,7 +57,7 @@ const UserApplicationForm = ({}) => {
         try {
             const { data } = await axios.post(
                 "/api/application/userApplication",
-                values
+                values,
             );
             if (data) {
                 toast({ description: data.message });
@@ -141,7 +141,7 @@ const UserApplicationForm = ({}) => {
                                                         ImageHandler(
                                                             e,
                                                             form,
-                                                            setIsUploading
+                                                            setIsUploading,
                                                         )
                                                     }
                                                 />
@@ -215,7 +215,7 @@ const UserApplicationForm = ({}) => {
                                                     onValueChange={(e) => {
                                                         form.setValue(
                                                             "district",
-                                                            ""
+                                                            "",
                                                         );
                                                         setState(e);
                                                         field.onChange(e);
@@ -248,7 +248,7 @@ const UserApplicationForm = ({}) => {
                                                                             state.state
                                                                         }
                                                                     </SelectItem>
-                                                                )
+                                                                ),
                                                             )}
                                                         </SelectGroup>
                                                     </SelectContent>
@@ -294,7 +294,7 @@ const UserApplicationForm = ({}) => {
                                                                 ) {
                                                                     return s.districts?.map(
                                                                         (
-                                                                            district: string
+                                                                            district: string,
                                                                         ) => (
                                                                             <SelectItem
                                                                                 key={
@@ -308,7 +308,7 @@ const UserApplicationForm = ({}) => {
                                                                                     district
                                                                                 }
                                                                             </SelectItem>
-                                                                        )
+                                                                        ),
                                                                     );
                                                                 }
                                                             })}

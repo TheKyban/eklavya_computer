@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 export const downloadHandler = (
     canvas: HTMLCanvasElement,
     name: string,
-    orientation: "p" | "l" = "p"
+    orientation: "p" | "l" = "p",
 ) => {
     const doc = new jsPDF({ orientation: orientation });
     var width = doc.internal.pageSize.getWidth();

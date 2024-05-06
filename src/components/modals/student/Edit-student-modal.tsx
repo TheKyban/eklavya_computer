@@ -114,7 +114,7 @@ export const EditStudentModal = () => {
                         searchParams?.page,
                         searchParams?.registration,
                     ],
-                    data?.student
+                    data?.student,
                 );
             }
         },
@@ -172,7 +172,7 @@ export const EditStudentModal = () => {
                                                 ImageHandler(
                                                     e,
                                                     form,
-                                                    setIsUploading
+                                                    setIsUploading,
                                                 )
                                             }
                                         />
@@ -317,14 +317,14 @@ export const EditStudentModal = () => {
                                                         className={cn(
                                                             "w-[240px] justify-start text-left font-normal",
                                                             !field.value &&
-                                                                "text-muted-foreground"
+                                                                "text-muted-foreground",
                                                         )}
                                                     >
                                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                                         {field.value ? (
                                                             format(
                                                                 field.value,
-                                                                "PPP"
+                                                                "PPP",
                                                             )
                                                         ) : (
                                                             <span>
@@ -404,7 +404,7 @@ export const EditStudentModal = () => {
                                                 onValueChange={(e) => {
                                                     form.setValue(
                                                         "district",
-                                                        ""
+                                                        "",
                                                     );
                                                     setState(e);
                                                     field.onChange(e);
@@ -477,7 +477,7 @@ export const EditStudentModal = () => {
                                                             ) {
                                                                 return s.districts?.map(
                                                                     (
-                                                                        district: string
+                                                                        district: string,
                                                                     ) => (
                                                                         <SelectItem
                                                                             key={
@@ -491,7 +491,7 @@ export const EditStudentModal = () => {
                                                                                 district
                                                                             }
                                                                         </SelectItem>
-                                                                    )
+                                                                    ),
                                                                 );
                                                             }
                                                         })}
@@ -602,7 +602,7 @@ export const EditStudentModal = () => {
                                                                         course?.name
                                                                     }
                                                                 </SelectItem>
-                                                            )
+                                                            ),
                                                         )}
                                                     </SelectGroup>
                                                 </SelectContent>
@@ -630,14 +630,14 @@ export const EditStudentModal = () => {
                                                         className={cn(
                                                             "w-[240px] justify-start text-left font-normal",
                                                             !field.value &&
-                                                                "text-muted-foreground"
+                                                                "text-muted-foreground",
                                                         )}
                                                     >
                                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                                         {field.value ? (
                                                             format(
                                                                 field.value,
-                                                                "PPP"
+                                                                "PPP",
                                                             )
                                                         ) : (
                                                             <span>

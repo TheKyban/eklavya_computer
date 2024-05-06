@@ -61,7 +61,7 @@ const Certificate = () => {
                     ctx?.fillText(
                         format(new Date(student.updatedAt), "dd/MM/yyyy"),
                         300,
-                        900
+                        900,
                     ); // date of creation
 
                     ctx?.fillText(`EUPL/${student.serialNumber}`, 1350, 185); // serial number
@@ -94,7 +94,7 @@ const Certificate = () => {
                                         ctx?.drawImage(qr, 760, 960, 80, 80);
                                         resolve(qr);
                                     };
-                                }
+                                },
                             );
                         });
                         await createQR;
@@ -135,7 +135,7 @@ const Certificate = () => {
                             downloadHandler(
                                 ref.current!,
                                 `certificate_${registration}.pdf`,
-                                "l"
+                                "l",
                             )
                         }
                     >

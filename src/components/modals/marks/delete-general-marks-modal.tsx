@@ -27,7 +27,7 @@ export const DeleteGeneralMarksModal = () => {
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             const { data } = await axios.delete(
-                `/api/marks?registration=${generalMarks?.registration}`
+                `/api/marks?registration=${generalMarks?.registration}`,
             );
             return data;
         },
@@ -50,7 +50,7 @@ export const DeleteGeneralMarksModal = () => {
                     searchParams?.registration || "none",
                     false,
                 ],
-                generalMarks?.registration as string
+                generalMarks?.registration as string,
             );
 
             /**
@@ -59,7 +59,7 @@ export const DeleteGeneralMarksModal = () => {
 
             addRegistrationNumberToUnMarkedList(
                 ["computer-students-mark", false],
-                Number(generalMarks?.registration)
+                Number(generalMarks?.registration),
             );
         },
     });

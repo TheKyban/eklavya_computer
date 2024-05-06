@@ -56,7 +56,7 @@ export const GET = async (req: Request) => {
             },
             {
                 status: 500,
-            }
+            },
         );
     }
 };
@@ -98,7 +98,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
         /**
@@ -146,7 +146,7 @@ export const POST = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -158,7 +158,7 @@ export const POST = async (req: Request) => {
             },
             {
                 status: 201,
-            }
+            },
         );
     } catch (error) {
         console.log(error);
@@ -204,7 +204,7 @@ export const PUT = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -253,7 +253,7 @@ export const PUT = async (req: Request) => {
             },
             {
                 status: 202,
-            }
+            },
         );
     } catch (error) {
         console.log(error);
@@ -288,7 +288,7 @@ export const DELETE = async (req: Request) => {
                 },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -310,7 +310,7 @@ export const DELETE = async (req: Request) => {
                 { message: "Invalid data" },
                 {
                     status: 400,
-                }
+                },
             );
         }
 
@@ -321,7 +321,7 @@ export const DELETE = async (req: Request) => {
             },
             {
                 status: 202,
-            }
+            },
         );
     } catch (error) {
         console.log(error);
@@ -331,7 +331,7 @@ export const DELETE = async (req: Request) => {
             },
             {
                 status: 500,
-            }
+            },
         );
     }
 };

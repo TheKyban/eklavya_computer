@@ -108,7 +108,7 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
                             name: string;
                             branch: string;
                         },
-                        idx: number
+                        idx: number,
                     ) => (
                         <div
                             key={idx}
@@ -131,7 +131,7 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
                                 </span>
                             </div>
                         </div>
-                    )
+                    ),
                 )}
 
                 {/* @ts-ignore */}
@@ -493,8 +493,8 @@ const OurCourses = () => {
                                 idx === 0 || idx === 3 || idx === 6
                                     ? -100
                                     : idx === 1 || idx === 4 || idx === 7
-                                    ? 0
-                                    : 100,
+                                      ? 0
+                                      : 100,
                             y: idx === 1 || idx === 4 || idx === 7 ? 100 : 0,
                             opacity: 0,
                         }}

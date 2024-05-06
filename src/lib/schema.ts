@@ -4,7 +4,7 @@ import * as z from "zod";
  * PHONE NUMBER VALIDATOR
  */
 export const phoneRegex = new RegExp(
-    /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+    /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
 );
 
 /**
@@ -62,7 +62,7 @@ export const franchiseSchema = z
         (values) => {
             return values.password === values.confirmPassword;
         },
-        { message: "Password must match!", path: ["confirmPassword"] }
+        { message: "Password must match!", path: ["confirmPassword"] },
     );
 
 export const userApplicationSchema = z.object({
@@ -315,13 +315,13 @@ export const changePasswordSchema = z
         (value) => {
             return value.currentPassword !== value.password;
         },
-        { message: "Password cannot be same.", path: ["password"] }
+        { message: "Password cannot be same.", path: ["password"] },
     )
     .refine(
         (values) => {
             return values.password === values.confirmPassword;
         },
-        { message: "Password must match!", path: ["confirmPassword"] }
+        { message: "Password must match!", path: ["confirmPassword"] },
     );
 
 export const courseSchema = z.object({

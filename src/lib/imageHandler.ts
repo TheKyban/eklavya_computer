@@ -19,7 +19,7 @@ export const ImageHandler = async (
         | UseFormReturn<z.infer<typeof studentSchema>>
         | UseFormReturn<z.infer<typeof studentAddmissionSchema>>
         | UseFormReturn<z.infer<typeof userApplicationSchema>>,
-    setIsUploading: (value: boolean) => void
+    setIsUploading: (value: boolean) => void,
 ) => {
     const file = e.target.files?.[0];
     const form = Form as UseFormReturn<

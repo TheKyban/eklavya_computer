@@ -63,7 +63,7 @@ const ICard = () => {
                             downloadHandler(
                                 ref.current!,
                                 `certificate_${registration}.pdf`,
-                                "l"
+                                "l",
                             )
                         }
                     >

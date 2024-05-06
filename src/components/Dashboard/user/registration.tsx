@@ -137,7 +137,7 @@ const UserRegistration = ({}) => {
                                                     ImageHandler(
                                                         e,
                                                         form,
-                                                        setIsUploading
+                                                        setIsUploading,
                                                     )
                                                 }
                                             />
@@ -211,7 +211,7 @@ const UserRegistration = ({}) => {
                                                 onValueChange={(e) => {
                                                     form.setValue(
                                                         "district",
-                                                        ""
+                                                        "",
                                                     );
                                                     setState(e);
                                                     field.onChange(e);
@@ -284,7 +284,7 @@ const UserRegistration = ({}) => {
                                                             ) {
                                                                 return s.districts?.map(
                                                                     (
-                                                                        district: string
+                                                                        district: string,
                                                                     ) => (
                                                                         <SelectItem
                                                                             key={
@@ -298,7 +298,7 @@ const UserRegistration = ({}) => {
                                                                                 district
                                                                             }
                                                                         </SelectItem>
-                                                                    )
+                                                                    ),
                                                                 );
                                                             }
                                                         })}

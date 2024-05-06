@@ -81,7 +81,7 @@ export const EditGeneralMarks = () => {
                 ],
                 {
                     marks: data?.marks,
-                }
+                },
             );
         },
     });
@@ -128,7 +128,7 @@ export const EditGeneralMarks = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Written marks"
@@ -151,7 +151,7 @@ export const EditGeneralMarks = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Viva marks"
@@ -174,7 +174,7 @@ export const EditGeneralMarks = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Practical marks"
@@ -198,7 +198,7 @@ export const EditGeneralMarks = () => {
                                             {...field}
                                             onChange={(e) =>
                                                 field.onChange(
-                                                    Number(e.target.value)
+                                                    Number(e.target.value),
                                                 )
                                             }
                                             placeholder="Project marks"
