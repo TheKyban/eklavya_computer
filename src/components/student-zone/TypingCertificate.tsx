@@ -23,7 +23,6 @@ const TypingCertificate = () => {
             const { data } = await axios(
                 `/api/assets/typingCertificate/?registration=${registration}`,
             );
-            console.log(data);
             if (!!data?.png) {
                 setTypingCertificate(true);
 

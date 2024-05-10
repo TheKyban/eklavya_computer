@@ -23,7 +23,6 @@ const MarkSheet = () => {
             const { data } = await axios(
                 `/api/assets/marksheet/?registration=${registration}`,
             );
-            console.log(data);
             if (!!data?.png) {
                 setMarksheet(true);
 
