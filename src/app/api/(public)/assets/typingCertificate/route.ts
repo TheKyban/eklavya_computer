@@ -96,6 +96,9 @@ export const GET = async (req: Request) => {
         );
     } catch (error) {
         console.log("[STUDENT ZONE]", error);
-        return Response.json({ message: "Internal Error" }, { status: 500 });
+        return Response.json(
+            { message: "Internal Error", error },
+            { status: 500 },
+        );
     }
 };

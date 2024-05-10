@@ -138,6 +138,7 @@ export const GET = async (req: Request) => {
                 message:
                     (error as PrismaClientUnknownRequestError)?.message ||
                     "Internal Error",
+                error,
             },
             {
                 status: 500,
