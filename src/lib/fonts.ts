@@ -12,3 +12,28 @@ export const langar = Langar({
     weight: ["400"],
     display: "auto",
 });
+
+export async function loadGoogleFont(font: string) {
+    const url = `https://fonts.googleapis.com/css2?family=${font}`;
+
+    const css = await (
+        await fetch(url, {
+            cache: "force-cache",
+        })
+    ).text();
+
+    const resource = css.match(
+        /src: url\((.+)\) format\('(opentype|truetype)'\)/,
+    );
+
+    if (resource) {
+        const res = await fetch(resource[1], {
+            cache: "force-cache",
+        });
+        if (res.status == 200) {
+            return await res.arrayBuffer();
+        }
+    }
+
+    throw new Error("failed to load font data");
+}

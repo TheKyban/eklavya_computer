@@ -1,6 +1,9 @@
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { ImageResponse } from "@vercel/og";
+import ToCapitalize from "@/lib/toCapitalize";
+import { format } from "date-fns";
+import { loadGoogleFont } from "@/lib/fonts";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +14,7 @@ export const GET = async (req: Request) => {
          */
         const { searchParams } = new URL(req.url);
         const registration = searchParams.get("registration");
+        const image = !!searchParams.get("no_image") ? false : true;
 
         if (!registration) {
             return Response.json(
@@ -32,6 +36,20 @@ export const GET = async (req: Request) => {
             where: {
                 registration,
             },
+            include: {
+                Course: {
+                    select: {
+                        name: true,
+                        duration: true,
+                        fullName: true,
+                    },
+                },
+                Branch: {
+                    select: {
+                        branch: true,
+                    },
+                },
+            },
         });
 
         /**
@@ -48,9 +66,7 @@ export const GET = async (req: Request) => {
                     status: 404,
                 },
             );
-        }
-
-        if (!student?.isVerified || !student?.certificate) {
+        } else if (!student?.isVerified || !student?.icard) {
             return Response.json(
                 {
                     message: !student?.isVerified
@@ -64,6 +80,11 @@ export const GET = async (req: Request) => {
             );
         }
 
+        const fontData = await loadGoogleFont("Noto+Serif");
+
+        const I_CARD_IMG =
+            "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715232604/ekavaya_assets/zc3imktyxfxg8fk2zqfo.jpg";
+
         return new ImageResponse(
             (
                 <div
@@ -74,38 +95,86 @@ export const GET = async (req: Request) => {
                         display: "flex",
                         height: "100%",
                         width: "100%",
+                        fontFamily: "NotoSerif",
                     }}
                 >
                     {/* I-CARD TEMPLATES */}
-
+                    {image && (
+                        // eslint-disable-next-line
+                        <img
+                            src={I_CARD_IMG}
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                            }}
+                            alt="cert"
+                        />
+                    )}
+                    {/* Student Image */}
                     {/* eslint-disable-next-line  */}
                     <img
-                        src="https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715232604/ekavaya_assets/zc3imktyxfxg8fk2zqfo.jpg"
+                        src={student?.img}
                         style={{
                             position: "absolute",
-                            top: 0,
-                            left: 0,
+                            top: 145,
+                            left: 160,
+                            width: 280,
+                            height: 290,
                         }}
-                        alt="cert"
                     />
 
-                    <span style={{ position: "absolute", top: 380, left: 380 }}>
-                        Aditya
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 450,
+                            fontSize: 30,
+                            fontWeight: "bolder",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                        }}
+                    >
+                        {ToCapitalize(student?.name)}
                     </span>
-                    <span style={{ position: "absolute", top: 420, left: 380 }}>
-                        Mother name
+                    <span style={{ position: "absolute", top: 495, left: 280 }}>
+                        {student?.registration}
                     </span>
-                    <span style={{ position: "absolute", top: 460, left: 380 }}>
-                        Father name
+                    <span style={{ position: "absolute", top: 535, left: 280 }}>
+                        {ToCapitalize(student?.fatherName)}
                     </span>
-                    <span style={{ position: "absolute", top: 500, left: 380 }}>
-                        course name
+
+                    <span style={{ position: "absolute", top: 575, left: 280 }}>
+                        {format(new Date(student.dob), "dd/MM/yyyy")}
+                    </span>
+
+                    <span style={{ position: "absolute", top: 615, left: 280 }}>
+                        {student?.Course?.name}
+                    </span>
+                    <span style={{ position: "absolute", top: 655, left: 280 }}>
+                        {student?.Course?.duration}
+                    </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 740,
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                        }}
+                    >
+                        {student?.Branch?.branch}
                     </span>
                 </div>
             ),
             {
                 width: 599,
                 height: 957,
+                fonts: [
+                    {
+                        name: "NotoSerif",
+                        data: fontData,
+                        style: "normal",
+                    },
+                ],
             },
         );
     } catch (error) {

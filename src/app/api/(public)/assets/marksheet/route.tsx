@@ -4,16 +4,10 @@ import { ImageResponse } from "@vercel/og";
 import qrcode from "qrcode";
 import StudentStats from "@/lib/StudentStats";
 import { format } from "date-fns";
+import ToCapitalize from "@/lib/toCapitalize";
+import { loadGoogleFont } from "@/lib/fonts";
 
 export const dynamic = "force-dynamic";
-
-const ToUpperCase = (name: string): string => {
-    let newName: string = "";
-    for (let str of name.split(" ")) {
-        newName += str.charAt(0).toUpperCase() + str.slice(1) + " ";
-    }
-    return newName;
-};
 
 export const GET = async (req: Request) => {
     try {
@@ -96,6 +90,8 @@ export const GET = async (req: Request) => {
             );
         }
 
+        const fontData = await loadGoogleFont("Noto+Serif");
+
         /**
          * SEND IMAGE AS RESPONSE IF STUDENT IS FOUND AND CERTIFICATE AND ISVERIFIED TRUE
          */
@@ -125,6 +121,7 @@ export const GET = async (req: Request) => {
                         width: "100%",
                         height: "100%",
                         display: "flex",
+                        fontFamily: "NotoSerif",
                     }}
                 >
                     {/* MARKSHEET TEMPLATES */}
@@ -157,20 +154,20 @@ export const GET = async (req: Request) => {
                         style={{
                             position: "absolute",
                             top: 245,
-                            right: 170,
+                            left: 880,
                             fontSize: 22,
                         }}
                     >
                         {student?.registration}
                     </span>
                     <span style={{ position: "absolute", top: 383, left: 380 }}>
-                        {ToUpperCase(student?.name)}
+                        {ToCapitalize(student?.name)}
                     </span>
                     <span style={{ position: "absolute", top: 423, left: 380 }}>
-                        {ToUpperCase(student?.motherName)}
+                        {ToCapitalize(student?.motherName)}
                     </span>
                     <span style={{ position: "absolute", top: 463, left: 380 }}>
-                        {ToUpperCase(student?.fatherName)}
+                        {ToCapitalize(student?.fatherName)}
                     </span>
                     <span style={{ position: "absolute", top: 503, left: 380 }}>
                         {student?.Course?.name} ( {student?.Course?.fullName} )
@@ -258,7 +255,6 @@ export const GET = async (req: Request) => {
                             position: "absolute",
                             top: 1180,
                             left: 400,
-                            fontWeight: "bolder",
                         }}
                     >
                         {studentStats?.getPercentage()}%
@@ -267,8 +263,7 @@ export const GET = async (req: Request) => {
                         style={{
                             position: "absolute",
                             top: 1180,
-                            right: 200,
-                            fontWeight: "bolder",
+                            left: 860,
                         }}
                     >
                         {studentStats?.getPerformance()}
@@ -303,6 +298,13 @@ export const GET = async (req: Request) => {
             {
                 width: 1131,
                 height: 1599,
+                fonts: [
+                    {
+                        name: "NotoSerif",
+                        data: fontData,
+                        style: "normal",
+                    },
+                ],
             },
         );
     } catch (error) {
