@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
+import { extractPublicId } from "cloudinary-build-url";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -7,13 +8,13 @@ cloudinary.config({
 });
 
 export const UPLOAD_TO_CLOUDINARY = async (file: File, folder?: string) => {
-    const fileBuffer = await file.arrayBuffer();
-    var mime = file.type;
-    var encoding = "base64";
-    var base64Data = Buffer.from(fileBuffer).toString("base64");
-    var fileUri = "data:" + mime + ";" + encoding + "," + base64Data;
-
     try {
+        const fileBuffer = await file?.arrayBuffer();
+        var mime = file?.type;
+        var encoding = "base64";
+        var base64Data = Buffer?.from(fileBuffer)?.toString("base64");
+        var fileUri = "data:" + mime + ";" + encoding + "," + base64Data;
+
         const uploadToCloudinary = () => {
             return new Promise((resolve, reject) => {
                 var result = cloudinary.uploader
@@ -35,7 +36,7 @@ export const UPLOAD_TO_CLOUDINARY = async (file: File, folder?: string) => {
 
         return result;
     } catch (error) {
-        console.log("server err", error);
+        console.log("ERROR While UPLOADING MEDIA", error);
         return error;
     }
 };
@@ -49,10 +50,7 @@ export const DELETE_IMG = async (publicId: string) => {
 };
 
 export const DELETE_FILE = async (url: string) => {
-    let fileUrl = url.split("/");
-    let Id = fileUrl[fileUrl.length - 1].split(".")[0];
-    const publicId =
-        fileUrl.length === 8 ? Id : `${fileUrl[fileUrl.length - 2]}/${Id}`;
+    const publicId = extractPublicId(url);
     const result = await DELETE_IMG(publicId);
     return result;
 };

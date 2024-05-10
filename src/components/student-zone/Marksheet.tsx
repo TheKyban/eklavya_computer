@@ -41,7 +41,7 @@ const MarkSheet = () => {
                 const image = document.createElement("img");
                 image.crossOrigin = "anonymous";
                 image.src =
-                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900605/ekavaya_assets/g9la6ysdljkrjr9fssz5.jpg";
+                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715189705/ekavaya_assets/tgcwqnmhmwaaomhcxws4.jpg";
                 image.onload = async () => {
                     ctx?.clearRect(0, 0, canvas.width, canvas.height);
                     canvas.width = image.naturalWidth;

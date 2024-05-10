@@ -1,7 +1,5 @@
-import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import { DELETE_FILE, UPLOAD_TO_CLOUDINARY } from "@/lib/cloudinary";
-import { role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 
@@ -11,7 +9,17 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
 });
 
-export async function POST(request: Request): Promise<NextResponse> {
+// export const GET = async () => {
+//     const assets = await cloudinary.api.resources({
+//         type: "upload",
+//         prefix: "ekavaya_assets", // add your folder
+//         direction: "desc",
+//     });
+
+//     return Response.json(assets);
+// };
+
+export async function POST(res: Request): Promise<Response> {
     try {
         /**
          * CHECK ADMIN OR FRENCHISE IS LOGIN
@@ -19,64 +27,65 @@ export async function POST(request: Request): Promise<NextResponse> {
 
         const session = await getServerSession(authOptions);
 
-        if (!session?.user) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
+        if (!session?.user || !session.user?.isActive) {
+            return Response.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                {
+                    status: 401,
+                },
+            );
         }
 
-        /**
-         * CHECK FRANCHISE IS ACTIVE OR NOT
-         */
-
-        if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
-            return NextResponse.json({
-                message: "Unauthorized",
-                success: false,
-            });
-        }
-
-        const data = await request.formData();
+        const data = await res.formData();
         const file = data.get("file") as File;
-        const results = await UPLOAD_TO_CLOUDINARY(file, "eklavaya");
+        const folder = (data.get("folder") as string) || "eklavaya";
+        const results = await UPLOAD_TO_CLOUDINARY(file, folder);
 
-        return NextResponse.json(results, { status: 201 });
+        return Response.json(results, { status: 201 });
     } catch (error) {
-        return NextResponse.json(
-            { message: "some error occured while uploading" },
+        console.log;
+        return Response.json(
+            { message: "some error occured while uploading", error },
             { status: 500 },
         );
     }
 }
 
-export async function DELETE(request: Request) {
-    /**
-     * CHECK ADMIN OR FRENCHISE IS LOGIN
-     */
+export async function DELETE(res: Request) {
+    try {
+        /**
+         * CHECK ADMIN OR FRENCHISE IS LOGIN
+         */
 
-    const session = await getServerSession(authOptions);
+        const session = await getServerSession(authOptions);
 
-    if (!session?.user) {
-        return NextResponse.json({
-            message: "Unauthorized",
-            success: false,
-        });
+        if (!session?.user || !session.user?.isActive) {
+            return Response.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                {
+                    status: 401,
+                },
+            );
+        }
+        const { searchParams } = new URL(res.url);
+        const urlToDelete = searchParams.get("url") as string;
+
+        const result = await DELETE_FILE(urlToDelete);
+        return Response.json(result, { status: 200 });
+    } catch (error) {
+        console.log("ERROR WHILE DELETE UPLOAD", error);
+        return Response.json(
+            {
+                message: "Internal Error",
+                error,
+            },
+            { status: 500 },
+        );
     }
-
-    /**
-     * CHECK FRANCHISE IS ACTIVE OR NOT
-     */
-
-    if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
-        return NextResponse.json({
-            message: "Unauthorized",
-            success: false,
-        });
-    }
-    const { searchParams } = new URL(request.url);
-    const urlToDelete = searchParams.get("url") as string;
-
-    const result = await DELETE_FILE(urlToDelete);
-    return NextResponse.json(result, { status: 200 });
 }

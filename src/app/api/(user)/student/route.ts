@@ -7,7 +7,6 @@ import { studentSchema } from "@/lib/schema";
 import { z } from "zod";
 import { per_page } from "@/lib/constants";
 import { DELETE_FILE } from "@/lib/cloudinary";
-import { tree } from "next/dist/build/templates/app-page";
 
 /**
  * REGISTER STUDENTS

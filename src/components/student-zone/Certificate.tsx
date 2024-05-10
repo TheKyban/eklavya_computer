@@ -38,8 +38,10 @@ const Certificate = () => {
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
                 image.crossOrigin = "anonymous";
+                // image.src =
+                // "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900605/ekavaya_assets/zeib4pejjzevocvlmg4j.jpg";
                 image.src =
-                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900605/ekavaya_assets/zeib4pejjzevocvlmg4j.jpg";
+                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715183433/ekavaya_assets/z37jjeti3t0lasea40sn.jpg";
                 image.onload = async () => {
                     canvas.width = image.naturalWidth;
                     canvas.height = image.naturalHeight;
