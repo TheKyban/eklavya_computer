@@ -30,18 +30,11 @@ interface LinkType {
 
 export const links: LinkType[] = [
     {
-        title: "Manage ICard",
-        icon: <BookCheck className="w-5 h-5 text-green-400" />,
-        link: "/dashboard/icard",
-        role: "ADMIN",
-    },
-    {
         title: "Course",
         icon: <Book className="w-5 h-5 text-green-400" />,
         link: "/dashboard/course",
         role: "ADMIN",
     },
-
     {
         title: "Payment",
         icon: <IndianRupee className="w-5 h-5 text-rose-400" />,
@@ -105,12 +98,6 @@ export const accordianLinks: accordianLinks[] = [
                 icon: <ShieldCheck className="w-5 h-5 text-indigo-600" />,
                 link: "/dashboard/student",
             },
-            {
-                title: "Verification",
-                icon: <UserRoundCog className="w-5 h-5 text-pink-600" />,
-                link: "/dashboard/student/verification",
-                role: "ADMIN",
-            },
         ],
     },
     {
@@ -144,12 +131,6 @@ export const accordianLinks: accordianLinks[] = [
                 icon: <TextCursorInput className="w-5 h-5 text-orange-400" />,
                 link: "/dashboard/marks?typing=true",
             },
-            {
-                title: "Manage Marks",
-                icon: <FileScan className="w-5 h-5 text-red-400" />,
-                link: "/dashboard/marks/manage",
-                role: "ADMIN",
-            },
         ],
     },
     {
@@ -166,10 +147,36 @@ export const accordianLinks: accordianLinks[] = [
                 icon: <Ribbon className="w-5 h-5 text-red-400" />,
                 link: "/dashboard/certificates?pending=true",
             },
+        ],
+    },
+    {
+        title: "Management",
+        icon: <Medal className="w-5 h-5 text-gray-600" />,
+        links: [
             {
-                title: "Manage Certificates",
+                title: "Student Verification",
+                icon: <UserRoundCog className="w-5 h-5 text-pink-600" />,
+                link: "/dashboard/management/students",
+                role: "ADMIN",
+            },
+            {
+                title: "Manage Certificate",
                 icon: <Layers3 className="w-5 h-5 text-cyan-400" />,
-                link: "/dashboard/certificates/manage",
+                link: "/dashboard/management/certificate",
+                role: "ADMIN",
+            },
+
+            {
+                title: "Manage Marksheet",
+                icon: <FileScan className="w-5 h-5 text-red-400" />,
+                link: "/dashboard/management/marksheet",
+                role: "ADMIN",
+            },
+
+            {
+                title: "Manage ICard",
+                icon: <BookCheck className="w-5 h-5 text-green-400" />,
+                link: "/dashboard/management/icard",
                 role: "ADMIN",
             },
         ],

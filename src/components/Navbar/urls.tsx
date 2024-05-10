@@ -104,8 +104,8 @@ const DownloadLinks: linkType[] = [
 
 const StudentzoneLinks: linkType[] = [
     {
-        title: "Registration verification",
-        link: "/studentzone/registration",
+        title: "Typing Certificate",
+        link: "/studentzone/computerTyping",
         icon: GraduationCap,
     },
     {

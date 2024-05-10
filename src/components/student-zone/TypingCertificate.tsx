@@ -3,16 +3,16 @@ import { FormEvent, useRef, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { SearchTemplate } from "@/components/student-zone/searchTemplate";
 import { MAX_WIDTH } from "@/lib/styles";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import { printHandler } from "@/lib/printHandler";
 import { downloadHandler } from "@/lib/pdfDownload";
 import axios, { AxiosError } from "axios";
 
-const MarkSheet = () => {
+const TypingCertificate = () => {
     const [registration, setRegistration] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const ref = useRef<HTMLCanvasElement>(null);
-    const [marksheet, setMarksheet] = useState(false);
+    const [typingCertificate, setTypingCertificate] = useState(false);
 
     const handleSearch = async (e: FormEvent) => {
         try {
@@ -21,11 +21,11 @@ const MarkSheet = () => {
             setIsLoading(true);
 
             const { data } = await axios(
-                `/api/assets/marksheet/?registration=${registration}`,
+                `/api/assets/typingCertificate/?registration=${registration}`,
             );
             console.log(data);
             if (!!data?.png) {
-                setMarksheet(true);
+                setTypingCertificate(true);
 
                 const canvas = ref.current!;
                 const ctx = canvas.getContext("2d");
@@ -48,7 +48,7 @@ const MarkSheet = () => {
                 ?.clearRect(0, 0, ref.current?.width!, ref.current?.height!);
             ref.current!.width = 0;
             ref.current!.height = 0;
-            setMarksheet(false);
+            setTypingCertificate(false);
         } finally {
             setIsLoading(false);
         }
@@ -58,7 +58,7 @@ const MarkSheet = () => {
         <div className={`w-full ${MAX_WIDTH} m-auto px-2 py-16`}>
             <div className="max-w-[363px] md:max-w-xl lg:min-w-[500px] m-auto">
                 <SearchTemplate
-                    title="MARKSHEET VERIFICATION"
+                    title="TYPING CERTIFICATE VERIFICATION"
                     registration={registration}
                     setRegistration={setRegistration}
                     searchFunc={handleSearch}
@@ -66,7 +66,7 @@ const MarkSheet = () => {
                 />
             </div>
 
-            {marksheet && (
+            {typingCertificate && (
                 <div className="w-full flex gap-4 justify-center items-center my-4">
                     <Button
                         variant={"primary"}
@@ -79,7 +79,8 @@ const MarkSheet = () => {
                         onClick={() =>
                             downloadHandler(
                                 ref.current!,
-                                `marksheet_${registration}.pdf`,
+                                `typingCertificate_${registration}.pdf`,
+                                "l",
                             )
                         }
                     >
@@ -88,11 +89,11 @@ const MarkSheet = () => {
                 </div>
             )}
 
-            <div className="w-full overflow-x-auto">
+            <div className="w-full overflow-x-auto flex items-center justify-center">
                 <canvas ref={ref}></canvas>
             </div>
         </div>
     );
 };
 
-export default MarkSheet;
+export default TypingCertificate;

@@ -1,92 +1,51 @@
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
-import { Prisma } from "../../../../../../prisma/prisma";
+import { Prisma } from "../../../../../../../prisma/prisma";
 import { ImageResponse } from "@vercel/og";
 import qrcode from "qrcode";
 import ToCapitalize from "@/lib/toCapitalize";
-import StudentStats from "@/lib/StudentStats";
 import { loadGoogleFont } from "@/lib/fonts";
 import { format } from "date-fns";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+import { Course, Marks, Student } from "@prisma/client";
+
 export const dynamic = "force-dynamic";
 
 export const GET = async (req: Request) => {
     try {
-        /**
-         * GET REGISTRATION
-         */
         const { searchParams } = new URL(req.url);
-        const registration = searchParams.get("registration");
         const image = !!searchParams.get("no_image") ? false : true;
 
-        if (!registration) {
+        const token = cookies().get("student");
+        if (!token)
             return Response.json(
                 {
-                    message: "Missing registration",
-                    success: false,
-                },
-                {
-                    status: 400,
-                },
-            );
-        }
-
-        /**
-         * FIND STUDENT FROM REGISTRATION
-         */
-
-        const student = await Prisma.student.findUnique({
-            where: {
-                registration,
-            },
-            include: {
-                Course: true,
-                Branch: {
-                    select: {
-                        branch: true,
-                    },
-                },
-                marks: true,
-            },
-        });
-
-        /**
-         * SEND ERROR IF STUDENT IS NOT FOUND
-         */
-
-        if (!student) {
-            return Response.json(
-                {
-                    message: "Student not found",
+                    message: "Invalid request",
                     success: false,
                 },
                 {
                     status: 404,
                 },
             );
-        } else if (
-            !student?.isVerified ||
-            !student?.certificate ||
-            student?.Course?.name === "COMPUTER TYPING" ||
-            !student?.marks
-        ) {
-            return Response.json(
-                {
-                    message: !student?.isVerified
-                        ? "Not Verified"
-                        : "Not Generated",
-                    success: false,
-                },
-                {
-                    status: 404,
-                },
-            );
-        }
+
+        const decoded = jwt.verify(token.value, process.env.JWT_STUDENT_KEY!);
+
+        const student = decoded as Student & {
+            Course: Course;
+            marks: Marks;
+            Branch: { branch: string };
+        };
+
         const fontData = await loadGoogleFont("Noto+Serif");
 
         /**
          * SEND IMAGE AS RESPONSE IF STUDENT IS FOUND AND CERTIFICATE AND ISVERIFIED TRUE
          */
 
-        const str = await qrcode.toBuffer(`${{ name: "aditya" }}`, {
+        const Typing_Certificate =
+            "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715264416/ekavaya_assets/n3htsehgv01jksnqh76z.jpg";
+
+        const QR_Buffer = await qrcode.toBuffer(`${{ name: "aditya" }}`, {
             width: 80,
             margin: 0,
             color: {
@@ -95,19 +54,10 @@ export const GET = async (req: Request) => {
         });
 
         var encoding = "base64";
-        var base64Data = Buffer.from(str).toString("base64");
+        var base64Data = Buffer.from(QR_Buffer).toString("base64");
         var qrCodeURl =
             "data:" + "image/png" + ";" + encoding + "," + base64Data;
 
-        const studentStats = new StudentStats(
-            [
-                student?.marks?.marks?.practical!,
-                student?.marks?.marks?.project!,
-                student?.marks?.marks?.viva!,
-                student?.marks?.marks?.written!,
-            ],
-            400,
-        );
         return new ImageResponse(
             (
                 <div
@@ -126,7 +76,7 @@ export const GET = async (req: Request) => {
                     {image && (
                         // eslint-disable-next-line
                         <img
-                            src="https://res.cloudinary.com/ddgjcyk0q/image/upload/q_5/v1715183433/ekavaya_assets/z37jjeti3t0lasea40sn.jpg"
+                            src={Typing_Certificate}
                             style={{
                                 position: "absolute",
                                 top: 0,
@@ -136,11 +86,14 @@ export const GET = async (req: Request) => {
                         />
                     )}
 
+                    {/* Student details */}
+
                     <span
                         style={{
                             position: "absolute",
                             top: 120,
                             left: 1000,
+                            color: "white",
                             fontSize: 20,
                         }}
                     >
@@ -152,66 +105,59 @@ export const GET = async (req: Request) => {
                             top: 178,
                             left: 1005,
                             fontSize: 20,
+                            color: "white",
                         }}
                     >
                         {student?.registration}
                     </span>
-                    <span style={{ position: "absolute", top: 353, left: 480 }}>
+                    <span style={{ position: "absolute", top: 295, left: 350 }}>
                         {ToCapitalize(student?.name)}
                     </span>
-                    <span style={{ position: "absolute", top: 400, left: 460 }}>
+                    <span style={{ position: "absolute", top: 340, left: 360 }}>
                         {ToCapitalize(student?.fatherName)}
                     </span>
+                    <span style={{ position: "absolute", top: 385, left: 380 }}>
+                        {student?.registration}
+                    </span>
+                    <span style={{ position: "absolute", top: 430, left: 370 }}>
+                        {student?.Course?.name}
+                    </span>
                     <span
-                        style={{
-                            position: "absolute",
-                            top: 450,
-                            left: 500,
-                            fontSize: 22,
-                        }}
-                    >
-                        {student?.Course?.name} ({student?.Course?.fullName})
-                    </span>
-                    <span style={{ position: "absolute", top: 490, left: 480 }}>
-                        {student?.Branch?.branch}
-                    </span>
-
-                    <span style={{ position: "absolute", top: 535, left: 230 }}>
-                        {student?.branch}
-                    </span>
-
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 540,
-                            left: 560,
-                            fontSize: 22,
-                        }}
+                        style={{ position: "absolute", top: 430, right: 130 }}
                     >
                         {student?.Course?.duration}
                     </span>
+                    <span style={{ position: "absolute", top: 480, left: 330 }}>
+                        {student?.Branch?.branch}
+                    </span>
+                    <span style={{ position: "absolute", top: 525, left: 330 }}>
+                        {student?.branch}
+                    </span>
 
+                    {/* Performance */}
                     <span
-                        style={{
-                            position: "absolute",
-                            top: 590,
-                            left: 500,
-                            fontSize: 22,
-                        }}
+                        style={{ position: "absolute", top: 620, right: 490 }}
                     >
-                        {studentStats?.getGrade()}
+                        {student?.marks?.typingMarks?.englishTyping}
+                    </span>
+                    <span
+                        style={{ position: "absolute", top: 665, right: 500 }}
+                    >
+                        {student?.marks?.typingMarks?.hindiTyping}
                     </span>
 
                     <span
                         style={{
                             position: "absolute",
-                            top: 650,
-                            left: 220,
-                            fontSize: 22,
+                            top: 695,
+                            left: 240,
+                            fontWeight: "bolder",
+                            fontSize: 18,
                         }}
                     >
                         {format(new Date(student.updatedAt), "dd/MM/yyyy")}
                     </span>
+
                     {/* QR CODE */}
                     {/* eslint-disable-next-line  */}
                     <img
@@ -221,7 +167,7 @@ export const GET = async (req: Request) => {
                             maxWidth: "80px",
                             maxHeight: "80px",
                             position: "absolute",
-                            top: 670,
+                            top: 730,
                             right: 430,
                         }}
                     />

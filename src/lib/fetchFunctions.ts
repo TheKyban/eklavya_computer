@@ -1,5 +1,3 @@
-import { Course, Marks, Student } from "@prisma/client";
-import axios from "axios";
 import { UserType, details } from "./types";
 import { Prisma } from "../../prisma/prisma";
 import {
@@ -10,22 +8,6 @@ import {
     ShieldCheck,
     Users,
 } from "lucide-react";
-
-export const fetchStuddent = async (registration: string) => {
-    const { data } = await axios.get<{
-        message?: string;
-        student?: Student & {
-            Course: Course;
-            Branch: {
-                branch: string;
-                userId: string;
-            };
-            marks?: Marks;
-        };
-    }>(`/api/student/${registration}`);
-
-    return data;
-};
 
 export const fetchAdminDashboardData = async () => {
     const data: details[] = [

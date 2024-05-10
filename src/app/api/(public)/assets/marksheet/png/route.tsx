@@ -1,53 +1,43 @@
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
-import { Prisma } from "../../../../../../prisma/prisma";
 import { ImageResponse } from "@vercel/og";
 import qrcode from "qrcode";
 import StudentStats from "@/lib/StudentStats";
 import { format } from "date-fns";
 import ToCapitalize from "@/lib/toCapitalize";
 import { loadGoogleFont } from "@/lib/fonts";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+import { Course, Marks, Student } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
 export const GET = async (req: Request) => {
     try {
-        /**
-         * GET REGISTRATION
-         */
         const { searchParams } = new URL(req.url);
-        const registration = searchParams.get("registration");
         const image = !!searchParams.get("no_image") ? false : true;
 
-        if (!registration) {
+        const token = cookies().get("student");
+        if (!token)
             return Response.json(
                 {
-                    message: "Missing registration",
+                    message: "Invalid request",
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: 404,
                 },
             );
-        }
 
+        const decoded = jwt.verify(token.value, process.env.JWT_STUDENT_KEY!);
+
+        const student = decoded as Student & {
+            Course: Course;
+            marks: Marks;
+            Branch: { branch: string };
+        };
         /**
          * FIND STUDENT FROM REGISTRATION
          */
-
-        const student = await Prisma.student.findUnique({
-            where: {
-                registration,
-            },
-            include: {
-                Course: true,
-                Branch: {
-                    select: {
-                        branch: true,
-                    },
-                },
-                marks: true,
-            },
-        });
 
         const studentStats = new StudentStats(
             [
@@ -58,37 +48,6 @@ export const GET = async (req: Request) => {
             ],
             400,
         );
-        /**
-         * SEND ERROR IF STUDENT IS NOT FOUND
-         */
-
-        if (!student) {
-            return Response.json(
-                {
-                    message: "Student not found",
-                    success: false,
-                },
-                {
-                    status: 404,
-                },
-            );
-        } else if (
-            !student?.isVerified ||
-            !student?.marksheet ||
-            student?.Course?.name === "COMPUTER TYPING"
-        ) {
-            return Response.json(
-                {
-                    message: !student?.isVerified
-                        ? "Not Verified"
-                        : "Not Generated",
-                    success: false,
-                },
-                {
-                    status: 404,
-                },
-            );
-        }
 
         const fontData = await loadGoogleFont("Noto+Serif");
 
@@ -98,13 +57,23 @@ export const GET = async (req: Request) => {
         const marksheetUrl =
             "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715263907/ekavaya_assets/kctsnnrujvfhkmoixley.jpg";
 
-        const QR_buffer = await qrcode.toBuffer(`${{ name: "aditya" }}`, {
-            width: 80,
-            margin: 0,
-            color: {
-                light: "#fff7ed",
+        const QR_buffer = await qrcode.toBuffer(
+            `${{
+                name: student?.name,
+                registration: student?.registration,
+                fatherName: student?.fatherName,
+                motherName: student?.motherName,
+                branch: student?.Branch?.branch,
+                branchCode: student?.branch,
+            }}`,
+            {
+                width: 80,
+                margin: 0,
+                color: {
+                    light: "#fff7ed",
+                },
             },
-        });
+        );
 
         var base64Data = Buffer.from(QR_buffer).toString("base64");
         var encoding = "base64";

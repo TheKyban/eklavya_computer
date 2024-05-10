@@ -9,16 +9,6 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
 });
 
-// export const GET = async () => {
-//     const assets = await cloudinary.api.resources({
-//         type: "upload",
-//         prefix: "ekavaya_assets", // add your folder
-//         direction: "desc",
-//     });
-
-//     return Response.json(assets);
-// };
-
 export async function POST(res: Request): Promise<Response> {
     try {
         /**

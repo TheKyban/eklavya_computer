@@ -2,64 +2,76 @@ import { cookies } from "next/headers";
 import { Prisma } from "../../../../../../prisma/prisma";
 import jwt from "jsonwebtoken";
 
-export const GET = async (
-    req: Request,
-    { params }: { params: { registration: string } },
-) => {
+export const dynamic = "force-dynamic";
+
+export const GET = async (req: Request) => {
     try {
-        if (!params.registration) {
+        /**
+         * GET REGISTRATION
+         */
+        const { searchParams } = new URL(req.url);
+        const registration = searchParams.get("registration");
+        const image = !!searchParams.get("no_image") ? true : false;
+
+        if (!registration) {
             return Response.json(
                 {
-                    message: "Regisatration number is required.",
+                    message: "Missing registration",
+                    success: false,
                 },
-                { status: 400 },
+                {
+                    status: 400,
+                },
             );
         }
 
-        /**
-         * REGISTRATION VERIFICATION OR I CARD VERIFICATION
-         */
-
+        // FIND STUDENT FROM REGISTRATION
         const student = await Prisma.student.findFirst({
             where: {
-                registration: params.registration,
+                registration,
             },
             include: {
+                Course: true,
+                marks: true,
                 Branch: {
                     select: {
                         branch: true,
-                        userId: true,
                     },
                 },
-                Course: {
-                    select: {
-                        name: true,
-                        fullName: true,
-                        duration: true,
-                        modules: true,
-                    },
-                },
-                marks: true,
             },
         });
 
+        // VALIDATE STUDENT
         if (!student) {
             return Response.json(
-                { message: "Student not found." },
-                { status: 400 },
-            );
-        }
-
-        if (!student?.isVerified) {
-            return Response.json(
                 {
-                    message: "Not Verified.",
+                    message: "Student not found",
                     success: false,
                 },
-                { status: 400 },
+                {
+                    status: 404,
+                },
             );
         }
 
+        if (
+            !student?.isVerified ||
+            student?.Course?.name !== "COMPUTER TYPING" ||
+            !student?.certificate
+        ) {
+            return Response.json(
+                {
+                    message: !student?.isVerified
+                        ? "Not Verified"
+                        : "Not Generated",
+                    success: false,
+                },
+                {
+                    status: 404,
+                },
+            );
+        }
+        // JWT TOKEN
         const STUDENT_JWT = jwt.sign(student, process.env.JWT_STUDENT_KEY!, {
             expiresIn: "5M",
         });
@@ -74,7 +86,7 @@ export const GET = async (
 
         return Response.json(
             {
-                student,
+                png: `/api/assets/typingCertificate/png${image ? "?no_image=true" : ""}`,
             },
             {
                 status: 200,

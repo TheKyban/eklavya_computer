@@ -2,36 +2,51 @@
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { SearchTemplate } from "./searchTemplate";
-import { fetchStuddent } from "@/lib/fetchFunctions";
 import { MAX_WIDTH } from "@/lib/styles";
 import { Button } from "../ui/button";
 import { printHandler } from "@/lib/printHandler";
 import { downloadHandler } from "@/lib/pdfDownload";
+import axios, { AxiosError } from "axios";
 
 const ICard = () => {
     const [registration, setRegistration] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [student, setStudent] = useState(false);
     const ref = useRef<HTMLCanvasElement>(null);
+    const [icard, setICard] = useState(false);
 
     const handleSearch = async (e: FormEvent) => {
         try {
             e.preventDefault();
             if (!registration || registration.length <= 6) return;
             setIsLoading(true);
-            const data = await fetchStuddent(registration);
-            if (!!data?.message) {
-                toast({ description: (data.message as string).toUpperCase() });
-            }
 
-            if (!data?.student?.isVerified) {
-                toast({ description: "NOT VERIFIED." });
-                return;
-            } else {
-                toast({ description: "Icard will available soon." });
+            const { data } = await axios(
+                `/api/assets/icard/?registration=${registration}`,
+            );
+            if (!!data?.png) {
+                setICard(true);
+                const canvas = ref.current!;
+                const ctx = canvas.getContext("2d");
+                const image = document.createElement("img");
+                image.src = data?.png;
+                image.onload = async () => {
+                    canvas.width = image?.naturalWidth;
+                    canvas.height = image?.naturalHeight;
+                    ctx?.drawImage(image, 0, 0);
+                };
             }
         } catch (error) {
             console.log(error);
+            toast({
+                description: (error as AxiosError<{ message: string }>)
+                    ?.response?.data?.message,
+            });
+            ref.current
+                ?.getContext("2d")
+                ?.clearRect(0, 0, ref.current?.width!, ref.current?.height!);
+            ref.current!.width = 0;
+            ref.current!.height = 0;
+            setICard(false);
         } finally {
             setIsLoading(false);
         }
@@ -49,7 +64,7 @@ const ICard = () => {
                 />
             </div>
 
-            {student && (
+            {!!icard && (
                 <div className="w-full flex gap-4 justify-center items-center my-4">
                     <Button
                         variant={"primary"}
@@ -63,7 +78,7 @@ const ICard = () => {
                             downloadHandler(
                                 ref.current!,
                                 `certificate_${registration}.pdf`,
-                                "l",
+                                "p",
                             )
                         }
                     >
@@ -71,9 +86,8 @@ const ICard = () => {
                     </Button>
                 </div>
             )}
-
-            <div className="w-full overflow-x-auto">
-                <canvas ref={ref} className="mx-auto max-w-4xl"></canvas>
+            <div className="w-full overflow-x-auto flex items-center justify-center">
+                <canvas ref={ref}></canvas>
             </div>
         </div>
     );
