@@ -27,7 +27,7 @@ const MobileMode = () => {
             <Image
                 priority
                 src={
-                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712899947/ekavaya_assets/opflfl8pq0yfpeqj0kwc.jpg"
+                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
                 }
                 width={500}
                 height={50}
@@ -40,7 +40,7 @@ const MobileMode = () => {
                         <Button
                             variant={"outline"}
                             size={"sm"}
-                            className="py-5 px-3 drop-shadow-md"
+                            className="py-5 px-3 drop-shadow-md absolute right-2"
                             suppressHydrationWarning
                         >
                             <Menu className="h-[1.2rem] w-[1.2rem] text-red-700" />
