@@ -50,11 +50,11 @@ const Navbar = () => {
                         delay: 0.1,
                         duration: 1,
                     }}
-                    className="relative w-[50vw] m-auto h-[120px] overflow-hidden"
+                    className="relative w-full m-auto h-[120px] overflow-hidden"
                 >
                     <Image
                         src={
-                            "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712899947/ekavaya_assets/opflfl8pq0yfpeqj0kwc.jpg"
+                            "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
                         }
                         fill
                         alt="banner"
