@@ -82,6 +82,8 @@ export const GET = async (req: Request) => {
             httpOnly: true,
             secure: true,
             expires: Date.now() + 1000 * 60,
+            sameSite: "lax",
+            path: "/",
         });
 
         return Response.json(
