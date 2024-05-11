@@ -1,5 +1,4 @@
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
-import { Prisma } from "../../../../../../../prisma/prisma";
 import { ImageResponse } from "@vercel/og";
 import qrcode from "qrcode";
 import ToCapitalize from "@/lib/toCapitalize";

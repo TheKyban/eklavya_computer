@@ -24,8 +24,6 @@ const MarkSheet = () => {
                 `/api/assets/marksheet/?registration=${registration}`,
             );
             if (!!data?.png) {
-                setMarksheet(true);
-
                 const canvas = ref.current!;
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
@@ -34,6 +32,7 @@ const MarkSheet = () => {
                     canvas.width = image?.naturalWidth;
                     canvas.height = image?.naturalHeight;
                     ctx?.drawImage(image, 0, 0);
+                    setMarksheet(true);
                 };
             }
         } catch (error) {
@@ -73,6 +72,7 @@ const MarkSheet = () => {
                     >
                         Print
                     </Button>
+
                     <Button
                         variant={"primary"}
                         onClick={() =>
@@ -86,9 +86,8 @@ const MarkSheet = () => {
                     </Button>
                 </div>
             )}
-
-            <div className="w-full overflow-x-auto">
-                <canvas ref={ref}></canvas>
+            <div className="w-full overflow-x-auto flex items-center justify-center">
+                <canvas ref={ref} className="max-w-sm md:max-w-lg lg:max-w-2xl"></canvas>
             </div>
         </div>
     );

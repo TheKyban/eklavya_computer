@@ -24,7 +24,6 @@ const ICard = () => {
                 `/api/assets/icard/?registration=${registration}`,
             );
             if (!!data?.png) {
-                setICard(true);
                 const canvas = ref.current!;
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
@@ -33,6 +32,7 @@ const ICard = () => {
                     canvas.width = image?.naturalWidth;
                     canvas.height = image?.naturalHeight;
                     ctx?.drawImage(image, 0, 0);
+                    setICard(true);
                 };
             }
         } catch (error) {
@@ -87,7 +87,7 @@ const ICard = () => {
                 </div>
             )}
             <div className="w-full overflow-x-auto flex items-center justify-center">
-                <canvas ref={ref}></canvas>
+                <canvas ref={ref} className="max-w-sm"></canvas>
             </div>
         </div>
     );

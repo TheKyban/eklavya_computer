@@ -26,7 +26,6 @@ export const HomeCarousel: FC<{
                 x: -100,
             }}
             transition={{
-                delay: 0.4,
                 duration: 0.6,
             }}
             className="w-full lg:max-w-xl"

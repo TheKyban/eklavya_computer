@@ -38,6 +38,7 @@ export const SearchTemplate: FC<CardProps> = ({
                         onChange={(e) => setRegistration(e.target.value)}
                         className="bg-white dark:focus:ring-offset-white"
                         autoFocus
+                        disabled={isLoading}
                     />
                     <Button
                         variant={"destructive"}

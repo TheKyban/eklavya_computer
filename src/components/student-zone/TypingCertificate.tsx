@@ -24,8 +24,6 @@ const TypingCertificate = () => {
                 `/api/assets/typingCertificate/?registration=${registration}`,
             );
             if (!!data?.png) {
-                setTypingCertificate(true);
-
                 const canvas = ref.current!;
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
@@ -34,6 +32,7 @@ const TypingCertificate = () => {
                     canvas.width = image?.naturalWidth;
                     canvas.height = image?.naturalHeight;
                     ctx?.drawImage(image, 0, 0);
+                    setTypingCertificate(true);
                 };
             }
         } catch (error) {
@@ -89,7 +88,10 @@ const TypingCertificate = () => {
             )}
 
             <div className="w-full overflow-x-auto flex items-center justify-center">
-                <canvas ref={ref}></canvas>
+                <canvas
+                    ref={ref}
+                    className="max-w-sm sm:max-w-xl lg:max-w-3xl"
+                ></canvas>
             </div>
         </div>
     );

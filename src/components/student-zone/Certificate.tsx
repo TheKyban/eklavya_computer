@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { printHandler } from "@/lib/printHandler";
 import { downloadHandler } from "@/lib/pdfDownload";
 import axios, { AxiosError } from "axios";
+import jsPDF from "jspdf";
 
 const Certificate = () => {
     const [registration, setRegistration] = useState("");
@@ -21,10 +22,9 @@ const Certificate = () => {
             setIsLoading(true);
 
             const { data } = await axios(
-                `/api/assets/marksheet/?registration=${registration}`,
+                `/api/assets/certificate/?registration=${registration}`,
             );
             if (!!data?.png) {
-                setCertificate(true);
                 const canvas = ref.current!;
                 const ctx = canvas.getContext("2d");
                 const image = document.createElement("img");
@@ -33,6 +33,7 @@ const Certificate = () => {
                     canvas.width = image?.naturalWidth;
                     canvas.height = image?.naturalHeight;
                     ctx?.drawImage(image, 0, 0);
+                    setCertificate(true);
                 };
             }
         } catch (error) {
@@ -88,7 +89,10 @@ const Certificate = () => {
             )}
 
             <div className="w-full overflow-x-auto flex items-center justify-center">
-                <canvas ref={ref}></canvas>
+                <canvas
+                    ref={ref}
+                    className="max-w-sm sm:max-w-xl lg:max-w-3xl"
+                ></canvas>
             </div>
         </div>
     );

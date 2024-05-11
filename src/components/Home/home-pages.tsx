@@ -89,7 +89,6 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
                 x: 100,
             }}
             transition={{
-                delay: 0.4,
                 duration: 0.6,
             }}
             className="relative h-[400px] max-h-[400px] w-full max-w-full md:max-w-xs flex flex-col border"
@@ -152,7 +151,6 @@ const FromDeskOf = () => {
                 x: -100,
             }}
             transition={{
-                delay: 0.2,
                 duration: 0.6,
             }}
             className="w-full flex flex-col gap-2 items-center border"
@@ -218,7 +216,6 @@ const NoticeSection = () => {
                 x: 100,
             }}
             transition={{
-                delay: 0.2,
                 duration: 0.6,
             }}
             className="w-full max-w-full md:max-w-xs border overflow-y-hidden"
