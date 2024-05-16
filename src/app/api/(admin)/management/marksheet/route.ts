@@ -4,9 +4,7 @@ import { Prisma } from "../../../../../../prisma/prisma";
 import { per_page } from "@/lib/constants";
 import { STATUS_CODE } from "@/lib/statusCode";
 
-/**
- * GET STUDENTS
- */
+export const dynamic = "force-dynamic";
 export const GET = async (req: Request) => {
     try {
         /**
