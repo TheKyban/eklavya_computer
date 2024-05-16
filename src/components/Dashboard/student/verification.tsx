@@ -79,9 +79,8 @@ const StudentVerificationManagement = ({
             registration: string;
         }) => {
             const { data } = await axios.put(
-                `/api/student-verification/${user}`,
+                `/api/management/student-verification`,
                 {
-                    isVerified,
                     registration,
                 },
             );

@@ -2,12 +2,62 @@ import { v2 as cloudinary } from "cloudinary";
 import { DELETE_FILE, UPLOAD_TO_CLOUDINARY } from "@/lib/cloudinary";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
+import { STATUS_CODE } from "@/lib/statusCode";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_CLOUD_API,
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
 });
+
+export async function GET(req: Request) {
+    try {
+        const session = await getServerSession(authOptions);
+
+        if (!session?.user) {
+            return Response.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                {
+                    status: STATUS_CODE?.UNAUTHENTICATE,
+                },
+            );
+        }
+
+        const { searchParams } = new URL(req.url);
+        const folder = searchParams.get("folder");
+        if (!folder) {
+            return Response.json(
+                { message: "Folder or Prefix is required" },
+                { status: STATUS_CODE.CLIENT_ERROR },
+            );
+        }
+        const assets = await cloudinary.api.resources({
+            type: "upload",
+            prefix: "eklavaya-carousel", // add your folder
+        });
+        if (!assets?.resources) {
+            return Response.json(
+                {
+                    message: "Something went wrong while fetching assets",
+                },
+                { status: STATUS_CODE.INTERNAL_ERROR },
+            );
+        }
+        return Response.json(
+            { assets: assets?.resources },
+            { status: STATUS_CODE.OK },
+        );
+    } catch (error) {
+        console.log("GET ALL ASSETS");
+        return Response.json(
+            { message: "Something went wrong", error },
+            { status: STATUS_CODE.INTERNAL_ERROR },
+        );
+    }
+}
 
 export async function POST(res: Request): Promise<Response> {
     try {
@@ -24,7 +74,7 @@ export async function POST(res: Request): Promise<Response> {
                     success: false,
                 },
                 {
-                    status: 401,
+                    status: STATUS_CODE?.UNAUTHENTICATE,
                 },
             );
         }
@@ -39,7 +89,7 @@ export async function POST(res: Request): Promise<Response> {
         console.log;
         return Response.json(
             { message: "some error occured while uploading", error },
-            { status: 500 },
+            { status: STATUS_CODE.INTERNAL_ERROR },
         );
     }
 }
@@ -59,7 +109,7 @@ export async function DELETE(res: Request) {
                     success: false,
                 },
                 {
-                    status: 401,
+                    status: STATUS_CODE.UNAUTHENTICATE,
                 },
             );
         }
@@ -67,7 +117,7 @@ export async function DELETE(res: Request) {
         const urlToDelete = searchParams.get("url") as string;
 
         const result = await DELETE_FILE(urlToDelete);
-        return Response.json(result, { status: 200 });
+        return Response.json(result, { status: STATUS_CODE.OK });
     } catch (error) {
         console.log("ERROR WHILE DELETE UPLOAD", error);
         return Response.json(
@@ -75,7 +125,7 @@ export async function DELETE(res: Request) {
                 message: "Internal Error",
                 error,
             },
-            { status: 500 },
+            { status: STATUS_CODE.INTERNAL_ERROR },
         );
     }
 }

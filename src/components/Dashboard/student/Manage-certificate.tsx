@@ -21,34 +21,17 @@ import {
 } from "@/components/ui/table";
 import { toast } from "@/components/ui/use-toast";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { useUsers, useVerifyCertificate } from "@/hooks/useFetch";
+import { useVerifyCertificate } from "@/hooks/useFetch";
 import { poppins } from "@/lib/fonts";
-import { role } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Layers2, Layers3, Shield, Users } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
-interface pageProps {}
-
-interface student {
+interface pageProps {
+    page: string;
     registration: string;
-    name: string;
-    course: string;
-    written: string;
-    project: string;
-    viva: string;
-    practical: string;
-    englishTyping: string;
-    hindiTyping: string;
-    certificate: boolean;
-}
-
-interface userType {
-    role: role;
-    userId: string;
+    branches: { branch: string; userId: string }[];
 }
 
 interface updateType {
@@ -59,27 +42,10 @@ interface updateType {
 }
 
 type course = "computerTyping" | "other";
-type verify = "false" | "true";
-const ManageCertificate: FC<pageProps> = ({}) => {
-    const params = useSearchParams();
-    const registration = params.get("registration");
-    const page = params.get("page");
-
-    const { data: session } = useSession();
-
-    const [user, setUser] = useState(session?.user.userId);
+const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
+    const [user, setUser] = useState(branches?.[0].userId);
     const [course, setCourse] = useState<course>("other");
-    const [type, setType] = useState<verify>("false");
-
-    /**
-     * FETCHING USERS
-     */
-
-    const { data: fetchUsers, isLoading: isUserLoading } = useUsers(
-        "all",
-        undefined,
-        "userId,role",
-    );
+    const [type, setType] = useState<boolean>(false);
 
     /**
      * FETCH STUDENTS
@@ -87,16 +53,13 @@ const ManageCertificate: FC<pageProps> = ({}) => {
     const { data: fetchStudents, isLoading } = useVerifyCertificate(
         registration || "",
         page || "1",
-        user || "",
+        user,
         course,
         type,
     );
-    useEffect(() => {
-        setUser(session?.user.userId);
-    }, [session]);
 
     const { addMark, removeMark } = useCustumQuery();
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationKey: ["mutateMarksVerification"],
         mutationFn: async ({
             registration,
@@ -107,7 +70,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
             if (!user) {
                 return;
             }
-            const { data } = await axios.put(`/api/verify/marks`, {
+            const { data } = await axios.put(`/api/management/certificate`, {
                 registration,
                 verified,
                 course,
@@ -123,27 +86,13 @@ const ManageCertificate: FC<pageProps> = ({}) => {
 
             // remove data
             removeMark(
-                [
-                    "students",
-                    registration || "none",
-                    page || "1",
-                    user,
-                    course,
-                    type,
-                ],
+                ["students", registration, page, user, course, type],
                 data?.student?.registration,
             );
 
             //Add To other type
             addMark(
-                [
-                    "students",
-                    registration || "none",
-                    page || "1",
-                    user,
-                    course,
-                    type === "false" ? "true" : "false",
-                ],
+                ["students", registration, page, user, course, !type],
                 data?.student,
             );
         },
@@ -176,55 +125,21 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                         defaultValue={user}
                         value={user}
                         onValueChange={(val) => setUser(val)}
+                        disabled={isPending}
                     >
                         <SelectTrigger className="w-36">
                             <SelectValue placeholder="Select User" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>Admin</SelectLabel>
-                                <SelectItem
-                                    value={session?.user.userId as string}
-                                >
-                                    {session?.user.userId}
-                                </SelectItem>
-
-                                {isUserLoading && (
-                                    <SelectItem value="loading2">
-                                        Loading...
+                                {branches?.map((branch) => (
+                                    <SelectItem
+                                        key={branch.userId}
+                                        value={branch.userId}
+                                    >
+                                        {branch.userId}
                                     </SelectItem>
-                                )}
-
-                                {fetchUsers?.users?.map(
-                                    (user: userType) =>
-                                        user.role === "ADMIN" && (
-                                            <SelectItem
-                                                key={user.userId}
-                                                value={user.userId}
-                                            >
-                                                {user.userId}
-                                            </SelectItem>
-                                        ),
-                                )}
-
-                                <SelectLabel>Users</SelectLabel>
-                                {isUserLoading && (
-                                    <SelectItem value="loading1">
-                                        Loading...
-                                    </SelectItem>
-                                )}
-
-                                {fetchUsers?.users?.map(
-                                    (user: userType) =>
-                                        user.role === "FRANCHISE" && (
-                                            <SelectItem
-                                                key={user.userId}
-                                                value={user.userId}
-                                            >
-                                                {user.userId}
-                                            </SelectItem>
-                                        ),
-                                )}
+                                ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -239,6 +154,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                     <Select
                         defaultValue={course}
                         value={course}
+                        disabled={isPending}
                         onValueChange={(val) => setCourse(val as course)}
                     >
                         <SelectTrigger className="w-40">
@@ -255,6 +171,7 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                         </SelectContent>
                     </Select>
                 </div>
+
                 {/* Type */}
                 <div className="flex flex-col gap-2">
                     <div className="flex gap-1 items-center">
@@ -262,9 +179,12 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                         <span>Type</span>
                     </div>
                     <Select
-                        defaultValue={type}
-                        value={type}
-                        onValueChange={(val) => setType(val as verify)}
+                        defaultValue={`${type}`}
+                        value={`${type}`}
+                        disabled={isPending}
+                        onValueChange={(val) =>
+                            setType(val === "true" ? true : false)
+                        }
                     >
                         <SelectTrigger className="w-40">
                             <SelectValue placeholder="Select type" />
@@ -272,8 +192,8 @@ const ManageCertificate: FC<pageProps> = ({}) => {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>courses</SelectLabel>
-                                <SelectItem value="true">VERIFIED</SelectItem>
                                 <SelectItem value="false">PENDING</SelectItem>
+                                <SelectItem value="true">ISSUED</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>

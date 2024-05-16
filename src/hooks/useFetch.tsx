@@ -1,9 +1,9 @@
 "use client";
-import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
 import { Course, Marks, Student } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { z } from "zod";
+import queryString from "query-string";
+import { StudentWithMarksCourse } from "@/lib/types";
 
 export const useUsers = (page: string, userId?: string, select?: string) => {
     const url = `/api/users?page=${page}${!!userId ? "&userId=" + userId : ""}${
@@ -18,10 +18,12 @@ export const useUsers = (page: string, userId?: string, select?: string) => {
     });
 };
 export const useBranch = () => {
-    return useQuery<{ branches: { branch: string; userId: string }[] }>({
+    return useQuery({
         queryKey: ["branches"],
         queryFn: async () => {
-            const { data } = await axios.get("/api/branch");
+            const { data } = await axios.get<{
+                branches: { branch: string; userId: string }[];
+            }>("/api/branch");
             return data;
         },
     });
@@ -50,18 +52,24 @@ export const useStudents = (
 
 export const useStudentVerification = (
     page: string,
-    user: string | undefined,
+    userId: string | undefined,
     registration: string,
     type: string,
 ) => {
-    const url = `/api/student-verification/${user}?pending=${type}&page=${page}${
-        !!registration ? "&registration=" + registration : ""
-    }`;
+    const url = queryString.stringifyUrl({
+        url: "/api/management/student-verification",
+        query: {
+            registration,
+            pending: type,
+            page,
+            userId,
+        },
+    });
     return useQuery({
         queryKey: [
             "student_verification",
             page || "1",
-            user,
+            userId,
             registration ? registration : "",
             type,
         ],
@@ -138,28 +146,92 @@ export const useVerifyCertificate = (
     page: string,
     user: string,
     course: string,
-    type: string,
+    type: boolean,
 ) => {
     return useQuery<{
         studentsWithMarks: studentsWithMarks[];
         total: number;
     }>({
+        queryKey: ["students", registration, page, user, course, type],
+        queryFn: async () => {
+            const url = queryString.stringifyUrl({
+                url: "/api/management/certificate",
+                query: {
+                    userId: user,
+                    computerTyping: course === "computerTyping",
+                    page,
+                    registration,
+                    verified: type,
+                },
+            });
+            const { data } = await axios(url);
+            return data;
+        },
+    });
+};
+
+export const useMarksheet = ({
+    page,
+    pending,
+    registration,
+    userId,
+}: {
+    pending: boolean;
+    registration: string | undefined;
+    page: string | undefined;
+    userId: string | number;
+}) => {
+    return useQuery<{ total: number; students: StudentWithMarksCourse[] }>({
         queryKey: [
-            "students",
-            registration || "none",
-            page || "1",
-            user,
-            course,
-            type,
+            pending ? "pending_marksheet" : "verified_marksheet",
+            page,
+            registration,
+            userId,
         ],
         queryFn: async () => {
-            const { data } = await axios(
-                `/api/verify/marks?userId=${user}&${
-                    course === "computerTyping" ? "computerTyping=true&" : "&"
-                }verified=${type}&page=${page ? page : "1"}${
-                    !!registration ? "&registration=" + registration : ""
-                }`,
-            );
+            const url = queryString.stringifyUrl({
+                url: "/api/management/marksheet",
+                query: {
+                    page,
+                    registration,
+                    pending: pending,
+                    userId,
+                },
+            });
+            const { data } = await axios.get(url);
+            return data;
+        },
+    });
+};
+export const useICard = ({
+    page,
+    pending,
+    registration,
+    userId,
+}: {
+    pending: boolean;
+    registration: string | undefined;
+    page: string | undefined;
+    userId: string | number;
+}) => {
+    return useQuery<{ total: number; students: StudentWithMarksCourse[] }>({
+        queryKey: [
+            pending ? "pending_icard" : "verified_icard",
+            page,
+            registration,
+            userId,
+        ],
+        queryFn: async () => {
+            const url = queryString.stringifyUrl({
+                url: "/api/management/icard",
+                query: {
+                    page,
+                    registration,
+                    pending: pending,
+                    userId,
+                },
+            });
+            const { data } = await axios.get(url);
             return data;
         },
     });
@@ -169,8 +241,10 @@ export const useAssests = () => {
     return useQuery<{ public_id: string; secure_url: string }[]>({
         queryKey: ["assets"],
         queryFn: async () => {
-            const { data } = await axios("/api/media", {});
-            return data;
+            const { data } = await axios(
+                "/api/upload?folder=eklavaya-carousel",
+            );
+            return data?.assets;
         },
         staleTime: 60 * 1000 * 30,
     });

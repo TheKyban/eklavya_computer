@@ -9,6 +9,16 @@ import {
     Users,
 } from "lucide-react";
 
+export const fetchBranch = async () => {
+    const branches = await Prisma.user.findMany({
+        select: {
+            branch: true,
+            userId: true,
+        },
+    });
+    return branches;
+};
+
 export const fetchAdminDashboardData = async () => {
     const data: details[] = [
         {

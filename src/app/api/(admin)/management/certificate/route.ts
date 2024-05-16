@@ -1,8 +1,8 @@
 import { authOptions } from "@/lib/auth-options";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { per_page } from "@/lib/constants";
+import { STATUS_CODE } from "@/lib/statusCode";
 
 export const dynamic = "force-dynamic";
 /**
@@ -11,19 +11,14 @@ export const dynamic = "force-dynamic";
 
 export const GET = async (req: Request) => {
     try {
-        /**
-         * CHECK SESSION IS AVAILABLE
-         */
-
-        /**
-         * VERIFY THAT ADMIN IS LOGIN
-         */
-
         const session = await getServerSession(authOptions);
         if (!session?.user || session?.user.role !== "ADMIN") {
-            return NextResponse.json({
-                message: "Unauthorized",
-            });
+            return Response.json(
+                {
+                    message: "Unauthorized",
+                },
+                { status: STATUS_CODE.UNAUTHENTICATE },
+            );
         }
         const { searchParams } = new URL(req.url);
         const computerTyping = !!searchParams.get("computerTyping") || false;
@@ -32,9 +27,12 @@ export const GET = async (req: Request) => {
         const userId = searchParams.get("userId");
         const verified = searchParams.get("verified") === "true" ? true : false;
         if (!userId) {
-            return NextResponse.json({
-                message: "UserId is required",
-            });
+            return Response.json(
+                {
+                    message: "UserId is required",
+                },
+                { status: STATUS_CODE.CLIENT_ERROR },
+            );
         }
 
         /**
@@ -87,12 +85,21 @@ export const GET = async (req: Request) => {
             },
         });
 
-        return NextResponse.json({ studentsWithMarks, total });
+        return Response.json(
+            { studentsWithMarks, total },
+            { status: STATUS_CODE.OK },
+        );
     } catch (error) {
-        console.log(error);
-        return NextResponse.json({
-            message: "Internal error",
-        });
+        console.log("[GET CERTIFICATE]", error);
+        return Response.json(
+            {
+                message: "Internal Error",
+                error,
+            },
+            {
+                status: STATUS_CODE.INTERNAL_ERROR,
+            },
+        );
     }
 };
 
@@ -108,14 +115,20 @@ export const PUT = async (req: Request) => {
 
         const session = await getServerSession(authOptions);
         if (!session?.user || session?.user.role !== "ADMIN") {
-            return NextResponse.json({
-                message: "Unauthorized",
-            });
+            return Response.json(
+                {
+                    message: "Unauthorized",
+                },
+                { status: STATUS_CODE.UNAUTHENTICATE },
+            );
         }
 
-        const { userId, verified, course, registration } = await req.json();
-        if (!userId || !course || !registration) {
-            return NextResponse.json({ message: "All fields are required" });
+        const { verified, course, registration } = await req.json();
+        if (!course || !registration) {
+            return Response.json(
+                { message: "All fields are required" },
+                { status: STATUS_CODE.CLIENT_ERROR },
+            );
         }
 
         /**
@@ -124,7 +137,6 @@ export const PUT = async (req: Request) => {
 
         const student = await Prisma.student.update({
             where: {
-                branch: userId,
                 registration: registration,
                 course: course,
             },
@@ -138,17 +150,26 @@ export const PUT = async (req: Request) => {
         });
 
         if (!student) {
-            return NextResponse.json({
-                message: "Invalid fields",
-            });
+            return Response.json(
+                {
+                    message: "Invalid fields",
+                },
+                { status: STATUS_CODE.CLIENT_ERROR },
+            );
         }
 
-        return NextResponse.json({
-            message: "Successfully updated",
-            student,
-        });
+        return Response.json(
+            {
+                message: "Successfully updated",
+                student,
+            },
+            { status: STATUS_CODE.OK },
+        );
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Internal Error" });
+        return Response.json(
+            { message: "Internal Error", error },
+            { status: STATUS_CODE.INTERNAL_ERROR },
+        );
     }
 };

@@ -1,4 +1,4 @@
-import { role } from "@prisma/client";
+import { Course, Marks, Student, role } from "@prisma/client";
 import { LucideIcon } from "lucide-react";
 
 export interface details {
@@ -22,3 +22,10 @@ export interface UserType {
     pendingCertificates: number;
     issuedCertificates: number;
 }
+
+export type StudentWithCourse = Student & {
+    Course: Course;
+};
+export type StudentWithMarksCourse = StudentWithCourse & {
+    marks: Marks;
+};

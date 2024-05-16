@@ -4,7 +4,6 @@ import { ChangeEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, PlusCircle } from "lucide-react";
-// import { ActionTooltip } from "@/components/action-tooltip";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { toast } from "../ui/use-toast";
 export const CarouselMediaUploader = () => {
@@ -15,7 +14,7 @@ export const CarouselMediaUploader = () => {
         if (file) {
             // 1mb = 1024000
             if (file.size > 1024000 * 5) {
-                toast({ description: "😶 Image Should be lesser than 5mb" });
+                toast({ description: "😶 Image Should be greater than 5mb" });
                 return;
             }
             try {
@@ -23,10 +22,12 @@ export const CarouselMediaUploader = () => {
 
                 const formData = new FormData();
                 formData.append("file", file);
-                const { data } = await axios.post(`/api/media`, formData);
+                formData.append("folder", "eklavaya-carousel");
+                const { data } = await axios.post(`/api/upload`, formData);
                 console.log(data);
                 addData(["assets"], data);
             } catch (error: any) {
+                console.log(error);
                 toast(error.message);
             } finally {
                 setIsUploading(false);

@@ -1,0 +1,8 @@
+export const STATUS_CODE = {
+    UNAUTHENTICATE: 401,
+    OK: 200,
+    CREATED: 201,
+    INTERNAL_ERROR: 500,
+    CLIENT_ERROR: 400,
+    NOT_FOUND: 404,
+};

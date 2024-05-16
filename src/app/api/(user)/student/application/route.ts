@@ -7,6 +7,7 @@ import { DELETE_FILE } from "@/lib/cloudinary";
 import { per_page } from "@/lib/constants";
 import { studentSchema } from "@/lib/schema";
 import { z } from "zod";
+import { STATUS_CODE } from "@/lib/statusCode";
 
 export const dynamic = "force-dynamic";
 
@@ -33,10 +34,13 @@ export const POST = async (req: Request) => {
          */
 
         if (session?.user.role === role.FRANCHISE && !session?.user?.isActive) {
-            return Response.json({
-                message: "Unauthorized",
-                success: false,
-            });
+            return Response.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                { status: STATUS_CODE.UNAUTHENTICATE },
+            );
         }
 
         /**
@@ -46,10 +50,15 @@ export const POST = async (req: Request) => {
         const id = searchParams.get("id");
 
         if (!id) {
-            return Response.json({
-                message: "id is required",
-                success: false,
-            });
+            return Response.json(
+                {
+                    message: "id is required",
+                    success: false,
+                },
+                {
+                    status: STATUS_CODE.CLIENT_ERROR,
+                },
+            );
         }
 
         const data: z.infer<typeof studentSchema> = await req.json();
@@ -59,12 +68,17 @@ export const POST = async (req: Request) => {
             dor: new Date(data.dor),
         });
         if (!dataVerify.success) {
-            return Response.json({
-                message:
-                    dataVerify.error?.errors?.[0].message ||
-                    "All fields are required",
-                success: false,
-            });
+            return Response.json(
+                {
+                    message:
+                        dataVerify.error?.errors?.[0].message ||
+                        "All fields are required",
+                    success: false,
+                },
+                {
+                    status: STATUS_CODE.CLIENT_ERROR,
+                },
+            );
         }
 
         /**
@@ -79,7 +93,7 @@ export const POST = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -92,7 +106,7 @@ export const POST = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -110,7 +124,7 @@ export const POST = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }

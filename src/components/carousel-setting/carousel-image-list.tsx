@@ -37,24 +37,23 @@ const ImageCard = ({ link, publicId }: { link: string; publicId: string }) => {
         try {
             setIsLoading(true);
 
-            const { data } = await axios.delete(
-                `/api/media?publicId=${publicId}`,
-            );
-            if (data?.message) {
-                toast({ description: data.message });
-            }
-            if (data?.success) {
+            const { data } = await axios.delete(`/api/upload?url=${link}`);
+            console.log(data);
+            if (data?.result === "ok") {
+                toast({ description: "Deleted!" });
+
                 queryClient.setQueryData(
                     ["assets"],
                     (old: { public_id: string }[]) => {
                         const allData = old?.filter(
-                            (data) => data?.public_id !== publicId,
+                            (img) => img?.public_id !== publicId,
                         );
                         return allData;
                     },
                 );
             }
         } catch (error: any) {
+            console.log(error);
             toast({ description: error?.message });
         } finally {
             setIsLoading(false);
