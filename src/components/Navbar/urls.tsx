@@ -16,25 +16,75 @@ import {
 
 interface linkType {
     title: string;
-    link: string;
+    link?: string;
     icon: LucideIcon;
     download?: string;
+    links?: linkType[];
 }
 
-export const singleLink: linkType[] = [
+const StudentzoneLinks: linkType[] = [
+    {
+        title: "Addmission",
+        link: "/addmission",
+        icon: GraduationCap,
+    },
+    {
+        title: "Typing Certificate",
+        link: "/studentzone/computerTyping",
+        icon: GraduationCap,
+    },
+    {
+        title: "Marksheet",
+        link: "/studentzone/marksheet",
+        icon: GraduationCap,
+    },
+    {
+        title: "Certificate",
+        link: "/studentzone/certificate",
+        icon: GraduationCap,
+    },
+    {
+        title: "I-Card",
+        link: "/studentzone/icard",
+        icon: GraduationCap,
+    },
+];
+
+const Franchise: linkType[] = [
+    {
+        title: "Franchise Apply",
+        link: "/franchiseApply",
+        icon: Users,
+    },
+    {
+        title: "Franchise Verifiy",
+        link: "/franchise",
+        icon: Users,
+    },
+];
+
+export const navbarLinks: linkType[] = [
     {
         title: "Home",
         link: "/",
         icon: Home,
     },
-    {
-        title: "Franchise",
-        link: "/franchise",
-        icon: Users,
-    },
+    { title: "Student Zone", links: StudentzoneLinks, icon: GraduationCap },
+    { title: "Franchise", links: Franchise, icon: Users },
     {
         title: "Course",
         link: "/course",
+        icon: LibraryBig,
+    },
+
+    {
+        title: "University Programs",
+        link: "/university",
+        icon: GraduationCap,
+    },
+    {
+        title: "Affiliation",
+        link: "/affiliation",
         icon: LibraryBig,
     },
     {
@@ -46,26 +96,6 @@ export const singleLink: linkType[] = [
         title: "Contact us",
         link: "#contact",
         icon: BookUser,
-    },
-    {
-        title: "Addmission",
-        link: "/addmission",
-        icon: GraduationCap,
-    },
-    {
-        title: "Franchise Apply",
-        link: "/franchiseApply",
-        icon: Users,
-    },
-    {
-        title: "University Programs",
-        link: "/university",
-        icon: GraduationCap,
-    },
-    {
-        title: "Affiliation",
-        link: "/affiliation",
-        icon: LibraryBig,
     },
 ];
 
@@ -102,29 +132,6 @@ const DownloadLinks: linkType[] = [
     },
 ];
 
-const StudentzoneLinks: linkType[] = [
-    {
-        title: "Typing Certificate",
-        link: "/studentzone/computerTyping",
-        icon: GraduationCap,
-    },
-    {
-        title: "Marksheet",
-        link: "/studentzone/marksheet",
-        icon: GraduationCap,
-    },
-    {
-        title: "Certificate",
-        link: "/studentzone/certificate",
-        icon: GraduationCap,
-    },
-    {
-        title: "I-Card",
-        link: "/studentzone/icard",
-        icon: GraduationCap,
-    },
-];
-
 const SyllabusLinks: linkType[] = [
     {
         title: "DCA",
@@ -136,14 +143,4 @@ const SyllabusLinks: linkType[] = [
         link: "#",
         icon: Database,
     },
-];
-
-export const AccordionLinks: Array<{
-    name: string;
-    links: linkType[];
-    icon: LucideIcon;
-}> = [
-    { name: "Student Zone", links: StudentzoneLinks, icon: GraduationCap },
-    { name: "Download", links: DownloadLinks, icon: Download },
-    { name: "Syllabus", links: SyllabusLinks, icon: Files },
 ];

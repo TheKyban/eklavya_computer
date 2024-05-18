@@ -1,8 +1,10 @@
 "use client";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 
-export const TimeComponent = () => {
+interface Prop extends HTMLAttributes<HTMLParagraphElement> {}
+
+export const TimeComponent = ({ className, ...props }: Prop) => {
     const [time, setTime] = useState(
         format(new Date(), "EEEE, dd MMMM yyyy | HH:mm:ss"),
     );
@@ -15,5 +17,9 @@ export const TimeComponent = () => {
         return () => clearInterval(interval);
     }, []);
 
-    return <span suppressHydrationWarning>{time}</span>;
+    return (
+        <p suppressHydrationWarning className={className} {...props}>
+            {time}
+        </p>
+    );
 };

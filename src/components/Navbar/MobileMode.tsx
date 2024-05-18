@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Accordion,
     AccordionContent,
@@ -13,17 +12,16 @@ import {
 } from "@/components/ui/accordion";
 import { LayoutDashboard, Menu, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AccordionLinks, singleLink } from "@/components/Navbar/urls";
+import { navbarLinks } from "@/components/Navbar/urls";
 import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/styles";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
-const MobileMode = () => {
+const MobileMode = ({ session }: { session: Session | null }) => {
     const [open, setOpen] = useState(false);
-    const { status } = useSession();
-    const isAuth = status === "authenticated" ? true : false;
+    const isAuth = !!session?.user ? true : false;
 
     return (
-        <div className="md:hidden w-full flex justify-around bg-orange-50">
+        <div className="lg:hidden w-full flex justify-around bg-orange-50">
             <Image
                 priority
                 src={
@@ -49,34 +47,34 @@ const MobileMode = () => {
                     </SheetTrigger>
                     <SheetContent
                         side={"left"}
-                        className="flex flex-col gap-0 pt-16"
+                        className="flex flex-col gap-0 pt-16 overflow-y-auto"
                     >
-                        <ScrollArea>
-                            <div className="flex flex-col">
-                                {/* Authentication */}
-                                {isAuth ? (
-                                    <Link
-                                        className={LinkStyle3}
-                                        href={"/dashboard"}
-                                        onClick={() => setOpen(!open)}
-                                    >
-                                        <LayoutDashboard className="w-4 h-4" />
-                                        <span>Dashbord</span>
-                                    </Link>
-                                ) : (
-                                    <Link
-                                        className={LinkStyle3}
-                                        href={"/login"}
-                                        onClick={() => setOpen(!open)}
-                                    >
-                                        <User className="w-4 h-4" />
-                                        <span>Login</span>
-                                    </Link>
-                                )}
+                        <div className="flex flex-col">
+                            {/* Authentication */}
+                            {isAuth ? (
+                                <Link
+                                    className={LinkStyle3}
+                                    href={"/dashboard"}
+                                    onClick={() => setOpen(!open)}
+                                >
+                                    <LayoutDashboard className="w-4 h-4" />
+                                    <span>Dashbord</span>
+                                </Link>
+                            ) : (
+                                <Link
+                                    className={LinkStyle3}
+                                    href={"/login"}
+                                    onClick={() => setOpen(!open)}
+                                >
+                                    <User className="w-4 h-4" />
+                                    <span>Login</span>
+                                </Link>
+                            )}
 
-                                {singleLink.map((link, idx) => (
+                            {navbarLinks.map((link) => {
+                                return !!link?.link ? (
                                     <Link
-                                        key={idx}
+                                        key={link?.title}
                                         className={LinkStyle3}
                                         href={link.link}
                                         onClick={() => setOpen(!open)}
@@ -84,53 +82,57 @@ const MobileMode = () => {
                                         <link.icon className="w-4 h-4" />{" "}
                                         <span>{link.title}</span>
                                     </Link>
-                                ))}
-                            </div>
-
-                            {/* Accordion Links */}
-                            <Accordion type="single" collapsible className="">
-                                {AccordionLinks.map((accordionLink, idx) => (
-                                    <AccordionItem
-                                        key={idx}
-                                        value={accordionLink.name}
-                                        className="hover:bg-primary/10 px-3  rounded-md"
+                                ) : (
+                                    <Accordion
+                                        type="single"
+                                        collapsible
+                                        className=""
                                     >
-                                        <AccordionTrigger>
-                                            <div className="flex items-center gap-3 text-lg">
-                                                <accordionLink.icon className="w-4 h-4" />
-                                                <span>
-                                                    {accordionLink.name}
-                                                </span>
-                                            </div>
-                                        </AccordionTrigger>
-                                        <AccordionContent>
-                                            <div className="flex flex-col gap-0">
-                                                {accordionLink.links.map(
-                                                    (link, idx) => (
-                                                        <Link
-                                                            key={idx}
-                                                            className={cn(
-                                                                LinkStyle,
-                                                                LinkStyle2,
-                                                            )}
-                                                            href={link.link}
-                                                            onClick={() =>
-                                                                setOpen(!open)
-                                                            }
-                                                        >
-                                                            <link.icon className="w-4 h-4" />
-                                                            <span>
-                                                                {link.title}
-                                                            </span>
-                                                        </Link>
-                                                    ),
-                                                )}
-                                            </div>
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                ))}
-                            </Accordion>
-                        </ScrollArea>
+                                        <AccordionItem
+                                            value={link?.title}
+                                            className="hover:bg-primary/10 px-3  rounded-md"
+                                        >
+                                            <AccordionTrigger>
+                                                <div className="flex items-center gap-3 text-lg">
+                                                    <link.icon className="w-4 h-4" />
+                                                    <span>{link?.title}</span>
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent>
+                                                <div className="flex flex-col gap-0">
+                                                    {link?.links?.map(
+                                                        (link, idx) => (
+                                                            <Link
+                                                                key={idx}
+                                                                className={cn(
+                                                                    LinkStyle,
+                                                                    LinkStyle2,
+                                                                )}
+                                                                href={
+                                                                    link?.link!
+                                                                }
+                                                                onClick={() =>
+                                                                    setOpen(
+                                                                        !open,
+                                                                    )
+                                                                }
+                                                            >
+                                                                <link.icon className="w-4 h-4" />
+                                                                <span>
+                                                                    {
+                                                                        link?.title
+                                                                    }
+                                                                </span>
+                                                            </Link>
+                                                        ),
+                                                    )}
+                                                </div>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    </Accordion>
+                                );
+                            })}
+                        </div>
                     </SheetContent>
                 </Sheet>
             </div>
