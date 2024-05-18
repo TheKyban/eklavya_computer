@@ -9,12 +9,14 @@ import {
     Smile,
     Target,
 } from "lucide-react";
-import { langar } from "@/lib/fonts";
+import { montserrat } from "@/lib/fonts";
 import { MAX_WIDTH } from "@/lib/styles";
 import Image from "next/image";
 import { HomeCarousel } from "@/components/Home/home-carousel";
 import { AnimationDiv } from "@/components/AnimatedDiv";
 import { FC } from "react";
+
+import ReactMarquee from "react-fast-marquee";
 
 interface familyType {
     img: string;
@@ -31,16 +33,19 @@ interface firstPageProps {
 export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
     return (
         <div
-            className={`${MAX_WIDTH} m-auto w-full h-full flex flex-col gap-2 py-5 overflow-x-hidden`}
+            className={`${MAX_WIDTH} m-auto w-full mb-5 flex flex-col justify-center gap-5`}
         >
-            <div className="w-full flex justify-between gap-2 flex-col md:flex-row">
-                {/* FAMILY */}
-                <div className="h-[400px] max-h-[400px] w-full max-w-xs hidden lg:block">
-                    <HomeFamily family={family} />
+            <div className="mt-5 w-[93%] 2xl:w-full m-auto px-3">
+                <div className="flex items-start justify-between gap-5 overflow-hidden">
+                    {!!carousel?.[0] && <HomeCarousel carousel={carousel} />}
+                    <NoticeSection />
                 </div>
-                {/* CAROUSEL */}
-                {!!carousel?.[0] && <HomeCarousel carousel={carousel} />}
-                {/* FAMILY */}
+            </div>
+
+            <div className="my-5 w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 rounded-lg pb-9 pt-2 px-5">
+                <h1 className="text-3xl text-center font-bold text-green-600 my-7 uppercase">
+                    Our Family
+                </h1>
                 <HomeFamily family={family} />
             </div>
         </div>
@@ -52,15 +57,7 @@ export const SecondPage = () => {
         <div
             className={`overflow-hidden flex flex-col m-auto ${MAX_WIDTH} items-center lg:gap-10 w-full`}
         >
-            <div className="flex gap-3 flex-col md:flex-row">
-                {/* From desk of director */}
-                <FromDeskOf />
-
-                {/* NOTICE */}
-                <NoticeSection />
-            </div>
-
-            {/* WHY */}
+            <FromDeskOf />
             <WhySection />
         </div>
     );
@@ -79,128 +76,181 @@ export const ThridPage = () => {
 
 const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
     return (
-        <AnimationDiv
-            animate={{
-                x: 0,
-                opacity: 1,
-            }}
-            initial={{
-                opacity: 0,
-                x: 100,
-            }}
-            transition={{
-                duration: 0.6,
-            }}
-            className="relative h-[400px] max-h-[400px] w-full max-w-full md:max-w-xs flex flex-col border"
-        >
-            <h1
-                className={`bg-[#026335] text-white uppercase text-lg text-center py-2 ${langar.className}`}
-            >
-                Family
-            </h1>
-            {/* @ts-ignore */}
-            <marquee direction="up" className="w-full h-full">
-                {family?.map(
-                    (
-                        user: {
-                            img: string;
-                            name: string;
-                            branch: string;
-                        },
-                        idx: number,
-                    ) => (
-                        <div
-                            key={idx}
-                            className="flex flex-col gap-2 mt-4 mb-4 items-center"
-                        >
-                            <Image
-                                src={user.img}
-                                width={100}
-                                height={100}
-                                alt="avatar"
-                                placeholder="empty"
-                                className="rounded-full object-cover min-w-[50px] min-h-[50px] max-w-[50px] max-h-[50px] lg:min-w-[70px] lg:min-h-[70px] lg:max-w-[70px] lg:max-h-[70px]"
-                            />
-                            <div className="flex flex-col gap-1 font-semibold items-center text-xs ">
-                                <span className="capitalize text-rose-800">
-                                    {user.name}
-                                </span>
-                                <span className="capitalize text-orange-600">
-                                    {user.branch}
-                                </span>
-                            </div>
+        <ReactMarquee autoFill={true}>
+            {family?.map(
+                (
+                    user: {
+                        img: string;
+                        name: string;
+                        branch: string;
+                    },
+                    idx: number,
+                ) => (
+                    <div
+                        key={idx}
+                        className="flex flex-col gap-2 ml-16 items-center"
+                    >
+                        <Image
+                            src={user.img}
+                            width={100}
+                            height={100}
+                            alt="avatar"
+                            placeholder="empty"
+                            className="rounded-full object-cover min-w-[50px] min-h-[50px] max-w-[50px] max-h-[50px] lg:min-w-[70px] lg:min-h-[70px] lg:max-w-[70px] lg:max-h-[70px]"
+                        />
+                        <div className="flex flex-col gap-1 font-semibold items-center text-xs ">
+                            <span className="capitalize text-rose-800">
+                                {user.name}
+                            </span>
+                            <span className="capitalize text-orange-600">
+                                {user.branch}
+                            </span>
                         </div>
-                    ),
-                )}
-
-                {/* @ts-ignore */}
-            </marquee>
-        </AnimationDiv>
+                    </div>
+                ),
+            )}
+        </ReactMarquee>
     );
 };
 
 const FromDeskOf = () => {
     return (
         <AnimationDiv
-            animate={{
+            whileInView={{
                 x: 0,
                 opacity: 1,
             }}
+            className="bg-orange-100 mt-5 lg:mt-0 rounded-lg w-[93%] 2xl:w-full"
             initial={{
+                x: 100,
                 opacity: 0,
-                x: -100,
             }}
             transition={{
+                delay: 0.2,
                 duration: 0.6,
             }}
-            className="w-full flex flex-col gap-2 items-center border"
         >
-            <p
-                className={`bg-[#026335] w-full text-white uppercase text-lg text-center py-2 ${langar.className}`}
-            >
-                From the Desk of Directors......
-            </p>
+            <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
+                <h1 className="text-3xl font-bold text-zinc-600 xl:text-3xl">
+                    From the Desk of Directors......
+                    <span className="inline-block animate-pulse">?</span>.
+                </h1>
 
-            <div className="flex flex-col gap-4 w-full px-5 py-3">
-                <p className="text-center sm:text-left md:h-fit text-sm  text-slate-800 px-2 leading-6">
-                    Education is the most powerful weapon which can be used to
-                    change the world.This is the only tool to remove the
-                    darkness of ignornce from the society. Information
-                    Technology has become the backbone off all the productive
-                    activities today. It is not only the fastest growing
-                    industry but it is the most successful and most profitable
-                    industry also.For this very purpose we have initiated a
-                    worldwide program named Eklavaya global computer(EGC).
-                    Through this program we are imparting IT education and IT
-                    enabled services through a worldwide educational network. On
-                    the completion of successful years of incredible
-                    performance. Eklavaya global computer(EGC) is built on a
-                    foundation to promote greater access to quality higher
-                    education, cutting-edge research and contribution to the
-                    society. EGC provides generic skills together with
-                    flexibility, adaptability and passion for life-long
-                    learning. While simultaneously equipping young people with
-                    the best basis for carrers inany area, including industry
-                    and unforeseen needs of the future. I congratulate you on
-                    your decision to join EGC to pursue your higher education.
-                    Teaching-learning process is not merely for profit it is for
-                    nation building as well. EGC with its associate distance
-                    education provider universities/organizations will strive
-                    together to cater to your academic needs and see that you
-                    come out of your courses with flying colors. We wish you
-                    great success in all your endeavors and quest for a better
-                    tomorrow, for yourselves and for the mankind.
-                </p>
-                <div className="flex flex-col text-zinc-600">
-                    <span className="self-end text-sm font-semibold mr-6">
-                        Warm Regards
-                    </span>
-                    <span className="self-end text-sm font-semibold mr-6">
-                        Director
-                    </span>
+                <div className="flex flex-col gap-4 w-full px-5 py-3 text-sm  lg:w-[70%] xl:text-lg dark:text-zinc-700">
+                    <p
+                        className={`text-center sm:text-left md:h-fit text-sm  text-slate-900 px-2 leading-6 ${montserrat.className}`}
+                    >
+                        Education is the most powerful weapon which can be used
+                        to change the world.This is the only tool to remove the
+                        darkness of ignornce from the society. Information
+                        Technology has become the backbone off all the
+                        productive activities today. It is not only the fastest
+                        growing industry but it is the most successful and most
+                        profitable industry also.For this very purpose we have
+                        initiated a worldwide program named Eklavaya global
+                        computer(EUPL). Through this program we are imparting IT
+                        education and IT enabled services through a worldwide
+                        educational network. On the completion of successful
+                        years of incredible performance. Eklavaya global
+                        computer(EUPL) is built on a foundation to promote
+                        greater access to quality higher education, cutting-edge
+                        research and contribution to the society. EUPL provides
+                        generic skills together with flexibility, adaptability
+                        and passion for life-long learning. While simultaneously
+                        equipping young people with the best basis for carrers
+                        inany area, including industry and unforeseen needs of
+                        the future. I congratulate you on your decision to join
+                        EUPL to pursue your higher education. Teaching-learning
+                        process is not merely for profit it is for nation
+                        building as well. EUPL with its associate distance
+                        education provider universities/organizations will
+                        strive together to cater to your academic needs and see
+                        that you come out of your courses with flying colors. We
+                        wish you great success in all your endeavors and quest
+                        for a better tomorrow, for yourselves and for the
+                        mankind.
+                    </p>
+                    <div className="flex flex-col text-zinc-600">
+                        <span className="self-end text-sm font-semibold mr-6">
+                            Warm Regards
+                        </span>
+                        <span className="self-end text-sm font-semibold mr-6">
+                            Director
+                        </span>
+                    </div>
                 </div>
+                {/* <p className="text-sm w-full lg:w-[70%] xl:text-lg dark:text-zinc-700">
+                Our purpose as a company and sevices as the standard against
+                which we weight our action and dicisions. To strengthen,
+                sustain and professionalize business knowledge through
+                creative research and teaching, highlighting the
+                significance of learning and by collaborating with
+                organizations, institutions and universities both within and
+                well beyond the national boundaries.
+            </p> */}
             </div>
         </AnimationDiv>
+
+        // <AnimationDiv
+        //     animate={{
+        //         x: 0,
+        //         opacity: 1,
+        //     }}
+        //     initial={{
+        //         opacity: 0,
+        //         x: -100,
+        //     }}
+        //     transition={{
+        //         duration: 0.6,
+        //     }}
+        //     className="w-full flex flex-col gap-2 items-center border"
+        // >
+        //     <p
+        //         className={`bg-orange-200 w-full text-zinc-600 uppercase text-lg text-center py-2 font-bold`}
+        //     >
+        //         From the Desk of Directors......
+        //     </p>
+
+        //     <div className="flex flex-col gap-4 w-full px-5 py-3">
+        //         <p className="text-center sm:text-left md:h-fit text-sm  text-slate-800 px-2 leading-6">
+        //             Education is the most powerful weapon which can be used to
+        //             change the world.This is the only tool to remove the
+        //             darkness of ignornce from the society. Information
+        //             Technology has become the backbone off all the productive
+        //             activities today. It is not only the fastest growing
+        //             industry but it is the most successful and most profitable
+        //             industry also.For this very purpose we have initiated a
+        //             worldwide program named Eklavaya global computer(EUPL).
+        //             Through this program we are imparting IT education and IT
+        //             enabled services through a worldwide educational network. On
+        //             the completion of successful years of incredible
+        //             performance. Eklavaya global computer(EUPL) is built on a
+        //             foundation to promote greater access to quality higher
+        //             education, cutting-edge research and contribution to the
+        //             society. EUPL provides generic skills together with
+        //             flexibility, adaptability and passion for life-long
+        //             learning. While simultaneously equipping young people with
+        //             the best basis for carrers inany area, including industry
+        //             and unforeseen needs of the future. I congratulate you on
+        //             your decision to join EUPL to pursue your higher education.
+        //             Teaching-learning process is not merely for profit it is for
+        //             nation building as well. EUPL with its associate distance
+        //             education provider universities/organizations will strive
+        //             together to cater to your academic needs and see that you
+        //             come out of your courses with flying colors. We wish you
+        //             great success in all your endeavors and quest for a better
+        //             tomorrow, for yourselves and for the mankind.
+        //         </p>
+        //         <div className="flex flex-col text-zinc-600">
+        //             <span className="self-end text-sm font-semibold mr-6">
+        //                 Warm Regards
+        //             </span>
+        //             <span className="self-end text-sm font-semibold mr-6">
+        //                 Director
+        //             </span>
+        //         </div>
+        //     </div>
+        // </AnimationDiv>
     );
 };
 
@@ -218,62 +268,77 @@ const NoticeSection = () => {
             transition={{
                 duration: 0.6,
             }}
-            className="w-full max-w-full md:max-w-xs border overflow-y-hidden"
+            className="w-full h-[400px] max-w-full md:max-w-sm border overflow-y-hidden"
         >
             <h1
-                className={`bg-[#026335] text-white uppercase text-lg text-center py-2 ${langar.className}`}
+                className={`bg-orange-200 text-orange-700 font-bold uppercase text-lg text-center py-2 z-10 relative`}
             >
                 Notice
             </h1>
-            {/* @ts-ignore */}
-            <marquee
-                direction="up"
-                className="h-full max-h-full px-5 m-auto flex"
-            >
-                <ul className="flex flex-col w-full text-center font-medium items-center sm:text-start sm:items-start text-xs gap-5">
-                    <li className="flex flex-col sm:flex-row items-center justify-center  gap-2 text-rose-700">
-                        <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                        <p>Admission is Going On...</p>
-                    </li>
-                    <li className="flex gap-2 flex-col sm:flex-row items-center justify-center text-indigo-600">
-                        <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                        <p>Contact for Franchisee Opening.</p>
-                    </li>
-                    <li className="flex flex-col sm:flex-row items-center justify-center text-slate-600 gap-2">
-                        <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                        <p>Educate Your Dreams</p>
-                    </li>
 
-                    <li className="flex flex-col sm:flex-row items-center justify-center gap-2 text-orange-600">
-                        <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                        <p>Life+ Academics+ Creativity =Success</p>
-                    </li>
+            <ul className="flex flex-col w-full h-full text-center font-medium items-center sm:text-start sm:items-start text-xs gap-5 noticeSection px-3">
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center  gap-2 text-rose-700"
+                    key={1}
+                >
+                    <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Admission is Going On...</p>
+                </li>
+                <li
+                    className="flex gap-2 flex-col sm:flex-row items-center justify-center text-indigo-600"
+                    key={2}
+                >
+                    <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Contact for Franchisee Opening.</p>
+                </li>
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center text-slate-600 gap-2"
+                    key={3}
+                >
+                    <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Educate Your Dreams</p>
+                </li>
 
-                    <li className="flex flex-col sm:flex-row items-center justify-center text-slate-600 gap-2">
-                        <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                        <p>Educating Today’s Learners for Tomorrow’s world.</p>
-                    </li>
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center gap-2 text-orange-600"
+                    key={4}
+                >
+                    <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Life+ Academics+ Creativity =Success</p>
+                </li>
 
-                    <li className="flex flex-col sm:flex-row items-center justify-center text-indigo-600 gap-2">
-                        <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                        <p>
-                            “You dared to Struggle Yesterday you can dare to win
-                            Today”
-                        </p>
-                    </li>
-                    <li className="flex flex-col sm:flex-row items-center justify-center text-rose-600 gap-2">
-                        <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                        <p>
-                            It Is With Great Pleasure That I Congratulate You On
-                            Your Five Year Anniversary. Please Know That You Are
-                            Important Members Of Our Team And Your abilities And
-                            Contributions Will Be An Important Part Of Our
-                            Continued Success. People Are And Will Always Be.
-                        </p>
-                    </li>
-                </ul>
-                {/* @ts-ignore */}
-            </marquee>
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center text-slate-600 gap-2"
+                    key={5}
+                >
+                    <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Educating Today’s Learners for Tomorrow’s world.</p>
+                </li>
+
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center text-indigo-600 gap-2"
+                    key={6}
+                >
+                    <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        “You dared to Struggle Yesterday you can dare to win
+                        Today”
+                    </p>
+                </li>
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center text-rose-600 gap-2"
+                    key={7}
+                >
+                    <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        It Is With Great Pleasure That I Congratulate You On
+                        Your Five Year Anniversary. Please Know That You Are
+                        Important Members Of Our Team And Your abilities And
+                        Contributions Will Be An Important Part Of Our Continued
+                        Success. People Are And Will Always Be.
+                    </p>
+                </li>
+            </ul>
         </AnimationDiv>
     );
 };
@@ -293,11 +358,11 @@ const WhySection = () => {
                 delay: 0.2,
                 duration: 0.6,
             }}
-            className="bg-slate-200 mt-5 lg:mt-0 rounded-lg w-[93%] 2xl:w-full"
+            className="bg-orange-100 mt-5 lg:mt-0 rounded-lg w-[93%] 2xl:w-full"
         >
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                 <h1 className="text-3xl font-medium text-zinc-600 xl:text-6xl">
-                    Why Eklavya{" "}
+                    Why Eklavaya
                     <span className="inline-block animate-pulse">?</span>.
                 </h1>
 
@@ -472,7 +537,7 @@ const OurCourses = () => {
     ];
     return (
         <div
-            className={`flex flex-col justify-center items-center gap-10 bg-indigo-100 w-full rounded-lg py-10 h-full`}
+            className={`flex flex-col justify-center items-center gap-10 bg-orange-100 w-full rounded-lg py-10 h-full`}
         >
             <h1 className="text-3xl font-bold text-green-600">Our Courses</h1>
 

@@ -28,10 +28,10 @@ export const HomeCarousel: FC<{
             transition={{
                 duration: 0.6,
             }}
-            className="w-full lg:max-w-xl"
+            className="w-full lg:max-w-3xl"
         >
             <Carousel
-                className="w-full h-[200px] md:h-[400px] lg:h-[300px] relative"
+                className="w-full h-[200px] md:h-[400px] lg:h-[400px] relative"
                 plugins={[
                     Autoplay({
                         delay: 3000,
@@ -42,7 +42,7 @@ export const HomeCarousel: FC<{
                 <CarouselContent>
                     {carousel?.map((image, idx) => (
                         <CarouselItem key={idx}>
-                            <div className="relative w-full h-[200px] md:h-[400px] lg:h-[300px]">
+                            <div className="relative w-full h-[200px] md:h-[400px] lg:h-[400px]">
                                 <Image
                                     src={image.secure_url}
                                     fill

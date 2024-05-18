@@ -94,4 +94,19 @@
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
+
+    .noticeSection {
+        animation-name: animationUpDown;
+        animation-duration: 20s;
+        animation-iteration-count: infinite;
+        overflow: hidden;
+    }
+    @keyframes animationUpDown {
+        from {
+            transform: translateY(380px);
+        }
+        to {
+            transform: translateY(-330px);
+        }
+    }
 }

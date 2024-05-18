@@ -11,7 +11,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
         <>
             {/* <Banner /> */}
             <div
-                className={`hidden lg:flex flex-col justify-between w-full shadow-xl bg-[#026335] sticky top-0 left-0 z-50`}
+                className={`hidden lg:flex flex-col justify-between w-full shadow-xl bg-orange-500 sticky top-0 left-0 z-50`}
             >
                 <div className="ml-auto w-full h-full flex items-center justify-between px-3 py-2 gap-4 text-white text-sm max-w-5xl">
                     {/* Login  & Dasboard*/}
