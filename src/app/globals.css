@@ -103,10 +103,10 @@
     }
     @keyframes animationUpDown {
         from {
-            transform: translateY(380px);
+            transform: translateY(400px);
         }
         to {
-            transform: translateY(-330px);
+            transform: translateY(-400px);
         }
     }
 }

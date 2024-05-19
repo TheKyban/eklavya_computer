@@ -35,15 +35,15 @@ export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
         <div
             className={`${MAX_WIDTH} m-auto w-full mb-5 flex flex-col justify-center gap-5`}
         >
-            <div className="mt-5 w-[93%] 2xl:w-full m-auto px-3">
-                <div className="flex items-start justify-between gap-5 overflow-hidden">
+            <div className="mt-5 w-[93%] 2xl:w-full m-auto px-1 lg:px-3">
+                <div className="flex items-start flex-col lg:flex-row justify-between gap-5 overflow-hidden">
                     {!!carousel?.[0] && <HomeCarousel carousel={carousel} />}
                     <NoticeSection />
                 </div>
             </div>
 
-            <div className="my-5 w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 rounded-lg pb-9 pt-2 px-5 flex flex-col items-center">
-                <span className="text-3xl font-bold text-green-600 my-10 uppercase border-b-4 pb-2 border-green-600">
+            <div className="my-5 w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 rounded-lg pb-9 pt-2 px-1 sm:px-5 flex flex-col items-center">
+                <span className="text-2xl sm:text-3xl font-bold text-green-600 my-10 uppercase border-b-2 sm:border-b-4 pb-2 border-green-600">
                     Our Family
                 </span>
                 <HomeFamily family={family} />
@@ -268,7 +268,7 @@ const NoticeSection = () => {
             transition={{
                 duration: 0.6,
             }}
-            className="w-full h-[400px] max-w-full md:max-w-sm border overflow-y-hidden rounded-lg"
+            className="w-full h-[400px] max-w-full lg:max-w-sm border overflow-y-hidden rounded-lg"
         >
             <h1
                 className={`bg-orange-200 text-orange-700 font-bold uppercase text-lg text-center py-2 z-10 relative`}

@@ -21,8 +21,8 @@ const MobileMode = ({ session }: { session: Session | null }) => {
     const isAuth = !!session?.user ? true : false;
 
     return (
-        <div className="lg:hidden w-full flex justify-around bg-orange-50">
-            <Image
+        <div className="lg:hidden w-full flex items-center justify-around py-2 bg-orange-500">
+            {/* <Image
                 priority
                 src={
                     "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
@@ -31,17 +31,19 @@ const MobileMode = ({ session }: { session: Session | null }) => {
                 height={50}
                 alt="logo"
                 className="w-full h-auto max-h-20 object-fill shadow-2xl"
-            />
+            /> */}
+
+            <h1 className="text-white/70 text-2xl font-bold">Eklavaya</h1>
             <div className="flex gap-5 items-center justify-center">
                 <Sheet open={open} onOpenChange={(val) => setOpen(val)}>
                     <SheetTrigger asChild>
                         <Button
-                            variant={"outline"}
-                            size={"sm"}
-                            className="py-5 px-3 drop-shadow-md absolute right-2"
+                            variant={"ghost"}
+                            size={"icon"}
+                            className="drop-shadow-2xl p-0 m-0"
                             suppressHydrationWarning
                         >
-                            <Menu className="h-[1.2rem] w-[1.2rem] text-red-700" />
+                            <Menu className="h-[1.5rem] w-[1.5rem] text-red-800" />
                             <span className="sr-only">Menu</span>
                         </Button>
                     </SheetTrigger>

@@ -16,7 +16,7 @@ export const Footer = () => {
         <div className={`flex flex-col items-center w-full`} id="contact">
             <div className={`w-full h-full bg-green-800 py-16`}>
                 <div
-                    className={`flex gap-10 items-start justify-between w-[93%] 2xl:w-full ${MAX_WIDTH} m-auto`}
+                    className={`flex gap-10 flex-col lg:flex-row items-start justify-center lg:items-start lg:justify-between w-fit lg:w-[93%] 2xl:w-full ${MAX_WIDTH} m-auto`}
                 >
                     <div className="flex flex-col gap-3">
                         <Image
@@ -96,7 +96,7 @@ export const Footer = () => {
 
             <div className="w-full bg-green-800 border-t border-white py-3">
                 <p
-                    className={`w-[93%] 2xl:w-full ${MAX_WIDTH} m-auto text-start text-xs text-white`}
+                    className={`w-[93%] 2xl:w-full ${MAX_WIDTH} m-auto text-center lg:text-start text-xs text-white`}
                 >
                     <span>Copyright © 2023-{year} </span>
                     <span className="text-yellow-300 font-bold">
