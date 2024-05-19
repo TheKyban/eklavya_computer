@@ -2,17 +2,26 @@ import Link from "next/link";
 import MobileMode from "@/components/Navbar/MobileMode";
 import { navbarLinks } from "@/components/Navbar/urls";
 import { IsAuth } from "./isAuth";
-import { Banner } from "./banner";
 import { ArrowDown } from "lucide-react";
 import { Session } from "next-auth";
+import Image from "next/image";
 
 const Navbar = ({ session }: { session: Session | null }) => {
     return (
         <>
-            {/* <Banner /> */}
             <div
-                className={`hidden lg:flex flex-col justify-between w-full shadow-xl bg-orange-500 sticky top-0 left-0 z-50`}
+                className={`hidden lg:flex items-center justify-between w-full shadow-xl py-2 bg-orange-500 sticky top-0 left-0 z-50`}
             >
+                <Image
+                    priority
+                    src={
+                        "https://res.cloudinary.com/dm8kvhwq7/image/upload/v1705811420/nfxqwn7nrmj76ged5mxo.png"
+                    }
+                    width={60}
+                    height={30}
+                    alt="logo"
+                    className="object-contain ml-auto"
+                />
                 <div className="ml-auto w-full h-full flex items-center justify-between px-3 py-2 gap-4 text-white text-sm max-w-5xl">
                     {/* Login  & Dasboard*/}
                     <IsAuth session={session} />

@@ -10,7 +10,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { LayoutDashboard, Menu, User } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navbarLinks } from "@/components/Navbar/urls";
 import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/styles";
