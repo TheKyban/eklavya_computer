@@ -23,7 +23,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                 key={link.title}
                                 href={link.link}
                                 className={
-                                    "transition hover:text-blue-100 font-normal"
+                                    "transition hover:text-blue-100 font-normal uppercase"
                                 }
                             >
                                 {link.title}
@@ -33,7 +33,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                 <div className="flex gap-2 justify-center items-center">
                                     <span
                                         className={
-                                            "transition group-hover:text-blue-100 font-normal"
+                                            "transition group-hover:text-blue-100 font-normal uppercase"
                                         }
                                     >
                                         {link?.title}
@@ -55,7 +55,9 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                             href={link?.link!}
                                         >
                                             <link.icon className="w-4 h-4" />
-                                            <span>{link.title}</span>
+                                            <span className="uppercase">
+                                                {link.title}
+                                            </span>
                                         </Link>
                                     ))}
                                 </div>

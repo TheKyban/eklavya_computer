@@ -83,11 +83,6 @@ export const navbarLinks: linkType[] = [
         icon: GraduationCap,
     },
     {
-        title: "Affiliation",
-        link: "/affiliation",
-        icon: LibraryBig,
-    },
-    {
         title: "About us",
         link: "/about",
         icon: Album,
@@ -96,51 +91,5 @@ export const navbarLinks: linkType[] = [
         title: "Contact us",
         link: "#contact",
         icon: BookUser,
-    },
-];
-
-const DownloadLinks: linkType[] = [
-    {
-        title: "Prospectus",
-        link: "",
-        icon: BookUser,
-        download: "prospectus",
-    },
-    {
-        title: "Admission Form",
-        link: "",
-        icon: Album,
-        download: "admissionForm",
-    },
-    {
-        title: "Franchisee Form",
-        link: "",
-        icon: Contact,
-        download: "franchiseeForm",
-    },
-    {
-        title: "Sample Ceritificate",
-        link: "",
-        icon: GraduationCap,
-        download: "sample_certificate",
-    },
-    {
-        title: "Sample Marksheet",
-        link: "",
-        icon: Table,
-        download: "sample_marksheet",
-    },
-];
-
-const SyllabusLinks: linkType[] = [
-    {
-        title: "DCA",
-        link: "#",
-        icon: Computer,
-    },
-    {
-        title: "ADCA",
-        link: "#",
-        icon: Database,
     },
 ];

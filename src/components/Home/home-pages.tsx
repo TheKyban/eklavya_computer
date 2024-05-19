@@ -42,10 +42,10 @@ export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
                 </div>
             </div>
 
-            <div className="my-5 w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 rounded-lg pb-9 pt-2 px-5">
-                <h1 className="text-3xl text-center font-bold text-green-600 my-7 uppercase">
+            <div className="my-5 w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 rounded-lg pb-9 pt-2 px-5 flex flex-col items-center">
+                <span className="text-3xl font-bold text-green-600 my-10 uppercase border-b-4 pb-2 border-green-600">
                     Our Family
-                </h1>
+                </span>
                 <HomeFamily family={family} />
             </div>
         </div>
@@ -131,10 +131,10 @@ const FromDeskOf = () => {
             }}
         >
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
-                <h1 className="text-3xl font-bold text-zinc-600 xl:text-3xl">
+                <span className="text-3xl font-bold text-zinc-600 xl:text-3xl border-b-4 border-zinc-500 pb-2 ">
                     From the Desk of Directors......
                     <span className="inline-block animate-pulse">?</span>.
-                </h1>
+                </span>
 
                 <div className="flex flex-col gap-4 w-full px-5 py-3 text-sm  lg:w-[70%] xl:text-lg dark:text-zinc-700">
                     <p
@@ -268,7 +268,7 @@ const NoticeSection = () => {
             transition={{
                 duration: 0.6,
             }}
-            className="w-full h-[400px] max-w-full md:max-w-sm border overflow-y-hidden"
+            className="w-full h-[400px] max-w-full md:max-w-sm border overflow-y-hidden rounded-lg"
         >
             <h1
                 className={`bg-orange-200 text-orange-700 font-bold uppercase text-lg text-center py-2 z-10 relative`}
@@ -361,10 +361,10 @@ const WhySection = () => {
             className="bg-orange-100 mt-5 lg:mt-0 rounded-lg w-[93%] 2xl:w-full"
         >
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
-                <h1 className="text-3xl font-medium text-zinc-600 xl:text-6xl">
+                <span className="text-3xl font-medium text-zinc-600 xl:text-6xl border-b-4 border-zinc-600 pb-4 ">
                     Why Eklavaya
                     <span className="inline-block animate-pulse">?</span>.
-                </h1>
+                </span>
 
                 <p className="text-sm w-full lg:w-[70%] xl:text-lg dark:text-zinc-700">
                     Our purpose as a company and sevices as the standard against
@@ -385,7 +385,9 @@ const OurFeatures = () => {
         <div
             className={`flex flex-col justify-center items-center gap-10 bg-orange-100 w-full rounded-lg py-10 h-full`}
         >
-            <h1 className="text-3xl font-bold text-green-600">Our Features</h1>
+            <span className="text-3xl font-bold text-green-600 border-b-4 border-green-600 pb-2 uppercase">
+                Our Features
+            </span>
             <div className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap">
                 {/* CARD ONE */}
 
@@ -539,7 +541,9 @@ const OurCourses = () => {
         <div
             className={`flex flex-col justify-center items-center gap-10 bg-orange-100 w-full rounded-lg py-10 h-full`}
         >
-            <h1 className="text-3xl font-bold text-green-600">Our Courses</h1>
+            <span className="text-3xl font-bold text-green-600 border-b-4 border-green-600 pb-2 uppercase">
+                Our Courses
+            </span>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 m-auto w-fit gap-8 flex-wrap">
                 {courses?.map((course, idx) => (

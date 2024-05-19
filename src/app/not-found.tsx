@@ -1,14 +1,17 @@
 import { Footer } from "@/components/Home/footer";
 import Navbar from "@/components/Navbar/Navbar";
 import { Button } from "@/components/ui/button";
+import { authOptions } from "@/lib/auth-options";
 import { MAX_WIDTH } from "@/lib/styles";
 import { ArrowRight, ShieldAlert } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 
-export default function NotFound() {
+export default async function NotFound() {
+    const session = await getServerSession(authOptions);
     return (
         <div className="bg-orange-50 h-screen w-screen overflow-x-hidden">
-            <Navbar />
+            <Navbar session={session} />
             <div
                 className={`${MAX_WIDTH} min-h-[calc(100vh-330px)]  mx-auto flex items-center justify-center flex-col overflow-hidden`}
             >

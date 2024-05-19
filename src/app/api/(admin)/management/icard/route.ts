@@ -4,6 +4,8 @@ import { Prisma } from "../../../../../../prisma/prisma";
 import { per_page } from "@/lib/constants";
 import { STATUS_CODE } from "@/lib/statusCode";
 
+export const dynamic = "force-dynamic";
+
 export const GET = async (req: Request) => {
     try {
         /**
@@ -72,7 +74,7 @@ export const GET = async (req: Request) => {
 
         return Response.json({ total, students }, { status: STATUS_CODE.OK });
     } catch (error) {
-        console.log("[GET Marksheet]", error);
+        console.log("[GET ICARD]", error);
         return Response.json(
             {
                 message: "Internal Error",

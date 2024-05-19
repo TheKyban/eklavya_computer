@@ -86,7 +86,7 @@ const MobileMode = ({ session }: { session: Session | null }) => {
                                     <Accordion
                                         type="single"
                                         collapsible
-                                        className=""
+                                        key={link?.title}
                                     >
                                         <AccordionItem
                                             value={link?.title}

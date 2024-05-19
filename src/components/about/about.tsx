@@ -26,7 +26,7 @@ export default function About() {
                     x: 100,
                     opacity: 0,
                 }}
-                className={`${MAX_WIDTH} m-auto flex flex-col items-center gap-8 bg-rose-50 px-10 max-h-96 lg:max-h-fit py-10 rounded`}
+                className={`${MAX_WIDTH} m-auto flex flex-col items-center gap-8 bg-orange-100 px-10 max-h-96 lg:max-h-fit py-10 rounded`}
             >
                 <h1 className="text-lg text-orange-600 font-semibold border-b-2 border-blue-400 py-2">
                     🤔 About The Academy
@@ -97,7 +97,7 @@ export default function About() {
                         x: -100,
                         opacity: 0,
                     }}
-                    className="bg-slate-200 rounded flex flex-col gap-5 py-8 items-center px-5"
+                    className="bg-orange-100 rounded flex flex-col gap-5 py-8 items-center px-5"
                 >
                     <h1 className="text-base font-semibold border-b-2 border-orange-400 py-1">
                         🎯 Our Mission
@@ -135,7 +135,7 @@ export default function About() {
                         x: 100,
                         opacity: 0,
                     }}
-                    className="bg-slate-200 rounded flex flex-col gap-5 py-8 items-center px-5"
+                    className="bg-orange-100 rounded flex flex-col gap-5 py-8 items-center px-5"
                 >
                     <h1 className="text-base font-semibold border-b-2 border-orange-400 py-1">
                         👁️ Our Vision
