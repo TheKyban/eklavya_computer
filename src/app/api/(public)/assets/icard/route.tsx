@@ -1,38 +1,78 @@
-import { PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
 import { ImageResponse } from "@vercel/og";
 import ToCapitalize from "@/lib/toCapitalize";
 import { format } from "date-fns";
 import { loadGoogleFont } from "@/lib/fonts";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
-import { Course, Marks, Student } from "@prisma/client";
+import { Prisma } from "../../../../../../prisma/prisma";
 
 export const dynamic = "force-dynamic";
 
 export const GET = async (req: Request) => {
     try {
+        /**
+         * GET REGISTRATION
+         */
         const { searchParams } = new URL(req.url);
+        const registration = searchParams.get("registration");
         const image = !!searchParams.get("no_image") ? false : true;
-
-        const token = cookies().get("student");
-        if (!token)
+        if (!registration) {
             return Response.json(
                 {
-                    message: "Invalid request",
+                    message: "Missing registration",
+                    success: false,
+                },
+                {
+                    status: 400,
+                },
+            );
+        }
+
+        // FIND STUDENT FROM REGISTRATION
+        const student = await Prisma.student.findFirst({
+            where: {
+                registration,
+            },
+            include: {
+                Course: {
+                    select: {
+                        name: true,
+                        duration: true,
+                        fullName: true,
+                    },
+                },
+                Branch: {
+                    select: {
+                        branch: true,
+                    },
+                },
+            },
+        });
+
+        // VALIDATE STUDENT
+        if (!student) {
+            return Response.json(
+                {
+                    message: "Student not found",
                     success: false,
                 },
                 {
                     status: 404,
                 },
             );
+        }
 
-        const decoded = jwt.verify(token.value, process.env.JWT_STUDENT_KEY!);
-
-        const student = decoded as Student & {
-            Course: Course;
-            marks: Marks;
-            Branch: { branch: string };
-        };
+        if (!student?.isVerified || !student?.icard) {
+            return Response.json(
+                {
+                    message: !student?.isVerified
+                        ? "Not Verified"
+                        : "Not Generated",
+                    success: false,
+                },
+                {
+                    status: 404,
+                },
+            );
+        }
 
         const fontData = await loadGoogleFont("Noto+Serif");
 
@@ -132,17 +172,10 @@ export const GET = async (req: Request) => {
             },
         );
     } catch (error) {
-        console.log("GET ICARD", error);
+        console.log("[STUDENT ZONE]", error);
         return Response.json(
-            {
-                message:
-                    (error as PrismaClientUnknownRequestError)?.message ||
-                    "Internal Error",
-                error,
-            },
-            {
-                status: 500,
-            },
+            { message: "Internal Error", error },
+            { status: 500 },
         );
     }
 };

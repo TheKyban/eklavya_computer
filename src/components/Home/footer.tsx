@@ -100,7 +100,7 @@ export const Footer = () => {
                 >
                     <span>Copyright © 2023-{year} </span>
                     <span className="text-yellow-300 font-bold">
-                        Eklavaya Global Computer{" "}
+                        Eklavaya Universal{" "}
                     </span>
                     <span>Pvt. Ltd.</span>
                 </p>

@@ -21,22 +21,28 @@ const MobileMode = ({ session }: { session: Session | null }) => {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="lg:hidden w-full flex flex-col  bg-orange-500">
-            <div className="flex gap-5 items-center justify-around">
-                <IsAuth
-                    session={session}
-                    className="text-white/70 font-semibold"
+        <div className="lg:hidden w-full flex flex-col">
+            <div className="relative w-full h-28 mb-2">
+                <Image
+                    priority
+                    src={
+                        "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
+                    }
+                    fill
+                    alt="logo"
                 />
+            </div>
+            <div className="flex gap-5 items-center justify-end px-3 w-full bg-[#033C73] py-1">
                 <Sheet open={open} onOpenChange={(val) => setOpen(val)}>
                     <SheetTrigger asChild>
                         <Button
-                            variant={"ghost"}
-                            size={"icon"}
-                            className="drop-shadow-2xl p-0 m-0"
+                            variant={"outline"}
+                            size={"sm"}
+                            className="flex gap-1 bg-transparent py-0 px-3"
                             suppressHydrationWarning
                         >
-                            <Menu className="h-[1.5rem] w-[1.5rem] text-white/70" />
-                            <span className="sr-only">Menu</span>
+                            <span className="text-sm text-white">Menu</span>
+                            <Menu className="h-4 w-4 text-white/70" />
                         </Button>
                     </SheetTrigger>
                     <SheetContent
@@ -45,7 +51,7 @@ const MobileMode = ({ session }: { session: Session | null }) => {
                     >
                         <div className="flex flex-col">
                             {/* Authentication */}
-                            <IsAuth session={session} />
+                            <IsAuth session={session} className={LinkStyle3} />
 
                             {navbarLinks.map((link) => {
                                 return !!link?.link ? (
@@ -112,17 +118,6 @@ const MobileMode = ({ session }: { session: Session | null }) => {
                     </SheetContent>
                 </Sheet>
             </div>
-
-            <Image
-                priority
-                src={
-                    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
-                }
-                width={500}
-                height={50}
-                alt="logo"
-                className="w-full h-auto max-h-20 object-fill shadow-2xl"
-            />
         </div>
     );
 };

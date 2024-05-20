@@ -1,46 +1,92 @@
-import { PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
-import { Prisma } from "../../../../../../../prisma/prisma";
+import { Prisma } from "../../../../../../prisma/prisma";
 import { ImageResponse } from "@vercel/og";
 import qrcode from "qrcode";
+import StudentStats from "@/lib/StudentStats";
+import { format } from "date-fns";
 import ToCapitalize from "@/lib/toCapitalize";
 import { loadGoogleFont } from "@/lib/fonts";
-import { format } from "date-fns";
-import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
-import { Course, Marks, Student } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
 export const GET = async (req: Request) => {
     try {
+        /**
+         * GET REGISTRATION
+         */
         const { searchParams } = new URL(req.url);
+        const registration = searchParams.get("registration");
         const image = !!searchParams.get("no_image") ? false : true;
 
-        const token = cookies().get("student");
-        if (!token)
+        if (!registration) {
             return Response.json(
                 {
-                    message: "Invalid request",
+                    message: "Missing registration",
+                    success: false,
+                },
+                {
+                    status: 400,
+                },
+            );
+        }
+
+        // FIND STUDENT FROM REGISTRATION
+        const student = await Prisma.student.findFirst({
+            where: {
+                registration,
+            },
+            include: {
+                Course: true,
+                marks: true,
+                Branch: {
+                    select: {
+                        branch: true,
+                    },
+                },
+            },
+        });
+
+        // VALIDATE STUDENT
+        if (!student) {
+            return Response.json(
+                {
+                    message: "Student not found",
                     success: false,
                 },
                 {
                     status: 404,
                 },
             );
+        }
 
-        const decoded = jwt.verify(token.value, process.env.JWT_STUDENT_KEY!);
-
-        const student = decoded as Student & {
-            Course: Course;
-            marks: Marks;
-            Branch: { branch: string };
-        };
+        if (
+            !student?.isVerified ||
+            student?.Course?.name !== "COMPUTER TYPING" ||
+            !student?.certificate
+        ) {
+            return Response.json(
+                {
+                    message: !student?.isVerified
+                        ? "Not Verified"
+                        : "Not Generated",
+                    success: false,
+                },
+                {
+                    status: 404,
+                },
+            );
+        }
+        // JWT TOKEN
+        const studentStats = new StudentStats(
+            [
+                student?.marks?.marks?.practical!,
+                student?.marks?.marks?.project!,
+                student?.marks?.marks?.viva!,
+                student?.marks?.marks?.written!,
+            ],
+            400,
+        );
 
         const fontData = await loadGoogleFont("Noto+Serif");
-
-        /**
-         * SEND IMAGE AS RESPONSE IF STUDENT IS FOUND AND CERTIFICATE AND ISVERIFIED TRUE
-         */
 
         const Typing_Certificate =
             "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715264416/ekavaya_assets/n3htsehgv01jksnqh76z.jpg";
@@ -185,17 +231,10 @@ export const GET = async (req: Request) => {
             },
         );
     } catch (error) {
-        console.log("GET CERTIFICATE", error);
+        console.log("[STUDENT ZONE]", error);
         return Response.json(
-            {
-                message:
-                    (error as PrismaClientUnknownRequestError)?.message ||
-                    "Internal Error",
-                error,
-            },
-            {
-                status: 500,
-            },
+            { message: "Internal Error", error },
+            { status: 500 },
         );
     }
 };

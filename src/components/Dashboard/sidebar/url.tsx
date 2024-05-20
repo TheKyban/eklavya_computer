@@ -152,6 +152,7 @@ export const accordianLinks: accordianLinks[] = [
     {
         title: "Management",
         icon: <Medal className="w-5 h-5 text-gray-600" />,
+        role: "ADMIN",
         links: [
             {
                 title: "Student Verification",
