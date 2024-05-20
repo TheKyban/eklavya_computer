@@ -66,10 +66,19 @@ module.exports = {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: 0 },
                 },
+                "vertical-animation": {
+                    from: {
+                        transform: "translateY(100%)",
+                    },
+                    to: {
+                        transform: "translateY(-100%)",
+                    },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
+                "vertical-animation": "vertical-animation 20s linear infinite",
             },
             gridTemplateColumns: {
                 "320_autofit": "repeat(auto-fit, minmax(320px, 1fr))",

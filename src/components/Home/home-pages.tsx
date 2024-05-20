@@ -2,10 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     BadgeCheck,
     BookText,
+    Brain,
     Building,
     Contact,
     Folder,
     GraduationCap,
+    Hand,
+    Lock,
     Smile,
     Target,
 } from "lucide-react";
@@ -82,7 +85,7 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
             <span className="text-2xl hidden lg:inline-block sm:text-3xl font-semibold text-green-600 my-3 sm:my-10 uppercase border-b-2 pb-2 border-green-600">
                 Our Family
             </span>
-            <ReactMarquee autoFill={true}>
+            <ReactMarquee autoFill={true} pauseOnHover>
                 {family?.map(
                     (
                         user: {
@@ -141,7 +144,7 @@ const NoticeSection = () => {
                 Notice
             </h1>
 
-            <ul className="flex flex-col w-full h-full text-center font-medium items-center sm:text-start sm:items-start text-xs gap-5 noticeSection px-3">
+            <ul className="flex flex-col w-full h-fit text-center font-medium items-center sm:text-start sm:items-start text-xs gap-5 animate-vertical-animation hover:paused px-3">
                 <li
                     className="flex flex-col sm:flex-row items-center justify-center  gap-2 text-rose-700"
                     key={1}
@@ -201,6 +204,38 @@ const NoticeSection = () => {
                         Important Members Of Our Team And Your abilities And
                         Contributions Will Be An Important Part Of Our Continued
                         Success. People Are And Will Always Be.
+                    </p>
+                </li>
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center text-indigo-600 gap-2"
+                    key={7}
+                >
+                    <Brain className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        IDEA--- All achievement, all earned riches, have their
+                        beginning in an idea.
+                    </p>
+                </li>
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center text-gray-600 gap-2"
+                    key={7}
+                >
+                    <Lock className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        Balance --- Balance is the key to everything. What we
+                        do, think, say, eat, feel, they all require awareness
+                        and through this awareness we can grow.
+                    </p>
+                </li>
+                <li
+                    className="flex flex-col sm:flex-row items-center justify-center text-orange-600 gap-2"
+                    key={7}
+                >
+                    <Hand className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        UNITY--- We are each other's harvest; we are each
+                        other's business; we are each other's magnitude and
+                        bond.
                     </p>
                 </li>
             </ul>
