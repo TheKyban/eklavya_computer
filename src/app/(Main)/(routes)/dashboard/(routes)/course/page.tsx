@@ -1,12 +1,12 @@
 import { AddCourse } from "@/components/Dashboard/course/addCourse";
 import { CourseList } from "@/components/Dashboard/course/courseList";
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export default async function CoursePage() {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(AUTH_OPTIONS);
 
     if (!session?.user || session?.user.role === role.FRANCHISE) {
         redirect("/dashboard");

@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { typingSpeedMarkSchema } from "@/lib/schema";
+import { COMPUTER_TYPING_MARKS_SCHEMA } from "@/lib/SCHEMA";
 import { useMutation } from "@tanstack/react-query";
 import { useCustumQuery } from "@/hooks/use-queries";
 
@@ -33,8 +33,8 @@ export const EditComputerTypingMarksModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "editComputerTypingMarks";
     const { computerTypingMarks, searchParams } = data;
-    const form = useForm<z.infer<typeof typingSpeedMarkSchema>>({
-        resolver: zodResolver(typingSpeedMarkSchema),
+    const form = useForm<z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA>>({
+        resolver: zodResolver(COMPUTER_TYPING_MARKS_SCHEMA),
         defaultValues: {
             registration: "",
             hindiTyping: 0,
@@ -53,7 +53,9 @@ export const EditComputerTypingMarksModal = () => {
     const { updateMark } = useCustumQuery();
 
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof typingSpeedMarkSchema>) => {
+        mutationFn: async (
+            values: z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA>,
+        ) => {
             const { data } = await axios.put(
                 "/api/marks?computerTyping=true",
                 values,

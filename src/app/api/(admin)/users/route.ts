@@ -1,12 +1,12 @@
-import { franchiseEditSchema, franchiseSchema } from "@/lib/schema";
+import { USER_EDIT_SCHEMA, USER_SCHEMA } from "@/lib/SCHEMA";
 import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../prisma/prisma";
 import { z } from "zod";
-import { per_page } from "@/lib/constants";
+import { per_page } from "@/lib/CONSTANTS";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { role as ROLE } from "@prisma/client";
-import { DELETE_FILE } from "@/lib/cloudinary";
+import { DELETE_FILE } from "@/lib/CLOUDINARY";
 
 /**
  * CREATE USER
@@ -17,19 +17,19 @@ export const POST = async (req: Request) => {
         /**
          * CHECK ADMIN IS LOGIN
          */
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session?.user || session?.user.role !== "ADMIN") {
             return NextResponse.json({
                 message: "Unauthorized",
             });
         }
 
-        const data: z.infer<typeof franchiseSchema> = await req.json();
+        const data: z.infer<typeof USER_SCHEMA> = await req.json();
 
         /**
          * VALIDATE DATA
          */
-        const dataVerify = franchiseSchema.safeParse(data);
+        const dataVerify = USER_SCHEMA.safeParse(data);
 
         if (!dataVerify.success) {
             return NextResponse.json(
@@ -140,7 +140,7 @@ export const GET = async (req: Request) => {
          * VERIFY THAT ADMIN IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session?.user || session?.user.role !== "ADMIN") {
             return NextResponse.json({
                 message: "Unauthorized",
@@ -231,7 +231,7 @@ export const PUT = async (req: Request) => {
          * CHECK ADMIN IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user || session?.user.role !== "ADMIN") {
             return NextResponse.json({
@@ -240,13 +240,13 @@ export const PUT = async (req: Request) => {
             });
         }
 
-        const data: z.infer<typeof franchiseEditSchema> = await req.json();
+        const data: z.infer<typeof USER_EDIT_SCHEMA> = await req.json();
 
         /**
          * VALIDATE DATA
          */
 
-        const { success } = franchiseEditSchema.safeParse(data);
+        const { success } = USER_EDIT_SCHEMA.safeParse(data);
 
         if (!success) {
             return NextResponse.json({
@@ -323,7 +323,7 @@ export const DELETE = async (req: Request) => {
          * CHECK ADMIN IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user || session?.user.role !== "ADMIN") {
             return NextResponse.json({

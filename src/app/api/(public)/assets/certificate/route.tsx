@@ -1,10 +1,11 @@
 import { Prisma } from "../../../../../../prisma/prisma";
 import { ImageResponse } from "@vercel/og";
 import qrcode from "qrcode";
-import ToCapitalize from "@/lib/toCapitalize";
-import StudentStats from "@/lib/StudentStats";
-import { loadGoogleFont } from "@/lib/fonts";
+import { TO_CAPITALIZE } from "@/lib/STYLES";
+import STUDENT_STATS from "@/lib/STUDENT_STATS";
+import { loadGoogleFont } from "@/lib/FONTS";
 import { format } from "date-fns";
+import { Duration } from "@/lib/CONSTANTS";
 
 export const dynamic = "force-dynamic";
 
@@ -92,7 +93,7 @@ export const GET = async (req: Request) => {
         var qrCodeURl =
             "data:" + "image/png" + ";" + encoding + "," + base64Data;
 
-        const studentStats = new StudentStats(
+        const studentStats = new STUDENT_STATS(
             [
                 student?.marks?.marks?.practical!,
                 student?.marks?.marks?.project!,
@@ -101,6 +102,12 @@ export const GET = async (req: Request) => {
             ],
             400,
         );
+
+        const completeDate = (new Date(student.dor).getTime() +
+            1000 *
+                Duration[
+                    student.Course.duration as keyof typeof Duration
+                ]) as number;
 
         return new ImageResponse(
             (
@@ -151,10 +158,10 @@ export const GET = async (req: Request) => {
                         {student?.registration}
                     </span>
                     <span style={{ position: "absolute", top: 353, left: 480 }}>
-                        {ToCapitalize(student?.name)}
+                        {TO_CAPITALIZE(student?.name)}
                     </span>
                     <span style={{ position: "absolute", top: 400, left: 460 }}>
-                        {ToCapitalize(student?.fatherName)}
+                        {TO_CAPITALIZE(student?.fatherName)}
                     </span>
                     <span
                         style={{
@@ -183,6 +190,16 @@ export const GET = async (req: Request) => {
                         }}
                     >
                         {student?.Course?.duration}
+                    </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 540,
+                            left: 860,
+                            fontSize: 22,
+                        }}
+                    >
+                        {format(new Date(completeDate), "MMM yyyy")}
                     </span>
 
                     <span

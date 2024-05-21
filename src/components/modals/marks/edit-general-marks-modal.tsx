@@ -26,7 +26,7 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { generalMarksSchema } from "@/lib/schema";
+import { GENERAL_COURSE_MARKS_SCHEMA } from "@/lib/SCHEMA";
 import { useMutation } from "@tanstack/react-query";
 import { useCustumQuery } from "@/hooks/use-queries";
 
@@ -34,8 +34,8 @@ export const EditGeneralMarks = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "editGeneralMarks";
     const { generalMarks, searchParams } = data;
-    const form = useForm<z.infer<typeof generalMarksSchema>>({
-        resolver: zodResolver(generalMarksSchema),
+    const form = useForm<z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA>>({
+        resolver: zodResolver(GENERAL_COURSE_MARKS_SCHEMA),
         defaultValues: {
             practical: 0,
             project: 0,
@@ -55,7 +55,9 @@ export const EditGeneralMarks = () => {
     }, [form, generalMarks]);
     const { updateMark } = useCustumQuery();
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof generalMarksSchema>) => {
+        mutationFn: async (
+            values: z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA>,
+        ) => {
             const { data } = await axios.put("/api/marks", values);
             return data;
         },

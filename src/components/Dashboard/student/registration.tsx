@@ -28,7 +28,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CalendarIcon, GraduationCap, Loader, PlusCircle } from "lucide-react";
-import { studentSchema } from "@/lib/schema";
+import { STUDENT_SCHEMA } from "@/lib/SCHEMA";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { useSession } from "next-auth/react";
@@ -41,9 +41,9 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { states } from "@/lib/stateAndDistrict";
+import { STATES } from "@/lib/STATE_WITH_DISTRICTS";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { ImageHandler } from "@/lib/imageHandler";
+import { IMAGE_HANDLER } from "@/lib/IMAGE_HANDLER";
 import { useCourse } from "@/hooks/useFetch";
 
 const StudentRegistration = () => {
@@ -51,8 +51,8 @@ const StudentRegistration = () => {
     const { data: session } = useSession();
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
-    const form = useForm<z.infer<typeof studentSchema>>({
-        resolver: zodResolver(studentSchema),
+    const form = useForm<z.infer<typeof STUDENT_SCHEMA>>({
+        resolver: zodResolver(STUDENT_SCHEMA),
         defaultValues: {
             address: "",
             branch: session?.user?.userId,
@@ -83,7 +83,7 @@ const StudentRegistration = () => {
         }
     }, [session, form]);
 
-    const onSubmit = async (values: z.infer<typeof studentSchema>) => {
+    const onSubmit = async (values: z.infer<typeof STUDENT_SCHEMA>) => {
         try {
             const { data } = await axios.post("/api/student", values);
 
@@ -167,7 +167,7 @@ const StudentRegistration = () => {
                                         id="img"
                                         value={""}
                                         onChange={(e) =>
-                                            ImageHandler(
+                                            IMAGE_HANDLER(
                                                 e,
                                                 form,
                                                 setIsUploading,
@@ -414,7 +414,7 @@ const StudentRegistration = () => {
                                                     <SelectLabel>
                                                         States
                                                     </SelectLabel>
-                                                    {states.map((state) => (
+                                                    {STATES.map((state) => (
                                                         <SelectItem
                                                             key={state.state}
                                                             value={state.state}
@@ -457,7 +457,7 @@ const StudentRegistration = () => {
                                                         Districts
                                                     </SelectLabel>
 
-                                                    {states.map((s) => {
+                                                    {STATES.map((s) => {
                                                         if (s.state === state) {
                                                             return s.districts?.map(
                                                                 (

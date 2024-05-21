@@ -1,6 +1,6 @@
 import printJS from "print-js";
 
-export const printHandler = (canvas: HTMLCanvasElement) => {
+export const PRINT_HANDLER = (canvas: HTMLCanvasElement) => {
     const toImg = canvas.toDataURL();
     printJS({
         printable: `${toImg}`,

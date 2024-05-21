@@ -35,16 +35,16 @@ import { useForm } from "react-hook-form";
 import { CalendarIcon, GraduationCap, Loader } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { studentSchema } from "@/lib/schema";
+import { STUDENT_SCHEMA } from "@/lib/SCHEMA";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "../../ui/calendar";
 import { useMutation } from "@tanstack/react-query";
-import { states } from "@/lib/stateAndDistrict";
+import { STATES } from "@/lib/STATE_WITH_DISTRICTS";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { ImageHandler } from "@/lib/imageHandler";
+import { IMAGE_HANDLER } from "@/lib/IMAGE_HANDLER";
 import { useCourse } from "@/hooks/useFetch";
 
 export const EditStudentModal = () => {
@@ -56,8 +56,8 @@ export const EditStudentModal = () => {
     const [isUploading, setIsUploading] = useState(false);
     const { data: courses, isLoading } = useCourse();
 
-    const form = useForm<z.infer<typeof studentSchema>>({
-        resolver: zodResolver(studentSchema),
+    const form = useForm<z.infer<typeof STUDENT_SCHEMA>>({
+        resolver: zodResolver(STUDENT_SCHEMA),
     });
 
     useEffect(() => {
@@ -93,7 +93,7 @@ export const EditStudentModal = () => {
 
     const { updateStudent } = useCustumQuery();
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof studentSchema>) => {
+        mutationFn: async (values: z.infer<typeof STUDENT_SCHEMA>) => {
             const { data } = await axios.put("/api/student", values);
             return data;
         },
@@ -169,7 +169,7 @@ export const EditStudentModal = () => {
                                             id="img"
                                             value={""}
                                             onChange={(e) =>
-                                                ImageHandler(
+                                                IMAGE_HANDLER(
                                                     e,
                                                     form,
                                                     setIsUploading,
@@ -423,7 +423,7 @@ export const EditStudentModal = () => {
                                                         <SelectLabel>
                                                             States
                                                         </SelectLabel>
-                                                        {states.map((state) => (
+                                                        {STATES.map((state) => (
                                                             <SelectItem
                                                                 key={
                                                                     state.state
@@ -470,7 +470,7 @@ export const EditStudentModal = () => {
                                                             Districts
                                                         </SelectLabel>
 
-                                                        {states.map((s) => {
+                                                        {STATES.map((s) => {
                                                             if (
                                                                 s.state ===
                                                                 state

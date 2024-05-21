@@ -36,11 +36,11 @@ import { useForm } from "react-hook-form";
 import { CircleUser, Loader, Smile } from "lucide-react";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { franchiseEditSchema } from "@/lib/schema";
+import { USER_EDIT_SCHEMA } from "@/lib/SCHEMA";
 import { useMutation } from "@tanstack/react-query";
-import { states } from "@/lib/stateAndDistrict";
+import { STATES } from "@/lib/STATE_WITH_DISTRICTS";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { ImageHandler } from "@/lib/imageHandler";
+import { IMAGE_HANDLER } from "@/lib/IMAGE_HANDLER";
 
 export const UserModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -49,8 +49,8 @@ export const UserModal = () => {
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
 
-    const form = useForm<z.infer<typeof franchiseEditSchema>>({
-        resolver: zodResolver(franchiseEditSchema),
+    const form = useForm<z.infer<typeof USER_EDIT_SCHEMA>>({
+        resolver: zodResolver(USER_EDIT_SCHEMA),
         defaultValues: {
             address: "",
             branch: "",
@@ -95,7 +95,7 @@ export const UserModal = () => {
     }, [data, form, user]);
     const { updateUser } = useCustumQuery();
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof franchiseEditSchema>) => {
+        mutationFn: async (values: z.infer<typeof USER_EDIT_SCHEMA>) => {
             const { data } = await axios.put("/api/users", values);
             return data;
         },
@@ -171,7 +171,7 @@ export const UserModal = () => {
                                                 id="img"
                                                 // value={field.value}
                                                 onChange={(e) =>
-                                                    ImageHandler(
+                                                    IMAGE_HANDLER(
                                                         e,
                                                         form,
                                                         setIsUploading,
@@ -267,7 +267,7 @@ export const UserModal = () => {
                                                         <SelectLabel>
                                                             States
                                                         </SelectLabel>
-                                                        {states.map((state) => (
+                                                        {STATES.map((state) => (
                                                             <SelectItem
                                                                 key={
                                                                     state.state
@@ -314,7 +314,7 @@ export const UserModal = () => {
                                                             Districts
                                                         </SelectLabel>
 
-                                                        {states.map((s) => {
+                                                        {STATES.map((s) => {
                                                             if (
                                                                 s.state ===
                                                                 state

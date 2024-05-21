@@ -1,9 +1,9 @@
 import { ImageResponse } from "@vercel/og";
 import qrcode from "qrcode";
-import StudentStats from "@/lib/StudentStats";
+import STUDENT_STATS from "@/lib/STUDENT_STATS";
 import { format } from "date-fns";
-import ToCapitalize from "@/lib/toCapitalize";
-import { loadGoogleFont } from "@/lib/fonts";
+import { TO_CAPITALIZE } from "@/lib/STYLES";
+import { loadGoogleFont } from "@/lib/FONTS";
 import { Prisma } from "../../../../../../prisma/prisma";
 
 export const dynamic = "force-dynamic";
@@ -76,7 +76,7 @@ export const GET = async (req: Request) => {
             );
         }
 
-        const studentStats = new StudentStats(
+        const studentStats = new STUDENT_STATS(
             [
                 student?.marks?.marks?.practical!,
                 student?.marks?.marks?.project!,
@@ -164,13 +164,13 @@ export const GET = async (req: Request) => {
                         {student?.registration}
                     </span>
                     <span style={{ position: "absolute", top: 383, left: 380 }}>
-                        {ToCapitalize(student?.name)}
+                        {TO_CAPITALIZE(student?.name)}
                     </span>
                     <span style={{ position: "absolute", top: 423, left: 380 }}>
-                        {ToCapitalize(student?.motherName)}
+                        {TO_CAPITALIZE(student?.motherName)}
                     </span>
                     <span style={{ position: "absolute", top: 463, left: 380 }}>
-                        {ToCapitalize(student?.fatherName)}
+                        {TO_CAPITALIZE(student?.fatherName)}
                     </span>
                     <span style={{ position: "absolute", top: 503, left: 380 }}>
                         {student?.Course?.name} ( {student?.Course?.fullName} )

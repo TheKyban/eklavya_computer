@@ -1,11 +1,11 @@
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { getServerSession } from "next-auth";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { NextRequest } from "next/server";
-import { per_page } from "@/lib/constants";
-import { DELETE_FILE } from "@/lib/cloudinary";
+import { per_page } from "@/lib/CONSTANTS";
+import { DELETE_FILE } from "@/lib/CLOUDINARY";
 import { role } from "@prisma/client";
-import { franchiseSchema } from "@/lib/schema";
+import { USER_SCHEMA } from "@/lib/SCHEMA";
 import { z } from "zod";
 import {
     PrismaClientKnownRequestError,
@@ -19,7 +19,7 @@ export const POST = async (req: Request) => {
         /**
          * CHECK ADMIN IS LOGIN
          */
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session?.user || session?.user.role !== "ADMIN") {
             return Response.json({
                 message: "Unauthorized",
@@ -36,12 +36,12 @@ export const POST = async (req: Request) => {
             });
         }
 
-        const data: z.infer<typeof franchiseSchema> = await req.json();
+        const data: z.infer<typeof USER_SCHEMA> = await req.json();
 
         /**
          * VALIDATE DATA
          */
-        const dataVerify = franchiseSchema.safeParse(data);
+        const dataVerify = USER_SCHEMA.safeParse(data);
 
         if (!dataVerify.success) {
             return Response.json(
@@ -155,7 +155,7 @@ export const GET = async (req: NextRequest) => {
          * CHECK SESSION IS AVAILABLE
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session || session.user.role === "FRANCHISE") {
             return Response.json({ message: "Unauthorized", success: false });
         }
@@ -212,7 +212,7 @@ export const DELETE = async (req: Request) => {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session) {
             return Response.json({ message: "Unauthorized", success: false });
         }

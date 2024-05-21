@@ -1,7 +1,7 @@
-import { CarouselMediaUploader } from "@/components/carousel-setting/carousel-uploader";
-import { CarouselImageList } from "@/components/carousel-setting/carousel-image-list";
+import { CarouselMediaUploader } from "@/components/Dashboard/carousel-setting/carousel-uploader";
+import { CarouselImageList } from "@/components/Dashboard/carousel-setting/carousel-image-list";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { redirect } from "next/navigation";
 
 export default async function CarouselSettings() {
@@ -9,7 +9,7 @@ export default async function CarouselSettings() {
      * VERIFY ROLE
      */
 
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(AUTH_OPTIONS);
     if (session?.user.role !== "ADMIN") {
         return redirect("/dashboard");
     }

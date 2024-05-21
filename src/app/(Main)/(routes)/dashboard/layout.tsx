@@ -2,13 +2,13 @@ import MobileMenu from "@/components/Dashboard/sidebar/MobileMenu";
 import Sidebar from "@/components/Dashboard/sidebar/Sidebar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { Loader } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 
 async function Dasboard({ children }: { children: React.ReactNode }) {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(AUTH_OPTIONS);
     const role = session?.user.role;
 
     return (

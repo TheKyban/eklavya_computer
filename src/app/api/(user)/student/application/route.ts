@@ -1,13 +1,13 @@
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { getServerSession } from "next-auth";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { NextRequest } from "next/server";
 import { gender, role } from "@prisma/client";
-import { DELETE_FILE } from "@/lib/cloudinary";
-import { per_page } from "@/lib/constants";
-import { studentSchema } from "@/lib/schema";
+import { DELETE_FILE } from "@/lib/CLOUDINARY";
+import { per_page } from "@/lib/CONSTANTS";
+import { STUDENT_SCHEMA } from "@/lib/SCHEMA";
 import { z } from "zod";
-import { STATUS_CODE } from "@/lib/statusCode";
+import { STATUS_CODE } from "@/lib/STATUS_CODE";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +20,7 @@ export const POST = async (req: Request) => {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user) {
             return Response.json({
@@ -61,8 +61,8 @@ export const POST = async (req: Request) => {
             );
         }
 
-        const data: z.infer<typeof studentSchema> = await req.json();
-        const dataVerify = studentSchema.safeParse({
+        const data: z.infer<typeof STUDENT_SCHEMA> = await req.json();
+        const dataVerify = STUDENT_SCHEMA.safeParse({
             ...data,
             dob: new Date(data.dob),
             dor: new Date(data.dor),
@@ -211,7 +211,7 @@ export const GET = async (req: NextRequest) => {
          * CHECK SESSION IS AVAILABLE
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session) {
             return Response.json({ message: "Unauthorized", success: false });
         }
@@ -272,7 +272,7 @@ export const DELETE = async (req: Request) => {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session) {
             return Response.json({ message: "Unauthorized", success: false });
         }

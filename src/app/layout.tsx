@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import type { Metadata } from "next";
-import { open_sans } from "@/lib/fonts";
+import { open_sans } from "@/lib/FONTS";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import AuthProvider from "@/components/providers/auth-provider";

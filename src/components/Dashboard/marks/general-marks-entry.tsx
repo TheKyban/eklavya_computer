@@ -22,7 +22,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { useStudentMark } from "@/hooks/useFetch";
-import { generalMarksSchema } from "@/lib/schema";
+import { GENERAL_COURSE_MARKS_SCHEMA } from "@/lib/SCHEMA";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Marks } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
@@ -32,8 +32,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const GeneralMarksEntry = () => {
-    const form = useForm<z.infer<typeof generalMarksSchema>>({
-        resolver: zodResolver(generalMarksSchema),
+    const form = useForm<z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA>>({
+        resolver: zodResolver(GENERAL_COURSE_MARKS_SCHEMA),
         defaultValues: {
             practical: 0,
             project: 0,
@@ -47,7 +47,9 @@ const GeneralMarksEntry = () => {
         useCustumQuery();
 
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof generalMarksSchema>) => {
+        mutationFn: async (
+            values: z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA>,
+        ) => {
             const { data } = await axios.post<{
                 message: string;
                 success: boolean;

@@ -1,5 +1,5 @@
-import { authOptions } from "@/lib/auth-options";
-import { changePasswordSchema } from "@/lib/schema";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
+import { PASSWORD_SCHEMA } from "@/lib/SCHEMA";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -11,7 +11,7 @@ export const POST = async (req: Request) => {
          * CHECK SESSION EXIST OR NOT
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session?.user) {
             return NextResponse.json({
                 message: "Unauthenticated",
@@ -22,9 +22,9 @@ export const POST = async (req: Request) => {
         /**
          * GET DATA AND VALIDATE
          */
-        const data: z.infer<typeof changePasswordSchema> = await req.json();
+        const data: z.infer<typeof PASSWORD_SCHEMA> = await req.json();
 
-        const { success } = changePasswordSchema.safeParse(data);
+        const { success } = PASSWORD_SCHEMA.safeParse(data);
         if (!success) {
             return NextResponse.json({
                 message: "invalid fields",

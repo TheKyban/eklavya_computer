@@ -1,4 +1,4 @@
-import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/styles";
+import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/STYLES";
 import Image from "next/image";
 
 export default function Course() {

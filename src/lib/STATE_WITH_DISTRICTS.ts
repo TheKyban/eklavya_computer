@@ -1,8 +1,4 @@
-/**
- * STATE AND DISTRICT
- */
-
-export const states = [
+export const STATES = [
     {
         state: "Andhra Pradesh",
         districts: [

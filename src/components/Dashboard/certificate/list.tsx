@@ -9,14 +9,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { poppins } from "@/lib/fonts";
+import { poppins } from "@/lib/FONTS";
 import { Course, Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Eye, UserRoundCheck } from "lucide-react";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
 import { format } from "date-fns";
-import { per_page } from "@/lib/constants";
+import { per_page } from "@/lib/CONSTANTS";
 import { useCertificate } from "@/hooks/useFetch";
 
 const CertificateList = ({

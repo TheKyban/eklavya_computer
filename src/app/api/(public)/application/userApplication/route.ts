@@ -1,16 +1,16 @@
-import { userApplicationSchema } from "@/lib/schema";
+import { USER_APPLICATION_SCHEMA } from "@/lib/SCHEMA";
 import { z } from "zod";
 import { Prisma } from "../../../../../../prisma/prisma";
 
 export const POST = async (req: Request) => {
     try {
-        const data: z.infer<typeof userApplicationSchema> = await req.json();
+        const data: z.infer<typeof USER_APPLICATION_SCHEMA> = await req.json();
 
         /**
          * VALIDATE DATA
          */
 
-        const { success } = userApplicationSchema.safeParse(data);
+        const { success } = USER_APPLICATION_SCHEMA.safeParse(data);
         if (!success) {
             return Response.json({
                 message: "Invalid data",

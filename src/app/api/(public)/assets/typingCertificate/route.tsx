@@ -1,10 +1,9 @@
 import { Prisma } from "../../../../../../prisma/prisma";
 import { ImageResponse } from "@vercel/og";
 import qrcode from "qrcode";
-import StudentStats from "@/lib/StudentStats";
 import { format } from "date-fns";
-import ToCapitalize from "@/lib/toCapitalize";
-import { loadGoogleFont } from "@/lib/fonts";
+import { TO_CAPITALIZE } from "@/lib/STYLES";
+import { loadGoogleFont } from "@/lib/FONTS";
 
 export const dynamic = "force-dynamic";
 
@@ -75,16 +74,6 @@ export const GET = async (req: Request) => {
                 },
             );
         }
-        // JWT TOKEN
-        const studentStats = new StudentStats(
-            [
-                student?.marks?.marks?.practical!,
-                student?.marks?.marks?.project!,
-                student?.marks?.marks?.viva!,
-                student?.marks?.marks?.written!,
-            ],
-            400,
-        );
 
         const fontData = await loadGoogleFont("Noto+Serif");
 
@@ -157,10 +146,10 @@ export const GET = async (req: Request) => {
                         {student?.registration}
                     </span>
                     <span style={{ position: "absolute", top: 295, left: 350 }}>
-                        {ToCapitalize(student?.name)}
+                        {TO_CAPITALIZE(student?.name)}
                     </span>
                     <span style={{ position: "absolute", top: 340, left: 360 }}>
-                        {ToCapitalize(student?.fatherName)}
+                        {TO_CAPITALIZE(student?.fatherName)}
                     </span>
                     <span style={{ position: "absolute", top: 385, left: 380 }}>
                         {student?.registration}

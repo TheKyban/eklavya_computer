@@ -1,7 +1,10 @@
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { getServerSession } from "next-auth";
 import { Prisma } from "../../../../../prisma/prisma";
-import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
+import {
+    GENERAL_COURSE_MARKS_SCHEMA,
+    COMPUTER_TYPING_MARKS_SCHEMA,
+} from "@/lib/SCHEMA";
 import { z } from "zod";
 
 /**
@@ -14,7 +17,7 @@ export const GET = async (req: Request) => {
          * CHECK SESSION IS AVAILABLE
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session) {
             return Response.json({ message: "Unauthorized" });
@@ -71,14 +74,15 @@ export const POST = async (req: Request) => {
          * CHECK SESSION IS AVAILABLE
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session) {
             return Response.json({ message: "Unauthorized" });
         }
 
         const data: z.infer<
-            typeof typingSpeedMarkSchema & typeof generalMarksSchema
+            typeof COMPUTER_TYPING_MARKS_SCHEMA &
+                typeof GENERAL_COURSE_MARKS_SCHEMA
         > = await req.json();
 
         const student = await Prisma.student.findUnique({
@@ -106,9 +110,10 @@ export const POST = async (req: Request) => {
          * COMPUTER TYPING OR OTHER
          */
         const { success: isTypingMarksValid } =
-            typingSpeedMarkSchema.safeParse(data);
+            COMPUTER_TYPING_MARKS_SCHEMA.safeParse(data);
 
-        const { success: isMarksValid } = generalMarksSchema.safeParse(data);
+        const { success: isMarksValid } =
+            GENERAL_COURSE_MARKS_SCHEMA.safeParse(data);
 
         if (!isTypingMarksValid && !isMarksValid) {
             return Response.json({ message: "Invalid data" });
@@ -177,14 +182,15 @@ export const PUT = async (req: Request) => {
          * CHECK SESSION IS AVAILABLE
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session) {
             return Response.json({ message: "Unauthorized" });
         }
 
         const data: z.infer<
-            typeof typingSpeedMarkSchema & typeof generalMarksSchema
+            typeof COMPUTER_TYPING_MARKS_SCHEMA &
+                typeof GENERAL_COURSE_MARKS_SCHEMA
         > = await req.json();
 
         const student = await Prisma.student.findUnique({
@@ -214,9 +220,10 @@ export const PUT = async (req: Request) => {
          */
 
         const { success: isTypingMarksValid } =
-            typingSpeedMarkSchema.safeParse(data);
+            COMPUTER_TYPING_MARKS_SCHEMA.safeParse(data);
 
-        const { success: isMarksValid } = generalMarksSchema.safeParse(data);
+        const { success: isMarksValid } =
+            GENERAL_COURSE_MARKS_SCHEMA.safeParse(data);
 
         if (!isTypingMarksValid && !isMarksValid) {
             return Response.json({ message: "Invalid data" });
@@ -272,7 +279,7 @@ export const DELETE = async (req: Request) => {
          * CHECK SESSION IS AVAILABLE
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session) {
             return Response.json({ message: "Unauthorized" });

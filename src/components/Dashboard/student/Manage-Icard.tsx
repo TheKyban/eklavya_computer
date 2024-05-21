@@ -22,9 +22,9 @@ import {
 } from "@/components/ui/table";
 import { toast } from "@/components/ui/use-toast";
 import { useICard, useMarksheet } from "@/hooks/useFetch";
-import { per_page } from "@/lib/constants";
-import { poppins } from "@/lib/fonts";
-import { StudentWithCourse, StudentWithMarksCourse } from "@/lib/types";
+import { per_page } from "@/lib/CONSTANTS";
+import { poppins } from "@/lib/FONTS";
+import { StudentWithCourse, StudentWithMarksCourse } from "@/lib/TYPES";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Layers3, Shield, Users } from "lucide-react";

@@ -22,7 +22,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { useStudentMark } from "@/hooks/useFetch";
-import { typingSpeedMarkSchema } from "@/lib/schema";
+import { COMPUTER_TYPING_MARKS_SCHEMA } from "@/lib/SCHEMA";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -31,8 +31,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const TypingMarksEntry = () => {
-    const form = useForm<z.infer<typeof typingSpeedMarkSchema>>({
-        resolver: zodResolver(typingSpeedMarkSchema),
+    const form = useForm<z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA>>({
+        resolver: zodResolver(COMPUTER_TYPING_MARKS_SCHEMA),
         defaultValues: {
             hindiTyping: 0,
             englishTyping: 0,
@@ -42,7 +42,9 @@ const TypingMarksEntry = () => {
     const { removeRegistrationNumberFromUnMarkedList, addMark } =
         useCustumQuery();
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof typingSpeedMarkSchema>) => {
+        mutationFn: async (
+            values: z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA>,
+        ) => {
             const { data } = await axios.post(
                 "/api/marks?computerTyping=true",
                 values,

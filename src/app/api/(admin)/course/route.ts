@@ -1,5 +1,5 @@
-import { authOptions } from "@/lib/auth-options";
-import { courseEditSchema, courseSchema } from "@/lib/schema";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
+import { COURSE_EDIT_SCHEMA, COURSE_SCHEMA } from "@/lib/SCHEMA";
 import { role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { Prisma } from "../../../../../prisma/prisma";
@@ -11,7 +11,7 @@ export const POST = async (req: Request) => {
          * CHECK ADMIN IS LOGIN OR NOT
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user || session?.user.role === role.FRANCHISE) {
             return Response.json({
@@ -22,7 +22,7 @@ export const POST = async (req: Request) => {
 
         const data = await req.json();
 
-        const validData = courseSchema.safeParse(data);
+        const validData = COURSE_SCHEMA.safeParse(data);
         if (!validData.success) {
             return Response.json(
                 {
@@ -133,7 +133,7 @@ export const PUT = async (req: Request) => {
          * CHECK ADMIN IS LOGIN OR NOT
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user || session?.user.role === role.FRANCHISE) {
             return Response.json({
@@ -144,7 +144,7 @@ export const PUT = async (req: Request) => {
 
         const data = await req.json();
 
-        const validData = courseEditSchema.safeParse(data);
+        const validData = COURSE_EDIT_SCHEMA.safeParse(data);
         if (!validData.success) {
             return Response.json(
                 {
@@ -219,7 +219,7 @@ export const DELETE = async (req: Request) => {
          * CHECK ADMIN IS LOGIN OR NOT
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user || session?.user.role === role.FRANCHISE) {
             return Response.json({

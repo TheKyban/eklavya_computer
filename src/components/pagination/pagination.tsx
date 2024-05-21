@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { per_page } from "@/lib/constants";
+import { per_page } from "@/lib/CONSTANTS";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { FC } from "react";

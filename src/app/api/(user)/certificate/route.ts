@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../prisma/prisma";
-import { per_page } from "@/lib/constants";
+import { per_page } from "@/lib/CONSTANTS";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ export const GET = async (req: Request) => {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session) {
             return NextResponse.json({

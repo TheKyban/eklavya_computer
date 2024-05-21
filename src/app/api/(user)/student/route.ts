@@ -1,12 +1,12 @@
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { gender, role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../prisma/prisma";
-import { studentSchema } from "@/lib/schema";
+import { STUDENT_SCHEMA } from "@/lib/SCHEMA";
 import { z } from "zod";
-import { per_page } from "@/lib/constants";
-import { DELETE_FILE } from "@/lib/cloudinary";
+import { per_page } from "@/lib/CONSTANTS";
+import { DELETE_FILE } from "@/lib/CLOUDINARY";
 
 /**
  * REGISTER STUDENTS
@@ -17,7 +17,7 @@ export const POST = async (req: Request) => {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (
             !session?.user ||
@@ -38,8 +38,8 @@ export const POST = async (req: Request) => {
          * VALIDATE DATA
          */
 
-        const data: z.infer<typeof studentSchema> = await req.json();
-        const dataVerify = studentSchema.safeParse({
+        const data: z.infer<typeof STUDENT_SCHEMA> = await req.json();
+        const dataVerify = STUDENT_SCHEMA.safeParse({
             ...data,
             dob: new Date(data.dob),
             dor: new Date(data.dor),
@@ -187,7 +187,7 @@ export const PUT = async (req: Request) => {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (
             !session?.user ||
@@ -208,8 +208,8 @@ export const PUT = async (req: Request) => {
          * VALIDATE DATA
          */
 
-        const data: z.infer<typeof studentSchema> = await req.json();
-        const { success } = studentSchema.safeParse({
+        const data: z.infer<typeof STUDENT_SCHEMA> = await req.json();
+        const { success } = STUDENT_SCHEMA.safeParse({
             ...data,
             dob: new Date(data.dob),
             dor: new Date(data.dor),
@@ -333,7 +333,7 @@ export const GET = async (req: Request) => {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (
             !session?.user ||
@@ -415,7 +415,7 @@ export const DELETE = async (req: Request) => {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (
             !session?.user ||

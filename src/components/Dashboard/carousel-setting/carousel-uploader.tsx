@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { toast } from "../ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 export const CarouselMediaUploader = () => {
     const [isUploading, setIsUploading] = useState(false);
     const { addData } = useCustumQuery();

@@ -1,12 +1,13 @@
-import { studentAddmissionSchema } from "@/lib/schema";
+import { STUDENT_APPLICATION_SCHEMA } from "@/lib/SCHEMA";
 import { z } from "zod";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { gender } from "@prisma/client";
 
 export const POST = async (req: Request) => {
     try {
-        const data: z.infer<typeof studentAddmissionSchema> = await req.json();
-        const { success } = studentAddmissionSchema.safeParse({
+        const data: z.infer<typeof STUDENT_APPLICATION_SCHEMA> =
+            await req.json();
+        const { success } = STUDENT_APPLICATION_SCHEMA.safeParse({
             ...data,
             dob: new Date(data.dob),
             dor: new Date(data.dor),

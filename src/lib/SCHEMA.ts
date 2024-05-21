@@ -3,14 +3,14 @@ import * as z from "zod";
 /**
  * PHONE NUMBER VALIDATOR
  */
-export const phoneRegex = new RegExp(
+export const PHONE_NUMBER_REGEX = new RegExp(
     /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
 );
 
 /**
  * USER REGISTRATION SCHEMA
  */
-export const franchiseSchema = z
+export const USER_SCHEMA = z
     .object({
         img: z
             .string({ required_error: "Please select a picture" })
@@ -28,7 +28,7 @@ export const franchiseSchema = z
         phone: z
             .string({ required_error: "Please Enter phone number" })
             .trim()
-            .regex(phoneRegex, "Invalid phone number")
+            .regex(PHONE_NUMBER_REGEX, "Invalid phone number")
             .min(10, { message: "Invalid phone number" })
             .max(10, { message: "Invalid phone number" }),
         state: z.string({ required_error: "Please Select State" }),
@@ -48,7 +48,7 @@ export const franchiseSchema = z
         userId: z
             .string({ required_error: "Please Enter User id" })
             .trim()
-            .regex(phoneRegex, "Invalid User id")
+            .regex(PHONE_NUMBER_REGEX, "Invalid User id")
             .min(5, { message: "Userid must be 5 characters" }),
         password: z
             .string({ required_error: "Please Enter password" })
@@ -65,7 +65,7 @@ export const franchiseSchema = z
         { message: "Password must match!", path: ["confirmPassword"] },
     );
 
-export const userApplicationSchema = z.object({
+export const USER_APPLICATION_SCHEMA = z.object({
     img: z
         .string({ required_error: "Please select a picture" })
         .trim()
@@ -82,7 +82,7 @@ export const userApplicationSchema = z.object({
     phone: z
         .string({ required_error: "Please Enter phone number" })
         .trim()
-        .regex(phoneRegex, "Invalid phone number")
+        .regex(PHONE_NUMBER_REGEX, "Invalid phone number")
         .min(10, { message: "Invalid phone number" })
         .max(10, { message: "Invalid phone number" }),
     state: z.string({ required_error: "Please Select State" }),
@@ -104,7 +104,7 @@ export const userApplicationSchema = z.object({
 /**
  * USER EDIT SCHEMA
  */
-export const franchiseEditSchema = z.object({
+export const USER_EDIT_SCHEMA = z.object({
     img: z.string({ required_error: "Please select a picture" }),
     name: z
         .string({ required_error: "Please Enter email id" })
@@ -118,7 +118,7 @@ export const franchiseEditSchema = z.object({
     phone: z
         .string({ required_error: "Please Enter phone number" })
         .trim()
-        .regex(phoneRegex, "Invalid phone number")
+        .regex(PHONE_NUMBER_REGEX, "Invalid phone number")
         .min(10, { message: "Invalid phone number" })
         .max(10, { message: "Invalid phone number" }),
     state: z.string({ required_error: "Please Select State" }),
@@ -138,7 +138,7 @@ export const franchiseEditSchema = z.object({
     userId: z
         .string({ required_error: "Please Enter User id" })
         .trim()
-        .regex(phoneRegex, "Invalid User id")
+        .regex(PHONE_NUMBER_REGEX, "Invalid User id")
         .min(5, { message: "Userid must be 5 characters" }),
     password: z
         .string({ required_error: "Please Enter password" })
@@ -153,7 +153,7 @@ export const franchiseEditSchema = z.object({
  * STUDENT SCHEMA
  */
 
-export const studentSchema = z.object({
+export const STUDENT_SCHEMA = z.object({
     img: z
         .string({ required_error: "Please select a picture" })
         .min(50, { message: "Please select a picture" }),
@@ -177,7 +177,7 @@ export const studentSchema = z.object({
     phone: z
         .string({ required_error: "Please Enter phone number" })
         .trim()
-        .regex(phoneRegex, "Invalid phone number")
+        .regex(PHONE_NUMBER_REGEX, "Invalid phone number")
         .min(10, { message: "Invalid phone number" })
         .max(10, { message: "Invalid phone number" }),
     state: z
@@ -209,7 +209,7 @@ export const studentSchema = z.object({
     qualification: z.string(),
 });
 
-export const studentAddmissionSchema = z.object({
+export const STUDENT_APPLICATION_SCHEMA = z.object({
     img: z
         .string({ required_error: "Please select a picture" })
         .min(50, { message: "Please select a picture" }),
@@ -233,7 +233,7 @@ export const studentAddmissionSchema = z.object({
     phone: z
         .string({ required_error: "Please Enter phone number" })
         .trim()
-        .regex(phoneRegex, "Invalid phone number")
+        .regex(PHONE_NUMBER_REGEX, "Invalid phone number")
         .min(10, { message: "Invalid phone number" })
         .max(10, { message: "Invalid phone number" }),
     state: z
@@ -262,7 +262,7 @@ export const studentAddmissionSchema = z.object({
     qualification: z.string(),
 });
 
-export const typingSpeedMarkSchema = z.object({
+export const COMPUTER_TYPING_MARKS_SCHEMA = z.object({
     registration: z
         .string({ required_error: "Select Registration Number" })
         .min(5, { message: "Select registration number" }),
@@ -276,7 +276,7 @@ export const typingSpeedMarkSchema = z.object({
         .max(100, { message: "marks cannot be greater than 100" }),
 });
 
-export const generalMarksSchema = z.object({
+export const GENERAL_COURSE_MARKS_SCHEMA = z.object({
     registration: z
         .string({ required_error: "Select Registration Number" })
         .min(5, { message: "Select registration number" }),
@@ -298,7 +298,7 @@ export const generalMarksSchema = z.object({
         .max(100, { message: "marks cannot be greater than 100" }),
 });
 
-export const changePasswordSchema = z
+export const PASSWORD_SCHEMA = z
     .object({
         currentPassword: z
             .string({ required_error: "Enter current Password." })
@@ -324,7 +324,7 @@ export const changePasswordSchema = z
         { message: "Password must match!", path: ["confirmPassword"] },
     );
 
-export const courseSchema = z.object({
+export const COURSE_SCHEMA = z.object({
     name: z
         .string({ required_error: "Enter course name." })
         .min(3, { message: "Enter valid course name." })
@@ -339,7 +339,7 @@ export const courseSchema = z.object({
     modules: z.string({ required_error: "Enter course modules." }),
 });
 
-export const courseEditSchema = z.object({
+export const COURSE_EDIT_SCHEMA = z.object({
     name: z
         .string({ required_error: "Enter course name." })
         .min(3, { message: "Enter valid course name." })

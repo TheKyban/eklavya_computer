@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 
 const TypingCertificate = dynamic(
-    () => import("@/components/student-zone/TypingCertificate"),
+    () => import("@/components/STUDENT_ZONE/COMPUTER_TYPING_CERTIFICATE"),
     {
         ssr: false,
     },

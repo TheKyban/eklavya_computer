@@ -27,7 +27,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CalendarIcon, GraduationCap, Loader, PlusCircle } from "lucide-react";
-import { studentAddmissionSchema } from "@/lib/schema";
+import { STUDENT_APPLICATION_SCHEMA } from "@/lib/SCHEMA";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import {
@@ -39,9 +39,9 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { states } from "@/lib/stateAndDistrict";
-import { ImageHandler } from "@/lib/imageHandler";
-import { MAX_WIDTH } from "@/lib/styles";
+import { STATES } from "@/lib/STATE_WITH_DISTRICTS";
+import { IMAGE_HANDLER } from "@/lib/IMAGE_HANDLER";
+import { MAX_WIDTH } from "@/lib/STYLES";
 import { useBranch, useCourse } from "@/hooks/useFetch";
 
 const StudentApplicationForm = () => {
@@ -51,8 +51,8 @@ const StudentApplicationForm = () => {
     const { data, isLoading } = useBranch();
     const { data: courses, isLoading: isCourseLoading } = useCourse();
 
-    const form = useForm<z.infer<typeof studentAddmissionSchema>>({
-        resolver: zodResolver(studentAddmissionSchema),
+    const form = useForm<z.infer<typeof STUDENT_APPLICATION_SCHEMA>>({
+        resolver: zodResolver(STUDENT_APPLICATION_SCHEMA),
         defaultValues: {
             address: "",
             branch: "",
@@ -74,7 +74,7 @@ const StudentApplicationForm = () => {
     });
 
     const onSubmit = async (
-        values: z.infer<typeof studentAddmissionSchema>,
+        values: z.infer<typeof STUDENT_APPLICATION_SCHEMA>,
     ) => {
         try {
             const { data } = await axios.post(
@@ -150,7 +150,7 @@ const StudentApplicationForm = () => {
                                             id="img"
                                             value={""}
                                             onChange={(e) =>
-                                                ImageHandler(
+                                                IMAGE_HANDLER(
                                                     e,
                                                     form,
                                                     setIsUploading,
@@ -439,7 +439,7 @@ const StudentApplicationForm = () => {
                                                         <SelectLabel>
                                                             States
                                                         </SelectLabel>
-                                                        {states.map((state) => (
+                                                        {STATES.map((state) => (
                                                             <SelectItem
                                                                 key={
                                                                     state.state
@@ -486,7 +486,7 @@ const StudentApplicationForm = () => {
                                                             Districts
                                                         </SelectLabel>
 
-                                                        {states.map((s) => {
+                                                        {STATES.map((s) => {
                                                             if (
                                                                 s.state ===
                                                                 state

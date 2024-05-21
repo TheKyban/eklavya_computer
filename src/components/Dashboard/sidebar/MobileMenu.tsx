@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/styles";
+import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/STYLES";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";

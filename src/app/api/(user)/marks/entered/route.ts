@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth-options";
-import { per_page } from "@/lib/constants";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
+import { per_page } from "@/lib/CONSTANTS";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ export const GET = async (req: Request) => {
          * CHECK SESSION IS AVAILABLE
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session) {
             return NextResponse.json({ message: "Unauthorized" });

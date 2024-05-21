@@ -1,5 +1,5 @@
 import UserApplicationList from "@/components/application/userApplicationList";
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -8,7 +8,7 @@ export default async function UserApplicationPage({
 }: {
     searchParams: { page: string };
 }) {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(AUTH_OPTIONS);
     if (session?.user?.role !== "ADMIN") {
         redirect("/dashboard");
     }

@@ -10,10 +10,10 @@ import {
 } from "../ui/table";
 import { useUserApplications } from "@/hooks/useFetch";
 import { LoadingCells } from "../loading/loading";
-import { poppins } from "@/lib/fonts";
+import { poppins } from "@/lib/FONTS";
 import { UserApplication } from "@prisma/client";
 import { format } from "date-fns";
-import { per_page } from "@/lib/constants";
+import { per_page } from "@/lib/CONSTANTS";
 import Pagination from "../pagination/pagination";
 import { useModal } from "@/hooks/use-modal-store";
 

@@ -9,14 +9,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { poppins } from "@/lib/fonts";
+import { poppins } from "@/lib/FONTS";
 import { User } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Pen, Trash } from "lucide-react";
 import { UserCog } from "lucide-react";
 import { LoadingCells } from "@/components/loading/loading";
 import { useModal } from "@/hooks/use-modal-store";
-import { per_page } from "@/lib/constants";
+import { per_page } from "@/lib/CONSTANTS";
 import { useUsers } from "@/hooks/useFetch";
 
 const UserList = ({

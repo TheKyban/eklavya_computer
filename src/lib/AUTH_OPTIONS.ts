@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { Prisma } from "../../prisma/prisma";
 import { role } from "@prisma/client";
 
-export const authOptions: AuthOptions = {
+export const AUTH_OPTIONS: AuthOptions = {
     pages: {
         signIn: "/login",
         error: "/login",

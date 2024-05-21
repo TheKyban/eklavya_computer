@@ -1,6 +1,6 @@
 import jsPDF from "jspdf";
 
-export const downloadHandler = (
+export const PDF_DOWNLOAD_HANDLER = (
     canvas: HTMLCanvasElement,
     name: string,
     orientation: "p" | "l" = "p",

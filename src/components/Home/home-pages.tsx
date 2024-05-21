@@ -12,8 +12,8 @@ import {
     Smile,
     Target,
 } from "lucide-react";
-import { montserrat } from "@/lib/fonts";
-import { MAX_WIDTH } from "@/lib/styles";
+import { montserrat } from "@/lib/FONTS";
+import { MAX_WIDTH } from "@/lib/STYLES";
 import Image from "next/image";
 import { HomeCarousel } from "@/components/Home/home-carousel";
 import { AnimationDiv } from "@/components/AnimatedDiv";
@@ -122,6 +122,7 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
         </div>
     );
 };
+
 const NoticeSection = () => {
     return (
         <AnimationDiv
@@ -180,7 +181,10 @@ const NoticeSection = () => {
                     key={5}
                 >
                     <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>Educating Today’s Learners for Tomorrow’s world.</p>
+                    <p>
+                        Educating Today&apos;s Learners for Tomorrow&apos;s
+                        world.
+                    </p>
                 </li>
 
                 <li
@@ -233,9 +237,9 @@ const NoticeSection = () => {
                 >
                     <Hand className="min-w-[16px] w-4 min-h-[16px] h-4" />
                     <p>
-                        UNITY--- We are each other's harvest; we are each
-                        other's business; we are each other's magnitude and
-                        bond.
+                        UNITY--- We are each other&apos;s harvest; we are each
+                        other&apos;s business; we are each other&apos;s
+                        magnitude and bond.
                     </p>
                 </li>
             </ul>

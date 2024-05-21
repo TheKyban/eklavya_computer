@@ -27,19 +27,19 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CircleUser, Loader, Smile, Users } from "lucide-react";
-import { franchiseSchema } from "@/lib/schema";
+import { USER_SCHEMA } from "@/lib/SCHEMA";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { states } from "@/lib/stateAndDistrict";
+import { STATES } from "@/lib/STATE_WITH_DISTRICTS";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { ImageHandler } from "@/lib/imageHandler";
+import { IMAGE_HANDLER } from "@/lib/IMAGE_HANDLER";
 
 const UserRegistration = ({}) => {
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
 
-    const form = useForm<z.infer<typeof franchiseSchema>>({
-        resolver: zodResolver(franchiseSchema),
+    const form = useForm<z.infer<typeof USER_SCHEMA>>({
+        resolver: zodResolver(USER_SCHEMA),
         defaultValues: {
             address: "",
             branch: "",
@@ -58,7 +58,7 @@ const UserRegistration = ({}) => {
 
     const { addUser } = useCustumQuery();
 
-    const onSubmit = async (values: z.infer<typeof franchiseSchema>) => {
+    const onSubmit = async (values: z.infer<typeof USER_SCHEMA>) => {
         try {
             const { data } = await axios.post("/api/users", values);
             if (data) {
@@ -134,7 +134,7 @@ const UserRegistration = ({}) => {
                                                 accept="image/*"
                                                 value={""}
                                                 onChange={(e) =>
-                                                    ImageHandler(
+                                                    IMAGE_HANDLER(
                                                         e,
                                                         form,
                                                         setIsUploading,
@@ -230,7 +230,7 @@ const UserRegistration = ({}) => {
                                                         <SelectLabel>
                                                             States
                                                         </SelectLabel>
-                                                        {states.map((state) => (
+                                                        {STATES.map((state) => (
                                                             <SelectItem
                                                                 key={
                                                                     state.state
@@ -277,7 +277,7 @@ const UserRegistration = ({}) => {
                                                             Districts
                                                         </SelectLabel>
 
-                                                        {states.map((s) => {
+                                                        {STATES.map((s) => {
                                                             if (
                                                                 s.state ===
                                                                 state

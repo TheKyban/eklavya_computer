@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { changePasswordSchema } from "@/lib/schema";
+import { PASSWORD_SCHEMA } from "@/lib/SCHEMA";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Loader, TextCursorInputIcon } from "lucide-react";
@@ -20,8 +20,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const Password = () => {
-    const form = useForm<z.infer<typeof changePasswordSchema>>({
-        resolver: zodResolver(changePasswordSchema),
+    const form = useForm<z.infer<typeof PASSWORD_SCHEMA>>({
+        resolver: zodResolver(PASSWORD_SCHEMA),
         defaultValues: {
             confirmPassword: "",
             currentPassword: "",
@@ -29,9 +29,7 @@ const Password = () => {
         },
     });
 
-    const ChangeHandler = async (
-        values: z.infer<typeof changePasswordSchema>,
-    ) => {
+    const ChangeHandler = async (values: z.infer<typeof PASSWORD_SCHEMA>) => {
         try {
             const { data } = await axios.post("/api/password", values);
             if (data) {

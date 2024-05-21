@@ -6,7 +6,10 @@ import {
     UserApplication,
 } from "@prisma/client";
 import { create } from "zustand";
-import { generalMarksSchema, typingSpeedMarkSchema } from "@/lib/schema";
+import {
+    GENERAL_COURSE_MARKS_SCHEMA,
+    COMPUTER_TYPING_MARKS_SCHEMA,
+} from "@/lib/SCHEMA";
 import { z } from "zod";
 
 export type ModalType =
@@ -31,8 +34,8 @@ interface ModalData {
         registration?: string;
         type?: string;
     };
-    generalMarks?: z.infer<typeof generalMarksSchema>;
-    computerTypingMarks?: z.infer<typeof typingSpeedMarkSchema>;
+    generalMarks?: z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA>;
+    computerTypingMarks?: z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA>;
     studentApplication?: StudentApplication;
     userApplication?: UserApplication;
     course?: Course;

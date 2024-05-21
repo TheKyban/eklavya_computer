@@ -23,8 +23,8 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { useStudentVerification, useUsers } from "@/hooks/useFetch";
-import { per_page } from "@/lib/constants";
-import { poppins } from "@/lib/fonts";
+import { per_page } from "@/lib/CONSTANTS";
+import { poppins } from "@/lib/FONTS";
 import { Course, Student, role } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -41,26 +41,23 @@ interface userType {
 type verify = "false" | "true";
 
 const StudentVerificationManagement = ({
-    searchParams,
+    branches,
+    page,
+    registration,
 }: {
-    searchParams: { page: string; registration: string };
+    page: string;
+    registration: string;
+    branches: { branch: string; userId: string }[];
 }) => {
     const { data: session } = useSession();
 
-    const [user, setUser] = useState(session?.user.userId);
+    const [user, setUser] = useState(branches?.[0].userId);
     const [type, setType] = useState<verify>("false");
-    const registration = searchParams?.registration;
-    const page = searchParams?.page || "1";
 
     /**
      * FETCHING USERS
      */
 
-    const { data: fetchUsers, isLoading: isUserLoading } = useUsers(
-        "all",
-        undefined,
-        "userId,role",
-    );
     const { data, isLoading } = useStudentVerification(
         page,
         user,
@@ -70,14 +67,8 @@ const StudentVerificationManagement = ({
 
     const { removeStudent, addStudent } = useCustumQuery();
 
-    const { mutate } = useMutation({
-        mutationFn: async ({
-            isVerified,
-            registration,
-        }: {
-            isVerified: boolean;
-            registration: string;
-        }) => {
+    const { mutate, isPending } = useMutation({
+        mutationFn: async ({ registration }: { registration: string }) => {
             const { data } = await axios.put(
                 `/api/management/student-verification`,
                 {
@@ -117,9 +108,6 @@ const StudentVerificationManagement = ({
             );
         },
     });
-    useEffect(() => {
-        setUser(session?.user.userId);
-    }, [session]);
 
     return (
         <div className="px-5 flex flex-col gap-4">
@@ -148,55 +136,21 @@ const StudentVerificationManagement = ({
                         defaultValue={user}
                         value={user}
                         onValueChange={(val) => setUser(val)}
+                        disabled={isPending}
                     >
                         <SelectTrigger className="w-36">
                             <SelectValue placeholder="Select User" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>Admin</SelectLabel>
-                                <SelectItem
-                                    value={session?.user.userId as string}
-                                >
-                                    {session?.user.userId}
-                                </SelectItem>
-
-                                {isUserLoading && (
-                                    <SelectItem value="loading2">
-                                        Loading...
+                                {branches?.map((branch) => (
+                                    <SelectItem
+                                        key={branch.userId}
+                                        value={branch.userId}
+                                    >
+                                        {branch.userId}
                                     </SelectItem>
-                                )}
-
-                                {fetchUsers?.users?.map(
-                                    (user: userType) =>
-                                        user.role === "ADMIN" && (
-                                            <SelectItem
-                                                key={user.userId}
-                                                value={user.userId}
-                                            >
-                                                {user.userId}
-                                            </SelectItem>
-                                        ),
-                                )}
-
-                                <SelectLabel>Users</SelectLabel>
-                                {isUserLoading && (
-                                    <SelectItem value="loading1">
-                                        Loading...
-                                    </SelectItem>
-                                )}
-
-                                {fetchUsers?.users?.map(
-                                    (user: userType) =>
-                                        user.role === "FRANCHISE" && (
-                                            <SelectItem
-                                                key={user?.userId}
-                                                value={user?.userId}
-                                            >
-                                                {user?.userId}
-                                            </SelectItem>
-                                        ),
-                                )}
+                                ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -212,6 +166,7 @@ const StudentVerificationManagement = ({
                         defaultValue={type}
                         value={type}
                         onValueChange={(val) => setType(val as verify)}
+                        disabled={isPending}
                     >
                         <SelectTrigger className="w-40">
                             <SelectValue placeholder="Select type" />
@@ -288,8 +243,6 @@ const StudentVerificationManagement = ({
                                                 className="box-content"
                                                 onCheckedChange={(value) =>
                                                     mutate({
-                                                        isVerified:
-                                                            value as boolean,
                                                         registration:
                                                             student?.registration,
                                                     })

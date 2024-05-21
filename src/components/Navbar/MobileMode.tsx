@@ -13,7 +13,7 @@ import {
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navbarLinks } from "@/components/Navbar/urls";
-import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/styles";
+import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/STYLES";
 import { Session } from "next-auth";
 import { IsAuth } from "./isAuth";
 

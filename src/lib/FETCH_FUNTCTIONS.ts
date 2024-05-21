@@ -1,4 +1,4 @@
-import { UserType, details } from "./types";
+import { UserType, details } from "./TYPES";
 import { Prisma } from "../../prisma/prisma";
 import {
     GraduationCap,

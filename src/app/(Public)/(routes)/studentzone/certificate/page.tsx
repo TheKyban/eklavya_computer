@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 const Certificate = dynamic(
-    () => import("@/components/student-zone/Certificate"),
+    () => import("@/components/STUDENT_ZONE/CERTIFICATE"),
     {
         ssr: false,
     },

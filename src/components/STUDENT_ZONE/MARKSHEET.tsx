@@ -1,11 +1,11 @@
 "use client";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
-import { SearchTemplate } from "@/components/student-zone/searchTemplate";
-import { MAX_WIDTH } from "@/lib/styles";
+import { SearchTemplate } from "@/components/STUDENT_ZONE/SEARCH_TEMPLATE";
+import { MAX_WIDTH } from "@/lib/STYLES";
 import { Button } from "@/components/ui/button";
-import { printHandler } from "@/lib/printHandler";
-import { downloadHandler } from "@/lib/pdfDownload";
+import { PRINT_HANDLER } from "@/lib/PRINT_HANDLER";
+import { PDF_DOWNLOAD_HANDLER } from "@/lib/PDF_DOWNLOAD_HANDLER";
 
 const MarkSheet = () => {
     const [registration, setRegistration] = useState("");
@@ -60,7 +60,7 @@ const MarkSheet = () => {
                 <div className="w-full flex gap-4 justify-center items-center my-4">
                     <Button
                         variant={"primary"}
-                        onClick={() => printHandler(ref.current!)}
+                        onClick={() => PRINT_HANDLER(ref.current!)}
                     >
                         Print
                     </Button>
@@ -68,7 +68,7 @@ const MarkSheet = () => {
                     <Button
                         variant={"primary"}
                         onClick={() =>
-                            downloadHandler(
+                            PDF_DOWNLOAD_HANDLER(
                                 ref.current!,
                                 `marksheet_${registration}.pdf`,
                             )

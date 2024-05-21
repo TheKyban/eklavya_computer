@@ -1,9 +1,8 @@
-import { MAX_WIDTH } from "@/lib/styles";
+import { MAX_WIDTH } from "@/lib/STYLES";
 import {
     Facebook,
     Instagram,
     Linkedin,
-    Locate,
     MapPin,
     Phone,
     Twitter,

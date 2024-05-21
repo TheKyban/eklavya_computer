@@ -1,6 +1,6 @@
 import ManageCertificate from "@/components/Dashboard/student/Manage-certificate";
-import { authOptions } from "@/lib/auth-options";
-import { fetchBranch } from "@/lib/fetchFunctions";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
+import { fetchBranch } from "@/lib/FETCH_FUNTCTIONS";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -13,7 +13,7 @@ export default async function CertificateManagement({
      * VERIFY ROLE
      */
 
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(AUTH_OPTIONS);
     if (session?.user.role !== "ADMIN") {
         return redirect("/dashboard");
     }

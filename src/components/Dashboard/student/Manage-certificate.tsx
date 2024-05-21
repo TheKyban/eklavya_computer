@@ -22,7 +22,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { useVerifyCertificate } from "@/hooks/useFetch";
-import { poppins } from "@/lib/fonts";
+import { poppins } from "@/lib/FONTS";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Layers2, Layers3, Shield, Users } from "lucide-react";

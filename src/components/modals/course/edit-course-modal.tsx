@@ -9,7 +9,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
@@ -34,11 +33,11 @@ import { useForm } from "react-hook-form";
 import { Loader, Trash } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { courseEditSchema } from "@/lib/schema";
+import { COURSE_EDIT_SCHEMA } from "@/lib/SCHEMA";
 import { useMutation } from "@tanstack/react-query";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { Textarea } from "../../ui/textarea";
-import { duration } from "@/lib/constants";
+import { Duration } from "@/lib/CONSTANTS";
 
 export const EditCourseModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -46,8 +45,8 @@ export const EditCourseModal = () => {
     const { course } = data;
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const form = useForm<z.infer<typeof courseEditSchema>>({
-        resolver: zodResolver(courseEditSchema),
+    const form = useForm<z.infer<typeof COURSE_EDIT_SCHEMA>>({
+        resolver: zodResolver(COURSE_EDIT_SCHEMA),
         defaultValues: {
             duration: "",
             fullName: "",
@@ -69,7 +68,7 @@ export const EditCourseModal = () => {
 
     const { updateData, removeData } = useCustumQuery();
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof courseEditSchema>) => {
+        mutationFn: async (values: z.infer<typeof COURSE_EDIT_SCHEMA>) => {
             const { data } = await axios.put("/api/course", values);
             return data;
         },
@@ -178,7 +177,7 @@ export const EditCourseModal = () => {
                                                     <SelectLabel>
                                                         Course Duration
                                                     </SelectLabel>
-                                                    {duration?.map(
+                                                    {Object.keys(Duration)?.map(
                                                         (duration) => (
                                                             <SelectItem
                                                                 key={duration}

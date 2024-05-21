@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/table";
 import { useModal } from "@/hooks/use-modal-store";
 import { useStudentMarkEntered } from "@/hooks/useFetch";
-import { per_page } from "@/lib/constants";
-import { poppins } from "@/lib/fonts";
+import { per_page } from "@/lib/CONSTANTS";
+import { poppins } from "@/lib/FONTS";
 import { Pen, TextCursorInput, Trash } from "lucide-react";
 
 const ComputerTypingEnteredMarks = ({

@@ -36,11 +36,11 @@ import { useForm } from "react-hook-form";
 import { CircleUser, Loader, Smile } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { franchiseSchema } from "@/lib/schema";
+import { USER_SCHEMA } from "@/lib/SCHEMA";
 import { useMutation } from "@tanstack/react-query";
-import { states } from "@/lib/stateAndDistrict";
+import { STATES } from "@/lib/STATE_WITH_DISTRICTS";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { ImageHandler } from "@/lib/imageHandler";
+import { IMAGE_HANDLER } from "@/lib/IMAGE_HANDLER";
 
 export const UserApplicationModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -49,8 +49,8 @@ export const UserApplicationModal = () => {
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
 
-    const form = useForm<z.infer<typeof franchiseSchema>>({
-        resolver: zodResolver(franchiseSchema),
+    const form = useForm<z.infer<typeof USER_SCHEMA>>({
+        resolver: zodResolver(USER_SCHEMA),
         defaultValues: {
             address: "",
             branch: "",
@@ -131,7 +131,7 @@ export const UserApplicationModal = () => {
     });
 
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof franchiseSchema>) => {
+        mutationFn: async (values: z.infer<typeof USER_SCHEMA>) => {
             const { data } = await axios.post(
                 `/api/users/application?id=${userApplication?.id}`,
                 values,
@@ -218,7 +218,7 @@ export const UserApplicationModal = () => {
                                                 id="img"
                                                 // value={field.value}
                                                 onChange={(e) =>
-                                                    ImageHandler(
+                                                    IMAGE_HANDLER(
                                                         e,
                                                         form,
                                                         setIsUploading,
@@ -315,7 +315,7 @@ export const UserApplicationModal = () => {
                                                         <SelectLabel>
                                                             States
                                                         </SelectLabel>
-                                                        {states.map((state) => (
+                                                        {STATES.map((state) => (
                                                             <SelectItem
                                                                 key={
                                                                     state.state
@@ -362,7 +362,7 @@ export const UserApplicationModal = () => {
                                                             Districts
                                                         </SelectLabel>
 
-                                                        {states.map((s) => {
+                                                        {STATES.map((s) => {
                                                             if (
                                                                 s.state ===
                                                                 state

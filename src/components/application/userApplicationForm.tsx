@@ -27,19 +27,19 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CircleUser, Loader, Smile, Users } from "lucide-react";
-import { userApplicationSchema } from "@/lib/schema";
+import { USER_APPLICATION_SCHEMA } from "@/lib/SCHEMA";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { states } from "@/lib/stateAndDistrict";
-import { ImageHandler } from "@/lib/imageHandler";
-import { MAX_WIDTH } from "@/lib/styles";
+import { STATES } from "@/lib/STATE_WITH_DISTRICTS";
+import { IMAGE_HANDLER } from "@/lib/IMAGE_HANDLER";
+import { MAX_WIDTH } from "@/lib/STYLES";
 
 const UserApplicationForm = ({}) => {
     const [state, setState] = useState("");
     const [isUploading, setIsUploading] = useState(false);
 
-    const form = useForm<z.infer<typeof userApplicationSchema>>({
-        resolver: zodResolver(userApplicationSchema),
+    const form = useForm<z.infer<typeof USER_APPLICATION_SCHEMA>>({
+        resolver: zodResolver(USER_APPLICATION_SCHEMA),
         defaultValues: {
             address: "",
             branch: "",
@@ -53,7 +53,9 @@ const UserApplicationForm = ({}) => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof userApplicationSchema>) => {
+    const onSubmit = async (
+        values: z.infer<typeof USER_APPLICATION_SCHEMA>,
+    ) => {
         try {
             const { data } = await axios.post(
                 "/api/application/userApplication",
@@ -138,7 +140,7 @@ const UserApplicationForm = ({}) => {
                                                     accept="image/*"
                                                     value={""}
                                                     onChange={(e) =>
-                                                        ImageHandler(
+                                                        IMAGE_HANDLER(
                                                             e,
                                                             form,
                                                             setIsUploading,
@@ -234,7 +236,7 @@ const UserApplicationForm = ({}) => {
                                                             <SelectLabel>
                                                                 States
                                                             </SelectLabel>
-                                                            {states.map(
+                                                            {STATES.map(
                                                                 (state) => (
                                                                     <SelectItem
                                                                         key={
@@ -287,7 +289,7 @@ const UserApplicationForm = ({}) => {
                                                                 Districts
                                                             </SelectLabel>
 
-                                                            {states.map((s) => {
+                                                            {STATES.map((s) => {
                                                                 if (
                                                                     s.state ===
                                                                     state

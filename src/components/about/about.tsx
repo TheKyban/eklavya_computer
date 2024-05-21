@@ -1,5 +1,5 @@
 import { AnimationDiv } from "@/components/AnimatedDiv";
-import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/styles";
+import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/STYLES";
 
 export default function About() {
     return (

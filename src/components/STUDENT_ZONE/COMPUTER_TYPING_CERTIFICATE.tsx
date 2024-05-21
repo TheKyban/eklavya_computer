@@ -1,17 +1,17 @@
 "use client";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
-import { SearchTemplate } from "@/components/student-zone/searchTemplate";
-import { MAX_WIDTH } from "@/lib/styles";
-import { Button } from "../ui/button";
-import { printHandler } from "@/lib/printHandler";
-import { downloadHandler } from "@/lib/pdfDownload";
+import { SearchTemplate } from "@/components/STUDENT_ZONE/SEARCH_TEMPLATE";
+import { MAX_WIDTH } from "@/lib/STYLES";
+import { Button } from "@/components/ui/button";
+import { PRINT_HANDLER } from "@/lib/PRINT_HANDLER";
+import { PDF_DOWNLOAD_HANDLER } from "@/lib/PDF_DOWNLOAD_HANDLER";
 
-const Certificate = () => {
+const ComputerTypingCertificate = () => {
     const [registration, setRegistration] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const ref = useRef<HTMLCanvasElement>(null);
-    const [certificate, setCertificate] = useState(false);
+    const [typingCertificate, setTypingCertificate] = useState(false);
 
     const handleSearch = async (e: FormEvent) => {
         e.preventDefault();
@@ -21,7 +21,7 @@ const Certificate = () => {
         const canvas = ref.current!;
         const ctx = canvas.getContext("2d");
         const image = document.createElement("img");
-        image.src = `/api/assets/certificate/?registration=${registration}`;
+        image.src = `/api/assets/typingCertificate/?registration=${registration}`;
 
         image.onerror = async (error) => {
             console.log(error);
@@ -32,14 +32,14 @@ const Certificate = () => {
                 ?.clearRect(0, 0, ref.current?.width!, ref.current?.height!);
             ref.current!.width = 0;
             ref.current!.height = 0;
-            setCertificate(false);
+            setTypingCertificate(false);
         };
 
         image.onload = async () => {
             canvas.width = image?.naturalWidth;
             canvas.height = image?.naturalHeight;
             ctx?.drawImage(image, 0, 0);
-            setCertificate(true);
+            setTypingCertificate(true);
             setIsLoading(false);
         };
     };
@@ -48,7 +48,7 @@ const Certificate = () => {
         <div className={`w-full ${MAX_WIDTH} m-auto px-2 py-16`}>
             <div className="max-w-[363px] md:max-w-xl lg:min-w-[500px] m-auto">
                 <SearchTemplate
-                    title="CERTIFICATE VERIFICATION"
+                    title="TYPING CERTIFICATE VERIFICATION"
                     registration={registration}
                     setRegistration={setRegistration}
                     searchFunc={handleSearch}
@@ -56,20 +56,20 @@ const Certificate = () => {
                 />
             </div>
 
-            {certificate && (
+            {typingCertificate && (
                 <div className="w-full flex gap-4 justify-center items-center my-4">
                     <Button
                         variant={"primary"}
-                        onClick={() => printHandler(ref.current!)}
+                        onClick={() => PRINT_HANDLER(ref.current!)}
                     >
                         Print
                     </Button>
                     <Button
                         variant={"primary"}
                         onClick={() =>
-                            downloadHandler(
+                            PDF_DOWNLOAD_HANDLER(
                                 ref.current!,
-                                `certificate_${registration}.pdf`,
+                                `typingCertificate_${registration}.pdf`,
                                 "l",
                             )
                         }
@@ -89,4 +89,4 @@ const Certificate = () => {
     );
 };
 
-export default Certificate;
+export default ComputerTypingCertificate;

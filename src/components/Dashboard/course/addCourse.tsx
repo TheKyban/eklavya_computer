@@ -22,8 +22,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { useCustumQuery } from "@/hooks/use-queries";
-import { duration } from "@/lib/constants";
-import { courseSchema } from "@/lib/schema";
+import { Duration } from "@/lib/CONSTANTS";
+import { COURSE_SCHEMA } from "@/lib/SCHEMA";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
@@ -33,8 +33,8 @@ import { z } from "zod";
 
 export const AddCourse = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const form = useForm<z.infer<typeof courseSchema>>({
-        resolver: zodResolver(courseSchema),
+    const form = useForm<z.infer<typeof COURSE_SCHEMA>>({
+        resolver: zodResolver(COURSE_SCHEMA),
         defaultValues: {
             name: "",
             duration: "",
@@ -44,7 +44,7 @@ export const AddCourse = () => {
     });
 
     const { addData } = useCustumQuery();
-    const onSubmit = async (values: z.infer<typeof courseSchema>) => {
+    const onSubmit = async (values: z.infer<typeof COURSE_SCHEMA>) => {
         try {
             setIsSubmitting(true);
             const { data } = await axios.post("/api/course", values);
@@ -133,7 +133,7 @@ export const AddCourse = () => {
                                                     <SelectLabel>
                                                         Course Duration
                                                     </SelectLabel>
-                                                    {duration?.map(
+                                                    {Object.keys(Duration)?.map(
                                                         (duration) => (
                                                             <SelectItem
                                                                 key={duration}

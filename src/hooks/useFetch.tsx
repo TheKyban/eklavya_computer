@@ -3,7 +3,7 @@ import { Course, Marks, Student } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import queryString from "query-string";
-import { StudentWithMarksCourse } from "@/lib/types";
+import { StudentWithMarksCourse } from "@/lib/TYPES";
 
 export const useUsers = (page: string, userId?: string, select?: string) => {
     const url = `/api/users?page=${page}${!!userId ? "&userId=" + userId : ""}${

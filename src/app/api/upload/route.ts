@@ -1,8 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
-import { DELETE_FILE, UPLOAD_TO_CLOUDINARY } from "@/lib/cloudinary";
+import { DELETE_FILE, UPLOAD_TO_CLOUDINARY } from "@/lib/CLOUDINARY";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth-options";
-import { STATUS_CODE } from "@/lib/statusCode";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
+import { STATUS_CODE } from "@/lib/STATUS_CODE";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -12,7 +12,7 @@ cloudinary.config({
 
 export async function GET(req: Request) {
     try {
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user) {
             return Response.json(
@@ -65,7 +65,7 @@ export async function POST(res: Request): Promise<Response> {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user || !session.user?.isActive) {
             return Response.json(
@@ -100,7 +100,7 @@ export async function DELETE(res: Request) {
          * CHECK ADMIN OR FRENCHISE IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
 
         if (!session?.user || !session.user?.isActive) {
             return Response.json(

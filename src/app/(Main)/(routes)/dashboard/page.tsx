@@ -6,12 +6,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import {
     fetchAdminDashboardData,
     fetchUserDashboardData,
-} from "@/lib/fetchFunctions";
-import { UserType, details } from "@/lib/types";
+} from "@/lib/FETCH_FUNTCTIONS";
+import { UserType, details } from "@/lib/TYPES";
 import {
     BadgeAlert,
     GraduationCap,
@@ -34,7 +34,7 @@ const IconMap = {
     Users: Users,
 };
 const Dasboard = async () => {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(AUTH_OPTIONS);
     let data: {
         details: details[];
         allUsers?: UserType[];

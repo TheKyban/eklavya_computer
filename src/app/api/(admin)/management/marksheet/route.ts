@@ -1,8 +1,8 @@
-import { authOptions } from "@/lib/auth-options";
+import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { getServerSession } from "next-auth";
 import { Prisma } from "../../../../../../prisma/prisma";
-import { per_page } from "@/lib/constants";
-import { STATUS_CODE } from "@/lib/statusCode";
+import { per_page } from "@/lib/CONSTANTS";
+import { STATUS_CODE } from "@/lib/STATUS_CODE";
 
 export const dynamic = "force-dynamic";
 export const GET = async (req: Request) => {
@@ -11,7 +11,7 @@ export const GET = async (req: Request) => {
          * VERIFY THAT ADMIN IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session?.user || session?.user.role !== "ADMIN") {
             return Response.json(
                 {
@@ -109,7 +109,7 @@ export const PUT = async (req: Request) => {
          * VERIFY THAT ADMIN IS LOGIN
          */
 
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(AUTH_OPTIONS);
         if (!session?.user || session?.user.role !== "ADMIN") {
             return Response.json(
                 {

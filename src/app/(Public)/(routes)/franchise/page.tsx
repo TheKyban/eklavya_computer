@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
-import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/styles";
+import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/STYLES";
 import { Address } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useAssests } from "@/hooks/useFetch";
-import { toast } from "../ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";

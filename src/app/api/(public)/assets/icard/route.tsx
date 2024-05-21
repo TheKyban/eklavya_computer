@@ -1,7 +1,7 @@
 import { ImageResponse } from "@vercel/og";
-import ToCapitalize from "@/lib/toCapitalize";
+import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { format } from "date-fns";
-import { loadGoogleFont } from "@/lib/fonts";
+import { loadGoogleFont } from "@/lib/FONTS";
 import { Prisma } from "../../../../../../prisma/prisma";
 
 export const dynamic = "force-dynamic";
@@ -128,13 +128,13 @@ export const GET = async (req: Request) => {
                             transform: "translateX(-50%)",
                         }}
                     >
-                        {ToCapitalize(student?.name)}
+                        {TO_CAPITALIZE(student?.name)}
                     </span>
                     <span style={{ position: "absolute", top: 495, left: 280 }}>
                         {student?.registration}
                     </span>
                     <span style={{ position: "absolute", top: 535, left: 280 }}>
-                        {ToCapitalize(student?.fatherName)}
+                        {TO_CAPITALIZE(student?.fatherName)}
                     </span>
 
                     <span style={{ position: "absolute", top: 575, left: 280 }}>
