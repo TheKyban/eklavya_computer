@@ -38,7 +38,7 @@ interface firstPageProps {
 export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
     return (
         <div
-            className={`${MAX_WIDTH} m-auto w-full sm:mb-5 xl:mt-1 2xl:mt-5 flex flex-col justify-center gap-5 lg:gap-8`}
+            className={`${MAX_WIDTH} m-auto w-full xl:mt-2 flex flex-col justify-center items-center gap-5 lg:gap-8`}
         >
             <div className="w-full h-full">
                 {!!carousel?.[0] && <HomeCarousel carousel={carousel} />}
@@ -48,11 +48,9 @@ export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
             <HomeFamily family={family} />
             <FromDeskOf />
 
-            <div className="flex flex-col gap-5 items-center ">
-                <WhySection />
-                <OurFeatures />
-                <OurCourses />
-            </div>
+            <WhySection />
+            <OurFeatures />
+            <OurCourses />
         </div>
     );
 };
@@ -60,7 +58,7 @@ export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
 const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
     return (
         <div className="w-full lg:w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 lg:rounded-lg py-7 lg:py-9 px-1 sm:px-5 flex flex-col items-center">
-            <span className="text-2xl sm:text-3xl font-semibold text-green-600 mb-7  lg:my-10 uppercase border-b-2 pb-2 border-green-600">
+            <span className="text-2xl sm:text-3xl font-semibold text-green-600 mb-7 uppercase border-b-2 pb-2 border-green-600">
                 Our Family
             </span>
             <ReactMarquee autoFill={true} pauseOnHover direction="right">
@@ -85,11 +83,11 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
                                 placeholder="empty"
                                 className="rounded-full object-cover min-w-[50px] min-h-[50px] max-w-[50px] max-h-[50px] lg:min-w-[70px] lg:min-h-[70px] lg:max-w-[70px] lg:max-h-[70px]"
                             />
-                            <div className="flex flex-col gap-1 font-semibold items-center text-xs ">
-                                <span className="capitalize text-rose-800">
+                            <div className="flex flex-col gap-1 font-semibold items-center text-xs uppercase">
+                                <span className="text-rose-800">
                                     {user.name}
                                 </span>
-                                <span className="capitalize text-orange-600">
+                                <span className="text-orange-600">
                                     {user.branch}
                                 </span>
                             </div>
@@ -103,7 +101,7 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
 
 const NoticeSection = () => {
     return (
-        <ReactMarquee className="text-sm bg-orange-600 py-3">
+        <ReactMarquee className="text-sm bg-black py-3" pauseOnHover>
             <li
                 className="ml-4 flex items-center justify-center  gap-2 text-white"
                 key={1}
@@ -111,6 +109,7 @@ const NoticeSection = () => {
                 <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Admission is Going On...</p>
             </li>
+
             <li
                 className="ml-4 flex gap-2 items-center justify-center text-white"
                 key={2}
@@ -118,6 +117,7 @@ const NoticeSection = () => {
                 <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Contact for Franchisee Opening.</p>
             </li>
+
             <li
                 className="ml-4 flex items-center justify-center text-white gap-2"
                 key={3}
@@ -149,10 +149,9 @@ const NoticeSection = () => {
                 key={6}
             >
                 <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>
-                    “You dared to Struggle Yesterday you can dare to win Today”
-                </p>
+                <p>You dared to Struggle Yesterday you can dare to win Today</p>
             </li>
+
             <li
                 className="ml-4 flex items-center justify-center text-white gap-2"
                 key={7}
@@ -166,6 +165,7 @@ const NoticeSection = () => {
                     Are And Will Always Be.
                 </p>
             </li>
+
             <li
                 className="ml-4 flex items-center justify-center text-white gap-2"
                 key={7}
@@ -176,6 +176,7 @@ const NoticeSection = () => {
                     beginning in an idea.
                 </p>
             </li>
+
             <li
                 className="ml-4 flex items-center justify-center text-white gap-2"
                 key={7}
@@ -187,6 +188,7 @@ const NoticeSection = () => {
                     through this awareness we can grow.
                 </p>
             </li>
+
             <li
                 className="ml-4 flex items-center justify-center text-white gap-2"
                 key={7}
@@ -204,21 +206,7 @@ const NoticeSection = () => {
 
 const FromDeskOf = () => {
     return (
-        <AnimationDiv
-            whileInView={{
-                x: 0,
-                opacity: 1,
-            }}
-            className="bg-orange-100 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full"
-            initial={{
-                x: 100,
-                opacity: 0,
-            }}
-            transition={{
-                delay: 0.2,
-                duration: 0.6,
-            }}
-        >
+        <div className="bg-orange-100 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full">
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                 <span className="text-3xl font-semibold uppercase text-zinc-600 border-b-2 border-zinc-500 pb-2 ">
                     From the Desk of Directors
@@ -286,7 +274,7 @@ const FromDeskOf = () => {
                     </div>
                 </div>
             </div>
-        </AnimationDiv>
+        </div>
     );
 };
 
