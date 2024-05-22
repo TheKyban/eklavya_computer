@@ -17,7 +17,6 @@ import { montserrat } from "@/lib/FONTS";
 import { MAX_WIDTH } from "@/lib/STYLES";
 import Image from "next/image";
 import { HomeCarousel } from "@/components/Home/home-carousel";
-import { AnimationDiv } from "@/components/AnimatedDiv";
 import { FC } from "react";
 
 import ReactMarquee from "react-fast-marquee";
@@ -280,21 +279,7 @@ const FromDeskOf = () => {
 
 const WhySection = () => {
     return (
-        <AnimationDiv
-            whileInView={{
-                x: 0,
-                opacity: 1,
-            }}
-            initial={{
-                x: 100,
-                opacity: 0,
-            }}
-            transition={{
-                delay: 0.2,
-                duration: 0.6,
-            }}
-            className="bg-orange-100 rounded-lg w-[93%] 2xl:w-full"
-        >
+        <div className="bg-orange-100 rounded-lg w-[93%] 2xl:w-full">
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                 <span className="text-3xl font-semibold text-zinc-600  border-b-2 border-zinc-600 pb-3 uppercase">
                     Why Eklavaya ?
@@ -312,7 +297,7 @@ const WhySection = () => {
                     well beyond the national boundaries.
                 </p>
             </div>
-        </AnimationDiv>
+        </div>
     );
 };
 
