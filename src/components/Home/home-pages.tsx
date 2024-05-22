@@ -37,7 +37,7 @@ interface firstPageProps {
 export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
     return (
         <div
-            className={`${MAX_WIDTH} m-auto w-full xl:mt-2 flex flex-col justify-center items-center gap-5 lg:gap-8`}
+            className={`${MAX_WIDTH} m-auto w-full xl:mt-2 flex flex-col justify-center items-center gap-5 lg:gap-8 mb-8`}
         >
             <div className="w-full h-full">
                 {!!carousel?.[0] && <HomeCarousel carousel={carousel} />}
