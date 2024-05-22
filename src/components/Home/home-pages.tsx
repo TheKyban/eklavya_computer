@@ -1,4 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
+import Link from "next/link";
 import {
     BadgeCheck,
     BookText,
@@ -282,7 +284,8 @@ const FromDeskOf = () => {
                             the fastest growing industry but it is the most
                             successful and most profitable industry also. For
                             this very purpose we have initiated a worldwide
-                            program named Eklavaya global computer(EUPL).
+                            program named Eklavaya Universal Private
+                            Limited(EUPL).
                         </p>
                         <p>
                             Through this program we are imparting IT education
@@ -292,8 +295,8 @@ const FromDeskOf = () => {
                         </p>
 
                         <p>
-                            Eklavaya global computer(EUPL) is built on a
-                            foundation to promote greater access to quality
+                            Eklavaya Universal Private Limited(EUPL) is built on
+                            a foundation to promote greater access to quality
                             higher education, cutting-edge research and
                             contribution to the society. EUPL provides generic
                             skills together with flexibility, adaptability and
@@ -383,108 +386,85 @@ const OurFeatures = () => {
             <div className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap">
                 {/* CARD ONE */}
 
-                <AnimationDiv
-                    whileInView={{
-                        x: 0,
-                        opacity: 1,
-                    }}
-                    initial={{
-                        x: -100,
-                        opacity: 0,
-                    }}
-                    transition={{
-                        delay: 0.2,
-                        duration: 0.6,
-                    }}
-                >
-                    <Card className="max-w-xs bg-orange-300 dark:border-0 dark:text-black h-full">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-3 text-black/75">
-                                <BookText className="w-4 h-4" />
-                                <span className="text-lg">Books</span>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-sm text-zinc-800/80 font-medium">
-                                We Provide books, updated with latest
-                                technology.Our books help students to understand
-                                the concept of the topic very clearly. We revise
-                                our book&apos;s content time to time to ensure
-                                that our students get better quality of
-                                education.
-                            </p>
-                        </CardContent>
-                    </Card>
-                </AnimationDiv>
+                <CardContainer className="w-full h-full">
+                    <CardBody className="w-full h-full">
+                        <CardItem translateZ="50" className="w-full h-full">
+                            <Card className="max-w-xs bg-orange-300 dark:border-0 dark:text-black h-full">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-3 text-black/75">
+                                        <BookText className="w-4 h-4" />
+                                        <span className="text-lg">Books</span>
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-sm text-zinc-800/80 font-medium">
+                                        We Provide books, updated with latest
+                                        technology.Our books help students to
+                                        understand the concept of the topic very
+                                        clearly. We revise our book&apos;s
+                                        content time to time to ensure that our
+                                        students get better quality of
+                                        education.
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </CardItem>
+                    </CardBody>
+                </CardContainer>
 
                 {/* CARD TWO */}
-
-                <AnimationDiv
-                    whileInView={{
-                        y: 0,
-                        opacity: 1,
-                    }}
-                    initial={{
-                        opacity: 0,
-                        y: 100,
-                    }}
-                    transition={{
-                        delay: 0.3,
-                        duration: 0.6,
-                    }}
-                >
-                    <Card className="max-w-xs bg-indigo-300 dark:border-0 dark:text-black">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-3 text-black/75">
-                                <Folder className="w-4 h-4" />
-                                <span className="text-lg">Facilities</span>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-sm text-zinc-800/80 font-medium">
-                                We provide unique and very user friendly Online
-                                facilities like Student Verification, I-Card
-                                Verification, Marksheet Verification,
-                                Certificate Verification & we also provide
-                                complete online management system for our
-                                franchise.
-                            </p>
-                        </CardContent>
-                    </Card>
-                </AnimationDiv>
+                <CardContainer className="w-full h-full">
+                    <CardBody className="w-full h-full">
+                        <CardItem translateZ="50" className="w-full h-full">
+                            <Card className="max-w-xs bg-indigo-300 dark:border-0 dark:text-black">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-3 text-black/75">
+                                        <Folder className="w-4 h-4" />
+                                        <span className="text-lg">
+                                            Facilities
+                                        </span>
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-sm text-zinc-800/80 font-medium">
+                                        We provide unique and very user friendly
+                                        Online facilities like Student
+                                        Verification, I-Card Verification,
+                                        Marksheet Verification, Certificate
+                                        Verification & we also provide complete
+                                        online management system for our
+                                        franchise.
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </CardItem>
+                    </CardBody>
+                </CardContainer>
 
                 {/* CARD THREE */}
-
-                <AnimationDiv
-                    whileInView={{
-                        x: 0,
-                        opacity: 1,
-                    }}
-                    initial={{
-                        x: 100,
-                        opacity: 0,
-                    }}
-                    transition={{
-                        delay: 0.4,
-                        duration: 0.6,
-                    }}
-                >
-                    <Card className="max-w-xs h-full bg-amber-300 dark:text-black dark:border-0">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-3 text-black/75">
-                                <BadgeCheck className="w-4 h-4" />
-                                <span className="text-lg">BETTER SUPPORT</span>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-sm text-zinc-800/80 font-medium">
-                                We provide better support system for our
-                                franchise , in order to solve any aspect of
-                                problems regarding the software uses.
-                            </p>
-                        </CardContent>
-                    </Card>
-                </AnimationDiv>
+                <CardContainer className="w-full h-full">
+                    <CardBody className="w-full h-full">
+                        <CardItem translateZ="50" className="w-full h-full">
+                            <Card className="max-w-xs h-full bg-amber-300 dark:text-black dark:border-0">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-3 text-black/75">
+                                        <BadgeCheck className="w-4 h-4" />
+                                        <span className="text-lg">
+                                            BETTER SUPPORT
+                                        </span>
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-sm text-zinc-800/80 font-medium">
+                                        We provide better support system for our
+                                        franchise , in order to solve any aspect
+                                        of problems regarding the software uses.
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </CardItem>
+                    </CardBody>
+                </CardContainer>
             </div>
         </div>
     );
@@ -537,43 +517,57 @@ const OurCourses = () => {
                 Our Courses
             </span>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 m-auto w-fit gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-fit gap-4 h-fit">
                 {courses?.map((course, idx) => (
-                    <AnimationDiv
-                        key={course.name}
-                        whileInView={{
-                            x: 0,
-                            y: 0,
-                            opacity: 1,
-                        }}
-                        initial={{
-                            x:
-                                idx === 0 || idx === 3 || idx === 6
-                                    ? -100
-                                    : idx === 1 || idx === 4 || idx === 7
-                                      ? 0
-                                      : 100,
-                            y: idx === 1 || idx === 4 || idx === 7 ? 100 : 0,
-                            opacity: 0,
-                        }}
-                        transition={{
-                            duration: 0.3,
-                        }}
-                        className="relative group overflow-hidden rounded-lg"
-                    >
-                        <Image
-                            src={course.url}
-                            width={130}
-                            height={130}
-                            className="transition-all group-hover:scale-110 rounded-lg w-36 h-36"
-                            alt={course.name}
-                        />
-                        <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                            <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
-                                More
-                            </span>
-                        </div>
-                    </AnimationDiv>
+                    <CardContainer key={idx}>
+                        <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-72 h-fit rounded-xl p-2 border  ">
+                            <CardItem translateZ="100" className="w-full">
+                                <Image
+                                    src={course.url}
+                                    height="1000"
+                                    width="1000"
+                                    className="h-60 w-full object-contain rounded-xl group-hover/card:shadow-xl"
+                                    alt="thumbnail"
+                                />
+                            </CardItem>
+                        </CardBody>
+                    </CardContainer>
+
+                    // <AnimationDiv
+                    //     key={course.name}
+                    //     whileInView={{
+                    //         x: 0,
+                    //         y: 0,
+                    //         opacity: 1,
+                    //     }}
+                    //     initial={{
+                    //         x:
+                    //             idx === 0 || idx === 3 || idx === 6
+                    //                 ? -100
+                    //                 : idx === 1 || idx === 4 || idx === 7
+                    //                   ? 0
+                    //                   : 100,
+                    //         y: idx === 1 || idx === 4 || idx === 7 ? 100 : 0,
+                    //         opacity: 0,
+                    //     }}
+                    //     transition={{
+                    //         duration: 0.3,
+                    //     }}
+                    //     className="relative group overflow-hidden rounded-lg"
+                    // >
+                    //     <Image
+                    //         src={course.url}
+                    //         width={130}
+                    //         height={130}
+                    //         className="transition-all group-hover:scale-110 rounded-lg w-36 h-36"
+                    //         alt={course.name}
+                    //     />
+                    //     <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
+                    //         <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
+                    //             More
+                    //         </span>
+                    //     </div>
+                    // </AnimationDiv>
                 ))}
             </div>
         </div>

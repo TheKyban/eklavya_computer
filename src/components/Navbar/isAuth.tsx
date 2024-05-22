@@ -12,7 +12,7 @@ export const IsAuth = ({ session, className, ...props }: PropsType) => {
         <Link
             href="/dashboard"
             className={cn(
-                "transition hover:text-blue-100 uppercase",
+                "transition hover:text-blue-800 uppercase",
                 className,
             )}
             {...props}
@@ -23,7 +23,7 @@ export const IsAuth = ({ session, className, ...props }: PropsType) => {
         <Link
             href="/login"
             className={cn(
-                "transition hover:text-blue-100 uppercase",
+                "transition hover:text-blue-800 uppercase",
                 className,
             )}
             {...props}

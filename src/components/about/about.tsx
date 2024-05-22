@@ -32,13 +32,13 @@ export default function About() {
                     🤔 About The Academy
                 </h1>
                 <p className=" text-xs text-clip overflow-y-auto h-full no-scrollbar">
-                    Eklavaya global computer, is the biggest educational which
-                    provides a great platform in IT sectors in India
-                    sub-continent. It is An ISO-9001:2008 Certified Company
-                    having mission to promote IT education and awareness to
-                    provide strong plinth to construct their bright fruture ans
-                    career. It is an independent to cater to the basic needs in
-                    computer education. It is a matter of great proud and
+                    Eklavaya Universal Private Limited, is the biggest
+                    educational which provides a great platform in IT sectors in
+                    India sub-continent. It is An ISO-9001:2008 Certified
+                    Company having mission to promote IT education and awareness
+                    to provide strong plinth to construct their bright fruture
+                    ans career. It is an independent to cater to the basic needs
+                    in computer education. It is a matter of great proud and
                     pleasure that our country is a fast developing country in
                     economy, education, science & technology etc. India is a
                     large population which needs to enhance human capital in
