@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import Link from "next/link";
 import {
     BadgeCheck,
     BookText,
@@ -39,55 +38,32 @@ interface firstPageProps {
 export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
     return (
         <div
-            className={`${MAX_WIDTH} m-auto w-full mb-5 lg:mt-5 flex flex-col justify-center gap-5`}
+            className={`${MAX_WIDTH} m-auto w-full sm:mb-5 xl:mt-1 2xl:mt-5 flex flex-col justify-center gap-5 lg:gap-8`}
         >
-            <div className="w-full lg:w-[93%] 2xl:w-full m-auto lg:px-3">
-                <div className="flex items-start flex-col lg:flex-row justify-between lg:gap-5 overflow-hidden">
-                    {!!carousel?.[0] && <HomeCarousel carousel={carousel} />}
-
-                    <div className="w-full lg:hidden">
-                        <HomeFamily family={family} />
-                    </div>
-                    <NoticeSection />
-                </div>
+            <div className="w-full h-full">
+                {!!carousel?.[0] && <HomeCarousel carousel={carousel} />}
+                <NoticeSection />
             </div>
 
-            <div className="w-full hidden lg:block">
-                <HomeFamily family={family} />
-            </div>
-        </div>
-    );
-};
-
-export const SecondPage = () => {
-    return (
-        <div
-            className={`overflow-hidden flex flex-col m-auto ${MAX_WIDTH} items-center lg:gap-10 w-full`}
-        >
+            <HomeFamily family={family} />
             <FromDeskOf />
-            <WhySection />
-        </div>
-    );
-};
 
-export const ThridPage = () => {
-    return (
-        <div
-            className={`flex flex-col gap-16 py-16 items-center overflow-hidden w-[93%] ${MAX_WIDTH} m-auto 2xl:w-full`}
-        >
-            <OurFeatures />
-            <OurCourses />
+            <div className="flex flex-col gap-5 items-center ">
+                <WhySection />
+                <OurFeatures />
+                <OurCourses />
+            </div>
         </div>
     );
 };
 
 const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
     return (
-        <div className="lg:my-4 mb-4 w-full lg:w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 lg:rounded-lg py-9 px-1 sm:px-5 flex flex-col items-center">
-            <span className="text-2xl hidden lg:inline-block sm:text-3xl font-semibold text-green-600 my-3 sm:my-10 uppercase border-b-2 pb-2 border-green-600">
+        <div className="w-full lg:w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 lg:rounded-lg py-7 lg:py-9 px-1 sm:px-5 flex flex-col items-center">
+            <span className="text-2xl sm:text-3xl font-semibold text-green-600 mb-7  lg:my-10 uppercase border-b-2 pb-2 border-green-600">
                 Our Family
             </span>
-            <ReactMarquee autoFill={true} pauseOnHover>
+            <ReactMarquee autoFill={true} pauseOnHover direction="right">
                 {family?.map(
                     (
                         user: {
@@ -127,125 +103,102 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
 
 const NoticeSection = () => {
     return (
-        <AnimationDiv
-            animate={{
-                x: 0,
-                opacity: 1,
-            }}
-            initial={{
-                opacity: 0,
-                x: 100,
-            }}
-            transition={{
-                duration: 0.6,
-            }}
-            className="w-full lg:w-[93%] 2xl:w-full mx-auto h-[400px] max-w-full lg:max-w-sm border overflow-y-hidden lg:rounded-lg bg-orange-100"
-        >
-            <h1
-                className={`bg-orange-200 text-orange-700 font-semibold uppercase text-lg text-center py-2 z-10 relative`}
+        <ReactMarquee className="text-sm bg-orange-600 py-3">
+            <li
+                className="ml-4 flex items-center justify-center  gap-2 text-white"
+                key={1}
             >
-                Notice
-            </h1>
+                <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>Admission is Going On...</p>
+            </li>
+            <li
+                className="ml-4 flex gap-2 items-center justify-center text-white"
+                key={2}
+            >
+                <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>Contact for Franchisee Opening.</p>
+            </li>
+            <li
+                className="ml-4 flex items-center justify-center text-white gap-2"
+                key={3}
+            >
+                <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>Educate Your Dreams</p>
+            </li>
 
-            <ul className="flex flex-col w-full h-fit text-center font-medium items-center sm:text-start sm:items-start text-xs gap-5 animate-vertical-animation hover:paused px-3">
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center  gap-2 text-rose-700"
-                    key={1}
-                >
-                    <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>Admission is Going On...</p>
-                </li>
-                <li
-                    className="flex gap-2 flex-col sm:flex-row items-center justify-center text-indigo-600"
-                    key={2}
-                >
-                    <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>Contact for Franchisee Opening.</p>
-                </li>
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center text-slate-600 gap-2"
-                    key={3}
-                >
-                    <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>Educate Your Dreams</p>
-                </li>
+            <li
+                className="ml-4 flex items-center justify-center gap-2 text-white"
+                key={4}
+            >
+                <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>Life+ Academics+ Creativity =Success</p>
+            </li>
 
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center gap-2 text-orange-600"
-                    key={4}
-                >
-                    <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>Life+ Academics+ Creativity =Success</p>
-                </li>
+            <li
+                className="ml-4 flex items-center justify-center text-white gap-2"
+                key={5}
+            >
+                <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>
+                    Educating Today&apos;s Learners for Tomorrow&apos;s world.
+                </p>
+            </li>
 
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center text-slate-600 gap-2"
-                    key={5}
-                >
-                    <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>
-                        Educating Today&apos;s Learners for Tomorrow&apos;s
-                        world.
-                    </p>
-                </li>
-
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center text-indigo-600 gap-2"
-                    key={6}
-                >
-                    <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>
-                        “You dared to Struggle Yesterday you can dare to win
-                        Today”
-                    </p>
-                </li>
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center text-rose-600 gap-2"
-                    key={7}
-                >
-                    <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>
-                        It Is With Great Pleasure That I Congratulate You On
-                        Your Five Year Anniversary. Please Know That You Are
-                        Important Members Of Our Team And Your abilities And
-                        Contributions Will Be An Important Part Of Our Continued
-                        Success. People Are And Will Always Be.
-                    </p>
-                </li>
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center text-indigo-600 gap-2"
-                    key={7}
-                >
-                    <Brain className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>
-                        IDEA--- All achievement, all earned riches, have their
-                        beginning in an idea.
-                    </p>
-                </li>
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center text-gray-600 gap-2"
-                    key={7}
-                >
-                    <Lock className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>
-                        Balance --- Balance is the key to everything. What we
-                        do, think, say, eat, feel, they all require awareness
-                        and through this awareness we can grow.
-                    </p>
-                </li>
-                <li
-                    className="flex flex-col sm:flex-row items-center justify-center text-orange-600 gap-2"
-                    key={7}
-                >
-                    <Hand className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                    <p>
-                        UNITY--- We are each other&apos;s harvest; we are each
-                        other&apos;s business; we are each other&apos;s
-                        magnitude and bond.
-                    </p>
-                </li>
-            </ul>
-        </AnimationDiv>
+            <li
+                className="ml-4 flex items-center justify-center text-white gap-2"
+                key={6}
+            >
+                <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>
+                    “You dared to Struggle Yesterday you can dare to win Today”
+                </p>
+            </li>
+            <li
+                className="ml-4 flex items-center justify-center text-white gap-2"
+                key={7}
+            >
+                <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>
+                    It Is With Great Pleasure That I Congratulate You On Your
+                    Five Year Anniversary. Please Know That You Are Important
+                    Members Of Our Team And Your abilities And Contributions
+                    Will Be An Important Part Of Our Continued Success. People
+                    Are And Will Always Be.
+                </p>
+            </li>
+            <li
+                className="ml-4 flex items-center justify-center text-white gap-2"
+                key={7}
+            >
+                <Brain className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>
+                    IDEA--- All achievement, all earned riches, have their
+                    beginning in an idea.
+                </p>
+            </li>
+            <li
+                className="ml-4 flex items-center justify-center text-white gap-2"
+                key={7}
+            >
+                <Lock className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>
+                    Balance --- Balance is the key to everything. What we do,
+                    think, say, eat, feel, they all require awareness and
+                    through this awareness we can grow.
+                </p>
+            </li>
+            <li
+                className="ml-4 flex items-center justify-center text-white gap-2"
+                key={7}
+            >
+                <Hand className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                <p>
+                    UNITY--- We are each other&apos;s harvest; we are each
+                    other&apos;s business; we are each other&apos;s magnitude
+                    and bond.
+                </p>
+            </li>
+        </ReactMarquee>
     );
 };
 
@@ -256,7 +209,7 @@ const FromDeskOf = () => {
                 x: 0,
                 opacity: 1,
             }}
-            className="bg-orange-100 mt-5 lg:mt-0 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full"
+            className="bg-orange-100 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full"
             initial={{
                 x: 100,
                 opacity: 0,
@@ -352,7 +305,7 @@ const WhySection = () => {
                 delay: 0.2,
                 duration: 0.6,
             }}
-            className="bg-orange-100 mt-5 lg:mt-0 rounded-lg w-[93%] 2xl:w-full"
+            className="bg-orange-100 rounded-lg w-[93%] 2xl:w-full"
         >
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                 <span className="text-3xl font-semibold text-zinc-600  border-b-2 border-zinc-600 pb-3 uppercase">
@@ -378,7 +331,7 @@ const WhySection = () => {
 const OurFeatures = () => {
     return (
         <div
-            className={`flex flex-col justify-center items-center gap-10 bg-orange-100 w-full rounded-lg py-10 h-full`}
+            className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 bg-orange-100 rounded-lg py-10 h-full`}
         >
             <span className="text-3xl font-semibold text-green-600 border-b-2 border-green-600 pb-2 uppercase">
                 Our Features
@@ -511,7 +464,7 @@ const OurCourses = () => {
     ];
     return (
         <div
-            className={`flex flex-col justify-center items-center gap-10 bg-orange-100 w-full rounded-lg py-10 h-full`}
+            className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 bg-orange-100 rounded-lg  py-10 h-full`}
         >
             <span className="text-3xl font-semibold text-green-600 border-b-2 border-green-600 pb-2 uppercase">
                 Our Courses

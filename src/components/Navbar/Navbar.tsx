@@ -17,14 +17,17 @@ const Navbar = ({ session }: { session: Session | null }) => {
                     src={
                         "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
                     }
-                    width={180}
+                    width={220}
                     height={60}
                     alt="logo"
                     className="object-contain ml-auto"
                 />
-                <div className="ml-auto w-full h-full flex items-center justify-between px-3 gap-4 text-zinc-800 text-sm max-w-5xl">
+                <div className="ml-auto w-full h-full flex items-center justify-end px-3 gap-6 text-zinc-800 text-sm max-w-6xl">
                     {/* Login  & Dasboard*/}
-                    <IsAuth session={session} />
+                    <IsAuth
+                        session={session}
+                        className="lg:text-xs 2xl:text-base"
+                    />
 
                     {navbarLinks.map((link) => {
                         return !!link?.link ? (
@@ -32,9 +35,12 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                 key={link.title}
                                 href={link.link}
                                 className={
-                                    "transition hover:text-blue-800 font-normal uppercase h-full"
+                                    "transition hover:text-blue-800 font-normal uppercase h-full flex items-center justify-center gap-2 lg:text-xs 2xl:text-base"
                                 }
                             >
+                                {
+                                    <link.icon className="w-4 h-4 text-orange-600 font-bold" />
+                                }
                                 {link.title}
                             </Link>
                         ) : (
@@ -45,9 +51,12 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                 <div className="flex gap-2 justify-center items-center h-full py-3">
                                     <span
                                         className={
-                                            "transition-all group-hover:text-blue-800  duration-300 font-normal uppercase"
+                                            "transition-all group-hover:text-blue-800  duration-300 font-normal uppercase flex justify-center items-center gap-2 lg:text-xs 2xl:text-base"
                                         }
                                     >
+                                        {
+                                            <link.icon className="w-4 h-4 text-orange-700 font-bold" />
+                                        }
                                         {link?.title}
                                     </span>
                                     <ArrowDown
@@ -62,7 +71,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                         <Link
                                             key={link.title}
                                             className={
-                                                "flex gap-2 transition-all hover:text-blue-800 hover:translate-x-2 duration-300 font-normal items-center"
+                                                "flex gap-2 transition-all hover:text-blue-800 hover:translate-x-2 duration-300 font-normal items-center lg:text-xs 2xl:text-base"
                                             }
                                             href={link?.link!}
                                         >

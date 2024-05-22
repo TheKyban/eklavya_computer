@@ -1,4 +1,4 @@
-import { FirstPage, SecondPage, ThridPage } from "@/components/Home/home-pages";
+import { FirstPage } from "@/components/Home/home-pages";
 import { v2 as cloudinary } from "cloudinary";
 import { Prisma } from "../../../../../prisma/prisma";
 
@@ -47,29 +47,7 @@ export default async function Home() {
         const families = await fetchFamilies();
         return (
             <div className="min-h-[calc(100vh-63px)] h-full bg-orange-50">
-                {/**
-                 *
-                 * HERO SECTION
-                 *
-                 */}
-
                 <FirstPage carousel={data} family={families} />
-
-                {/*
-                 *
-                 * SECOND PAGE
-                 *
-                 */}
-
-                <SecondPage />
-
-                {/*
-                 *
-                 * THIRD PAGE
-                 *
-                 */}
-
-                <ThridPage />
             </div>
         );
     } catch (error) {
