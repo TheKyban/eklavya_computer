@@ -26,7 +26,6 @@ import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/STYLES";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
-import { ModeToggle } from "@/components/ThemeTogggle";
 import { FC, HTMLAttributes, useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import { accordianLinks, links } from "./url";
@@ -165,8 +164,7 @@ const MobileMenu: FC<mobileMenu> = ({ className, role }) => {
                                     );
                                 })}
                             </ScrollArea>
-                            <div className="mt-auto flex gap-4">
-                                <ModeToggle />
+                            <div className="mt-auto flex">
                                 <Button
                                     variant={"outline"}
                                     className="flex-1"

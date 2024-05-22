@@ -1,5 +1,4 @@
 "use client";
-import { ModeToggle } from "@/components/ThemeTogggle";
 import {
     Accordion,
     AccordionContent,
@@ -137,8 +136,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                     );
                 })}
             </ScrollArea>
-            <div className="mt-auto flex gap-4">
-                <ModeToggle />
+            <div className="mt-auto flex">
                 <Button
                     variant={"outline"}
                     className="flex-1"
