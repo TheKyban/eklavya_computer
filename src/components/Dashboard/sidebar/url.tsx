@@ -2,6 +2,7 @@ import {
     Album,
     Book,
     BookCheck,
+    BriefcaseMedicalIcon,
     Dock,
     FileScan,
     FileSpreadsheet,
@@ -11,7 +12,9 @@ import {
     Layers3,
     Medal,
     PlusCircle,
+    Printer,
     Ribbon,
+    Settings,
     ShieldAlert,
     ShieldCheck,
     TextCursorInput,
@@ -151,7 +154,7 @@ export const accordianLinks: accordianLinks[] = [
     },
     {
         title: "Management",
-        icon: <Medal className="w-5 h-5 text-gray-600" />,
+        icon: <Settings className="w-5 h-5 text-gray-600" />,
         role: "ADMIN",
         links: [
             {
@@ -179,6 +182,30 @@ export const accordianLinks: accordianLinks[] = [
                 icon: <BookCheck className="w-5 h-5 text-green-400" />,
                 link: "/dashboard/management/icard",
                 role: "ADMIN",
+            },
+        ],
+    },
+    {
+        title: "Print",
+        icon: <Printer className="w-5 h-5 text-blue-600" />,
+        role: "ADMIN",
+        links: [
+            {
+                title: "Icard",
+                link: "/dashboard/print/icard",
+                icon: <Album className="w-5 h-5 text-yellow-500" />,
+            },
+            {
+                title: "Marksheet",
+                link: "/dashboard/print/marksheet",
+                icon: (
+                    <BriefcaseMedicalIcon className="w-5 h-5 text-yellow-500" />
+                ),
+            },
+            {
+                title: "Certificate",
+                link: "/dashboard/print/certificate",
+                icon: <Medal className="w-5 h-5 text-yellow-500" />,
             },
         ],
     },

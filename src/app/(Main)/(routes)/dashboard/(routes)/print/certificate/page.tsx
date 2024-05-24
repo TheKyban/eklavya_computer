@@ -1,10 +1,10 @@
-import ManageMarksheet from "@/components/Dashboard/student/Manage-marksheet";
+import CertificatePrinter from "@/components/Dashboard/print/CERTIFICATE_PRINTER";
 import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
+import { fetchBranch } from "@/lib/FETCH_FUNTCTIONS";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { fetchBranch } from "@/lib/FETCH_FUNTCTIONS";
 
-export default async function ManageMarks({
+export default async function CertificatePrinterPage({
     searchParams,
 }: {
     searchParams: { page: string; registration: string };
@@ -13,14 +13,13 @@ export default async function ManageMarks({
     if (session?.user.role !== "ADMIN") {
         return redirect("/dashboard");
     }
-
     const branches = await fetchBranch();
 
     return (
-        <ManageMarksheet
+        <CertificatePrinter
+            branches={branches}
             page={searchParams?.page || "1"}
             registration={searchParams?.registration || ""}
-            branches={branches}
         />
     );
 }
