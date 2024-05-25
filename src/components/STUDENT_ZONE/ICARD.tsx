@@ -10,7 +10,7 @@ import { PDF_DOWNLOAD_HANDLER } from "@/lib/PDF_DOWNLOAD_HANDLER";
 const ICard = () => {
     const [registration, setRegistration] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const ref = useRef<HTMLIFrameElement>(null);
+    const ref = useRef<HTMLCanvasElement>(null);
     const [icard, setICard] = useState(false);
 
     const handleSearch = async (e: FormEvent) => {
@@ -18,27 +18,27 @@ const ICard = () => {
         if (!registration || registration.length <= 6) return;
         setIsLoading(true);
 
-        const iframe = ref.current!;
-        // const ctx = canvas.getContext("2d");
-        // const image = document.createElement("img");
-        iframe.src = `/api/icard/?registration=${registration}`;
+        const canvas = ref.current!;
+        const ctx = canvas.getContext("2d");
+        const image = document.createElement("img");
+        image.src = `/api/assets/icard/?registration=${registration}`;
 
-        iframe.onerror = async (error) => {
+        image.onerror = async (error) => {
             console.log(error);
             toast({ description: "Not Issued." });
             setIsLoading(false);
-            // ref.current
-            //     ?.getContext("2d")
-            //     ?.clearRect(0, 0, ref.current?.width!, ref.current?.height!);
-            // ref.current!.width = 0;
-            // ref.current!.height = 0;
+            ref.current
+                ?.getContext("2d")
+                ?.clearRect(0, 0, ref.current?.width!, ref.current?.height!);
+            ref.current!.width = 0;
+            ref.current!.height = 0;
             setICard(false);
         };
 
-        iframe.onload = async () => {
-            // canvas.width = image?.naturalWidth;
-            // canvas.height = image?.naturalHeight;
-            // ctx?.drawImage(image, 0, 0);
+        image.onload = async () => {
+            canvas.width = image?.naturalWidth;
+            canvas.height = image?.naturalHeight;
+            ctx?.drawImage(image, 0, 0);
             setICard(true);
             setIsLoading(false);
         };
@@ -56,7 +56,7 @@ const ICard = () => {
                 />
             </div>
 
-            {/* {!!icard && (
+            {!!icard && (
                 <div className="w-full flex gap-4 justify-center items-center my-4">
                     <Button
                         variant={"primary"}
@@ -77,9 +77,9 @@ const ICard = () => {
                         Download
                     </Button>
                 </div>
-            )} */}
+            )}
             <div className="w-full overflow-x-auto flex items-center justify-center">
-                <iframe ref={ref} className="w-[360px] h-[400px]"></iframe>
+                <canvas ref={ref} className="max-w-sm"></canvas>
             </div>
         </div>
     );
