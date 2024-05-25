@@ -12,8 +12,8 @@ export const GET = async (req: Request) => {
          * GET REGISTRATION
          */
         const { searchParams } = new URL(req.url);
-        const registration = searchParams.get("registration");
-        const image = !!searchParams.get("no_image") ? false : true;
+        const registration = searchParams?.get("registration");
+        const image = !!searchParams?.get("no_image") ? false : true;
         if (!registration) {
             return Response.json(
                 {
@@ -83,7 +83,7 @@ export const GET = async (req: Request) => {
             (
                 <div
                     style={{
-                        fontSize: 25,
+                        fontSize: 15,
                         color: "black",
                         background: "white",
                         display: "flex",
@@ -101,6 +101,7 @@ export const GET = async (req: Request) => {
                                 position: "absolute",
                                 top: 0,
                                 left: 0,
+                                objectFit: "contain",
                             }}
                             alt="cert"
                         />
@@ -111,18 +112,19 @@ export const GET = async (req: Request) => {
                         src={student?.img}
                         style={{
                             position: "absolute",
-                            top: 145,
-                            left: 160,
-                            width: 280,
-                            height: 290,
+                            top: 76,
+                            left: 85,
+                            width: 130,
+                            height: 140,
+                            borderRadius: 15,
                         }}
                     />
 
                     <span
                         style={{
                             position: "absolute",
-                            top: 450,
-                            fontSize: 30,
+                            top: 220,
+                            fontSize: 18,
                             fontWeight: "bolder",
                             left: "50%",
                             transform: "translateX(-50%)",
@@ -130,27 +132,33 @@ export const GET = async (req: Request) => {
                     >
                         {TO_CAPITALIZE(student?.name)}
                     </span>
-                    <span style={{ position: "absolute", top: 495, left: 280 }}>
+                    <span style={{ position: "absolute", top: 245, left: 150 }}>
                         {student?.registration}
                     </span>
-                    <span style={{ position: "absolute", top: 535, left: 280 }}>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 265,
+                            left: 132,
+                        }}
+                    >
                         {TO_CAPITALIZE(student?.fatherName)}
                     </span>
 
-                    <span style={{ position: "absolute", top: 575, left: 280 }}>
+                    <span style={{ position: "absolute", top: 285, left: 145 }}>
                         {format(new Date(student.dob), "dd/MM/yyyy")}
                     </span>
 
-                    <span style={{ position: "absolute", top: 615, left: 280 }}>
+                    <span style={{ position: "absolute", top: 305, left: 135 }}>
                         {student?.Course?.name}
                     </span>
-                    <span style={{ position: "absolute", top: 655, left: 280 }}>
+                    <span style={{ position: "absolute", top: 325, left: 140 }}>
                         {student?.Course?.duration}
                     </span>
                     <span
                         style={{
                             position: "absolute",
-                            top: 740,
+                            top: 370,
                             left: "50%",
                             transform: "translateX(-50%)",
                         }}
@@ -160,8 +168,8 @@ export const GET = async (req: Request) => {
                 </div>
             ),
             {
-                width: 599,
-                height: 957,
+                width: 300,
+                height: 480,
                 fonts: [
                     {
                         name: "NotoSerif",

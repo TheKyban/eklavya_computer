@@ -15,8 +15,8 @@ export const GET = async (req: Request) => {
          * GET REGISTRATION
          */
         const { searchParams } = new URL(req.url);
-        const registration = searchParams.get("registration");
-        const image = !!searchParams.get("no_image") ? false : true;
+        const registration = searchParams?.get("registration");
+        const image = !!searchParams?.get("no_image") ? false : true;
 
         if (!registration) {
             return Response.json(

@@ -27,7 +27,7 @@ export const POST = async (req: Request) => {
         }
 
         const { searchParams } = new URL(req.url);
-        const id = searchParams.get("id");
+        const id = searchParams?.get("id");
 
         if (!id) {
             return Response.json({
@@ -161,7 +161,7 @@ export const GET = async (req: NextRequest) => {
         }
 
         const { searchParams } = new URL(req.url);
-        const page = Number(searchParams.get("page")) || 1;
+        const page = Number(searchParams?.get("page")) || 1;
 
         /**
          * GET APPLICATIONS
@@ -229,7 +229,7 @@ export const DELETE = async (req: Request) => {
         }
 
         const { searchParams } = new URL(req.url);
-        const id = searchParams.get("id");
+        const id = searchParams?.get("id");
 
         if (!id) {
             return Response.json({

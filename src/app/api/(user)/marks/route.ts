@@ -29,7 +29,7 @@ export const GET = async (req: Request) => {
 
         const { searchParams } = new URL(req.url);
         const computerTyping =
-            Boolean(searchParams.get("computerTyping")) || false;
+            Boolean(searchParams?.get("computerTyping")) || false;
 
         const studentsWithoutMarks = await Prisma.student.findMany({
             where: {
@@ -286,7 +286,7 @@ export const DELETE = async (req: Request) => {
         }
 
         const { searchParams } = new URL(req.url);
-        const registration = searchParams.get("registration");
+        const registration = searchParams?.get("registration");
 
         if (!registration) {
             return Response.json(

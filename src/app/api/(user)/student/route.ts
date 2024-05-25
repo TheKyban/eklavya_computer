@@ -351,9 +351,9 @@ export const GET = async (req: Request) => {
         }
 
         const { searchParams } = new URL(req.url);
-        const page = Number(searchParams.get("page")) || 1;
-        const pending = !!searchParams.get("pending") ? false : true;
-        const registration = searchParams.get("registration") || "";
+        const page = Number(searchParams?.get("page")) || 1;
+        const pending = !!searchParams?.get("pending") ? false : true;
+        const registration = searchParams?.get("registration") || "";
 
         /**
          * FINDING STUDENTS
@@ -433,7 +433,7 @@ export const DELETE = async (req: Request) => {
         }
 
         const { searchParams } = new URL(req.url);
-        const registration = searchParams.get("registration");
+        const registration = searchParams?.get("registration");
 
         if (!registration) {
             return NextResponse.json(

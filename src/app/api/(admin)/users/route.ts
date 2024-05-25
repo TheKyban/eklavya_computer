@@ -148,11 +148,11 @@ export const GET = async (req: Request) => {
         }
         const { searchParams } = new URL(req.url);
         const page =
-            searchParams.get("page") === "all"
+            searchParams?.get("page") === "all"
                 ? -1
-                : Number(searchParams.get("page")) || 1;
-        const userId = searchParams.get("userId");
-        const select = !!searchParams.get("select");
+                : Number(searchParams?.get("page")) || 1;
+        const userId = searchParams?.get("userId");
+        const select = !!searchParams?.get("select");
         interface selectOtions {
             [propName: string]: boolean;
         }
@@ -332,7 +332,7 @@ export const DELETE = async (req: Request) => {
             });
         }
         const { searchParams } = new URL(req.url);
-        const userId = searchParams.get("userId");
+        const userId = searchParams?.get("userId");
 
         if (!userId) {
             return NextResponse.json({

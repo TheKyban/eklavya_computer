@@ -28,9 +28,9 @@ export const GET = async (req: Request) => {
 
         const { searchParams } = new URL(req.url);
         const computerTyping =
-            Boolean(searchParams.get("computerTyping")) || false;
-        const registration = searchParams.get("registration") || "";
-        const page = Number(searchParams.get("page")) || 1;
+            Boolean(searchParams?.get("computerTyping")) || false;
+        const registration = searchParams?.get("registration") || "";
+        const page = Number(searchParams?.get("page")) || 1;
 
         const studentsWithMarks = await Prisma.student.findMany({
             take: per_page,

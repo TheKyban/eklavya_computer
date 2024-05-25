@@ -22,11 +22,12 @@ export const GET = async (req: Request) => {
         }
         const { searchParams } = new URL(req.url);
         const computerTyping =
-            searchParams.get("computerTyping") === "false" ? false : true;
-        const registration = searchParams.get("registration") || "";
-        const page = Number(searchParams.get("page")) || 1;
-        const userId = searchParams.get("userId");
-        const verified = searchParams.get("verified") === "true" ? true : false;
+            searchParams?.get("computerTyping") === "false" ? false : true;
+        const registration = searchParams?.get("registration") || "";
+        const page = Number(searchParams?.get("page")) || 1;
+        const userId = searchParams?.get("userId");
+        const verified =
+            searchParams?.get("verified") === "true" ? true : false;
         if (!userId) {
             return Response.json(
                 {

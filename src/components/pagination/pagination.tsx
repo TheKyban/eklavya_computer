@@ -15,9 +15,9 @@ const Pagination: FC<prop> = ({ total, isLoading }) => {
     const path = usePathname();
     const searchParams = useSearchParams();
 
-    const page = Number(searchParams.get("page")) || 1;
+    const page = Number(searchParams?.get("page")) || 1;
 
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams!);
 
     const hasPrev = per_page * (page - 1) > 0;
     const hasNext = per_page * (page - 1) + per_page < total;

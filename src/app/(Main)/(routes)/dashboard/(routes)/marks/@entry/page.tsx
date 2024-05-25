@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function EntryPage() {
     const searchParams = useSearchParams();
-    const typing = searchParams.get("typing") === "true" ? true : false;
+    const typing = searchParams?.get("typing") === "true" ? true : false;
     const [tab, setTab] = useState(typing ? "typing" : "general");
     return (
         <div className="w-full flex flex-col gap-5">

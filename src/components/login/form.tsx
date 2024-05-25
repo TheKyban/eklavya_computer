@@ -2,9 +2,7 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { LoginError } from "./error-login";
-import { ArrowRight, Loader } from "lucide-react";
-import { Button } from "../ui/button";
-import Link from "next/link";
+import { Loader } from "lucide-react";
 
 export const LoginForm = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -21,10 +19,7 @@ export const LoginForm = () => {
         }
     };
     return (
-        <form
-            className="w-full space-y-4"
-            action={onSubmit}
-        >
+        <form className="w-full space-y-4" action={onSubmit}>
             <div className="w-full">
                 <label
                     htmlFor="userid"

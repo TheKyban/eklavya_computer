@@ -28,7 +28,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
     const pathname = usePathname();
     const search = useSearchParams();
     const fullPath = `${pathname}${
-        search.toString() ? `?${search.toString()}` : ""
+        search?.toString() ? `?${search.toString()}` : ""
     }`;
     return (
         <div
@@ -82,7 +82,7 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
                                     "hover:bg-primary/5 px-3 rounded-md m-0",
                                     "transition-all",
                                     pathname
-                                        .split("/")
+                                        ?.split("/")
                                         .includes(link.title.toLowerCase()) &&
                                         "bg-black/5",
                                 )}

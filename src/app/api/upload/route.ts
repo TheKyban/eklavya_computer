@@ -27,7 +27,7 @@ export async function GET(req: Request) {
         }
 
         const { searchParams } = new URL(req.url);
-        const folder = searchParams.get("folder");
+        const folder = searchParams?.get("folder");
         if (!folder) {
             return Response.json(
                 { message: "Folder or Prefix is required" },
@@ -114,7 +114,7 @@ export async function DELETE(res: Request) {
             );
         }
         const { searchParams } = new URL(res.url);
-        const urlToDelete = searchParams.get("url") as string;
+        const urlToDelete = searchParams?.get("url") as string;
 
         const result = await DELETE_FILE(urlToDelete);
         return Response.json(result, { status: STATUS_CODE.OK });

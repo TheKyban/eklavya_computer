@@ -229,7 +229,7 @@ export const DELETE = async (req: Request) => {
         }
 
         const params = new URL(req.url);
-        const id = params.searchParams.get("id");
+        const id = params.searchParams?.get("id");
         if (!id) {
             return Response.json(
                 {

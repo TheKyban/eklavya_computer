@@ -23,10 +23,10 @@ export const GET = async (req: Request) => {
         }
 
         const { searchParams } = new URL(req.url);
-        const page = Number(searchParams.get("page")) || 1;
-        const userId = searchParams.get("userId");
-        const registration = searchParams.get("registration") || "";
-        const pending = searchParams.get("pending") === "true" ? true : false;
+        const page = Number(searchParams?.get("page")) || 1;
+        const userId = searchParams?.get("userId");
+        const registration = searchParams?.get("registration") || "";
+        const pending = searchParams?.get("pending") === "true" ? true : false;
 
         if (!userId) {
             return Response.json(

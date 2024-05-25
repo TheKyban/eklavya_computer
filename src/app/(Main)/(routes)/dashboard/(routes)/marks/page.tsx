@@ -2,21 +2,19 @@
 
 import ComputerTypingEnteredMarks from "@/components/Dashboard/marks/computer-typing-students-marks-list";
 import GeneralEntredMarks from "@/components/Dashboard/marks/general-mark-list";
-import GeneralMarksEntry from "@/components/Dashboard/marks/general-marks-entry";
-import TypingMarksEntry from "@/components/Dashboard/marks/computer-typing-marks-entry";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileSpreadsheet, TextCursorInput } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Marks = () => {
     const searchParams = useSearchParams();
-    const typing = searchParams.get("typing") === "true" ? true : false;
+    const typing = searchParams?.get("typing") === "true" ? true : false;
     const [tabM, setTabM] = useState(
         typing ? "typingEntered" : "generalEntered",
     );
-    const page = searchParams.get("page");
-    const registration = searchParams.get("registration");
+    const page = searchParams?.get("page") || "1";
+    const registration = searchParams?.get("registration") || "";
 
     return (
         <div className="w-full flex flex-col gap-5">
