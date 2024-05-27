@@ -57,7 +57,7 @@ export default function Franchise() {
 
     return (
         <div
-            className={`w-full ${MAX_WIDTH} bg-orange-100 m-auto ${MIN_HEIGHT} h-full py-20 lg:pt-28 flex items-center justify-center gap-9 flex-wrap`}
+            className={`w-full ${MAX_WIDTH} m-auto ${MIN_HEIGHT} h-full py-20 lg:pt-28 flex items-center justify-center gap-9 flex-wrap`}
         >
             {/* VERIFIY FRANCHISE */}
             <Card className="max-w-lg w-1/2 min-w-[350px] bg-transparent">

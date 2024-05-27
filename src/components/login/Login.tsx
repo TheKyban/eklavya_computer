@@ -26,7 +26,7 @@ export const Login = () => {
                 <LoginForm />
             </div>
 
-            <Button
+            {/* <Button
                 asChild
                 variant={"outline"}
                 className="mt-4 mx-auto text-xs dark:bg-white dark:text-black dark:border-[#e7e5e4]"
@@ -39,7 +39,7 @@ export const Login = () => {
                     <ArrowRight className="w-4 h-4" />
                     <span>Go to home</span>
                 </Link>
-            </Button>
+            </Button> */}
         </div>
     );
 };
