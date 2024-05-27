@@ -41,6 +41,7 @@ const MarkSheet = () => {
             ctx?.drawImage(image, 0, 0);
             setMarksheet(true);
             setIsLoading(false);
+            setRegistration("");
         };
     };
 

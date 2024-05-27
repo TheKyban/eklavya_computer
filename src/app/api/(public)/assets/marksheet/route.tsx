@@ -118,7 +118,7 @@ export const GET = async (req: Request) => {
             (
                 <div
                     style={{
-                        fontSize: 25,
+                        fontSize: 16,
                         color: "black",
                         background: "white",
                         width: "100%",
@@ -144,9 +144,8 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 245,
-                            left: 200,
-                            fontSize: 22,
+                            top: 170,
+                            left: 130,
                         }}
                     >
                         {`EUPL/${student?.serialNumber}`}
@@ -156,32 +155,32 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 245,
-                            left: 880,
-                            fontSize: 22,
+                            top: 170,
+                            left: 600,
                         }}
                     >
                         {student?.registration}
                     </span>
-                    <span style={{ position: "absolute", top: 383, left: 380 }}>
+
+                    <span style={{ position: "absolute", top: 270, left: 280 }}>
                         {TO_CAPITALIZE(student?.name)}
                     </span>
-                    <span style={{ position: "absolute", top: 423, left: 380 }}>
+                    <span style={{ position: "absolute", top: 300, left: 280 }}>
                         {TO_CAPITALIZE(student?.motherName)}
                     </span>
-                    <span style={{ position: "absolute", top: 463, left: 380 }}>
+                    <span style={{ position: "absolute", top: 327, left: 280 }}>
                         {TO_CAPITALIZE(student?.fatherName)}
                     </span>
-                    <span style={{ position: "absolute", top: 503, left: 380 }}>
+                    <span style={{ position: "absolute", top: 357, left: 280 }}>
                         {student?.Course?.name} ( {student?.Course?.fullName} )
                     </span>
-                    <span style={{ position: "absolute", top: 543, left: 380 }}>
+                    <span style={{ position: "absolute", top: 383, left: 280 }}>
                         {student?.Course?.duration}
                     </span>
-                    <span style={{ position: "absolute", top: 583, left: 380 }}>
+                    <span style={{ position: "absolute", top: 410, left: 280 }}>
                         {student?.Branch.branch}
                     </span>
-                    <span style={{ position: "absolute", top: 623, left: 380 }}>
+                    <span style={{ position: "absolute", top: 440, left: 280 }}>
                         {student?.branch}
                     </span>
 
@@ -189,12 +188,12 @@ export const GET = async (req: Request) => {
                     <pre
                         style={{
                             position: "absolute",
-                            top: 685,
-                            left: 95,
-                            fontSize: 21,
+                            top: 485,
+                            left: 60,
+                            fontSize: 14,
                             // border: "1px solid red",
-                            height: 180,
-                            width: 945,
+                            height: 130,
+                            width: 700,
                             lineHeight: 1.3,
                             whiteSpace: "pre-line",
                         }}
@@ -206,11 +205,10 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 980,
-                            right: 250,
-                            fontSize: 22,
+                            top: 687,
+                            right: 170,
+                            fontSize: 16,
                             fontWeight: 600,
-                            lineHeight: 0.7,
                         }}
                     >
                         {student?.marks?.marks?.written}
@@ -218,11 +216,10 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 1030,
-                            right: 250,
-                            fontSize: 22,
+                            top: 720,
+                            right: 170,
+                            fontSize: 16,
                             fontWeight: 600,
-                            lineHeight: 0.7,
                         }}
                     >
                         {student?.marks?.marks?.practical}
@@ -230,11 +227,10 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 1072,
-                            right: 250,
-                            fontSize: 22,
+                            top: 752,
+                            right: 170,
+                            fontSize: 16,
                             fontWeight: 600,
-                            lineHeight: 0.7,
                         }}
                     >
                         {student?.marks?.marks?.project}
@@ -242,11 +238,10 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 1115,
-                            right: 250,
-                            fontSize: 22,
+                            top: 783,
+                            right: 170,
+                            fontSize: 16,
                             fontWeight: 600,
-                            lineHeight: 0.7,
                         }}
                     >
                         {student?.marks?.marks?.viva}
@@ -256,8 +251,8 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 1180,
-                            left: 400,
+                            top: 830,
+                            left: 300,
                         }}
                     >
                         {studentStats?.getPercentage()}%
@@ -265,19 +260,20 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 1180,
-                            left: 860,
+                            top: 830,
+                            left: 600,
                         }}
                     >
                         {studentStats?.getPerformance()}
                     </span>
+
                     <span
                         style={{
                             position: "absolute",
-                            top: 1370,
-                            left: 250,
+                            top: 965,
+                            left: 180,
                             fontWeight: "bolder",
-                            fontSize: 22,
+                            fontSize: 16,
                         }}
                     >
                         {format(new Date(student.updatedAt), "dd/MM/yyyy")}
@@ -289,18 +285,18 @@ export const GET = async (req: Request) => {
                         src={qrCodeURl}
                         alt=""
                         style={{
-                            maxWidth: "80px",
-                            maxHeight: "80px",
+                            maxWidth: "60px",
+                            maxHeight: "60px",
                             position: "absolute",
-                            top: 1400,
-                            right: 450,
+                            top: 1005,
+                            right: 300,
                         }}
                     />
                 </div>
             ),
             {
-                width: 1131,
-                height: 1599,
+                width: 796.8,
+                height: 1123.2,
                 fonts: [
                     {
                         name: "NotoSerif",

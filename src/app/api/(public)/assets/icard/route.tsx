@@ -83,7 +83,7 @@ export const GET = async (req: Request) => {
             (
                 <div
                     style={{
-                        fontSize: 15,
+                        fontSize: 10,
                         color: "black",
                         background: "white",
                         display: "flex",
@@ -112,10 +112,10 @@ export const GET = async (req: Request) => {
                         src={student?.img}
                         style={{
                             position: "absolute",
-                            top: 76,
-                            left: 85,
-                            width: 130,
-                            height: 140,
+                            top: 50,
+                            left: 55,
+                            width: 95,
+                            height: 100,
                             borderRadius: 15,
                         }}
                     />
@@ -123,8 +123,8 @@ export const GET = async (req: Request) => {
                     <span
                         style={{
                             position: "absolute",
-                            top: 220,
-                            fontSize: 18,
+                            top: 155,
+                            fontSize: 10,
                             fontWeight: "bolder",
                             left: "50%",
                             transform: "translateX(-50%)",
@@ -132,33 +132,33 @@ export const GET = async (req: Request) => {
                     >
                         {TO_CAPITALIZE(student?.name)}
                     </span>
-                    <span style={{ position: "absolute", top: 245, left: 150 }}>
+                    <span style={{ position: "absolute", top: 166, left: 100 }}>
                         {student?.registration}
                     </span>
                     <span
                         style={{
                             position: "absolute",
-                            top: 265,
-                            left: 132,
+                            top: 180,
+                            left: 86,
                         }}
                     >
                         {TO_CAPITALIZE(student?.fatherName)}
                     </span>
 
-                    <span style={{ position: "absolute", top: 285, left: 145 }}>
+                    <span style={{ position: "absolute", top: 194, left: 85 }}>
                         {format(new Date(student.dob), "dd/MM/yyyy")}
                     </span>
 
-                    <span style={{ position: "absolute", top: 305, left: 135 }}>
+                    <span style={{ position: "absolute", top: 208, left: 75 }}>
                         {student?.Course?.name}
                     </span>
-                    <span style={{ position: "absolute", top: 325, left: 140 }}>
+                    <span style={{ position: "absolute", top: 220, left: 80 }}>
                         {student?.Course?.duration}
                     </span>
                     <span
                         style={{
                             position: "absolute",
-                            top: 370,
+                            top: 253,
                             left: "50%",
                             transform: "translateX(-50%)",
                         }}
@@ -168,8 +168,8 @@ export const GET = async (req: Request) => {
                 </div>
             ),
             {
-                width: 300,
-                height: 480,
+                width: 204,
+                height: 324,
                 fonts: [
                     {
                         name: "NotoSerif",

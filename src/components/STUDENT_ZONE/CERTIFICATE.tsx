@@ -41,6 +41,7 @@ const Certificate = () => {
             ctx?.drawImage(image, 0, 0);
             setCertificate(true);
             setIsLoading(false);
+            setRegistration("");
         };
     };
 

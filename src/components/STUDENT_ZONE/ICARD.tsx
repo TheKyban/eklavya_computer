@@ -41,6 +41,7 @@ const ICard = () => {
             ctx?.drawImage(image, 0, 0);
             setICard(true);
             setIsLoading(false);
+            setRegistration("");
         };
     };
 

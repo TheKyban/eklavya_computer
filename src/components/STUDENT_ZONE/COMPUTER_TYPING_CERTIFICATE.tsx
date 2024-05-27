@@ -41,6 +41,7 @@ const ComputerTypingCertificate = () => {
             ctx?.drawImage(image, 0, 0);
             setTypingCertificate(true);
             setIsLoading(false);
+            setRegistration("");
         };
     };
 
