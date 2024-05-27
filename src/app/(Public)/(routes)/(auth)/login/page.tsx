@@ -9,7 +9,7 @@ export default async function LoginPage() {
         return redirect("/dashboard");
     }
     return (
-        <div className="w-full h-full min-h-screen bg-orange-50 flex items-center justify-center">
+        <div className="w-full h-full my-auto bg-orange-50 py-20 flex items-center justify-center">
             <Login />
         </div>
     );

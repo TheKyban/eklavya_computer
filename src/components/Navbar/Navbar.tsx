@@ -22,7 +22,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                     alt="logo"
                     className="object-contain ml-auto"
                 />
-                <div className="ml-auto w-full h-full flex items-center justify-end px-3 gap-6 text-zinc-800 text-sm max-w-7xl">
+                <div className="ml-auto w-full h-full flex items-center justify-end px-3 gap-x-6 text-zinc-800 text-sm max-w-7xl flex-wrap">
                     {/* Login  & Dasboard*/}
                     <IsAuth
                         session={session}
