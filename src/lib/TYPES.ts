@@ -29,3 +29,7 @@ export type StudentWithCourse = Student & {
 export type StudentWithMarksCourse = StudentWithCourse & {
     marks: Marks;
 };
+
+export type StudentWithMarksCourseBranchName = StudentWithMarksCourse & {
+    Branch: { branch: string };
+};

@@ -1,8 +1,7 @@
 import { ImageResponse } from "@vercel/og";
-import { TO_CAPITALIZE } from "@/lib/STYLES";
-import { format } from "date-fns";
 import { loadGoogleFont } from "@/lib/FONTS";
 import { Prisma } from "../../../../../../prisma/prisma";
+import { ICardTemplate } from "./ICARD_TEMPLATE";
 
 export const dynamic = "force-dynamic";
 
@@ -76,100 +75,13 @@ export const GET = async (req: Request) => {
 
         const fontData = await loadGoogleFont("Noto+Serif");
 
-        const I_CARD_IMG =
-            "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715232604/ekavaya_assets/zc3imktyxfxg8fk2zqfo.jpg";
-
         return new ImageResponse(
-            (
-                <div
-                    style={{
-                        fontSize: 10,
-                        color: "black",
-                        background: "white",
-                        display: "flex",
-                        height: "100%",
-                        width: "100%",
-                        fontFamily: "NotoSerif",
-                    }}
-                >
-                    {/* I-CARD TEMPLATES */}
-                    {image && (
-                        // eslint-disable-next-line
-                        <img
-                            src={I_CARD_IMG}
-                            style={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                objectFit: "contain",
-                            }}
-                            alt="cert"
-                        />
-                    )}
-                    {/* Student Image */}
-                    {/* eslint-disable-next-line  */}
-                    <img
-                        src={student?.img}
-                        style={{
-                            position: "absolute",
-                            top: 50,
-                            left: 55,
-                            width: 95,
-                            height: 100,
-                            borderRadius: 15,
-                        }}
-                    />
-
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 155,
-                            fontSize: 10,
-                            fontWeight: "bolder",
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                        }}
-                    >
-                        {TO_CAPITALIZE(student?.name)}
-                    </span>
-                    <span style={{ position: "absolute", top: 166, left: 100 }}>
-                        {student?.registration}
-                    </span>
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 180,
-                            left: 86,
-                        }}
-                    >
-                        {TO_CAPITALIZE(student?.fatherName)}
-                    </span>
-
-                    <span style={{ position: "absolute", top: 194, left: 85 }}>
-                        {format(new Date(student.dob), "dd/MM/yyyy")}
-                    </span>
-
-                    <span style={{ position: "absolute", top: 208, left: 75 }}>
-                        {student?.Course?.name}
-                    </span>
-                    <span style={{ position: "absolute", top: 220, left: 80 }}>
-                        {student?.Course?.duration}
-                    </span>
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 253,
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                        }}
-                    >
-                        {student?.Branch?.branch}
-                    </span>
-                </div>
-            ),
+            <ICardTemplate image={image} student={student} />,
             {
                 width: 204,
                 height: 324,
+                // width: 404,
+                // height: 645,
                 fonts: [
                     {
                         name: "NotoSerif",
