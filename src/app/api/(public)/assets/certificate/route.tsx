@@ -4,6 +4,7 @@ import { loadGoogleFont } from "@/lib/FONTS";
 import GENERATE_QR from "@/lib/GENERATE_QR";
 import { CertificateTemplate } from "./CERTIFICATE_TEMPLATE";
 import { StudentWithMarksCourseBranchName } from "@/lib/TYPES";
+import { DOCUMENT_SIZES } from "@/lib/CONSTANTS";
 
 export const dynamic = "force-dynamic";
 
@@ -89,7 +90,7 @@ export const GET = async (req: Request) => {
                 />
             ),
             {
-                height: 848,
+                height: DOCUMENT_SIZES.CERTIFICATE.height,
                 fonts: [
                     {
                         name: "NotoSerif",

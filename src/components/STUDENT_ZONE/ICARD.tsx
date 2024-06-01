@@ -6,6 +6,7 @@ import { MAX_WIDTH } from "@/lib/STYLES";
 import { Button } from "@/components/ui/button";
 import { PRINT_HANDLER } from "@/lib/PRINT_HANDLER";
 import { PDF_DOWNLOAD_HANDLER } from "@/lib/PDF_DOWNLOAD_HANDLER";
+import { DOCUMENT_SIZES } from "@/lib/CONSTANTS";
 
 const ICard = () => {
     const [registration, setRegistration] = useState("");
@@ -72,8 +73,10 @@ const ICard = () => {
                         onClick={() =>
                             PDF_DOWNLOAD_HANDLER(
                                 ref.current!,
-                                `icard_${registrationRef.current}.pdf`,
+                                `icard.pdf`,
                                 "p",
+                                DOCUMENT_SIZES.I_CARD.width,
+                                DOCUMENT_SIZES.I_CARD.height,
                             )
                         }
                     >

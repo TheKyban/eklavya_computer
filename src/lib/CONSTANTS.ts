@@ -22,3 +22,20 @@ export const Duration = {
 };
 
 export const IMAGE_SIZE = 40000;
+
+export const DOCUMENT_SIZES = {
+    I_CARD: {
+        width: 204,
+        height: 324,
+    },
+    MARKSHEET: {
+        width: 796.8,
+        height: 1123.2,
+    },
+    TYPING_CERTIFICATE: {
+        height: 848,
+    },
+    CERTIFICATE: {
+        height: 848,
+    },
+};

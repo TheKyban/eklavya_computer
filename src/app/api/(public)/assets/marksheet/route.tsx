@@ -4,6 +4,7 @@ import { Prisma } from "../../../../../../prisma/prisma";
 import GENERATE_QR from "@/lib/GENERATE_QR";
 import { MarksheetTemplate } from "./MARKSHEET_TEMPLATE";
 import { StudentWithMarksCourseBranchName } from "@/lib/TYPES";
+import { DOCUMENT_SIZES } from "@/lib/CONSTANTS";
 
 export const dynamic = "force-dynamic";
 
@@ -87,8 +88,8 @@ export const GET = async (req: Request) => {
                 />
             ),
             {
-                width: 796.8,
-                height: 1123.2,
+                width: DOCUMENT_SIZES.MARKSHEET.width,
+                height: DOCUMENT_SIZES.MARKSHEET.height,
                 fonts: [
                     {
                         name: "NotoSerif",
