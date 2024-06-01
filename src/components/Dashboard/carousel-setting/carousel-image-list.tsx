@@ -7,6 +7,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { Carousel } from "@prisma/client";
 
 export const CarouselImageList = () => {
     const { data, isLoading } = useAssests();
@@ -19,38 +20,29 @@ export const CarouselImageList = () => {
                 {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
 
                 {data?.map((asset) => (
-                    <ImageCard
-                        key={asset.public_id}
-                        link={asset.secure_url}
-                        publicId={asset.public_id}
-                    />
+                    <ImageCard key={asset.id} link={asset.url} id={asset.id} />
                 ))}
             </div>
         </div>
     );
 };
 
-const ImageCard = ({ link, publicId }: { link: string; publicId: string }) => {
+const ImageCard = ({ link, id }: { link: string; id: string }) => {
     const queryClient = useQueryClient();
     const [isLoading, setIsLoading] = useState(false);
     const deleteHandler = async () => {
         try {
             setIsLoading(true);
 
-            const { data } = await axios.delete(`/api/upload?url=${link}`);
+            const { data } = await axios.delete(`/api/carousel?id=${id}`);
             console.log(data);
             if (data?.result === "ok") {
                 toast({ description: "Deleted!" });
 
-                queryClient.setQueryData(
-                    ["assets"],
-                    (old: { public_id: string }[]) => {
-                        const allData = old?.filter(
-                            (img) => img?.public_id !== publicId,
-                        );
-                        return allData;
-                    },
-                );
+                queryClient.setQueryData(["assets"], (old: Carousel[]) => {
+                    const allData = old?.filter((img) => img?.id !== id);
+                    return allData;
+                });
             }
         } catch (error: any) {
             console.log(error);

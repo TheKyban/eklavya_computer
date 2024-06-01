@@ -1,5 +1,5 @@
 "use client";
-import { Course, Marks, Student } from "@prisma/client";
+import { Carousel, Course, Marks, Student } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import queryString from "query-string";
@@ -238,13 +238,11 @@ export const useICard = ({
 };
 
 export const useAssests = () => {
-    return useQuery<{ public_id: string; secure_url: string }[]>({
+    return useQuery<Carousel[]>({
         queryKey: ["assets"],
         queryFn: async () => {
-            const { data } = await axios(
-                "/api/upload?folder=eklavaya-carousel",
-            );
-            return data?.assets;
+            const { data } = await axios("/api/carousel");
+            return data?.carousels;
         },
         staleTime: 60 * 1000 * 30,
     });

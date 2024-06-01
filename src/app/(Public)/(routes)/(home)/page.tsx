@@ -1,6 +1,6 @@
 import { FirstPage } from "@/components/Home/home-pages";
 import { fetchCarousels, fetchFamilies } from "@/lib/FETCH_FUNTCTIONS";
-
+export const maxDuration = 60;
 export default async function Home() {
     try {
         const data = await fetchCarousels();

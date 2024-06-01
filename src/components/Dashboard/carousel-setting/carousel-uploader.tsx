@@ -22,8 +22,7 @@ export const CarouselMediaUploader = () => {
 
                 const formData = new FormData();
                 formData.append("file", file);
-                formData.append("folder", "eklavaya-carousel");
-                const { data } = await axios.post(`/api/upload`, formData);
+                const { data } = await axios.post(`/api/carousel`, formData);
                 console.log(data);
                 addData(["assets"], data);
             } catch (error: any) {
