@@ -29,7 +29,7 @@ interface familyType {
 
 interface firstPageProps {
     carousel?: {
-        secure_url: string;
+        url: string;
     }[];
     family?: familyType[];
 }

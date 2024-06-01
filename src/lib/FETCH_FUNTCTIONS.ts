@@ -961,3 +961,27 @@ export const fetchUserDashboardData = async (userId: string) => {
 
     return { details };
 };
+
+export const fetchFamilies = async () => {
+    const users = await Prisma.user.findMany({
+        select: {
+            img: true,
+            name: true,
+            branch: true,
+        },
+    });
+
+    return users;
+};
+
+export const fetchCarousels = async () => {
+    const carousels = await Prisma.carousel.findMany({
+        orderBy: {
+            createdAt: "asc",
+        },
+        select: {
+            url: true,
+        },
+    });
+    return carousels;
+};

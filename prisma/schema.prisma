@@ -155,3 +155,9 @@ enum role {
     ADMIN
     FRANCHISE
 }
+
+model Carousel {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    url       String
+    createdAt DateTime @default(now())
+}

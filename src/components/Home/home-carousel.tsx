@@ -12,7 +12,7 @@ import { AnimationDiv } from "@/components/AnimatedDiv";
 
 export const HomeCarousel: FC<{
     carousel?: {
-        secure_url: string;
+        url: string;
     }[];
 }> = ({ carousel }) => {
     return (
@@ -44,9 +44,9 @@ export const HomeCarousel: FC<{
                         <CarouselItem key={idx}>
                             <div className="relative w-full h-[250px] sm:h-[400px] lg:h-[600px]">
                                 <Image
-                                    src={image.secure_url}
+                                    src={image.url}
                                     fill
-                                    alt={image.secure_url}
+                                    alt={image.url}
                                     className="object-fill w-full h-full"
                                 />
                             </div>
