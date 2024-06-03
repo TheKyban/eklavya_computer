@@ -25,7 +25,7 @@ export const GET = async (req: Request) => {
         const page = Number(searchParams?.get("page")) || 1;
         const registration = searchParams?.get("registration") || "";
         const userId = searchParams?.get("userId");
-        const pending = searchParams?.get("pending") === "true" ? false : true;
+        const issue = searchParams?.get("issue") === "true" ? true : false;
 
         if (!userId) {
             return Response.json(
@@ -52,7 +52,11 @@ export const GET = async (req: Request) => {
                         not: "COMPUTER TYPING",
                     },
                 },
-                marksheet: pending,
+                marksheet: {
+                    is: {
+                        issue,
+                    },
+                },
                 marks: {
                     isNot: null,
                 },
@@ -84,7 +88,11 @@ export const GET = async (req: Request) => {
                 marks: {
                     isNot: null,
                 },
-                marksheet: pending,
+                marksheet: {
+                    is: {
+                        issue,
+                    },
+                },
             },
         });
 
@@ -121,9 +129,9 @@ export const PUT = async (req: Request) => {
             );
         }
 
-        const data = await req.json();
+        const { registration, issue, date } = await req.json();
 
-        if (!data?.registration) {
+        if (!registration) {
             return Response.json(
                 {
                     message: "Registration Number is required",
@@ -138,36 +146,15 @@ export const PUT = async (req: Request) => {
          * FINDING STUDENTS
          */
 
-        const isExist = await Prisma.student.findUnique({
-            where: {
-                registration: data.registration,
-                marks: {
-                    isNot: null,
-                },
-            },
-            include: {
-                Course: true,
-                marks: true,
-            },
-        });
-
-        if (!isExist || isExist.Course.name === "COMPUTER TYPING") {
-            return Response.json(
-                { messagae: "Invalid Registration" },
-                {
-                    status: STATUS_CODE.CLIENT_ERROR,
-                },
-            );
-        }
-
-        const issued = isExist.marksheet;
-
         const student = await Prisma?.student?.update({
             where: {
-                registration: data?.registration,
+                registration: registration,
             },
             data: {
-                marksheet: !issued,
+                marksheet: {
+                    date,
+                    issue,
+                },
             },
             include: {
                 Course: true,

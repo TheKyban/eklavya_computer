@@ -101,60 +101,39 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
 const NoticeSection = () => {
     return (
         <ReactMarquee className="text-sm bg-black py-3" pauseOnHover>
-            <li
-                className="ml-4 flex items-center justify-center  gap-2 text-white"
-                key={1}
-            >
+            <li className="ml-4 flex items-center justify-center  gap-2 text-white">
                 <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Admission is Going On...</p>
             </li>
 
-            <li
-                className="ml-4 flex gap-2 items-center justify-center text-white"
-                key={2}
-            >
+            <li className="ml-4 flex gap-2 items-center justify-center text-white">
                 <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Contact for Franchisee Opening.</p>
             </li>
 
-            <li
-                className="ml-4 flex items-center justify-center text-white gap-2"
-                key={3}
-            >
+            <li className="ml-4 flex items-center justify-center text-white gap-2">
                 <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Educate Your Dreams</p>
             </li>
 
-            <li
-                className="ml-4 flex items-center justify-center gap-2 text-white"
-                key={4}
-            >
+            <li className="ml-4 flex items-center justify-center gap-2 text-white">
                 <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Life+ Academics+ Creativity =Success</p>
             </li>
 
-            <li
-                className="ml-4 flex items-center justify-center text-white gap-2"
-                key={5}
-            >
+            <li className="ml-4 flex items-center justify-center text-white gap-2">
                 <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     Educating Today&apos;s Learners for Tomorrow&apos;s world.
                 </p>
             </li>
 
-            <li
-                className="ml-4 flex items-center justify-center text-white gap-2"
-                key={6}
-            >
+            <li className="ml-4 flex items-center justify-center text-white gap-2">
                 <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>You dared to Struggle Yesterday you can dare to win Today</p>
             </li>
 
-            <li
-                className="ml-4 flex items-center justify-center text-white gap-2"
-                key={7}
-            >
+            <li className="ml-4 flex items-center justify-center text-white gap-2">
                 <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     It Is With Great Pleasure That I Congratulate You On Your
@@ -165,10 +144,7 @@ const NoticeSection = () => {
                 </p>
             </li>
 
-            <li
-                className="ml-4 flex items-center justify-center text-white gap-2"
-                key={7}
-            >
+            <li className="ml-4 flex items-center justify-center text-white gap-2">
                 <Brain className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     IDEA--- All achievement, all earned riches, have their
@@ -176,10 +152,7 @@ const NoticeSection = () => {
                 </p>
             </li>
 
-            <li
-                className="ml-4 flex items-center justify-center text-white gap-2"
-                key={7}
-            >
+            <li className="ml-4 flex items-center justify-center text-white gap-2">
                 <Lock className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     Balance --- Balance is the key to everything. What we do,
@@ -188,10 +161,7 @@ const NoticeSection = () => {
                 </p>
             </li>
 
-            <li
-                className="ml-4 flex items-center justify-center text-white gap-2"
-                key={7}
-            >
+            <li className="ml-4 flex items-center justify-center text-white gap-2">
                 <Hand className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     UNITY--- We are each other&apos;s harvest; we are each
@@ -458,42 +428,6 @@ const OurCourses = () => {
                             </CardItem>
                         </CardBody>
                     </CardContainer>
-
-                    // <AnimationDiv
-                    //     key={course.name}
-                    //     whileInView={{
-                    //         x: 0,
-                    //         y: 0,
-                    //         opacity: 1,
-                    //     }}
-                    //     initial={{
-                    //         x:
-                    //             idx === 0 || idx === 3 || idx === 6
-                    //                 ? -100
-                    //                 : idx === 1 || idx === 4 || idx === 7
-                    //                   ? 0
-                    //                   : 100,
-                    //         y: idx === 1 || idx === 4 || idx === 7 ? 100 : 0,
-                    //         opacity: 0,
-                    //     }}
-                    //     transition={{
-                    //         duration: 0.3,
-                    //     }}
-                    //     className="relative group overflow-hidden rounded-lg"
-                    // >
-                    //     <Image
-                    //         src={course.url}
-                    //         width={130}
-                    //         height={130}
-                    //         className="transition-all group-hover:scale-110 rounded-lg w-36 h-36"
-                    //         alt={course.name}
-                    //     />
-                    //     <div className="transition-all flex text-white invisible opacity-0 group-hover:visible  group-hover:opacity-100 items-center justify-center absolute bg-black/50 top-0 bottom-0 left-0 right-0">
-                    //         <span className="border-2 uppercase border-red-600 px-5 py-3 rounded-md cursor-pointer">
-                    //             More
-                    //         </span>
-                    //     </div>
-                    // </AnimationDiv>
                 ))}
             </div>
         </div>

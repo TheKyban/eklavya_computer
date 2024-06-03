@@ -33,3 +33,9 @@ export type StudentWithMarksCourse = StudentWithCourse & {
 export type StudentWithMarksCourseBranchName = StudentWithMarksCourse & {
     Branch: { branch: string };
 };
+
+export interface IssueType {
+    registration: string;
+    issue: boolean;
+    date: Date;
+}

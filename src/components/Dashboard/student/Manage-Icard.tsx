@@ -2,6 +2,7 @@
 import { LoadingCells } from "@/components/loading/loading";
 import Pagination from "@/components/pagination/pagination";
 import Search from "@/components/search/search";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
     Select,
@@ -20,13 +21,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { toast } from "@/components/ui/use-toast";
+import { useModal } from "@/hooks/use-modal-store";
 import { useICard, useMarksheet } from "@/hooks/useFetch";
-import { per_page } from "@/lib/CONSTANTS";
+import { DATE_FORMAT, per_page } from "@/lib/CONSTANTS";
 import { poppins } from "@/lib/FONTS";
-import { StudentWithCourse, StudentWithMarksCourse } from "@/lib/TYPES";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { format } from "date-fns";
 import { Layers3, Shield, Users } from "lucide-react";
 import { FC, useState } from "react";
 
@@ -39,77 +38,12 @@ interface pageProps {
 const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
     const [user, setUser] = useState(branches?.[0]?.userId);
     const [type, setType] = useState<boolean>(false);
-
+    const { onOpen } = useModal();
     const { data: fetchStudents, isLoading } = useICard({
         page,
-        pending: type,
+        type,
         registration,
         userId: user,
-    });
-
-    const queryClient = useQueryClient();
-    const { mutate, isPending } = useMutation({
-        mutationKey: ["mutateMarksheetVerification"],
-        mutationFn: async ({ registration }: { registration: string }) => {
-            const { data } = await axios.put(`/api/management/icard`, {
-                registration,
-            });
-            return data;
-        },
-        onError: (error) => {
-            console.log(error);
-            toast({ description: error?.message });
-        },
-
-        onSuccess(data, variables) {
-            if (data) {
-                toast({ description: data?.message });
-            }
-
-            try {
-                // remove data
-                queryClient.setQueryData(
-                    [
-                        type ? "pending_icard" : "verified_icard",
-                        page,
-                        registration,
-                        user,
-                    ],
-                    (oldData: {
-                        students: StudentWithCourse[];
-                        total: number;
-                    }) => {
-                        const students = oldData.students?.filter(
-                            (student) =>
-                                student?.registration !==
-                                data?.student?.registration,
-                        );
-
-                        return { total: oldData.total - 1, students };
-                    },
-                );
-
-                //Add To other type
-                queryClient.setQueryData(
-                    [
-                        !type ? "pending_icard" : "verified_icard",
-                        page,
-                        registration,
-                        user,
-                    ],
-                    (oldData: {
-                        students: StudentWithCourse[];
-                        total: number;
-                    }) => {
-                        const students = [data?.student, ...oldData?.students];
-
-                        return { total: oldData.total + 1, students };
-                    },
-                );
-            } catch (error) {
-                console.log("Error in Place Switch");
-            }
-        },
     });
 
     return (
@@ -117,7 +51,7 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
             <div className="flex justify-between">
                 <div className="flex gap-1 items-center">
                     <Layers3 className="text-indigo-400" />
-                    <span className="text-zinc-800 text-lg lg:text-2xl font-semibold">
+                    <span className="text-zinc-800 uppercase text-lg lg:text-2xl font-semibold">
                         Manage ICard
                     </span>
                 </div>
@@ -139,7 +73,6 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
                         defaultValue={user}
                         value={user}
                         onValueChange={(val) => setUser(val)}
-                        disabled={isPending}
                     >
                         <SelectTrigger className="w-36">
                             <SelectValue placeholder="Select User" />
@@ -168,7 +101,7 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
                     <Select
                         defaultValue={`${type}`}
                         value={`${type}`}
-                        disabled={isPending}
+                        // disabled={isPending}
                         onValueChange={(val) =>
                             setType(val === "true" ? true : false)
                         }
@@ -179,8 +112,8 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>courses</SelectLabel>
-                                <SelectItem value="true">PENDING</SelectItem>
-                                <SelectItem value="false">ISSUED</SelectItem>
+                                <SelectItem value="false">PENDING</SelectItem>
+                                <SelectItem value="true">ISSUED</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -201,6 +134,9 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
                             <TableHead>Course</TableHead>
                         )}
 
+                        {fetchStudents?.students?.[0]?.icard.issue && (
+                            <TableHead className="text-center">Date</TableHead>
+                        )}
                         {fetchStudents?.students?.[0] && (
                             <TableHead className="text-center">Issue</TableHead>
                         )}
@@ -237,17 +173,54 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
                                     </TableCell>
                                 )}
 
+                                {student?.icard.issue && (
+                                    <TableCell className="text-center">
+                                        {format(
+                                            student?.icard?.date!,
+                                            DATE_FORMAT,
+                                        )}
+                                    </TableCell>
+                                )}
                                 <TableCell className="text-center">
-                                    <Checkbox
-                                        className="box-content"
-                                        defaultChecked={student?.icard}
-                                        onCheckedChange={(value) =>
-                                            mutate({
-                                                registration:
-                                                    student.registration,
-                                            })
-                                        }
-                                    />
+                                    {type !== true ? (
+                                        <Button
+                                            size={"sm"}
+                                            variant={"primary"}
+                                            className="box-content"
+                                            onClick={() =>
+                                                onOpen("issueICard", {
+                                                    studentsWithMarks: student,
+                                                    searchParams: {
+                                                        page,
+                                                        registration,
+                                                        type: `${type}`,
+                                                        userId: user,
+                                                    },
+                                                })
+                                            }
+                                        >
+                                            Issue
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            size={"sm"}
+                                            variant={"destructive"}
+                                            className="box-content"
+                                            onClick={() =>
+                                                onOpen("issueICard", {
+                                                    studentsWithMarks: student,
+                                                    searchParams: {
+                                                        page,
+                                                        registration,
+                                                        type: `${type}`,
+                                                        userId: user,
+                                                    },
+                                                })
+                                            }
+                                        >
+                                            Cancel
+                                        </Button>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}

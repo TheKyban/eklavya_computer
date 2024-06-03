@@ -60,7 +60,7 @@ export const GET = async (req: Request) => {
 
         if (
             !student?.isVerified ||
-            !student?.marksheet ||
+            !student?.marksheet?.issue ||
             student?.Course?.name === "COMPUTER TYPING"
         ) {
             return Response.json(

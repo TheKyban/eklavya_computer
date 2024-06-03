@@ -23,12 +23,12 @@ export const CertificateTemplate = ({
         ],
         400,
     );
+
     const completeDate = (new Date(student.dor).getTime() +
         1000 *
             Duration[
                 student.Course.duration as keyof typeof Duration
             ]) as number;
-
     return (
         <div
             style={{
@@ -140,7 +140,7 @@ export const CertificateTemplate = ({
                     fontSize: 22,
                 }}
             >
-                {format(new Date(student.updatedAt), "dd/MM/yyyy")}
+                {format(new Date(student.certificate?.date!), "dd/MM/yyyy")}
             </span>
             {/* QR CODE */}
             {/* eslint-disable-next-line  */}

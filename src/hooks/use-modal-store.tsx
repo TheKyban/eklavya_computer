@@ -11,6 +11,7 @@ import {
     COMPUTER_TYPING_MARKS_SCHEMA,
 } from "@/lib/SCHEMA";
 import { z } from "zod";
+import { StudentWithMarksCourse } from "@/lib/TYPES";
 
 export type ModalType =
     | "User"
@@ -23,7 +24,10 @@ export type ModalType =
     | "deleteComputerTypingMarks"
     | "studentApplication"
     | "userApplication"
-    | "editCourse";
+    | "editCourse"
+    | "issueCertificate"
+    | "issueICard"
+    | "issueMarksheet";
 
 interface ModalData {
     user?: User;
@@ -39,6 +43,7 @@ interface ModalData {
     studentApplication?: StudentApplication;
     userApplication?: UserApplication;
     course?: Course;
+    studentsWithMarks?: StudentWithMarksCourse;
 }
 
 interface modalStore {

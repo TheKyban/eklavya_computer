@@ -114,7 +114,7 @@ const StudentVerificationManagement = ({
             <div className="flex justify-between">
                 <div className="flex gap-1 items-center">
                     <GraduationCap className="text-indigo-400" />
-                    <span className="text-zinc-800 text-2xl font-semibold">
+                    <span className="text-zinc-800 uppercase text-2xl font-semibold">
                         Student Verification
                     </span>
                 </div>

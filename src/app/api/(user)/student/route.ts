@@ -155,6 +155,15 @@ export const POST = async (req: Request) => {
                 branch: data.branch,
                 registration: data.registration,
                 serialNumber: StudentSerialNumber,
+                certificate: {
+                    issue: false,
+                },
+                icard: {
+                    issue: false,
+                },
+                marksheet: {
+                    issue: false,
+                },
             },
         });
 

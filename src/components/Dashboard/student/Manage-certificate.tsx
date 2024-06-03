@@ -1,6 +1,7 @@
 "use client";
 import { LoadingCells } from "@/components/loading/loading";
 import Search from "@/components/search/search";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
     Select,
@@ -20,11 +21,14 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { toast } from "@/components/ui/use-toast";
+import { useModal } from "@/hooks/use-modal-store";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { useVerifyCertificate } from "@/hooks/useFetch";
+import { DATE_FORMAT } from "@/lib/CONSTANTS";
 import { poppins } from "@/lib/FONTS";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { format } from "date-fns";
 import { Layers2, Layers3, Shield, Users } from "lucide-react";
 import { FC, useState } from "react";
 
@@ -58,52 +62,14 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
         type,
     );
 
-    const { addMark, removeMark } = useCustumQuery();
-    const { mutate, isPending } = useMutation({
-        mutationKey: ["mutateMarksVerification"],
-        mutationFn: async ({
-            registration,
-            verified,
-            course,
-            userId,
-        }: updateType) => {
-            if (!user) {
-                return;
-            }
-            const { data } = await axios.put(`/api/management/certificate`, {
-                registration,
-                verified,
-                course,
-                userId,
-            });
-            return data;
-        },
-
-        onSuccess(data, variables) {
-            if (data) {
-                toast({ description: data?.message });
-            }
-
-            // remove data
-            removeMark(
-                ["students", registration, page, user, course, type],
-                data?.student?.registration,
-            );
-
-            //Add To other type
-            addMark(
-                ["students", registration, page, user, course, !type],
-                data?.student,
-            );
-        },
-    });
+    const { onOpen } = useModal();
 
     return (
         <div className="w-screen lg:w-full h-full px-5 flex flex-col gap-4">
             <div className="flex justify-between">
                 <div className="flex gap-1 items-center">
                     <Layers3 className="text-indigo-400" />
-                    <span className="text-zinc-800 text-lg lg:text-2xl font-semibold">
+                    <span className="text-zinc-800 text-lg uppercase lg:text-2xl font-semibold">
                         Manage Certificate
                     </span>
                 </div>
@@ -125,7 +91,6 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                         defaultValue={user}
                         value={user}
                         onValueChange={(val) => setUser(val)}
-                        disabled={isPending}
                     >
                         <SelectTrigger className="w-36">
                             <SelectValue placeholder="Select User" />
@@ -154,7 +119,6 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                     <Select
                         defaultValue={course}
                         value={course}
-                        disabled={isPending}
                         onValueChange={(val) => setCourse(val as course)}
                     >
                         <SelectTrigger className="w-40">
@@ -181,7 +145,6 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                     <Select
                         defaultValue={`${type}`}
                         value={`${type}`}
-                        disabled={isPending}
                         onValueChange={(val) =>
                             setType(val === "true" ? true : false)
                         }
@@ -234,10 +197,12 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                             ?.typingMarks?.hindiTyping && (
                             <TableHead>Hindi</TableHead>
                         )}
+                        {fetchStudents?.studentsWithMarks?.[0]?.certificate
+                            .issue && (
+                            <TableHead className="text-center">Date</TableHead>
+                        )}
                         {fetchStudents?.studentsWithMarks?.[0] && (
-                            <TableHead className="text-center">
-                                Verify
-                            </TableHead>
+                            <TableHead className="text-center">Issue</TableHead>
                         )}
                     </TableRow>
                 </TableHeader>
@@ -312,20 +277,54 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                                         }
                                     </TableCell>
                                 )}
+                                {student?.certificate.issue && (
+                                    <TableCell className="text-center">
+                                        {format(
+                                            student?.certificate?.date!,
+                                            DATE_FORMAT,
+                                        )}
+                                    </TableCell>
+                                )}
                                 <TableCell className="text-center">
-                                    <Checkbox
-                                        className="box-content"
-                                        defaultChecked={student.certificate}
-                                        onCheckedChange={(value) =>
-                                            mutate({
-                                                registration:
-                                                    student.registration,
-                                                course: student.course,
-                                                userId: user as string,
-                                                verified: value as boolean,
-                                            })
-                                        }
-                                    />
+                                    {type !== true ? (
+                                        <Button
+                                            size={"sm"}
+                                            variant={"primary"}
+                                            className="box-content"
+                                            onClick={() =>
+                                                onOpen("issueCertificate", {
+                                                    studentsWithMarks: student,
+                                                    searchParams: {
+                                                        page,
+                                                        registration,
+                                                        type: `${type}`,
+                                                        userId: user,
+                                                    },
+                                                })
+                                            }
+                                        >
+                                            Issue
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            size={"sm"}
+                                            variant={"destructive"}
+                                            className="box-content"
+                                            onClick={() =>
+                                                onOpen("issueCertificate", {
+                                                    studentsWithMarks: student,
+                                                    searchParams: {
+                                                        page,
+                                                        registration,
+                                                        type: `${type}`,
+                                                        userId: user,
+                                                    },
+                                                })
+                                            }
+                                        >
+                                            Cancel
+                                        </Button>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -21,13 +21,13 @@ export const GET = async (req: Request) => {
             );
         }
         const { searchParams } = new URL(req.url);
-        const computerTyping =
-            searchParams?.get("computerTyping") === "false" ? false : true;
         const registration = searchParams?.get("registration") || "";
         const page = Number(searchParams?.get("page")) || 1;
         const userId = searchParams?.get("userId");
-        const verified =
-            searchParams?.get("verified") === "true" ? true : false;
+        const issue = searchParams?.get("issue") === "true" ? true : false;
+        const computerTyping =
+            searchParams?.get("computerTyping") === "true" ? true : false;
+
         if (!userId) {
             return Response.json(
                 {
@@ -52,7 +52,11 @@ export const GET = async (req: Request) => {
                         not: computerTyping ? "" : "COMPUTER TYPING",
                     },
                 },
-                certificate: verified,
+                certificate: {
+                    is: {
+                        issue: issue,
+                    },
+                },
                 isVerified: true,
                 registration: {
                     startsWith: registration,
@@ -70,7 +74,11 @@ export const GET = async (req: Request) => {
         const total = await Prisma.student.count({
             where: {
                 branch: userId,
-                certificate: verified,
+                certificate: {
+                    is: {
+                        issue: issue,
+                    },
+                },
                 Course: {
                     name: {
                         startsWith: computerTyping ? "COMPUTER TYPING" : "",
@@ -125,8 +133,8 @@ export const PUT = async (req: Request) => {
             );
         }
 
-        const { verified, course, registration } = await req.json();
-        if (!course || !registration) {
+        const { issue, registration, date } = await req.json();
+        if (!registration) {
             return Response.json(
                 { message: "All fields are required" },
                 { status: STATUS_CODE.CLIENT_ERROR },
@@ -140,10 +148,12 @@ export const PUT = async (req: Request) => {
         const student = await Prisma.student.update({
             where: {
                 registration: registration,
-                course: course,
             },
             data: {
-                certificate: verified,
+                certificate: {
+                    issue: issue,
+                    date,
+                },
             },
             include: {
                 Course: true,

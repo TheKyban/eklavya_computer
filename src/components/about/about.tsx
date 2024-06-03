@@ -1,5 +1,6 @@
-import { AnimationDiv } from "@/components/AnimatedDiv";
+"use client";
 import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/STYLES";
+import { motion } from "framer-motion";
 
 export default function About() {
     return (
@@ -8,7 +9,7 @@ export default function About() {
         >
             {/* ABOUT THE ACADEMY */}
 
-            <AnimationDiv
+            <motion.div
                 whileInView={{
                     x: 0,
                     opacity: 1,
@@ -72,14 +73,14 @@ export default function About() {
                     our center for nomination and shake hands with us in this
                     efforts in the direction of the social welfare.
                 </p>
-            </AnimationDiv>
+            </motion.div>
 
             <div
                 className={`flex gap-6 ${MAX_WIDTH} w-full m-auto  flex-wrap text-center lg:flex-nowrap`}
             >
                 {/* OUR MISSION */}
 
-                <AnimationDiv
+                <motion.div
                     whileInView={{
                         x: 0,
                         opacity: 1,
@@ -113,11 +114,11 @@ export default function About() {
                         universities both within and well beyond the national
                         boundaries.
                     </p>
-                </AnimationDiv>
+                </motion.div>
 
                 {/* OUR VISION */}
 
-                <AnimationDiv
+                <motion.div
                     whileInView={{
                         x: 0,
                         opacity: 1,
@@ -151,7 +152,7 @@ export default function About() {
                         individuals, corporates bodies, government organizations
                         and the society.
                     </p>
-                </AnimationDiv>
+                </motion.div>
             </div>
         </div>
     );

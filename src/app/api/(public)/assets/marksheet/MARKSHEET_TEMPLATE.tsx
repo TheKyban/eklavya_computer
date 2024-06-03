@@ -183,7 +183,7 @@ export const MarksheetTemplate = ({
                     fontSize: 16,
                 }}
             >
-                {format(new Date(student.updatedAt), "dd/MM/yyyy")}
+                {format(new Date(student.marksheet.date!), "dd/MM/yyyy")}
             </span>
 
             {/* QR CODE */}

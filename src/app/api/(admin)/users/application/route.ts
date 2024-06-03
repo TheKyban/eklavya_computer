@@ -7,10 +7,7 @@ import { DELETE_FILE } from "@/lib/CLOUDINARY";
 import { role } from "@prisma/client";
 import { USER_SCHEMA } from "@/lib/SCHEMA";
 import { z } from "zod";
-import {
-    PrismaClientKnownRequestError,
-    PrismaClientValidationError,
-} from "@prisma/client/runtime/library";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export const dynamic = "force-dynamic";
 

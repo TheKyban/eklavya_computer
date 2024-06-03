@@ -9,6 +9,9 @@ import { DeleteGeneralMarksModal } from "@/components/modals/marks/delete-genera
 import { StudentApplicationModal } from "@/components/modals/application/student-application-modal";
 import { UserApplicationModal } from "@/components/modals/application/user-application-modal";
 import { EditCourseModal } from "@/components/modals/course/edit-course-modal";
+import { IssueCertificateModal } from "@/components/modals/issue/certificate";
+import { IssueICardModal } from "@/components/modals/issue/icard";
+import { IssueMarksheetModal } from "@/components/modals/issue/marksheet";
 
 const ModalProvider = () => {
     return (
@@ -24,6 +27,9 @@ const ModalProvider = () => {
             <StudentApplicationModal />
             <UserApplicationModal />
             <EditCourseModal />
+            <IssueCertificateModal />
+            <IssueICardModal />
+            <IssueMarksheetModal />
         </>
     );
 };

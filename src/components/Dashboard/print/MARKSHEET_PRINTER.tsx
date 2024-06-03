@@ -36,7 +36,7 @@ const MarksheetPrinter: FC<pageProps> = ({ page, registration, branches }) => {
 
     const { data: fetchStudents, isLoading } = useMarksheet({
         page,
-        pending: false,
+        type: false,
         registration,
         userId: user,
     });

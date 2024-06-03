@@ -59,7 +59,7 @@ export const GET = async (req: Request) => {
             );
         }
 
-        if (!student?.isVerified || !student?.icard) {
+        if (!student?.isVerified || !student?.icard?.issue) {
             return Response.json(
                 {
                     message: !student?.isVerified

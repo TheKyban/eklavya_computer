@@ -60,7 +60,7 @@ export const GET = async (req: Request) => {
 
         if (
             !student?.isVerified ||
-            !student?.certificate ||
+            !student?.certificate.issue ||
             student?.Course?.name === "COMPUTER TYPING" ||
             !student?.marks
         ) {

@@ -161,7 +161,7 @@ export const useVerifyCertificate = (
                     computerTyping: course === "computerTyping",
                     page,
                     registration,
-                    verified: type,
+                    issue: type,
                 },
             });
             const { data } = await axios(url);
@@ -172,18 +172,18 @@ export const useVerifyCertificate = (
 
 export const useMarksheet = ({
     page,
-    pending,
+    type,
     registration,
     userId,
 }: {
-    pending: boolean;
+    type: boolean;
     registration: string | undefined;
     page: string | undefined;
     userId: string | number;
 }) => {
     return useQuery<{ total: number; students: StudentWithMarksCourse[] }>({
         queryKey: [
-            pending ? "pending_marksheet" : "verified_marksheet",
+            !type ? "pending_marksheet" : "verified_marksheet",
             page,
             registration,
             userId,
@@ -194,7 +194,7 @@ export const useMarksheet = ({
                 query: {
                     page,
                     registration,
-                    pending: pending,
+                    issue: type,
                     userId,
                 },
             });
@@ -205,18 +205,18 @@ export const useMarksheet = ({
 };
 export const useICard = ({
     page,
-    pending,
+    type,
     registration,
     userId,
 }: {
-    pending: boolean;
+    type: boolean;
     registration: string | undefined;
     page: string | undefined;
     userId: string | number;
 }) => {
     return useQuery<{ total: number; students: StudentWithMarksCourse[] }>({
         queryKey: [
-            pending ? "pending_icard" : "verified_icard",
+            type ? "verified_icard" : "pending_icard",
             page,
             registration,
             userId,
@@ -227,7 +227,7 @@ export const useICard = ({
                 query: {
                     page,
                     registration,
-                    pending: pending,
+                    issue: type,
                     userId,
                 },
             });

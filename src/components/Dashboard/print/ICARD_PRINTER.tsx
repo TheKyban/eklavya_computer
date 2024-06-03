@@ -36,7 +36,7 @@ const IcardPrinter: FC<pageProps> = ({ page, registration, branches }) => {
 
     const { data: fetchStudents, isLoading } = useICard({
         page,
-        pending: false,
+        type: false,
         registration,
         userId: user,
     });

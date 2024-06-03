@@ -8,15 +8,14 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-import { AnimationDiv } from "@/components/AnimatedDiv";
-
+import { motion } from "framer-motion";
 export const HomeCarousel: FC<{
     carousel?: {
         url: string;
     }[];
 }> = ({ carousel }) => {
     return (
-        <AnimationDiv
+        <motion.div
             animate={{
                 x: 0,
                 opacity: 1,
@@ -54,6 +53,6 @@ export const HomeCarousel: FC<{
                     ))}
                 </CarouselContent>
             </Carousel>
-        </AnimationDiv>
+        </motion.div>
     );
 };

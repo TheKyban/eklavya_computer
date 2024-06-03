@@ -26,7 +26,7 @@ export const GET = async (req: Request) => {
         const page = Number(searchParams?.get("page")) || 1;
         const registration = searchParams?.get("registration") || "";
         const userId = searchParams?.get("userId");
-        const pending = searchParams?.get("pending") === "true" ? false : true;
+        const pending = searchParams?.get("issue") === "true" ? true : false;
 
         if (!userId) {
             return Response.json(
@@ -48,7 +48,11 @@ export const GET = async (req: Request) => {
                 registration: {
                     contains: registration,
                 },
-                icard: pending,
+                icard: {
+                    is: {
+                        issue: pending,
+                    },
+                },
             },
             orderBy: {
                 id: "desc",
@@ -68,7 +72,11 @@ export const GET = async (req: Request) => {
                 registration: {
                     contains: registration,
                 },
-                icard: pending,
+                icard: {
+                    is: {
+                        issue: pending,
+                    },
+                },
             },
         });
 
@@ -105,9 +113,9 @@ export const PUT = async (req: Request) => {
             );
         }
 
-        const data = await req.json();
+        const { registration, issue, date } = await req.json();
 
-        if (!data?.registration) {
+        if (!registration) {
             return Response.json(
                 {
                     message: "Registration Number is required",
@@ -122,16 +130,22 @@ export const PUT = async (req: Request) => {
          * FINDING STUDENTS
          */
 
-        const isExist = await Prisma.student.findUnique({
+        const student = await Prisma?.student?.update({
             where: {
-                registration: data.registration,
+                registration: registration,
+            },
+            data: {
+                icard: {
+                    date,
+                    issue,
+                },
             },
             include: {
                 Course: true,
             },
         });
 
-        if (!isExist) {
+        if (!student) {
             return Response.json(
                 { messagae: "Invalid Registration" },
                 {
@@ -139,21 +153,6 @@ export const PUT = async (req: Request) => {
                 },
             );
         }
-
-        const issued = isExist.icard;
-
-        const student = await Prisma?.student?.update({
-            where: {
-                registration: data?.registration,
-            },
-            data: {
-                icard: !issued,
-            },
-            include: {
-                Course: true,
-            },
-        });
-
         return Response.json(
             {
                 student,

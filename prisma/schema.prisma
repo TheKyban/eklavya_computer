@@ -53,9 +53,9 @@ model Student {
 
     // verification
     isVerified  Boolean @default(false)
-    icard       Boolean @default(false)
-    marksheet   Boolean @default(false)
-    certificate Boolean @default(false)
+    icard       Issue
+    marksheet   Issue
+    certificate Issue
 
     // dates
     dor       DateTime
@@ -160,4 +160,9 @@ model Carousel {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     url       String
     createdAt DateTime @default(now())
+}
+
+type Issue {
+    issue Boolean   @default(false)
+    date  DateTime?
 }

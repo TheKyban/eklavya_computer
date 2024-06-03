@@ -1,7 +1,7 @@
 /**
  * RESULTS PER PAGE
  */
-export const per_page = 50;
+export const per_page = 100;
 
 const SECONDS_IN_A_DAY = 60 * 60 * 24;
 const SECONDS_IN_A_MONTH = SECONDS_IN_A_DAY * 30;
@@ -39,3 +39,5 @@ export const DOCUMENT_SIZES = {
         height: 848,
     },
 };
+
+export const DATE_FORMAT = "dd/MM/yyyy";

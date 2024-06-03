@@ -42,7 +42,11 @@ export const GET = async (req: Request) => {
                 registration: {
                     contains: registration,
                 },
-                certificate: pending,
+                certificate: {
+                    is: {
+                        issue: pending,
+                    },
+                },
             },
             orderBy: {
                 id: "desc",
@@ -62,7 +66,11 @@ export const GET = async (req: Request) => {
                 registration: {
                     contains: registration,
                 },
-                certificate: pending,
+                certificate: {
+                    is: {
+                        issue: pending,
+                    },
+                },
             },
         });
 
