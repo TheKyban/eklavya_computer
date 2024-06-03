@@ -1,7 +1,7 @@
 import { MAX_WIDTH, MIN_HEIGHT } from "@/lib/STYLES";
 import Image from "next/image";
 
-export default function Course() {
+export default async function Course() {
     return (
         <div
             className={`${MIN_HEIGHT} py-4 m-auto ${MAX_WIDTH} w-full text-center`}
@@ -17,7 +17,9 @@ export default function Course() {
                             ADIT & ADCA
                         </h4>
                         <Image
-                            src={"/courseDetails/adit.adca.course.jpg"}
+                            src={
+                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717414531/course_details/bjgeqkk1rhmtg5fmdlke.jpg"
+                            }
                             height={300}
                             width={300}
                             alt="course"
@@ -29,7 +31,9 @@ export default function Course() {
                             DCA & CCA
                         </h4>
                         <Image
-                            src={"/courseDetails/dca.cca.course.png"}
+                            src={
+                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717414533/course_details/yfzetxkyzd2w8nt4lrbz.png"
+                            }
                             height={300}
                             width={400}
                             alt="course"
@@ -41,7 +45,9 @@ export default function Course() {
                             DOA & DCP
                         </h4>
                         <Image
-                            src={"/courseDetails/doa.dcp.course.jpg"}
+                            src={
+                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717414532/course_details/rlcdyrquxllrm9yxjztj.jpg"
+                            }
                             height={300}
                             width={300}
                             alt="course"
@@ -53,7 +59,9 @@ export default function Course() {
                             HDIT & HDCA
                         </h4>
                         <Image
-                            src={"/courseDetails/hdit.hdca.course.jpg"}
+                            src={
+                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717414532/course_details/qjnvxsuwjo9pz4sqqnxo.jpg"
+                            }
                             height={300}
                             width={300}
                             alt="course"
@@ -65,7 +73,9 @@ export default function Course() {
                             DTP & PDDTP
                         </h4>
                         <Image
-                            src={"/courseDetails/design.pub.multimedia.jpg"}
+                            src={
+                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717414532/course_details/g5bhsl6edjjmaelvojpo.jpg"
+                            }
                             height={300}
                             width={300}
                             alt="course"
@@ -77,7 +87,9 @@ export default function Course() {
                             DHT & DHN & MRC
                         </h4>
                         <Image
-                            src={"/courseDetails/com.mob.reparing.jpg"}
+                            src={
+                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717414531/course_details/fuj1ja28tfsjpmcv5gai.jpg"
+                            }
                             height={300}
                             width={300}
                             alt="course"
@@ -89,7 +101,9 @@ export default function Course() {
                             DFA & CFA
                         </h4>
                         <Image
-                            src={"/courseDetails/financial.account.jpg"}
+                            src={
+                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717414532/course_details/cmpjrceiwphe5a7cou23.jpg"
+                            }
                             height={300}
                             width={300}
                             alt="course"
@@ -101,7 +115,9 @@ export default function Course() {
                             SHORT TERM
                         </h4>
                         <Image
-                            src={"/courseDetails/short.course.png"}
+                            src={
+                                "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717414537/course_details/g66zqolpjubdhnzqsmin.png"
+                            }
                             height={300}
                             width={500}
                             alt="course"
