@@ -1,4 +1,4 @@
-import { I_CARD_IMAGE } from "@/lib/ASSETS";
+import { I_CARD_IMAGE, MOHAR_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { Student } from "@prisma/client";
 import { format } from "date-fns";
@@ -107,6 +107,20 @@ export const ICardTemplate = ({
             >
                 {student?.Branch?.branch}
             </span>
+
+            {/* eslint-disable-next-line  */}
+            <img
+                src={MOHAR_IMAGE}
+                alt=""
+                style={{
+                    width: 54,
+                    height: 61,
+                    objectFit: "contain",
+                    position: "absolute",
+                    top: "74vh",
+                    right: "2%",
+                }}
+            />
         </div>
     );
 };

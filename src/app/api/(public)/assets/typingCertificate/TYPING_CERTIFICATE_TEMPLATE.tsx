@@ -1,4 +1,4 @@
-import { TYPING_CERTIFICATE_IMAGE } from "@/lib/ASSETS";
+import { MOHAR_IMAGE, TYPING_CERTIFICATE_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { StudentWithMarksCourseBranchName } from "@/lib/TYPES";
 import { format } from "date-fns";
@@ -15,7 +15,7 @@ export const TypingCertificateTemplate = ({
     return (
         <div
             style={{
-                fontSize: 25,
+                fontSize: 23,
                 color: "black",
                 background: "white",
                 display: "flex",
@@ -63,25 +63,25 @@ export const TypingCertificateTemplate = ({
             >
                 {student?.registration}
             </span>
-            <span style={{ position: "absolute", top: 295, left: 350 }}>
+            <span style={{ position: "absolute", top: 298, left: 350 }}>
                 {TO_CAPITALIZE(student?.name)}
             </span>
-            <span style={{ position: "absolute", top: 340, left: 360 }}>
+            <span style={{ position: "absolute", top: 343, left: 360 }}>
                 {TO_CAPITALIZE(student?.fatherName)}
             </span>
-            <span style={{ position: "absolute", top: 385, left: 380 }}>
+            <span style={{ position: "absolute", top: 388, left: 380 }}>
                 {student?.registration}
             </span>
-            <span style={{ position: "absolute", top: 430, left: 370 }}>
+            <span style={{ position: "absolute", top: 433, left: 370 }}>
                 {student?.Course?.name}
             </span>
-            <span style={{ position: "absolute", top: 430, right: 130 }}>
+            <span style={{ position: "absolute", top: 433, right: 130 }}>
                 {student?.Course?.duration}
             </span>
-            <span style={{ position: "absolute", top: 480, left: 330 }}>
+            <span style={{ position: "absolute", top: 483, left: 330 }}>
                 {student?.Branch?.branch}
             </span>
-            <span style={{ position: "absolute", top: 525, left: 330 }}>
+            <span style={{ position: "absolute", top: 528, left: 330 }}>
                 {student?.branch}
             </span>
 
@@ -116,6 +116,20 @@ export const TypingCertificateTemplate = ({
                     position: "absolute",
                     top: 730,
                     right: 430,
+                }}
+            />
+
+            {/* eslint-disable-next-line  */}
+            <img
+                src={MOHAR_IMAGE}
+                alt=""
+                style={{
+                    width: 120,
+                    height: 120,
+                    objectFit: "contain",
+                    position: "absolute",
+                    top: 700,
+                    right: 160,
                 }}
             />
         </div>

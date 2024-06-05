@@ -9,3 +9,6 @@ export const TYPING_CERTIFICATE_IMAGE =
 
 export const CERTIFICATE_IMAGE =
     "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_5/v1715183433/ekavaya_assets/z37jjeti3t0lasea40sn.jpg";
+
+export const MOHAR_IMAGE =
+    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717563594/ekavaya_assets/rnf5ihgzpljgib7pwa53.png";

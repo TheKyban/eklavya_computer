@@ -1,4 +1,4 @@
-import { CERTIFICATE_IMAGE } from "@/lib/ASSETS";
+import { CERTIFICATE_IMAGE, MOHAR_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { StudentWithMarksCourseBranchName } from "@/lib/TYPES";
 import { format } from "date-fns";
@@ -32,7 +32,7 @@ export const CertificateTemplate = ({
     return (
         <div
             style={{
-                fontSize: 25,
+                fontSize: 23,
                 color: "black",
                 background: "white",
                 display: "flex",
@@ -96,7 +96,7 @@ export const CertificateTemplate = ({
                 {student?.Branch?.branch}
             </span>
 
-            <span style={{ position: "absolute", top: 535, left: 230 }}>
+            <span style={{ position: "absolute", top: 540, left: 230 }}>
                 {student?.branch}
             </span>
 
@@ -153,6 +153,19 @@ export const CertificateTemplate = ({
                     position: "absolute",
                     top: 670,
                     right: 430,
+                }}
+            />
+            {/* eslint-disable-next-line  */}
+            <img
+                src={MOHAR_IMAGE}
+                alt=""
+                style={{
+                    width: 100,
+                    height: 100,
+                    objectFit: "contain",
+                    position: "absolute",
+                    top: 630,
+                    right: 180,
                 }}
             />
         </div>

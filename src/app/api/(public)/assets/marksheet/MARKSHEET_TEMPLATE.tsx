@@ -1,4 +1,4 @@
-import { MARKSHEET_IMAGE } from "@/lib/ASSETS";
+import { MARKSHEET_IMAGE, MOHAR_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { StudentWithMarksCourseBranchName } from "@/lib/TYPES";
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
@@ -197,6 +197,20 @@ export const MarksheetTemplate = ({
                     position: "absolute",
                     top: 1005,
                     right: 300,
+                }}
+            />
+
+            {/* eslint-disable-next-line  */}
+            <img
+                src={MOHAR_IMAGE}
+                alt=""
+                style={{
+                    width: 100,
+                    height: 100,
+                    objectFit: "contain",
+                    position: "absolute",
+                    top: 950,
+                    right: 100,
                 }}
             />
         </div>
