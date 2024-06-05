@@ -45,11 +45,12 @@ model Student {
     address       Address
 
     // branch 
-    registration String @unique
-    branch       String
-    course       String @db.ObjectId
-    marks        Marks?
-    serialNumber Int?
+    registration       String    @unique
+    branch             String
+    course             String    @db.ObjectId
+    marks              Marks?
+    serialNumber       Int?
+    courseCompleteDate DateTime?
 
     // verification
     isVerified  Boolean @default(false)
