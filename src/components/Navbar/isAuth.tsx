@@ -6,9 +6,15 @@ import { AnchorHTMLAttributes } from "react";
 
 interface PropsType extends AnchorHTMLAttributes<HTMLAnchorElement> {
     session: Session | null;
+    setOpen?: () => void;
 }
 
-export const IsAuth = ({ session, className, ...props }: PropsType) => {
+export const IsAuth = ({
+    session,
+    className,
+    setOpen,
+    ...props
+}: PropsType) => {
     return session?.user ? (
         <Link
             href="/dashboard"
@@ -16,6 +22,7 @@ export const IsAuth = ({ session, className, ...props }: PropsType) => {
                 "transition hover:text-blue-800 uppercase flex gap-2 items-center",
                 className,
             )}
+            onClick={setOpen}
             {...props}
         >
             <Lock className="w-4 h-4" />
@@ -28,6 +35,7 @@ export const IsAuth = ({ session, className, ...props }: PropsType) => {
                 "transition hover:text-blue-800 uppercase flex gap-2 items-center",
                 className,
             )}
+            onClick={setOpen}
             {...props}
         >
             <Lock className="w-4 h-4" />

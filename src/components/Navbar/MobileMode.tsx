@@ -51,7 +51,11 @@ const MobileMode = ({ session }: { session: Session | null }) => {
                     >
                         <div className="flex flex-col">
                             {/* Authentication */}
-                            <IsAuth session={session} className={LinkStyle3} />
+                            <IsAuth
+                                session={session}
+                                className={LinkStyle3}
+                                setOpen={() => setOpen(false)}
+                            />
 
                             {navbarLinks.map((link) => {
                                 return !!link?.link ? (

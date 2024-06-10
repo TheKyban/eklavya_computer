@@ -6,14 +6,13 @@ interface pageProps {}
 const Payment: FC<pageProps> = ({}) => {
     return (
         <div className="flex h-[calc(100vh-80px)] items-center justify-center">
-            <div className="relative h-[500px] w-80">
-                <Image
-                    src={"/payment.jpg"}
-                    fill
-                    alt="upi qr code"
-                    className="rounded-2xl drop-shadow-lg"
-                />
-            </div>
+            <Image
+                src={"/payment.jpg"}
+                alt="upi qr code"
+                width={400}
+                height={400}
+                className="rounded-2xl drop-shadow-lg"
+            />
         </div>
     );
 };

@@ -1,14 +1,14 @@
 export const I_CARD_IMAGE =
-    "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715232604/ekavaya_assets/zc3imktyxfxg8fk2zqfo.jpg";
+    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006473/ekavaya_assets/yqcerlys2abgwllxtub5.jpg";
 
 export const MARKSHEET_IMAGE =
-    "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715263907/ekavaya_assets/kctsnnrujvfhkmoixley.jpg";
+    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006695/ekavaya_assets/s93zb3tbfq98qgtzivvj.jpg";
 
 export const TYPING_CERTIFICATE_IMAGE =
-    "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_10/v1715264416/ekavaya_assets/n3htsehgv01jksnqh76z.jpg";
+    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718007001/ekavaya_assets/zuel2sehvbwqaw1fgmxz.jpg";
 
 export const CERTIFICATE_IMAGE =
-    "https://res.cloudinary.com/ddgjcyk0q/image/upload/q_5/v1715183433/ekavaya_assets/z37jjeti3t0lasea40sn.jpg";
+    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg";
 
 export const MOHAR_IMAGE =
     "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717563594/ekavaya_assets/rnf5ihgzpljgib7pwa53.png";

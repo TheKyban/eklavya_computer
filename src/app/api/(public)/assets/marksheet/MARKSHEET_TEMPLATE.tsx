@@ -51,7 +51,7 @@ export const MarksheetTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 170,
+                    top: 173,
                     left: 130,
                 }}
             >
@@ -62,14 +62,14 @@ export const MarksheetTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 170,
+                    top: 173,
                     left: 600,
                 }}
             >
                 {student?.registration}
             </span>
 
-            <span style={{ position: "absolute", top: 270, left: 280 }}>
+            <span style={{ position: "absolute", top: 273, left: 280 }}>
                 {TO_CAPITALIZE(student?.name)}
             </span>
             <span style={{ position: "absolute", top: 300, left: 280 }}>

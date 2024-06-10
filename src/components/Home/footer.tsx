@@ -8,6 +8,7 @@ import {
     Twitter,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Footer = () => {
     const year = new Date(Date.now()).getFullYear();
@@ -43,22 +44,38 @@ export const Footer = () => {
                             <div className="flex gap-2 items-start justify-start text-xs">
                                 <MapPin className="w-4 h-4 min-w-4 min-h-4 text-orange-400" />
                                 <p className="text-white uppercase">
-                                    Patahi Chowk, Rewa Road, Muzaffarpur, Bihar,
-                                    842001
+                                    PATAHI ,BHAGWANPUR , REWA ROAD, MUZAFFARPUR,
+                                    BIHAR, 843113
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-6 max-w-44">
-                            <h1 className="uppercase text-base text-white font-bold">
+                        <div className="flex flex-col gap-2 max-w-44">
+                            <h1 className="uppercase text-base mb-4 text-white font-bold">
                                 Our Contacts
                             </h1>
                             <div className="flex gap-2 items-start justify-start text-xs">
                                 <Phone className="w-4 h-4 min-w-4 min-h-4 text-orange-400" />
                                 <div className="flex flex-col gap-2 text-white">
-                                    <p>+91 95769 86658</p>
-                                    <p>+91 94302 25815</p>
+                                    <p>0621-2951300</p>
+                                    <p>0621-2951301</p>
                                 </div>
+                            </div>
+                            <div className="flex gap-2 items-start justify-start text-xs">
+                                <Image
+                                    src={"/WhatsAppICON.svg"}
+                                    width={16}
+                                    height={16}
+                                    className="w-4 h-4 text-orange-400"
+                                    alt="Whatsapp"
+                                />
+                                <Link
+                                    href={"https://wa.me/+919430225815"}
+                                    target="_blank"
+                                    className="text-white"
+                                >
+                                    +91 9430225815
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -69,7 +86,7 @@ export const Footer = () => {
                         </h1>
                         <div className="grid grid-cols-2 gap-y-3 text-white/60 text-xs">
                             <span>Sunday</span>
-                            <span>10:30 AM – 12:30 PM</span>
+                            <span>CLOSED</span>
 
                             <span>Monday</span>
                             <span>10:00 AM – 06:00 PM</span>
