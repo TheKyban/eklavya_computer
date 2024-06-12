@@ -146,13 +146,13 @@ export const useVerifyCertificate = (
     page: string,
     user: string,
     course: string,
-    type: boolean,
+    issue: boolean,
 ) => {
     return useQuery<{
         studentsWithMarks: studentsWithMarks[];
         total: number;
     }>({
-        queryKey: ["students", registration, page, user, course, type],
+        queryKey: ["students", registration, page, user, course, issue],
         queryFn: async () => {
             const url = queryString.stringifyUrl({
                 url: "/api/management/certificate",
@@ -161,7 +161,7 @@ export const useVerifyCertificate = (
                     computerTyping: course === "computerTyping",
                     page,
                     registration,
-                    issue: type,
+                    issue: issue,
                 },
             });
             const { data } = await axios(url);
@@ -172,18 +172,18 @@ export const useVerifyCertificate = (
 
 export const useMarksheet = ({
     page,
-    type,
+    issue,
     registration,
     userId,
 }: {
-    type: boolean;
+    issue: boolean;
     registration: string | undefined;
     page: string | undefined;
     userId: string | number;
 }) => {
     return useQuery<{ total: number; students: StudentWithMarksCourse[] }>({
         queryKey: [
-            !type ? "pending_marksheet" : "verified_marksheet",
+            !issue ? "pending_marksheet" : "verified_marksheet",
             page,
             registration,
             userId,
@@ -194,7 +194,7 @@ export const useMarksheet = ({
                 query: {
                     page,
                     registration,
-                    issue: type,
+                    issue: issue,
                     userId,
                 },
             });
@@ -205,18 +205,18 @@ export const useMarksheet = ({
 };
 export const useICard = ({
     page,
-    type,
+    issue,
     registration,
     userId,
 }: {
-    type: boolean;
+    issue: boolean;
     registration: string | undefined;
     page: string | undefined;
     userId: string | number;
 }) => {
     return useQuery<{ total: number; students: StudentWithMarksCourse[] }>({
         queryKey: [
-            type ? "verified_icard" : "pending_icard",
+            issue ? "verified_icard" : "pending_icard",
             page,
             registration,
             userId,
@@ -227,7 +227,7 @@ export const useICard = ({
                 query: {
                     page,
                     registration,
-                    issue: type,
+                    issue: issue,
                     userId,
                 },
             });
