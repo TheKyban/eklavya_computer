@@ -1,4 +1,3 @@
-import ManageMarksheet from "@/components/Dashboard/student/Manage-marksheet";
 import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
