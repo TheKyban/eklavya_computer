@@ -45,7 +45,7 @@ const ManageMarksheet: FC<pageProps> = ({ page, registration, branches }) => {
     const { onOpen } = useModal();
     const { data: fetchStudents, isLoading } = useMarksheet({
         page,
-        type,
+        issue: type,
         registration,
         userId: user,
     });

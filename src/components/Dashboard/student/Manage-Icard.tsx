@@ -41,7 +41,7 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
     const { onOpen } = useModal();
     const { data: fetchStudents, isLoading } = useICard({
         page,
-        type,
+        issue: type,
         registration,
         userId: user,
     });
