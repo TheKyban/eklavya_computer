@@ -7,7 +7,7 @@ const Payment: FC<pageProps> = ({}) => {
     return (
         <div className="flex h-[calc(100vh-80px)] items-center justify-center">
             <Image
-                src={"/payment.jpg"}
+                src={"/payment.jpeg"}
                 alt="upi qr code"
                 width={400}
                 height={400}
