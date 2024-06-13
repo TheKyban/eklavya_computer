@@ -24,25 +24,25 @@ export const Footer = () => {
                                 "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
                             }
                             alt="Banner"
-                            width={300}
-                            height={100}
+                            width={340}
+                            height={140}
                         />
 
                         <div className="flex gap-3 items-center">
-                            <Facebook className="text-white w-4 h-4 min-w-4 min-h-4" />
-                            <Instagram className="text-white w-4 h-4 min-w-4 min-h-4" />
-                            <Twitter className="text-white w-4 h-4 min-w-4 min-h-4" />
-                            <Linkedin className="text-white w-4 h-4 min-w-4 min-h-4" />
+                            <Facebook className="text-white w-5 h-5 min-w-5 min-h-5" />
+                            <Instagram className="text-white w-5 h-5 min-w-5 min-h-5" />
+                            <Twitter className="text-white w-5 h-5 min-w-5 min-h-5" />
+                            <Linkedin className="text-white w-5 h-5 min-w-5 min-h-5" />
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-10">
                         <div className="flex flex-col gap-6 max-w-44">
-                            <h1 className="uppercase text-lg text-white font-bold">
+                            <h1 className="uppercase text-xl text-white font-bold">
                                 Our Office
                             </h1>
-                            <div className="flex gap-2 items-start justify-start text-xs">
-                                <MapPin className="w-4 h-4 min-w-4 min-h-4 text-orange-400" />
+                            <div className="flex gap-2 items-start justify-start text-base">
+                                <MapPin className="w-5 h-5 min-w-5 min-h-5 text-orange-400" />
                                 <p className="text-white uppercase">
                                     PATAHI ,BHAGWANPUR , REWA ROAD, MUZAFFARPUR,
                                     BIHAR, 843113
@@ -51,22 +51,22 @@ export const Footer = () => {
                         </div>
 
                         <div className="flex flex-col gap-2 max-w-44">
-                            <h1 className="uppercase text-base mb-4 text-white font-bold">
+                            <h1 className="uppercase text-xl mb-4 text-white font-bold">
                                 Our Contacts
                             </h1>
-                            <div className="flex gap-2 items-start justify-start text-xs">
-                                <Phone className="w-4 h-4 min-w-4 min-h-4 text-orange-400" />
+                            <div className="flex gap-2 items-start justify-start text-base">
+                                <Phone className="w-5 h-5 min-w-5 min-h-5 text-orange-400" />
                                 <div className="flex flex-col gap-2 text-white">
                                     <p>0621-2951300</p>
                                     <p>0621-2951301</p>
                                 </div>
                             </div>
-                            <div className="flex gap-2 items-start justify-start text-xs">
+                            <div className="flex gap-2 items-start justify-start text-base">
                                 <Image
                                     src={"/WhatsAppICON.svg"}
                                     width={16}
                                     height={16}
-                                    className="w-4 h-4 text-orange-400"
+                                    className="w-5 h-5 text-orange-400"
                                     alt="Whatsapp"
                                 />
                                 <Link
@@ -81,10 +81,10 @@ export const Footer = () => {
                     </div>
 
                     <div className="flex flex-col gap-6">
-                        <h1 className="uppercase text-lg text-white font-bold">
+                        <h1 className="uppercase text-xl text-white font-bold">
                             Opening Time
                         </h1>
-                        <div className="grid grid-cols-2 gap-y-3 text-white/60 text-xs">
+                        <div className="grid grid-cols-2 gap-y-3 text-white/60 text-base">
                             <span>Sunday</span>
                             <span>CLOSED</span>
 
@@ -112,7 +112,7 @@ export const Footer = () => {
 
             <div className="w-full bg-green-800 border-t border-white py-3">
                 <p
-                    className={`w-[93%] 2xl:w-full ${MAX_WIDTH} m-auto text-center lg:text-start text-xs text-white`}
+                    className={`w-[93%] 2xl:w-full ${MAX_WIDTH} m-auto text-center lg:text-start text-sm text-white`}
                 >
                     <span>Copyright © 2023-{year} </span>
                     <span className="text-yellow-300 font-bold">
