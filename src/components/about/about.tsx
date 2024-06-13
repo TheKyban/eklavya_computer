@@ -17,23 +17,22 @@ export default function About() {
                     opacity: 1,
                 }}
                 transition={{
+                    delay: 0.4,
                     duration: 0.5,
                     easings: "tween",
                     ease: "easeInOut",
-                    delay: 0.2,
                 }}
                 viewport={{
                     once: true,
                 }}
                 initial={{
-                    x: 100,
+                    x: -100,
                     opacity: 0,
                 }}
-                className={`${MAX_WIDTH} m-auto`}
+                className={`${MAX_WIDTH} bg-orange-100 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full flex flex-col items-center`}
             >
                 <FromDeskOf />
             </motion.div>
-
             {/* OUR MISSION */}
 
             <motion.div
