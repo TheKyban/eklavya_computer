@@ -11,7 +11,7 @@ export default function About() {
         >
             {/* ABOUT THE ACADEMY */}
 
-            {/* <motion.div
+            <motion.div
                 whileInView={{
                     x: 0,
                     opacity: 1,
@@ -29,58 +29,11 @@ export default function About() {
                     x: 100,
                     opacity: 0,
                 }}
-                className={`${MAX_WIDTH} m-auto flex flex-col items-center gap-8 bg-orange-100/50 px-10 max-h-96 lg:max-h-fit py-10 rounded`}
+                className={`${MAX_WIDTH} m-auto`}
             >
-                <h1 className="text-lg text-orange-600 font-semibold border-b-2 border-blue-400 py-2">
-                    🤔 About The Academy
-                </h1>
-                <p className="text-[12px] lg:text-[14px] w-[70%] leading-7">
-                    EKLAVAYA UNIVERSAL PRIVATED LIMITED, is the biggest
-                    educational which provides a great platform in IT sectors in
-                    India sub-continent. It is An ISO-9001:2008 Certified
-                    Company having mission to promote IT education and awareness
-                    to provide strong plinth to construct their bright fruture
-                    ans career. It is an independent to cater to the basic needs
-                    in computer education. It is a matter of great proud and
-                    pleasure that our country is a fast developing country in
-                    economy, education, science & technology etc. India is a
-                    large population which needs to enhance human capital in
-                    developed country. In study conducted by World Bank it has
-                    been found that the role of human capital in development is
-                    far more important than physical capital. For India, it has
-                    been estimated that access to at least 25% of the relevant
-                    age group, between 17 to 23 in high education is necessary
-                    to ensure development on a par with the needs of the day. In
-                    this context EKLAVAYA UNIVERSAL PRIVATED LIMITED, initiated
-                    a program to provide IT education in various grades and
-                    courses to the people of India sub-continent. AGC is
-                    committed to embracing an inclusive quality assurance
-                    culture, and has developed a number of policies and
-                    procedures to ensure that our courses and services are the
-                    highest quality in the IT education and training industry.
-                    Our organization is committed and dedicated to achieve goal
-                    to maintain a learner focus in providing accessible and
-                    quality education to directly prepare our students for
-                    further study, or careers in the I.T. and Business global
-                    economies. Now when different reforms are taking place in
-                    the field of education in our society students are
-                    contributing at the international level, but the Centers for
-                    Higher Education are charging so heavily that the common
-                    person are getting no benefits of it. Therefore, we have
-                    taken a small step to enable those weaker sections of the
-                    society who are unable to seek asmission in those traing
-                    centers. Today we are having a large range of Computer
-                    Centers in various states from where many of students are
-                    earning name and fame after doing different computer courses
-                    successfuly. Therefore walk into our center for nomination
-                    and shake hands with us in this efforts in the direction of
-                    the social welfare.
-                </p>
-            </motion.div> */}
-            <FromDeskOf />
-            {/* <div
-                className={`flex gap-6 ${MAX_WIDTH} w-full m-auto  flex-wrap text-center lg:flex-nowrap`}
-            > */}
+                <FromDeskOf />
+            </motion.div>
+
             {/* OUR MISSION */}
 
             <motion.div
@@ -160,6 +113,5 @@ export default function About() {
                 </p>
             </motion.div>
         </div>
-        // </div>
     );
 }
