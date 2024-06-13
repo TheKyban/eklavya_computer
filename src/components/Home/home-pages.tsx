@@ -100,7 +100,10 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
 
 const NoticeSection = () => {
     return (
-        <ReactMarquee className="text-sm bg-black py-3" pauseOnHover>
+        <ReactMarquee
+            className="text-base font-semibold bg-black py-3"
+            pauseOnHover
+        >
             <li className="ml-4 flex items-center justify-center  gap-2 text-white">
                 <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Admission is Going On...</p>
@@ -173,7 +176,7 @@ const NoticeSection = () => {
     );
 };
 
-const FromDeskOf = () => {
+export const FromDeskOf = () => {
     return (
         <div className="bg-orange-100 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full">
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
@@ -181,7 +184,7 @@ const FromDeskOf = () => {
                     From the Desk of Directors
                 </span>
 
-                <div className="flex flex-col gap-4 w-full px-5 py-3 text-sm  lg:w-[70%] xl:text-lg dark:text-zinc-700">
+                <div className="flex flex-col gap-4 w-full px-5 py-3 text-sm  lg:w-[70%] xl:text-lg">
                     <div
                         className={`text-left text-sm text-slate-900/75 px-2 leading-6 ${montserrat.className} flex flex-col gap-5 font-medium`}
                     >

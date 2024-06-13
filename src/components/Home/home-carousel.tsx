@@ -1,5 +1,4 @@
 "use client";
-
 import { FC } from "react";
 import {
     Carousel,
@@ -9,6 +8,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { motion } from "framer-motion";
+
 export const HomeCarousel: FC<{
     carousel?: {
         url: string;
@@ -30,7 +30,7 @@ export const HomeCarousel: FC<{
             className="w-full"
         >
             <Carousel
-                className="w-full h-[250px] sm:h-[400px] lg:h-[600px] relative"
+                className="w-full h-[250px] sm:h-[400px] lg:h-[83vh] lg:max-h-[600px] relative"
                 plugins={[
                     Autoplay({
                         delay: 3000,
@@ -41,7 +41,7 @@ export const HomeCarousel: FC<{
                 <CarouselContent>
                     {carousel?.map((image, idx) => (
                         <CarouselItem key={idx}>
-                            <div className="relative w-full h-[250px] sm:h-[400px] lg:h-[600px]">
+                            <div className="relative w-full h-[250px] sm:h-[400px] lg:h-[83vh] lg:max-h-[600px]">
                                 <Image
                                     src={image.url}
                                     fill
