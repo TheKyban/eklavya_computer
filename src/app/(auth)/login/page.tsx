@@ -11,10 +11,10 @@ export default async function LoginPage() {
     }
     return (
         <div className="w-screen h-screen max-h-screen max-w-[100vw] relative overflow-hidden flex items-center justify-center">
-            <Boxes />
             <div className="relative z-50">
                 <Login />
             </div>
+            <Boxes />
         </div>
     );
 }

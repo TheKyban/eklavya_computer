@@ -12,3 +12,9 @@ export const CERTIFICATE_IMAGE =
 
 export const MOHAR_IMAGE =
     "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1717563594/ekavaya_assets/rnf5ihgzpljgib7pwa53.png";
+
+export const BANNER_IMAGE =
+    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg";
+
+export const EKLAVAYA_LOGO =
+    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1712900852/ekavaya_assets/f5tpu1skpaewn1gp0e6g.png";

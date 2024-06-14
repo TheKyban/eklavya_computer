@@ -46,14 +46,12 @@ const Dasboard = async () => {
     }
     return (
         <div className="px-3 h-full w-full flex flex-col gap-5">
-            {!!data?.details?.[0] && (
-                <div className="flex gap-2 items-center px-5 bg-slate-200 w-fit py-3 rounded-lg">
-                    <BadgeAlert className="w-8 h-8 text-indigo-600" />
-                    <h1 className="uppercase text-xl text-indigo-800 font-semibold">
-                        Total stats
-                    </h1>
-                </div>
-            )}
+            <div className="flex gap-2 items-center px-5 bg-slate-200 w-fit py-2 rounded-lg">
+                <BadgeAlert className="w-5 h-5 text-indigo-600" />
+                <h1 className="uppercase text-lg text-indigo-800 font-semibold">
+                    Total stats
+                </h1>
+            </div>
 
             <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-7">
                 {data?.details?.map((info: details, idx: number) => (
@@ -69,9 +67,9 @@ const Dasboard = async () => {
 
             {!!data?.allUsers && (
                 <div className="flex flex-col gap-3 w-full h-full">
-                    <div className="flex gap-2 items-center px-5 bg-slate-200 w-fit py-3 rounded-lg">
-                        <Users className="w-8 h-8 text-indigo-600" />
-                        <h1 className="uppercase text-xl text-indigo-800 font-semibold">
+                    <div className="flex gap-2 items-center px-5 bg-slate-200 w-fit py-2 rounded-lg">
+                        <Users className="w-5 h-5 text-indigo-600" />
+                        <h1 className="uppercase text-lg text-indigo-800 font-semibold">
                             All User
                         </h1>
                     </div>
@@ -106,51 +104,50 @@ const Dasboard = async () => {
                                 <TableHead className="text-center hidden md:table-cell">
                                     pending Cert
                                 </TableHead>
-                                <TableHead className="text-center hidden md:table-cell">
-                                    Type
-                                </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {data?.allUsers?.map((user) => (
-                                <TableRow key={user?.userId}>
-                                    <TableCell>{user?.userId}</TableCell>
-                                    <TableCell className="items-center justify-center hidden md:flex">
-                                        <Image
-                                            src={user?.img}
-                                            height={60}
-                                            width={60}
-                                            alt="user"
-                                            className="min-w-[60px] min-h-[60px] w-[60px] h-[60px] object-cover rounded-full"
-                                        />
-                                    </TableCell>
-                                    <TableCell className="text-center hidden md:table-cell">
-                                        <h3>{user?.name}</h3>
-                                    </TableCell>
-                                    <TableCell className="text-center hidden md:table-cell">
-                                        <h1>{user?.branch}</h1>
-                                    </TableCell>
+                            {data?.allUsers?.map((user) => {
+                                if (user?.role !== "ADMIN")
+                                    return (
+                                        <TableRow key={user?.userId}>
+                                            <TableCell>
+                                                {user?.userId}
+                                            </TableCell>
+                                            <TableCell className="items-center justify-center hidden md:flex">
+                                                <Image
+                                                    src={user?.img}
+                                                    height={60}
+                                                    width={60}
+                                                    alt="user"
+                                                    className="min-w-[60px] min-h-[60px] w-[60px] h-[60px] object-cover rounded-full"
+                                                />
+                                            </TableCell>
+                                            <TableCell className="text-center hidden md:table-cell">
+                                                <h3>{user?.name}</h3>
+                                            </TableCell>
+                                            <TableCell className="text-center hidden md:table-cell">
+                                                <h1>{user?.branch}</h1>
+                                            </TableCell>
 
-                                    <TableCell className="text-center">
-                                        {user?.pendingStudents}
-                                    </TableCell>
-                                    <TableCell className="text-center">
-                                        {user?.verifiedStudents}
-                                    </TableCell>
-                                    <TableCell className="text-center hidden md:table-cell">
-                                        {user?.totalStudents}
-                                    </TableCell>
-                                    <TableCell className="text-center hidden md:table-cell">
-                                        {user?.issuedCertificates}
-                                    </TableCell>
-                                    <TableCell className="text-center hidden md:table-cell">
-                                        {user?.pendingCertificates}
-                                    </TableCell>
-                                    <TableCell className="text-center hidden md:table-cell">
-                                        {user?.role}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                                            <TableCell className="text-center">
+                                                {user?.pendingStudents}
+                                            </TableCell>
+                                            <TableCell className="text-center">
+                                                {user?.verifiedStudents}
+                                            </TableCell>
+                                            <TableCell className="text-center hidden md:table-cell">
+                                                {user?.totalStudents}
+                                            </TableCell>
+                                            <TableCell className="text-center hidden md:table-cell">
+                                                {user?.issuedCertificates}
+                                            </TableCell>
+                                            <TableCell className="text-center hidden md:table-cell">
+                                                {user?.pendingCertificates}
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                            })}
                         </TableBody>
                     </Table>
                 </div>

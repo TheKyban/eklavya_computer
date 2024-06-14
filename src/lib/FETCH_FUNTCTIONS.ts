@@ -11,6 +11,9 @@ import {
 
 export const fetchBranch = async () => {
     const branches = await Prisma.user.findMany({
+        where: {
+            role: "FRANCHISE",
+        },
         select: {
             branch: true,
             userId: true,
@@ -484,7 +487,7 @@ export const fetchAdminDashboardData = async () => {
         ],
     });
 
-    data[0].count = allUsers?.length; // total users
+    data[0].count = allUsers?.length - 1; // total users
     for (let i = 0; i < allUsers?.length; i++) {
         data[1].count += allUsers[i]?.totalStudents;
         data[2].count += allUsers[i].pendingStudents;

@@ -22,6 +22,8 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { FC, HTMLAttributes } from "react";
 import { accordianLinks, links } from "./url";
+import Image from "next/image";
+import { EKLAVAYA_LOGO } from "@/lib/ASSETS";
 
 interface sidebar extends HTMLAttributes<HTMLDivElement> {}
 const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
@@ -34,13 +36,19 @@ const Sidebar: FC<sidebar> = ({ className, role, ...props }) => {
         <div
             {...props}
             className={cn(
-                "flex flex-col min-h-full h-full min-w-[300px] bg-zinc-50 dark:bg-black px-4 py-3",
+                "flex flex-col min-h-full h-full min-w-[300px] bg-zinc-100 dark:bg-black px-4 py-3",
                 className,
             )}
         >
             <div className="flex gap-3 items-center justify-center py-2 mb-2 select-none">
                 {role === "ADMIN" ? (
-                    <ShieldCheck className="w-6 h-6 text-indigo-600" />
+                    <Image
+                        src={EKLAVAYA_LOGO}
+                        width={50}
+                        height={50}
+                        alt="logo"
+                        className="mb-2"
+                    />
                 ) : (
                     <ShieldPlus className="w-6 h-6 text-orange-600" />
                 )}

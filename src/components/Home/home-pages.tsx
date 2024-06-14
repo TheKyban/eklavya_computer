@@ -101,42 +101,42 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
 const NoticeSection = () => {
     return (
         <ReactMarquee
-            className="text-base font-semibold bg-black py-3"
+            className="text-base font-semibold bg-black/10 py-3"
             pauseOnHover
         >
-            <li className="ml-4 flex items-center justify-center  gap-2 text-white">
+            <li className="ml-8 flex items-center justify-center gap-2 text-orange-600 border-x border-orange-800 px-3">
                 <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Admission is Going On...</p>
             </li>
 
-            <li className="ml-4 flex gap-2 items-center justify-center text-white">
+            <li className="ml-8 flex gap-2 items-center justify-center text-orange-600 border-x border-orange-800 px-3">
                 <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Contact for Franchisee Opening.</p>
             </li>
 
-            <li className="ml-4 flex items-center justify-center text-white gap-2">
+            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
                 <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Educate Your Dreams</p>
             </li>
 
-            <li className="ml-4 flex items-center justify-center gap-2 text-white">
+            <li className="ml-8 flex items-center justify-center gap-2 text-orange-600 border-x border-orange-800 px-3">
                 <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>Life+ Academics+ Creativity =Success</p>
             </li>
 
-            <li className="ml-4 flex items-center justify-center text-white gap-2">
+            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
                 <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     Educating Today&apos;s Learners for Tomorrow&apos;s world.
                 </p>
             </li>
 
-            <li className="ml-4 flex items-center justify-center text-white gap-2">
+            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
                 <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>You dared to Struggle Yesterday you can dare to win Today</p>
             </li>
 
-            <li className="ml-4 flex items-center justify-center text-white gap-2">
+            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
                 <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     It Is With Great Pleasure That I Congratulate You On Your
@@ -147,7 +147,7 @@ const NoticeSection = () => {
                 </p>
             </li>
 
-            <li className="ml-4 flex items-center justify-center text-white gap-2">
+            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
                 <Brain className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     IDEA--- All achievement, all earned riches, have their
@@ -155,7 +155,7 @@ const NoticeSection = () => {
                 </p>
             </li>
 
-            <li className="ml-4 flex items-center justify-center text-white gap-2">
+            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
                 <Lock className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     Balance --- Balance is the key to everything. What we do,
@@ -164,7 +164,7 @@ const NoticeSection = () => {
                 </p>
             </li>
 
-            <li className="ml-4 flex items-center justify-center text-white gap-2">
+            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
                 <Hand className="min-w-[16px] w-4 min-h-[16px] h-4" />
                 <p>
                     UNITY--- We are each other&apos;s harvest; we are each

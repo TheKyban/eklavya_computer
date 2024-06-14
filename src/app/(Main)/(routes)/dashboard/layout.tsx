@@ -20,17 +20,20 @@ async function Dasboard({ children }: { children: React.ReactNode }) {
             <div className="h-full w-full">
                 <MobileMenu
                     role={role}
-                    className="lg:hidden fixed top-0 z-50 bg-white dark:bg-black"
+                    className="lg:hidden fixed top-0 z-50 bg-white"
                 />
-                <ScrollArea className="w-full h-[calc(100vh-90px)] mt-[90px] lg:mt-0 lg:h-screen  dark:bg-black">
-                    <div className="px-3 py-3">
+                <ScrollArea className="w-full h-[calc(100vh-130px)] mt-[90px] lg:mt-0 lg:h-screen py-2">
+                    {role !== "ADMIN" && (
                         <Button
-                            variant={"secondary"}
-                            className="text-sm md:text-lg text-zinc-600 dark:text-zinc-300 cursor-grabbing font-medium"
+                            variant={"ghost"}
+                            className="text-sm md:text-lg text-zinc-600 dark:text-zinc-300 cursor-grabbing font-medium mb-2"
                         >
-                            {session?.user?.branch}
+                            Welcome to
+                            <span className="text-orange-600 ml-1">
+                                {session?.user?.branch}
+                            </span>
                         </Button>
-                    </div>
+                    )}
                     {children}
                 </ScrollArea>
             </div>

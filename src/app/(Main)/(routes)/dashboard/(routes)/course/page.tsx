@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 export default async function CoursePage() {
     const session = await getServerSession(AUTH_OPTIONS);
 
-    if (!session?.user || session?.user.role === role.FRANCHISE) {
+    if (!session?.user || session?.user.role !== role.ADMIN) {
         redirect("/dashboard");
     }
     return (

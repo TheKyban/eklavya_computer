@@ -42,11 +42,7 @@ export const links: LinkType[] = [
         title: "Payment",
         icon: <IndianRupee className="w-5 h-5 text-rose-400" />,
         link: "/dashboard/payment",
-    },
-    {
-        title: "Password",
-        icon: <FormInput className="w-5 h-5 text-fuchsia-400" />,
-        link: "/dashboard/password",
+        role: "FRANCHISE",
     },
     {
         title: "Carousel",
@@ -55,6 +51,11 @@ export const links: LinkType[] = [
             <Album className="w-5 h-5 text-indigo-700 dark:text-indigo-500" />
         ),
         role: "ADMIN",
+    },
+    {
+        title: "Password",
+        icon: <FormInput className="w-5 h-5 text-fuchsia-400" />,
+        link: "/dashboard/password",
     },
 ];
 
@@ -85,6 +86,7 @@ export const accordianLinks: accordianLinks[] = [
     {
         title: "Student",
         icon: <GraduationCap className="w-5 h-5 text-indigo-600" />,
+        role: "FRANCHISE",
         links: [
             {
                 title: "Registration",
@@ -111,6 +113,7 @@ export const accordianLinks: accordianLinks[] = [
                 title: "students",
                 icon: <GraduationCap className="w-5 h-5 text-orange-500" />,
                 link: "/dashboard/applications/students",
+                role: "FRANCHISE",
             },
             {
                 title: "users",
@@ -123,6 +126,7 @@ export const accordianLinks: accordianLinks[] = [
     {
         title: "Marks",
         icon: <TextCursorInput className="w-5 h-5 text-gray-600" />,
+        role: "FRANCHISE",
         links: [
             {
                 title: "Marks Entry",
@@ -139,6 +143,7 @@ export const accordianLinks: accordianLinks[] = [
     {
         title: "Certificates",
         icon: <Medal className="w-5 h-5 text-gray-600" />,
+        role: "FRANCHISE",
         links: [
             {
                 title: "Issued Certificates",
@@ -194,6 +199,7 @@ export const accordianLinks: accordianLinks[] = [
                 title: "Icard",
                 link: "/dashboard/print/icard",
                 icon: <Album className="w-5 h-5 text-yellow-500" />,
+                role: "ADMIN",
             },
             {
                 title: "Marksheet",
@@ -201,11 +207,13 @@ export const accordianLinks: accordianLinks[] = [
                 icon: (
                     <BriefcaseMedicalIcon className="w-5 h-5 text-yellow-500" />
                 ),
+                role: "ADMIN",
             },
             {
                 title: "Certificate",
                 link: "/dashboard/print/certificate",
                 icon: <Medal className="w-5 h-5 text-yellow-500" />,
+                role: "ADMIN",
             },
         ],
     },
