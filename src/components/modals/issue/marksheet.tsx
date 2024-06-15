@@ -166,7 +166,7 @@ export const IssueMarksheetModal = () => {
             form.setValue("written", studentsWithMarks?.marks?.marks?.written);
             form.setValue("registration", studentsWithMarks?.registration);
         }
-    }, [studentsWithMarks]);
+    }, [studentsWithMarks, form]);
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
