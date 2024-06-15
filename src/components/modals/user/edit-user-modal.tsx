@@ -430,7 +430,7 @@ export const UserModal = () => {
                             />
 
                             {/* Role */}
-                            <FormField
+                            {/* <FormField
                                 control={form.control}
                                 name="role"
                                 render={({ field }) => (
@@ -462,7 +462,8 @@ export const UserModal = () => {
                                         <FormMessage />
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
+
                             {/* Is Active */}
                             <FormField
                                 control={form.control}
