@@ -36,8 +36,7 @@ export const Footer = () => {
 
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14329.543617204883!2d85.31104777730714!3d26.11895761472644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed172255676c69%3A0x4e9cc1a3b2955cc4!2sEklavaya%20Computer!5e0!3m2!1sen!2sin!4v1718433237752!5m2!1sen!2sin"
-                            width="400"
-                            height="250"
+                            className="w-full h-52"
                             style={{ border: 0 }}
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
