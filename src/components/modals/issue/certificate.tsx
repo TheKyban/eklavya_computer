@@ -140,7 +140,7 @@ export const IssueCertificateModal = () => {
                 studentsWithMarks?.marks?.typingMarks?.hindiTyping,
             );
         }
-    }, [studentsWithMarks]);
+    }, [studentsWithMarks, form]);
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
