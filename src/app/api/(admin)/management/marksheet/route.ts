@@ -128,13 +128,14 @@ export const PUT = async (req: Request) => {
                 },
             );
         }
+        console.log("Calling");
+        const { registration, issue, date, practical, project, viva, written } =
+            await req.json();
 
-        const { registration, issue, date } = await req.json();
-
-        if (!registration) {
+        if (!registration || !date) {
             return Response.json(
                 {
-                    message: "Registration Number is required",
+                    message: "all fields are required",
                 },
                 {
                     status: STATUS_CODE.CLIENT_ERROR,
@@ -150,12 +151,28 @@ export const PUT = async (req: Request) => {
             where: {
                 registration: registration,
             },
-            data: {
-                marksheet: {
-                    date,
-                    issue,
-                },
-            },
+            data: !!issue
+                ? {
+                      marksheet: {
+                          date,
+                          issue,
+                      },
+                      marks: {
+                          update: {
+                              marks: {
+                                  practical,
+                                  project,
+                                  viva,
+                                  written,
+                              },
+                          },
+                      },
+                  }
+                : {
+                      marksheet: {
+                          issue,
+                      },
+                  },
             include: {
                 Course: true,
                 marks: true,

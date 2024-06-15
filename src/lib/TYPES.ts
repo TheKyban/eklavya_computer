@@ -38,4 +38,8 @@ export interface IssueType {
     registration: string;
     issue: boolean;
     date: Date;
+    practical?: number;
+    project?: number;
+    viva?: number;
+    written?: number;
 }
