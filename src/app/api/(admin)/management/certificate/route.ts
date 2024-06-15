@@ -133,7 +133,8 @@ export const PUT = async (req: Request) => {
             );
         }
 
-        const { issue, registration, date } = await req.json();
+        const { issue, registration, date, hindiTyping, englishTyping } =
+            await req.json();
         if (!registration) {
             return Response.json(
                 { message: "All fields are required" },
@@ -149,12 +150,28 @@ export const PUT = async (req: Request) => {
             where: {
                 registration: registration,
             },
-            data: {
-                certificate: {
-                    issue: issue,
-                    date,
-                },
-            },
+            data:
+                englishTyping && hindiTyping && issue
+                    ? {
+                          certificate: {
+                              issue: issue,
+                              date,
+                          },
+                          marks: {
+                              update: {
+                                  typingMarks: {
+                                      englishTyping,
+                                      hindiTyping,
+                                  },
+                              },
+                          },
+                      }
+                    : {
+                          certificate: {
+                              issue: issue,
+                              date,
+                          },
+                      },
             include: {
                 Course: true,
                 marks: true,

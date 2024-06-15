@@ -30,6 +30,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { DATE_FORMAT } from "@/lib/CONSTANTS";
 import { IssueType, StudentWithCourse } from "@/lib/TYPES";
+import Image from "next/image";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const IssueICardModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -114,117 +116,240 @@ export const IssueICardModal = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
-            <DialogContent>
+            <DialogContent className="max-h-[80vh] h-[80vh]">
                 <DialogHeader>
                     <DialogTitle>Issue ICard</DialogTitle>
                 </DialogHeader>
-                <Table>
-                    <TableBody>
-                        {studentsWithMarks?.registration && (
+                <ScrollArea className="overflow-y-auto h-full w-full">
+                    <Image
+                        src={studentsWithMarks?.img as string}
+                        width={200}
+                        height={200}
+                        className="w-[150px] h-[150px] object-cover rounded-full"
+                        alt="profile"
+                    />
+                    <Table className="px-1">
+                        <TableBody>
+                            {/* Registration */}
+                            {studentsWithMarks?.registration && (
+                                <TableRow>
+                                    <TableCell>Registration No.</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.registration}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* Name */}
+                            {studentsWithMarks?.name && (
+                                <TableRow>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.name}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* FName */}
+                            {studentsWithMarks?.fatherName && (
+                                <TableRow>
+                                    <TableCell>Father Name</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.fatherName}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* MName */}
+                            {studentsWithMarks?.motherName && (
+                                <TableRow>
+                                    <TableCell>Mother Name</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.motherName}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* Gender */}
+                            {studentsWithMarks?.gender && (
+                                <TableRow>
+                                    <TableCell>Gender</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.gender}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* Dob */}
+                            {studentsWithMarks?.dob && (
+                                <TableRow>
+                                    <TableCell>DOB</TableCell>
+                                    <TableCell>
+                                        {format(
+                                            new Date(studentsWithMarks?.dob),
+                                            DATE_FORMAT,
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* Email */}
+                            {studentsWithMarks?.email && (
+                                <TableRow>
+                                    <TableCell>Email</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.email}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                            {/* Phone */}
+                            {studentsWithMarks?.phone && (
+                                <TableRow>
+                                    <TableCell>Phone</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.phone}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                            {/* qualification */}
+                            {studentsWithMarks?.qualification && (
+                                <TableRow>
+                                    <TableCell>Qualification</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.qualification}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* State and District */}
+                            {studentsWithMarks?.address && (
+                                <TableRow>
+                                    <TableCell>State</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.address.state}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                            {studentsWithMarks?.address && (
+                                <TableRow>
+                                    <TableCell>District</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.address.district}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                            {/* Pin code */}
+                            {studentsWithMarks?.address && (
+                                <TableRow>
+                                    <TableCell>Pin</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.address.pincode}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* Address */}
+                            {studentsWithMarks?.address && (
+                                <TableRow>
+                                    <TableCell>Address</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.address?.street}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                            {/* Course */}
+                            {studentsWithMarks?.Course && (
+                                <TableRow>
+                                    <TableCell>Course</TableCell>
+                                    <TableCell>
+                                        {studentsWithMarks?.Course.name}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* Dor */}
+                            {studentsWithMarks?.dor && (
+                                <TableRow>
+                                    <TableCell>DOR</TableCell>
+                                    <TableCell>
+                                        {format(
+                                            new Date(studentsWithMarks?.dor),
+                                            DATE_FORMAT,
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
                             <TableRow>
-                                <TableCell>Registration No.</TableCell>
+                                <TableCell>Issue Date</TableCell>
                                 <TableCell>
-                                    {studentsWithMarks?.registration}
-                                </TableCell>
-                            </TableRow>
-                        )}
-
-                        {studentsWithMarks?.name && (
-                            <TableRow>
-                                <TableCell>Name</TableCell>
-                                <TableCell>{studentsWithMarks?.name}</TableCell>
-                            </TableRow>
-                        )}
-
-                        {studentsWithMarks?.Course && (
-                            <TableRow>
-                                <TableCell>Course</TableCell>
-                                <TableCell>
-                                    {studentsWithMarks?.Course.name}
-                                </TableCell>
-                            </TableRow>
-                        )}
-
-                        <TableRow>
-                            <TableCell>Issue Date</TableCell>
-                            <TableCell>
-                                <Popover>
-                                    <PopoverTrigger asChild>
-                                        <Button
-                                            variant={"outline"}
-                                            className={cn(
-                                                "w-[240px] justify-start text-left font-normal",
-                                                !date &&
-                                                    "text-muted-foreground",
-                                            )}
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                                variant={"outline"}
+                                                className={cn(
+                                                    "w-[240px] justify-start text-left font-normal",
+                                                    !date &&
+                                                        "text-muted-foreground",
+                                                )}
+                                            >
+                                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                                {date ? (
+                                                    format(date, DATE_FORMAT)
+                                                ) : (
+                                                    <span>Pick a date</span>
+                                                )}
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent
+                                            align="start"
+                                            className=" w-auto p-0"
                                         >
-                                            <CalendarIcon className="mr-2 h-4 w-4" />
-                                            {date ? (
-                                                format(date, DATE_FORMAT)
-                                            ) : (
-                                                <span>Pick a date</span>
-                                            )}
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent
-                                        align="start"
-                                        className=" w-auto p-0"
-                                    >
-                                        <Calendar
-                                            mode="single"
-                                            captionLayout="dropdown-buttons"
-                                            selected={date}
-                                            onSelect={(d) => setDate(d!)}
-                                            fromYear={2015}
-                                            toYear={currentYear}
-                                            disabled={
-                                                studentsWithMarks?.icard?.issue
-                                            }
-                                        />
-                                    </PopoverContent>
-                                </Popover>
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                                            <Calendar
+                                                mode="single"
+                                                captionLayout="dropdown-buttons"
+                                                selected={date}
+                                                onSelect={(d) => setDate(d!)}
+                                                fromYear={2015}
+                                                toYear={currentYear}
+                                                disabled={
+                                                    studentsWithMarks?.icard
+                                                        ?.issue
+                                                }
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
 
-                {studentsWithMarks?.icard.issue ? (
                     <Button
-                        variant={"destructive"}
+                        type="submit"
+                        variant={
+                            studentsWithMarks?.icard?.issue
+                                ? "destructive"
+                                : "primary"
+                        }
+                        className="w-full"
+                        disabled={isPending}
                         onClick={() =>
                             mutate({
                                 date,
+                                issue: !studentsWithMarks?.icard?.issue,
                                 registration: studentsWithMarks?.registration!,
-                                issue: false,
                             })
                         }
-                        disabled={isPending}
                     >
                         {isPending ? (
                             <Loader className="animate-spin" />
-                        ) : (
+                        ) : studentsWithMarks?.icard?.issue ? (
                             "CANCEL"
-                        )}
-                    </Button>
-                ) : (
-                    <Button
-                        variant={"primary"}
-                        onClick={() =>
-                            mutate({
-                                date,
-                                registration: studentsWithMarks?.registration!,
-                                issue: true,
-                            })
-                        }
-                        disabled={isPending}
-                    >
-                        {isPending ? (
-                            <Loader className="animate-spin" />
                         ) : (
                             "ISSUE"
                         )}
                     </Button>
-                )}
+                </ScrollArea>
             </DialogContent>
         </Dialog>
     );

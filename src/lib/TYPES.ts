@@ -42,4 +42,6 @@ export interface IssueType {
     project?: number;
     viva?: number;
     written?: number;
+    englishTyping?: number;
+    hindiTyping?: number;
 }
