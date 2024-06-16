@@ -111,7 +111,6 @@ const ManageMarksheet: FC<pageProps> = ({ page, registration, branches }) => {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>courses</SelectLabel>
                                 <SelectItem value="false">PENDING</SelectItem>
                                 <SelectItem value="true">ISSUED</SelectItem>
                             </SelectGroup>

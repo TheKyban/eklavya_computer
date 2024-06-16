@@ -91,6 +91,7 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                         defaultValue={user}
                         value={user}
                         onValueChange={(val) => setUser(val)}
+                        disabled={isLoading}
                     >
                         <SelectTrigger className="w-36">
                             <SelectValue placeholder="Select User" />
@@ -120,13 +121,13 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                         defaultValue={course}
                         value={course}
                         onValueChange={(val) => setCourse(val as course)}
+                        disabled={isLoading}
                     >
                         <SelectTrigger className="w-40">
                             <SelectValue placeholder="Select Course" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>courses</SelectLabel>
                                 <SelectItem value="other">OTHERS</SelectItem>
                                 <SelectItem value="computerTyping">
                                     TYPING
@@ -148,13 +149,13 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                         onValueChange={(val) =>
                             setType(val === "true" ? true : false)
                         }
+                        disabled={isLoading}
                     >
                         <SelectTrigger className="w-40">
                             <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>courses</SelectLabel>
                                 <SelectItem value="false">PENDING</SelectItem>
                                 <SelectItem value="true">ISSUED</SelectItem>
                             </SelectGroup>

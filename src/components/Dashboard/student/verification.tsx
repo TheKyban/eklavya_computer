@@ -124,7 +124,6 @@ const StudentVerificationManagement = ({
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>courses</SelectLabel>
                                 <SelectItem value="true">VERIFIED</SelectItem>
                                 <SelectItem value="false">PENDING</SelectItem>
                             </SelectGroup>
