@@ -478,6 +478,27 @@ export const DELETE = async (req: Request) => {
             );
         }
 
+        const isStudentExist = await Prisma.student.findUnique({
+            where: {
+                registration,
+            },
+        });
+
+        if (
+            session?.user?.role === "FRANCHISE" &&
+            isStudentExist?.branch !== session?.user?.userId
+        ) {
+            return NextResponse.json(
+                {
+                    message: "Unauthorized",
+                    success: false,
+                },
+                {
+                    status: STATUS_CODE.UNAUTHENTICATE,
+                },
+            );
+        }
+
         const student = await Prisma.student.delete({
             where: {
                 registration,
