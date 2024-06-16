@@ -33,15 +33,23 @@ export const useStudents = (
     page: string,
     pending: boolean | undefined,
     registration: string,
+    user?: string,
 ) => {
-    const url = `/api/student?${pending ? "pending=true&" : ""}page=${page}${
-        !!registration ? "&registration=" + registration : ""
-    }`;
+    const url = queryString.stringifyUrl({
+        url: "/api/student",
+        query: {
+            pending,
+            page,
+            registration,
+            user,
+        },
+    });
     return useQuery({
         queryKey: [
-            pending ? "pending_list" : "verified_list",
+            pending ? "verified_list" : "pending_list",
             page,
-            registration ? registration : "none",
+            registration ? registration : "",
+            user || "",
         ],
         queryFn: async () => {
             const { data } = await axios.get(url);

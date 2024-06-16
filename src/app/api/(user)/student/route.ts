@@ -7,6 +7,7 @@ import { STUDENT_SCHEMA } from "@/lib/SCHEMA";
 import { z } from "zod";
 import { per_page } from "@/lib/CONSTANTS";
 import { DELETE_FILE } from "@/lib/CLOUDINARY";
+import { STATUS_CODE } from "@/lib/STATUS_CODE";
 
 /**
  * REGISTER STUDENTS
@@ -19,17 +20,14 @@ export const POST = async (req: Request) => {
 
         const session = await getServerSession(AUTH_OPTIONS);
 
-        if (
-            !session?.user ||
-            (session?.user.role === role.FRANCHISE && !session?.user?.isActive)
-        ) {
+        if (!session?.user || !session?.user?.isActive) {
             return NextResponse.json(
                 {
                     message: "Unauthorized",
                     success: false,
                 },
                 {
-                    status: 401,
+                    status: STATUS_CODE.UNAUTHENTICATE,
                 },
             );
         }
@@ -52,7 +50,7 @@ export const POST = async (req: Request) => {
                         "All fields are required",
                     success: false,
                 },
-                { status: 400 },
+                { status: STATUS_CODE.CLIENT_ERROR },
             );
         }
 
@@ -68,7 +66,7 @@ export const POST = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -81,7 +79,7 @@ export const POST = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -99,7 +97,7 @@ export const POST = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -182,7 +180,7 @@ export const POST = async (req: Request) => {
         return NextResponse.json(
             { message: "INTERNAL ERROR", success: false },
             {
-                status: 500,
+                status: STATUS_CODE.INTERNAL_ERROR,
             },
         );
     }
@@ -198,17 +196,14 @@ export const PUT = async (req: Request) => {
 
         const session = await getServerSession(AUTH_OPTIONS);
 
-        if (
-            !session?.user ||
-            (session?.user.role === role.FRANCHISE && !session?.user?.isActive)
-        ) {
+        if (!session?.user || !session?.user?.isActive) {
             return NextResponse.json(
                 {
                     message: "Unauthorized",
                     success: false,
                 },
                 {
-                    status: 401,
+                    status: STATUS_CODE.UNAUTHENTICATE,
                 },
             );
         }
@@ -223,6 +218,7 @@ export const PUT = async (req: Request) => {
             dob: new Date(data.dob),
             dor: new Date(data.dor),
         });
+
         if (!success) {
             return NextResponse.json(
                 {
@@ -230,7 +226,24 @@ export const PUT = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
+                },
+            );
+        }
+
+        const userId =
+            session?.user?.role === "ADMIN"
+                ? data?.branch
+                : session.user.userId;
+
+        if (!userId) {
+            return NextResponse.json(
+                {
+                    message: "UserId is Required.",
+                    success: false,
+                },
+                {
+                    status: STATUS_CODE.UNAUTHENTICATE,
                 },
             );
         }
@@ -247,7 +260,7 @@ export const PUT = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -260,7 +273,7 @@ export const PUT = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -272,7 +285,7 @@ export const PUT = async (req: Request) => {
         const student = await Prisma.student.update({
             where: {
                 registration: data.registration,
-                branch: data.branch,
+                branch: userId,
             },
             data: {
                 img: data.img,
@@ -306,7 +319,7 @@ export const PUT = async (req: Request) => {
                     student,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -318,7 +331,7 @@ export const PUT = async (req: Request) => {
                 student,
             },
             {
-                status: 202,
+                status: STATUS_CODE.CREATED,
             },
         );
     } catch (error) {
@@ -326,7 +339,7 @@ export const PUT = async (req: Request) => {
         return NextResponse.json(
             { message: "INTERNAL ERROR", success: false },
             {
-                status: 500,
+                status: STATUS_CODE.INTERNAL_ERROR,
             },
         );
     }
@@ -344,26 +357,38 @@ export const GET = async (req: Request) => {
 
         const session = await getServerSession(AUTH_OPTIONS);
 
-        if (
-            !session?.user ||
-            (session?.user.role === role.FRANCHISE && !session?.user?.isActive)
-        ) {
+        if (!session?.user || !session?.user?.isActive) {
             return NextResponse.json(
                 {
                     message: "Unauthorized",
                     success: false,
                 },
                 {
-                    status: 401,
+                    status: STATUS_CODE.UNAUTHENTICATE,
                 },
             );
         }
 
         const { searchParams } = new URL(req.url);
         const page = Number(searchParams?.get("page")) || 1;
-        const pending = !!searchParams?.get("pending") ? false : true;
+        const pending = searchParams?.get("pending") === "false" ? false : true;
         const registration = searchParams?.get("registration") || "";
+        const userId =
+            session?.user?.role === "ADMIN"
+                ? searchParams?.get("user")
+                : session.user.userId;
 
+        if (!userId) {
+            return NextResponse.json(
+                {
+                    message: "UserId is Required.",
+                    success: false,
+                },
+                {
+                    status: STATUS_CODE.UNAUTHENTICATE,
+                },
+            );
+        }
         /**
          * FINDING STUDENTS
          */
@@ -372,7 +397,7 @@ export const GET = async (req: Request) => {
             take: per_page,
             skip: per_page * (page - 1),
             where: {
-                branch: session.user.userId,
+                branch: userId,
                 registration: {
                     contains: registration,
                 },
@@ -392,7 +417,7 @@ export const GET = async (req: Request) => {
 
         const total = await Prisma.student.count({
             where: {
-                branch: session.user.userId,
+                branch: userId,
                 registration: {
                     contains: registration,
                 },
@@ -403,13 +428,13 @@ export const GET = async (req: Request) => {
         return NextResponse.json(
             { total, students },
             {
-                status: 200,
+                status: STATUS_CODE.OK,
             },
         );
     } catch (error) {
         console.log("[GET STUDENT]", error);
         return new NextResponse("Internal Error", {
-            status: 500,
+            status: STATUS_CODE.INTERNAL_ERROR,
         });
     }
 };
@@ -426,17 +451,14 @@ export const DELETE = async (req: Request) => {
 
         const session = await getServerSession(AUTH_OPTIONS);
 
-        if (
-            !session?.user ||
-            (session?.user.role === role.FRANCHISE && !session?.user?.isActive)
-        ) {
+        if (!session?.user || !session?.user?.isActive) {
             return NextResponse.json(
                 {
                     message: "Unauthorized",
                     success: false,
                 },
                 {
-                    status: 401,
+                    status: STATUS_CODE.UNAUTHENTICATE,
                 },
             );
         }
@@ -451,7 +473,7 @@ export const DELETE = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -469,7 +491,7 @@ export const DELETE = async (req: Request) => {
                     success: false,
                 },
                 {
-                    status: 400,
+                    status: STATUS_CODE.CLIENT_ERROR,
                 },
             );
         }
@@ -482,7 +504,7 @@ export const DELETE = async (req: Request) => {
                 success: true,
             },
             {
-                status: 202,
+                status: STATUS_CODE.CREATED,
             },
         );
     } catch (error) {
@@ -490,7 +512,7 @@ export const DELETE = async (req: Request) => {
         return NextResponse.json(
             { message: "Internal Error" },
             {
-                status: 500,
+                status: STATUS_CODE.INTERNAL_ERROR,
             },
         );
     }

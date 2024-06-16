@@ -108,14 +108,19 @@ export const EditStudentModal = () => {
                 onClose();
             }
             if (data.success) {
-                updateStudent(
-                    [
-                        searchParams?.type,
-                        searchParams?.page,
-                        searchParams?.registration,
-                    ],
-                    data?.student,
-                );
+                try {
+                    updateStudent(
+                        [
+                            searchParams?.type,
+                            searchParams?.page,
+                            searchParams?.registration,
+                            searchParams?.userId || "",
+                        ],
+                        data?.student,
+                    );
+                } catch (error) {
+                    console.log("error in student update variable");
+                }
             }
         },
     });

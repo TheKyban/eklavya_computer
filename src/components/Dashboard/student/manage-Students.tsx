@@ -3,6 +3,7 @@ import { LoadingCells } from "@/components/loading/loading";
 import Pagination from "@/components/pagination/pagination";
 import Search from "@/components/search/search";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
     Select,
     SelectContent,
@@ -20,15 +21,19 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useModal } from "@/hooks/use-modal-store";
-import { useStudentVerification, useUsers } from "@/hooks/useFetch";
+import {
+    useStudentVerification,
+    useStudents,
+    useUsers,
+} from "@/hooks/useFetch";
 import { per_page } from "@/lib/CONSTANTS";
 import { poppins } from "@/lib/FONTS";
 import { StudentWithAllDetails } from "@/lib/TYPES";
 import { format } from "date-fns";
-import { GraduationCap, Shield, Users } from "lucide-react";
+import { GraduationCap, Pen, Shield, Trash, Users } from "lucide-react";
 import { useState } from "react";
 
-const StudentVerificationManagement = ({
+export const ManageStudents = ({
     branches,
     page,
     registration,
@@ -40,16 +45,11 @@ const StudentVerificationManagement = ({
     const { onOpen } = useModal();
     const [user, setUser] = useState(branches?.[0].userId);
     const [type, setType] = useState<boolean>(false);
-
-    /**
-     * FETCHING USERS
-     */
-
-    const { data, isLoading } = useStudentVerification(
-        page,
-        user,
-        registration,
+    const { data, isLoading } = useStudents(
+        page || "1",
         type,
+        registration,
+        user,
     );
 
     return (
@@ -58,7 +58,7 @@ const StudentVerificationManagement = ({
                 <div className="flex gap-1 items-center">
                     <GraduationCap className="text-indigo-400" />
                     <span className="text-zinc-800 uppercase text-2xl font-semibold">
-                        Student Verification
+                        Students
                     </span>
                 </div>
                 <Search
@@ -126,6 +126,7 @@ const StudentVerificationManagement = ({
 
             <div>
                 <Table>
+                    {/* TABLE HEADING */}
                     <TableHeader>
                         <TableRow>
                             <TableHead>Registration</TableHead>
@@ -140,14 +141,14 @@ const StudentVerificationManagement = ({
                                 Date of Addmission
                             </TableHead>
                             <TableHead>Course</TableHead>
-                            <TableHead className="text-left md:text-center">
-                                Verified
+                            <TableHead className="text-left sm:text-right">
+                                Tool
                             </TableHead>
                         </TableRow>
                     </TableHeader>
+                    {/* TABLE BODY */}
                     <TableBody>
-                        {isLoading && <LoadingCells cols={7} />}
-
+                        {isLoading && <LoadingCells cols={6} />}
                         {!isLoading &&
                             data?.students?.map(
                                 (student: StudentWithAllDetails) => (
@@ -176,32 +177,53 @@ const StudentVerificationManagement = ({
                                         <TableCell className="text-xs md:text-sm">
                                             {student?.Course?.name}
                                         </TableCell>
-                                        <TableCell className="text-center">
+                                        <TableCell className="text-left sm:text-right text-xs md:text-sm flex justify-end gap-2">
+                                            {/* EDIT BTN */}
                                             <Button
-                                                variant={
-                                                    student?.isVerified
-                                                        ? "destructive"
-                                                        : "primary"
-                                                }
-                                                size={"sm"}
+                                                variant={"outline"}
                                                 onClick={() =>
-                                                    onOpen(
-                                                        "studentVerification",
-                                                        {
-                                                            student: student,
-                                                            searchParams: {
-                                                                page,
-                                                                registration,
-                                                                type: `${type}`,
-                                                                userId: user,
-                                                            },
+                                                    onOpen("editStudent", {
+                                                        student,
+                                                        searchParams: {
+                                                            type: type
+                                                                ? "verified_list"
+                                                                : "pending_list",
+                                                            page: page || "1",
+                                                            registration:
+                                                                registration
+                                                                    ? registration
+                                                                    : "",
+                                                            userId: user,
                                                         },
-                                                    )
+                                                    })
                                                 }
+                                                className="px-2 py-0"
                                             >
-                                                {student?.isVerified
-                                                    ? "Cancel"
-                                                    : "Verify"}
+                                                <Pen className="w-5 h-5" />
+                                            </Button>
+                                            {/* DELETE BTN */}
+                                            <Button
+                                                variant={"outline"}
+                                                onClick={() =>
+                                                    onOpen("deleteStudent", {
+                                                        student,
+                                                        searchParams: {
+                                                            type: type
+                                                                ? "verified_list"
+                                                                : "pending_list",
+
+                                                            page: page || "1",
+                                                            registration:
+                                                                registration
+                                                                    ? registration
+                                                                    : "",
+                                                            userId: user,
+                                                        },
+                                                    })
+                                                }
+                                                className="sm:ml-2 px-2 py-0"
+                                            >
+                                                <Trash className="w-5 h-5" />
                                             </Button>
                                         </TableCell>
                                     </TableRow>
@@ -209,12 +231,11 @@ const StudentVerificationManagement = ({
                             )}
                     </TableBody>
                 </Table>
-                {data?.total! > per_page && (
-                    <Pagination total={data?.total!} isLoading={isLoading} />
+                {/* PAGINATION */}
+                {data && data?.total > per_page && (
+                    <Pagination total={data?.total} isLoading={isLoading} />
                 )}
             </div>
         </div>
     );
 };
-
-export default StudentVerificationManagement;

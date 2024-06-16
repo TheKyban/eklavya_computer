@@ -10,7 +10,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { poppins } from "@/lib/FONTS";
-import { Course, Student } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Pen, Trash, UserRoundCheck } from "lucide-react";
 import { LoadingCells } from "@/components/loading/loading";
@@ -33,7 +32,7 @@ const StudentList = ({
 
     const { data, isLoading } = useStudents(
         searchParams.page || "1",
-        searchParams.pending,
+        !searchParams.pending,
         searchParams.registration,
     );
 
@@ -124,7 +123,8 @@ const StudentList = ({
                                                             registration:
                                                                 searchParams.registration
                                                                     ? searchParams.registration
-                                                                    : "none",
+                                                                    : "",
+                                                            userId: "",
                                                         },
                                                     })
                                                 }

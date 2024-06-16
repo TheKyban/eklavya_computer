@@ -33,6 +33,12 @@ interface LinkType {
 
 export const links: LinkType[] = [
     {
+        title: "Students",
+        icon: <GraduationCap className="w-5 h-5 text-indigo-600" />,
+        link: "/dashboard/students",
+        role: "ADMIN",
+    },
+    {
         title: "Course",
         icon: <Book className="w-5 h-5 text-green-400" />,
         link: "/dashboard/course",

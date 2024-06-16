@@ -40,6 +40,7 @@ export const DeleteStudentModal = () => {
                         searchParams?.type,
                         searchParams?.page || "1",
                         searchParams?.registration,
+                        searchParams?.userId || "",
                     ],
                     student?.registration as string,
                 );
