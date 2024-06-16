@@ -3,7 +3,7 @@ import { ImageResponse } from "@vercel/og";
 import { loadGoogleFont } from "@/lib/FONTS";
 import GENERATE_QR from "@/lib/GENERATE_QR";
 import { TypingCertificateTemplate } from "./TYPING_CERTIFICATE_TEMPLATE";
-import { StudentWithMarksCourse } from "@/lib/TYPES";
+import { StudentWithAllDetails } from "@/lib/TYPES";
 import { DOCUMENT_SIZES } from "@/lib/CONSTANTS";
 
 export const dynamic = "force-dynamic";
@@ -84,7 +84,7 @@ export const GET = async (req: Request) => {
             (
                 <TypingCertificateTemplate
                     student={
-                        student as StudentWithMarksCourse & {
+                        student as StudentWithAllDetails & {
                             Branch: { branch: string };
                         }
                     }

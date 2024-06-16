@@ -18,6 +18,7 @@ import { useModal } from "@/hooks/use-modal-store";
 import { format } from "date-fns";
 import { per_page } from "@/lib/CONSTANTS";
 import { useStudents } from "@/hooks/useFetch";
+import { StudentWithAllDetails } from "@/lib/TYPES";
 
 const StudentList = ({
     searchParams,
@@ -79,7 +80,7 @@ const StudentList = ({
                         {isLoading && <LoadingCells cols={6} />}
                         {!isLoading &&
                             data?.students?.map(
-                                (student: Student & { Course: Course }) => (
+                                (student: StudentWithAllDetails) => (
                                     <TableRow
                                         key={student?.registration}
                                         className={poppins.className}

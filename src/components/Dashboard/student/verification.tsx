@@ -2,6 +2,7 @@
 import { LoadingCells } from "@/components/loading/loading";
 import Pagination from "@/components/pagination/pagination";
 import Search from "@/components/search/search";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
     Select,
@@ -20,25 +21,20 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { toast } from "@/components/ui/use-toast";
-import { useCustumQuery } from "@/hooks/use-queries";
+import { useModal } from "@/hooks/use-modal-store";
 import { useStudentVerification, useUsers } from "@/hooks/useFetch";
 import { per_page } from "@/lib/CONSTANTS";
 import { poppins } from "@/lib/FONTS";
-import { Course, Student, role } from "@prisma/client";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import { StudentWithAllDetails } from "@/lib/TYPES";
+import { role } from "@prisma/client";
 import { format } from "date-fns";
 import { GraduationCap, Shield, Users } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface userType {
     role: role;
     userId: string;
 }
-
-type verify = "false" | "true";
 
 const StudentVerificationManagement = ({
     branches,
@@ -49,10 +45,9 @@ const StudentVerificationManagement = ({
     registration: string;
     branches: { branch: string; userId: string }[];
 }) => {
-    const { data: session } = useSession();
-
+    const { onOpen } = useModal();
     const [user, setUser] = useState(branches?.[0].userId);
-    const [type, setType] = useState<verify>("false");
+    const [type, setType] = useState<boolean>(false);
 
     /**
      * FETCHING USERS
@@ -64,50 +59,6 @@ const StudentVerificationManagement = ({
         registration,
         type,
     );
-
-    const { removeStudent, addStudent } = useCustumQuery();
-
-    const { mutate, isPending } = useMutation({
-        mutationFn: async ({ registration }: { registration: string }) => {
-            const { data } = await axios.put(
-                `/api/management/student-verification`,
-                {
-                    registration,
-                },
-            );
-            return data;
-        },
-
-        onSuccess(data, variables) {
-            if (data) {
-                toast({ description: data?.message });
-            }
-
-            // remove Student from the list
-            removeStudent(
-                [
-                    "student_verification",
-                    page || "1",
-                    user,
-                    registration ? registration : "",
-                    type,
-                ],
-                data.student.registration,
-            );
-
-            //Add To other list
-            addStudent(
-                [
-                    "student_verification",
-                    page || "1",
-                    user,
-                    registration ? registration : "",
-                    type === "false" ? "true" : "false",
-                ],
-                data.student,
-            );
-        },
-    });
 
     return (
         <div className="px-5 flex flex-col gap-4">
@@ -136,7 +87,7 @@ const StudentVerificationManagement = ({
                         defaultValue={user}
                         value={user}
                         onValueChange={(val) => setUser(val)}
-                        disabled={isPending}
+                        disabled={isLoading}
                     >
                         <SelectTrigger className="w-36">
                             <SelectValue placeholder="Select User" />
@@ -163,10 +114,10 @@ const StudentVerificationManagement = ({
                         <span>Type</span>
                     </div>
                     <Select
-                        defaultValue={type}
-                        value={type}
-                        onValueChange={(val) => setType(val as verify)}
-                        disabled={isPending}
+                        defaultValue={`${type}`}
+                        value={`${type}`}
+                        onValueChange={(val) => setType(val === "true")}
+                        disabled={isLoading}
                     >
                         <SelectTrigger className="w-40">
                             <SelectValue placeholder="Select type" />
@@ -208,7 +159,7 @@ const StudentVerificationManagement = ({
 
                         {!isLoading &&
                             data?.students?.map(
-                                (student: Student & { Course: Course }) => (
+                                (student: StudentWithAllDetails) => (
                                     <TableRow
                                         key={student?.registration}
                                         className={poppins.className}
@@ -235,27 +186,40 @@ const StudentVerificationManagement = ({
                                             {student?.Course?.name}
                                         </TableCell>
                                         <TableCell className="text-center">
-                                            <Checkbox
-                                                defaultChecked={
+                                            <Button
+                                                variant={
                                                     student?.isVerified
+                                                        ? "destructive"
+                                                        : "primary"
                                                 }
-                                                id={student?.registration}
-                                                className="box-content"
-                                                onCheckedChange={(value) =>
-                                                    mutate({
-                                                        registration:
-                                                            student?.registration,
-                                                    })
+                                                size={"sm"}
+                                                onClick={() =>
+                                                    onOpen(
+                                                        "studentVerification",
+                                                        {
+                                                            student: student,
+                                                            searchParams: {
+                                                                page,
+                                                                registration,
+                                                                type: `${type}`,
+                                                                userId: user,
+                                                            },
+                                                        },
+                                                    )
                                                 }
-                                            />
+                                            >
+                                                {student?.isVerified
+                                                    ? "Cancel"
+                                                    : "Verify"}
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                 ),
                             )}
                     </TableBody>
                 </Table>
-                {data?.total > per_page && (
-                    <Pagination total={data?.total} isLoading={isLoading} />
+                {data?.total! > per_page && (
+                    <Pagination total={data?.total!} isLoading={isLoading} />
                 )}
             </div>
         </div>

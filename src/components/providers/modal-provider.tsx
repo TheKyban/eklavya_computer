@@ -12,6 +12,7 @@ import { EditCourseModal } from "@/components/modals/course/edit-course-modal";
 import { IssueCertificateModal } from "@/components/modals/issue/certificate";
 import { IssueICardModal } from "@/components/modals/issue/icard";
 import { IssueMarksheetModal } from "@/components/modals/issue/marksheet";
+import { StudentVerificationModal } from "../modals/student/student-verification-modal";
 
 const ModalProvider = () => {
     return (
@@ -30,6 +31,7 @@ const ModalProvider = () => {
             <IssueCertificateModal />
             <IssueICardModal />
             <IssueMarksheetModal />
+            <StudentVerificationModal />
         </>
     );
 };

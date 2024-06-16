@@ -3,7 +3,7 @@ import { Carousel, Course, Marks, Student } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import queryString from "query-string";
-import { StudentWithMarksCourse } from "@/lib/TYPES";
+import { StudentWithAllDetails } from "@/lib/TYPES";
 
 export const useUsers = (page: string, userId?: string, select?: string) => {
     const url = `/api/users?page=${page}${!!userId ? "&userId=" + userId : ""}${
@@ -54,7 +54,7 @@ export const useStudentVerification = (
     page: string,
     userId: string | undefined,
     registration: string,
-    type: string,
+    type: boolean,
 ) => {
     const url = queryString.stringifyUrl({
         url: "/api/management/student-verification",
@@ -65,7 +65,7 @@ export const useStudentVerification = (
             userId,
         },
     });
-    return useQuery({
+    return useQuery<{ total: number; students: StudentWithAllDetails[] }>({
         queryKey: [
             "student_verification",
             page || "1",
@@ -140,7 +140,6 @@ export const useCertificate = (
     });
 };
 
-type studentsWithMarks = Student & { Course: Course; marks: Marks };
 export const useVerifyCertificate = (
     registration: string,
     page: string,
@@ -149,7 +148,7 @@ export const useVerifyCertificate = (
     issue: boolean,
 ) => {
     return useQuery<{
-        studentsWithMarks: studentsWithMarks[];
+        studentsWithMarks: StudentWithAllDetails[];
         total: number;
     }>({
         queryKey: ["students", registration, page, user, course, issue],
@@ -181,7 +180,7 @@ export const useMarksheet = ({
     page: string | undefined;
     userId: string | number;
 }) => {
-    return useQuery<{ total: number; students: StudentWithMarksCourse[] }>({
+    return useQuery<{ total: number; students: StudentWithAllDetails[] }>({
         queryKey: [
             !issue ? "pending_marksheet" : "verified_marksheet",
             page,
@@ -214,7 +213,7 @@ export const useICard = ({
     page: string | undefined;
     userId: string | number;
 }) => {
-    return useQuery<{ total: number; students: StudentWithMarksCourse[] }>({
+    return useQuery<{ total: number; students: StudentWithAllDetails[] }>({
         queryKey: [
             issue ? "verified_icard" : "pending_icard",
             page,

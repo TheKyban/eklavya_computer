@@ -3,7 +3,6 @@ import { LoadingCells } from "@/components/loading/loading";
 import Pagination from "@/components/pagination/pagination";
 import Search from "@/components/search/search";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
     Select,
     SelectContent,
@@ -21,14 +20,10 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { toast } from "@/components/ui/use-toast";
 import { useModal } from "@/hooks/use-modal-store";
 import { useMarksheet } from "@/hooks/useFetch";
 import { DATE_FORMAT, per_page } from "@/lib/CONSTANTS";
 import { poppins } from "@/lib/FONTS";
-import { StudentWithMarksCourse } from "@/lib/TYPES";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { format } from "date-fns";
 import { Layers3, Shield, Users } from "lucide-react";
 import { FC, useState } from "react";
@@ -77,6 +72,7 @@ const ManageMarksheet: FC<pageProps> = ({ page, registration, branches }) => {
                         defaultValue={user}
                         value={user}
                         onValueChange={(val) => setUser(val)}
+                        disabled={isLoading}
                     >
                         <SelectTrigger className="w-36">
                             <SelectValue placeholder="Select User" />
@@ -108,6 +104,7 @@ const ManageMarksheet: FC<pageProps> = ({ page, registration, branches }) => {
                         onValueChange={(val) =>
                             setType(val === "true" ? true : false)
                         }
+                        disabled={isLoading}
                     >
                         <SelectTrigger className="w-40">
                             <SelectValue placeholder="Select type" />
@@ -152,7 +149,7 @@ const ManageMarksheet: FC<pageProps> = ({ page, registration, branches }) => {
                         {fetchStudents?.students?.[0]?.marks?.typingMarks
                             ?.hindiTyping && <TableHead>Hindi</TableHead>}
                         {fetchStudents?.students?.[0]?.marksheet.issue && (
-                            <TableCell className="text-center">Date</TableCell>
+                            <TableHead className="text-center">Date</TableHead>
                         )}
                         {fetchStudents?.students?.[0] && (
                             <TableHead className="text-center">Issue</TableHead>
@@ -239,45 +236,30 @@ const ManageMarksheet: FC<pageProps> = ({ page, registration, branches }) => {
                                     </TableCell>
                                 )}
                                 <TableCell className="text-center">
-                                    {type !== true ? (
-                                        <Button
-                                            size={"sm"}
-                                            variant={"primary"}
-                                            className="box-content"
-                                            onClick={() =>
-                                                onOpen("issueMarksheet", {
-                                                    studentsWithMarks: student,
-                                                    searchParams: {
-                                                        page,
-                                                        registration,
-                                                        type: `${type}`,
-                                                        userId: user,
-                                                    },
-                                                })
-                                            }
-                                        >
-                                            Issue
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            size={"sm"}
-                                            variant={"destructive"}
-                                            className="box-content"
-                                            onClick={() =>
-                                                onOpen("issueMarksheet", {
-                                                    studentsWithMarks: student,
-                                                    searchParams: {
-                                                        page,
-                                                        registration,
-                                                        type: `${type}`,
-                                                        userId: user,
-                                                    },
-                                                })
-                                            }
-                                        >
-                                            Cancel
-                                        </Button>
-                                    )}
+                                    <Button
+                                        size={"sm"}
+                                        variant={
+                                            student?.marksheet.issue
+                                                ? "destructive"
+                                                : "primary"
+                                        }
+                                        className="box-content"
+                                        onClick={() =>
+                                            onOpen("issueMarksheet", {
+                                                student: student,
+                                                searchParams: {
+                                                    page,
+                                                    registration,
+                                                    type: `${type}`,
+                                                    userId: user,
+                                                },
+                                            })
+                                        }
+                                    >
+                                        {student?.marksheet.issue
+                                            ? "Cancel"
+                                            : "Issue"}
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}

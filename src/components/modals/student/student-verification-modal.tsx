@@ -6,54 +6,34 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-
 import { toast } from "@/components/ui/use-toast";
-import { CalendarIcon, Loader } from "lucide-react";
+import { Loader } from "lucide-react";
 import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-} from "@/components/ui/table";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { useMutation } from "@tanstack/react-query";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
 import { DATE_FORMAT } from "@/lib/CONSTANTS";
-import { IssueType, StudentWithAllDetails } from "@/lib/TYPES";
 import Image from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useCustumQuery } from "@/hooks/use-queries";
 
-export const IssueICardModal = () => {
+export const StudentVerificationModal = () => {
     const { isOpen, onClose, type, data } = useModal();
-    const isModalOpen = isOpen && type === "issueICard";
+    const isModalOpen = isOpen && type === "studentVerification";
     const { student, searchParams } = data;
-    const [date, setDate] = useState(student?.certificate?.date || new Date());
-    const currentYear = new Date().getFullYear() + 1;
+    const { removeStudent, addStudent } = useCustumQuery();
 
-    const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
-        mutationKey: ["mutateMarksheetVerification"],
-        mutationFn: async ({ registration, date, issue }: IssueType) => {
-            const { data } = await axios.put(`/api/management/icard`, {
-                registration,
-                date,
-                issue,
-            });
+        mutationFn: async ({ registration }: { registration: string }) => {
+            const { data } = await axios.put(
+                `/api/management/student-verification`,
+                {
+                    registration,
+                },
+            );
             return data;
-        },
-        onError: (error) => {
-            console.log(error);
-            toast({ description: error?.message });
         },
 
         onSuccess(data, variables) {
@@ -63,51 +43,36 @@ export const IssueICardModal = () => {
 
             try {
                 onClose();
-                // remove data
-                queryClient.setQueryData(
+                // remove Student from the list
+                removeStudent(
                     [
-                        searchParams?.type === "false"
-                            ? "pending_icard"
-                            : "verified_icard",
-                        searchParams?.page,
-                        searchParams?.registration,
+                        "student_verification",
+                        searchParams?.page || "1",
                         searchParams?.userId,
+                        searchParams?.registration
+                            ? searchParams?.registration
+                            : "",
+                        searchParams?.type === "true" ? true : false,
                     ],
-                    (oldData: {
-                        students: StudentWithAllDetails[];
-                        total: number;
-                    }) => {
-                        const students = oldData.students?.filter(
-                            (student) =>
-                                student?.registration !==
-                                data?.student?.registration,
-                        );
-
-                        return { total: oldData.total - 1, students };
-                    },
+                    data.student.registration,
                 );
 
-                //Add To other type
-                queryClient.setQueryData(
+                //Add To other list
+                addStudent(
                     [
-                        searchParams?.type === "false"
-                            ? "verified_icard"
-                            : "pending_icard",
-                        searchParams?.page,
-                        searchParams?.registration,
+                        "student_verification",
+                        searchParams?.page || "1",
                         searchParams?.userId,
+                        searchParams?.registration
+                            ? searchParams?.registration
+                            : "",
+                        searchParams?.type === "false" ? true : false,
                     ],
-                    (oldData: {
-                        students: StudentWithAllDetails[];
-                        total: number;
-                    }) => {
-                        const students = [data?.student, ...oldData?.students];
-
-                        return { total: oldData.total + 1, students };
-                    },
+                    data.student,
                 );
             } catch (error) {
-                console.log("Error in Place Switch");
+                console.log("Error in student switch");
+                console.log(error);
             }
         },
     });
@@ -116,7 +81,7 @@ export const IssueICardModal = () => {
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="max-h-[80vh] h-[80vh]">
                 <DialogHeader>
-                    <DialogTitle>Issue ICard</DialogTitle>
+                    <DialogTitle>Student Verification</DialogTitle>
                 </DialogHeader>
                 <ScrollArea className="overflow-y-auto h-full w-full">
                     <Image
@@ -265,66 +230,25 @@ export const IssueICardModal = () => {
                                     </TableCell>
                                 </TableRow>
                             )}
-
-                            <TableRow>
-                                <TableCell>Issue Date</TableCell>
-                                <TableCell>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant={"outline"}
-                                                className={cn(
-                                                    "w-[240px] justify-start text-left font-normal",
-                                                    !date &&
-                                                        "text-muted-foreground",
-                                                )}
-                                            >
-                                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                                {date ? (
-                                                    format(date, DATE_FORMAT)
-                                                ) : (
-                                                    <span>Pick a date</span>
-                                                )}
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent
-                                            align="start"
-                                            className=" w-auto p-0"
-                                        >
-                                            <Calendar
-                                                mode="single"
-                                                captionLayout="dropdown-buttons"
-                                                selected={date}
-                                                onSelect={(d) => setDate(d!)}
-                                                fromYear={2015}
-                                                toYear={currentYear}
-                                                disabled={student?.icard?.issue}
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                </TableCell>
-                            </TableRow>
                         </TableBody>
                     </Table>
 
                     <Button
                         type="submit"
                         variant={
-                            student?.icard?.issue ? "destructive" : "primary"
+                            student?.isVerified ? "destructive" : "primary"
                         }
                         className="w-full"
                         disabled={isPending}
                         onClick={() =>
                             mutate({
-                                date,
-                                issue: !student?.icard?.issue,
                                 registration: student?.registration!,
                             })
                         }
                     >
                         {isPending ? (
                             <Loader className="animate-spin" />
-                        ) : student?.icard?.issue ? (
+                        ) : student?.isVerified ? (
                             "CANCEL"
                         ) : (
                             "ISSUE"

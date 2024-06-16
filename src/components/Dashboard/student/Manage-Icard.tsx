@@ -73,6 +73,7 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
                         defaultValue={user}
                         value={user}
                         onValueChange={(val) => setUser(val)}
+                        disabled={isLoading}
                     >
                         <SelectTrigger className="w-36">
                             <SelectValue placeholder="Select User" />
@@ -101,7 +102,7 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
                     <Select
                         defaultValue={`${type}`}
                         value={`${type}`}
-                        // disabled={isPending}
+                        disabled={isLoading}
                         onValueChange={(val) =>
                             setType(val === "true" ? true : false)
                         }
@@ -182,45 +183,30 @@ const ManageIcard: FC<pageProps> = ({ page, registration, branches }) => {
                                     </TableCell>
                                 )}
                                 <TableCell className="text-center">
-                                    {type !== true ? (
-                                        <Button
-                                            size={"sm"}
-                                            variant={"primary"}
-                                            className="box-content"
-                                            onClick={() =>
-                                                onOpen("issueICard", {
-                                                    studentsWithMarks: student,
-                                                    searchParams: {
-                                                        page,
-                                                        registration,
-                                                        type: `${type}`,
-                                                        userId: user,
-                                                    },
-                                                })
-                                            }
-                                        >
-                                            Issue
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            size={"sm"}
-                                            variant={"destructive"}
-                                            className="box-content"
-                                            onClick={() =>
-                                                onOpen("issueICard", {
-                                                    studentsWithMarks: student,
-                                                    searchParams: {
-                                                        page,
-                                                        registration,
-                                                        type: `${type}`,
-                                                        userId: user,
-                                                    },
-                                                })
-                                            }
-                                        >
-                                            Cancel
-                                        </Button>
-                                    )}
+                                    <Button
+                                        size={"sm"}
+                                        variant={
+                                            student?.icard?.issue
+                                                ? "destructive"
+                                                : "primary"
+                                        }
+                                        className="box-content"
+                                        onClick={() =>
+                                            onOpen("issueICard", {
+                                                student: student,
+                                                searchParams: {
+                                                    page,
+                                                    registration,
+                                                    type: `${type}`,
+                                                    userId: user,
+                                                },
+                                            })
+                                        }
+                                    >
+                                        {student?.icard?.issue
+                                            ? "Cancel"
+                                            : "Issue"}
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}

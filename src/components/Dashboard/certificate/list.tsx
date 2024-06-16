@@ -18,6 +18,7 @@ import { useModal } from "@/hooks/use-modal-store";
 import { format } from "date-fns";
 import { per_page } from "@/lib/CONSTANTS";
 import { useCertificate } from "@/hooks/useFetch";
+import { StudentWithAllDetails } from "@/lib/TYPES";
 
 const CertificateList = ({
     searchParams,
@@ -79,7 +80,7 @@ const CertificateList = ({
                         {isLoading && <LoadingCells cols={7} />}
                         {!isLoading &&
                             data?.certificates?.map(
-                                (student: Student & { Course: Course }) => (
+                                (student: StudentWithAllDetails) => (
                                     <TableRow
                                         key={student?.registration}
                                         className={poppins.className}

@@ -1,6 +1,5 @@
 import {
     Course,
-    Student,
     StudentApplication,
     User,
     UserApplication,
@@ -11,7 +10,7 @@ import {
     COMPUTER_TYPING_MARKS_SCHEMA,
 } from "@/lib/SCHEMA";
 import { z } from "zod";
-import { StudentWithMarksCourse } from "@/lib/TYPES";
+import { StudentWithAllDetails } from "@/lib/TYPES";
 
 export type ModalType =
     | "User"
@@ -27,11 +26,12 @@ export type ModalType =
     | "editCourse"
     | "issueCertificate"
     | "issueICard"
-    | "issueMarksheet";
+    | "issueMarksheet"
+    | "studentVerification";
 
 interface ModalData {
     user?: User;
-    student?: Student;
+    student?: StudentWithAllDetails;
     searchParams?: {
         page?: string;
         userId?: string | null;
@@ -43,7 +43,6 @@ interface ModalData {
     studentApplication?: StudentApplication;
     userApplication?: UserApplication;
     course?: Course;
-    studentsWithMarks?: StudentWithMarksCourse;
 }
 
 interface modalStore {

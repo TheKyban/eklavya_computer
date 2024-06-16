@@ -23,20 +23,9 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { useEffect, useState } from "react";
 import { DATE_FORMAT } from "@/lib/CONSTANTS";
-import { IssueType, StudentWithMarksCourse } from "@/lib/TYPES";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+import { IssueType, StudentWithAllDetails } from "@/lib/TYPES";
+
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { STATES } from "@/lib/STATE_WITH_DISTRICTS";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Image from "next/image";
 import {
     Form,
@@ -55,10 +44,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 export const IssueMarksheetModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "issueMarksheet";
-    const { studentsWithMarks, searchParams } = data;
-    const [date, setDate] = useState(
-        studentsWithMarks?.certificate?.date || new Date(),
-    );
+    const { student, searchParams } = data;
+    const [date, setDate] = useState(student?.certificate?.date || new Date());
     const currentYear = new Date().getFullYear() + 1;
     const form = useForm<z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA>>({
         resolver: zodResolver(GENERAL_COURSE_MARKS_SCHEMA),
@@ -117,7 +104,7 @@ export const IssueMarksheetModal = () => {
                         searchParams?.userId,
                     ],
                     (oldData: {
-                        students: StudentWithMarksCourse[];
+                        students: StudentWithAllDetails[];
                         total: number;
                     }) => {
                         const students = oldData.students?.filter(
@@ -141,7 +128,7 @@ export const IssueMarksheetModal = () => {
                         searchParams?.userId,
                     ],
                     (oldData: {
-                        students: StudentWithMarksCourse[];
+                        students: StudentWithAllDetails[];
                         total: number;
                     }) => {
                         const students = [data?.student, ...oldData?.students];
@@ -156,17 +143,14 @@ export const IssueMarksheetModal = () => {
     });
 
     useEffect(() => {
-        if (studentsWithMarks?.marks?.marks) {
-            form.setValue(
-                "practical",
-                studentsWithMarks?.marks?.marks?.practical,
-            );
-            form.setValue("project", studentsWithMarks?.marks?.marks?.project);
-            form.setValue("viva", studentsWithMarks?.marks?.marks?.viva);
-            form.setValue("written", studentsWithMarks?.marks?.marks?.written);
-            form.setValue("registration", studentsWithMarks?.registration);
+        if (student?.marks?.marks) {
+            form.setValue("practical", student?.marks?.marks?.practical);
+            form.setValue("project", student?.marks?.marks?.project);
+            form.setValue("viva", student?.marks?.marks?.viva);
+            form.setValue("written", student?.marks?.marks?.written);
+            form.setValue("registration", student?.registration);
         }
-    }, [studentsWithMarks, form]);
+    }, [student, form]);
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -176,7 +160,7 @@ export const IssueMarksheetModal = () => {
                 </DialogHeader>
                 <ScrollArea className="overflow-y-auto h-full w-full">
                     <Image
-                        src={studentsWithMarks?.img as string}
+                        src={student?.img as string}
                         width={200}
                         height={200}
                         className="w-[150px] h-[150px] object-cover rounded-full"
@@ -185,62 +169,54 @@ export const IssueMarksheetModal = () => {
                     <Table>
                         <TableBody>
                             {/* Registration */}
-                            {studentsWithMarks?.registration && (
+                            {student?.registration && (
                                 <TableRow>
                                     <TableCell>Registration No.</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.registration}
+                                        {student?.registration}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* Name */}
-                            {studentsWithMarks?.name && (
+                            {student?.name && (
                                 <TableRow>
                                     <TableCell>Name</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.name}
-                                    </TableCell>
+                                    <TableCell>{student?.name}</TableCell>
                                 </TableRow>
                             )}
 
                             {/* FName */}
-                            {studentsWithMarks?.fatherName && (
+                            {student?.fatherName && (
                                 <TableRow>
                                     <TableCell>Father Name</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.fatherName}
-                                    </TableCell>
+                                    <TableCell>{student?.fatherName}</TableCell>
                                 </TableRow>
                             )}
 
                             {/* MName */}
-                            {studentsWithMarks?.motherName && (
+                            {student?.motherName && (
                                 <TableRow>
                                     <TableCell>Mother Name</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.motherName}
-                                    </TableCell>
+                                    <TableCell>{student?.motherName}</TableCell>
                                 </TableRow>
                             )}
 
                             {/* Gender */}
-                            {studentsWithMarks?.gender && (
+                            {student?.gender && (
                                 <TableRow>
                                     <TableCell>Gender</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.gender}
-                                    </TableCell>
+                                    <TableCell>{student?.gender}</TableCell>
                                 </TableRow>
                             )}
 
                             {/* Dob */}
-                            {studentsWithMarks?.dob && (
+                            {student?.dob && (
                                 <TableRow>
                                     <TableCell>DOB</TableCell>
                                     <TableCell>
                                         {format(
-                                            new Date(studentsWithMarks?.dob),
+                                            new Date(student?.dob),
                                             DATE_FORMAT,
                                         )}
                                     </TableCell>
@@ -248,86 +224,82 @@ export const IssueMarksheetModal = () => {
                             )}
 
                             {/* Email */}
-                            {studentsWithMarks?.email && (
+                            {student?.email && (
                                 <TableRow>
                                     <TableCell>Email</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.email}
-                                    </TableCell>
+                                    <TableCell>{student?.email}</TableCell>
                                 </TableRow>
                             )}
                             {/* Phone */}
-                            {studentsWithMarks?.phone && (
+                            {student?.phone && (
                                 <TableRow>
                                     <TableCell>Phone</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.phone}
-                                    </TableCell>
+                                    <TableCell>{student?.phone}</TableCell>
                                 </TableRow>
                             )}
                             {/* qualification */}
-                            {studentsWithMarks?.qualification && (
+                            {student?.qualification && (
                                 <TableRow>
                                     <TableCell>Qualification</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.qualification}
+                                        {student?.qualification}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* State and District */}
-                            {studentsWithMarks?.address && (
+                            {student?.address && (
                                 <TableRow>
                                     <TableCell>State</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.address.state}
+                                        {student?.address.state}
                                     </TableCell>
                                 </TableRow>
                             )}
-                            {studentsWithMarks?.address && (
+                            {student?.address && (
                                 <TableRow>
                                     <TableCell>District</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.address.district}
+                                        {student?.address.district}
                                     </TableCell>
                                 </TableRow>
                             )}
                             {/* Pin code */}
-                            {studentsWithMarks?.address && (
+                            {student?.address && (
                                 <TableRow>
                                     <TableCell>Pin</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.address.pincode}
+                                        {student?.address.pincode}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* Address */}
-                            {studentsWithMarks?.address && (
+                            {student?.address && (
                                 <TableRow>
                                     <TableCell>Address</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.address?.street}
+                                        {student?.address?.street}
                                     </TableCell>
                                 </TableRow>
                             )}
                             {/* Course */}
-                            {studentsWithMarks?.Course && (
+                            {student?.Course && (
                                 <TableRow>
                                     <TableCell>Course</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.Course.name}
+                                        {student?.Course.name}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* Dor */}
-                            {studentsWithMarks?.dor && (
+                            {student?.dor && (
                                 <TableRow>
                                     <TableCell>DOR</TableCell>
                                     <TableCell>
                                         {format(
-                                            new Date(studentsWithMarks?.dor),
+                                            new Date(student?.dor),
                                             DATE_FORMAT,
                                         )}
                                     </TableCell>
@@ -367,8 +339,7 @@ export const IssueMarksheetModal = () => {
                                                 fromYear={2015}
                                                 toYear={currentYear}
                                                 disabled={
-                                                    studentsWithMarks?.marksheet
-                                                        ?.issue
+                                                    student?.marksheet?.issue
                                                 }
                                             />
                                         </PopoverContent>
@@ -383,7 +354,7 @@ export const IssueMarksheetModal = () => {
                             onSubmit={form.handleSubmit((values) =>
                                 mutate({
                                     date,
-                                    issue: !studentsWithMarks?.marksheet?.issue,
+                                    issue: !student?.marksheet?.issue,
                                     ...values,
                                 }),
                             )}
@@ -391,10 +362,6 @@ export const IssueMarksheetModal = () => {
                         >
                             {/* WRITTEN */}
                             <FormField
-                                disabled={
-                                    isPending ||
-                                    studentsWithMarks?.marksheet?.issue
-                                }
                                 control={form.control}
                                 name="written"
                                 render={({ field }) => (
@@ -408,6 +375,10 @@ export const IssueMarksheetModal = () => {
                                                         Number(e.target.value),
                                                     )
                                                 }
+                                                disabled={
+                                                    isPending ||
+                                                    student?.marksheet?.issue
+                                                }
                                                 placeholder="Written marks"
                                                 type="number"
                                             />
@@ -418,10 +389,6 @@ export const IssueMarksheetModal = () => {
                             />
                             {/* Viva */}
                             <FormField
-                                disabled={
-                                    isPending ||
-                                    studentsWithMarks?.marksheet?.issue
-                                }
                                 control={form.control}
                                 name="viva"
                                 render={({ field }) => (
@@ -435,6 +402,10 @@ export const IssueMarksheetModal = () => {
                                                         Number(e.target.value),
                                                     )
                                                 }
+                                                disabled={
+                                                    isPending ||
+                                                    student?.marksheet?.issue
+                                                }
                                                 placeholder="Viva marks"
                                                 type="number"
                                             />
@@ -445,10 +416,6 @@ export const IssueMarksheetModal = () => {
                             />
                             {/* Practical */}
                             <FormField
-                                disabled={
-                                    isPending ||
-                                    studentsWithMarks?.marksheet?.issue
-                                }
                                 control={form.control}
                                 name="practical"
                                 render={({ field }) => (
@@ -462,6 +429,10 @@ export const IssueMarksheetModal = () => {
                                                         Number(e.target.value),
                                                     )
                                                 }
+                                                disabled={
+                                                    isPending ||
+                                                    student?.marksheet?.issue
+                                                }
                                                 placeholder="Practical marks"
                                                 type="number"
                                             />
@@ -473,10 +444,6 @@ export const IssueMarksheetModal = () => {
 
                             {/* Projects */}
                             <FormField
-                                disabled={
-                                    isPending ||
-                                    studentsWithMarks?.marksheet?.issue
-                                }
                                 control={form.control}
                                 name="project"
                                 render={({ field }) => (
@@ -490,6 +457,10 @@ export const IssueMarksheetModal = () => {
                                                         Number(e.target.value),
                                                     )
                                                 }
+                                                disabled={
+                                                    isPending ||
+                                                    student?.marksheet?.issue
+                                                }
                                                 placeholder="Project marks"
                                                 type="number"
                                             />
@@ -502,7 +473,7 @@ export const IssueMarksheetModal = () => {
                             <Button
                                 type="submit"
                                 variant={
-                                    studentsWithMarks?.marksheet?.issue
+                                    student?.marksheet?.issue
                                         ? "destructive"
                                         : "primary"
                                 }
@@ -510,7 +481,7 @@ export const IssueMarksheetModal = () => {
                             >
                                 {isPending ? (
                                     <Loader className="animate-spin" />
-                                ) : studentsWithMarks?.marksheet.issue ? (
+                                ) : student?.marksheet.issue ? (
                                     "CANCEL"
                                 ) : (
                                     "ISSUE"

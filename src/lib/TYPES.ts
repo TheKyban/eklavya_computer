@@ -23,15 +23,10 @@ export interface UserType {
     issuedCertificates: number;
 }
 
-export type StudentWithCourse = Student & {
-    Course: Course;
-};
-export type StudentWithMarksCourse = StudentWithCourse & {
-    marks: Marks;
-};
-
-export type StudentWithMarksCourseBranchName = StudentWithMarksCourse & {
+export type StudentWithAllDetails = Student & {
     Branch: { branch: string };
+    Course: Course;
+    marks?: Marks;
 };
 
 export interface IssueType {

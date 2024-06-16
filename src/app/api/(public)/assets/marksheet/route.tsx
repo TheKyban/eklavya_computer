@@ -3,7 +3,7 @@ import { loadGoogleFont } from "@/lib/FONTS";
 import { Prisma } from "../../../../../../prisma/prisma";
 import GENERATE_QR from "@/lib/GENERATE_QR";
 import { MarksheetTemplate } from "./MARKSHEET_TEMPLATE";
-import { StudentWithMarksCourseBranchName } from "@/lib/TYPES";
+import { StudentWithAllDetails } from "@/lib/TYPES";
 import { DOCUMENT_SIZES } from "@/lib/CONSTANTS";
 
 export const dynamic = "force-dynamic";
@@ -82,7 +82,7 @@ export const GET = async (req: Request) => {
         return new ImageResponse(
             (
                 <MarksheetTemplate
-                    student={student as StudentWithMarksCourseBranchName}
+                    student={student as StudentWithAllDetails}
                     image={image}
                     qrCodeURl={qrCodeURl}
                 />

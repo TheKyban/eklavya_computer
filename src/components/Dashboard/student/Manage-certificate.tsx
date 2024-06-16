@@ -286,45 +286,30 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
                                     </TableCell>
                                 )}
                                 <TableCell className="text-center">
-                                    {type !== true ? (
-                                        <Button
-                                            size={"sm"}
-                                            variant={"primary"}
-                                            className="box-content"
-                                            onClick={() =>
-                                                onOpen("issueCertificate", {
-                                                    studentsWithMarks: student,
-                                                    searchParams: {
-                                                        page,
-                                                        registration,
-                                                        type: `${type}`,
-                                                        userId: user,
-                                                    },
-                                                })
-                                            }
-                                        >
-                                            Issue
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            size={"sm"}
-                                            variant={"destructive"}
-                                            className="box-content"
-                                            onClick={() =>
-                                                onOpen("issueCertificate", {
-                                                    studentsWithMarks: student,
-                                                    searchParams: {
-                                                        page,
-                                                        registration,
-                                                        type: `${type}`,
-                                                        userId: user,
-                                                    },
-                                                })
-                                            }
-                                        >
-                                            Cancel
-                                        </Button>
-                                    )}
+                                    <Button
+                                        size={"sm"}
+                                        variant={
+                                            student?.certificate?.issue
+                                                ? "destructive"
+                                                : "primary"
+                                        }
+                                        className="box-content"
+                                        onClick={() =>
+                                            onOpen("issueCertificate", {
+                                                student: student,
+                                                searchParams: {
+                                                    page,
+                                                    registration,
+                                                    type: `${type}`,
+                                                    userId: user,
+                                                },
+                                            })
+                                        }
+                                    >
+                                        {student?.certificate?.issue
+                                            ? "Cancel"
+                                            : "Issue"}
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}

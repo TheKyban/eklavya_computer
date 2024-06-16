@@ -1,6 +1,6 @@
 import { MOHAR_IMAGE, TYPING_CERTIFICATE_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
-import { StudentWithMarksCourseBranchName } from "@/lib/TYPES";
+import { StudentWithAllDetails } from "@/lib/TYPES";
 import { format } from "date-fns";
 
 export const TypingCertificateTemplate = ({
@@ -10,7 +10,7 @@ export const TypingCertificateTemplate = ({
 }: {
     qrCodeURl: string;
     image: boolean;
-    student: StudentWithMarksCourseBranchName;
+    student: StudentWithAllDetails;
 }) => {
     return (
         <div

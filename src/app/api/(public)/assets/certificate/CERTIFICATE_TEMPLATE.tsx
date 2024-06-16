@@ -1,6 +1,6 @@
 import { CERTIFICATE_IMAGE, MOHAR_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
-import { StudentWithMarksCourseBranchName } from "@/lib/TYPES";
+import { StudentWithAllDetails } from "@/lib/TYPES";
 import { format } from "date-fns";
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
 import { Duration } from "@/lib/CONSTANTS";
@@ -12,7 +12,7 @@ export const CertificateTemplate = ({
 }: {
     qrCodeURl: string;
     image: boolean;
-    student: StudentWithMarksCourseBranchName;
+    student: StudentWithAllDetails;
 }) => {
     const studentStats = new STUDENT_STATS(
         [

@@ -44,11 +44,10 @@ import { Input } from "@/components/ui/input";
 export const IssueCertificateModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "issueCertificate";
-    const { studentsWithMarks, searchParams } = data;
-    const [date, setDate] = useState(
-        studentsWithMarks?.certificate?.date || new Date(),
-    );
+    const { student, searchParams } = data;
+    const [date, setDate] = useState(student?.certificate?.date || new Date());
     const currentYear = new Date().getFullYear() + 1;
+
     const form = useForm<z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA>>({
         resolver: zodResolver(COMPUTER_TYPING_MARKS_SCHEMA),
         defaultValues: {
@@ -91,8 +90,8 @@ export const IssueCertificateModal = () => {
                             "students",
                             searchParams?.registration,
                             searchParams?.page,
-                            studentsWithMarks?.branch,
-                            studentsWithMarks?.Course.name === "COMPUTER TYPING"
+                            student?.branch,
+                            student?.Course.name === "COMPUTER TYPING"
                                 ? "computerTyping"
                                 : "other",
                             searchParams?.type === "true" ? true : false,
@@ -106,8 +105,8 @@ export const IssueCertificateModal = () => {
                             "students",
                             searchParams?.registration,
                             searchParams?.page,
-                            studentsWithMarks?.branch,
-                            studentsWithMarks?.Course.name === "COMPUTER TYPING"
+                            student?.branch,
+                            student?.Course.name === "COMPUTER TYPING"
                                 ? "computerTyping"
                                 : "other",
                             searchParams?.type === "true" ? false : true,
@@ -122,25 +121,25 @@ export const IssueCertificateModal = () => {
     });
 
     useEffect(() => {
-        if (studentsWithMarks) {
-            form.setValue("registration", studentsWithMarks?.registration);
+        if (student) {
+            form.setValue("registration", student?.registration);
         }
 
         if (
-            studentsWithMarks?.Course?.name === "COMPUTER TYPING" &&
-            studentsWithMarks?.marks?.typingMarks
+            student?.Course?.name === "COMPUTER TYPING" &&
+            student?.marks?.typingMarks
         ) {
-            form.setValue("registration", studentsWithMarks?.registration);
+            form.setValue("registration", student?.registration);
             form.setValue(
                 "englishTyping",
-                studentsWithMarks?.marks?.typingMarks?.englishTyping,
+                student?.marks?.typingMarks?.englishTyping,
             );
             form.setValue(
                 "hindiTyping",
-                studentsWithMarks?.marks?.typingMarks?.hindiTyping,
+                student?.marks?.typingMarks?.hindiTyping,
             );
         }
-    }, [studentsWithMarks, form]);
+    }, [student, form]);
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -150,7 +149,7 @@ export const IssueCertificateModal = () => {
                 </DialogHeader>
                 <ScrollArea className="overflow-y-auto h-full w-full">
                     <Image
-                        src={studentsWithMarks?.img as string}
+                        src={student?.img as string}
                         width={200}
                         height={200}
                         className="w-[150px] h-[150px] object-cover rounded-full"
@@ -159,62 +158,54 @@ export const IssueCertificateModal = () => {
                     <Table>
                         <TableBody>
                             {/* Registration */}
-                            {studentsWithMarks?.registration && (
+                            {student?.registration && (
                                 <TableRow>
                                     <TableCell>Registration No.</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.registration}
+                                        {student?.registration}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* Name */}
-                            {studentsWithMarks?.name && (
+                            {student?.name && (
                                 <TableRow>
                                     <TableCell>Name</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.name}
-                                    </TableCell>
+                                    <TableCell>{student?.name}</TableCell>
                                 </TableRow>
                             )}
 
                             {/* FName */}
-                            {studentsWithMarks?.fatherName && (
+                            {student?.fatherName && (
                                 <TableRow>
                                     <TableCell>Father Name</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.fatherName}
-                                    </TableCell>
+                                    <TableCell>{student?.fatherName}</TableCell>
                                 </TableRow>
                             )}
 
                             {/* MName */}
-                            {studentsWithMarks?.motherName && (
+                            {student?.motherName && (
                                 <TableRow>
                                     <TableCell>Mother Name</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.motherName}
-                                    </TableCell>
+                                    <TableCell>{student?.motherName}</TableCell>
                                 </TableRow>
                             )}
 
                             {/* Gender */}
-                            {studentsWithMarks?.gender && (
+                            {student?.gender && (
                                 <TableRow>
                                     <TableCell>Gender</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.gender}
-                                    </TableCell>
+                                    <TableCell>{student?.gender}</TableCell>
                                 </TableRow>
                             )}
 
                             {/* Dob */}
-                            {studentsWithMarks?.dob && (
+                            {student?.dob && (
                                 <TableRow>
                                     <TableCell>DOB</TableCell>
                                     <TableCell>
                                         {format(
-                                            new Date(studentsWithMarks?.dob),
+                                            new Date(student?.dob),
                                             DATE_FORMAT,
                                         )}
                                     </TableCell>
@@ -222,86 +213,82 @@ export const IssueCertificateModal = () => {
                             )}
 
                             {/* Email */}
-                            {studentsWithMarks?.email && (
+                            {student?.email && (
                                 <TableRow>
                                     <TableCell>Email</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.email}
-                                    </TableCell>
+                                    <TableCell>{student?.email}</TableCell>
                                 </TableRow>
                             )}
                             {/* Phone */}
-                            {studentsWithMarks?.phone && (
+                            {student?.phone && (
                                 <TableRow>
                                     <TableCell>Phone</TableCell>
-                                    <TableCell>
-                                        {studentsWithMarks?.phone}
-                                    </TableCell>
+                                    <TableCell>{student?.phone}</TableCell>
                                 </TableRow>
                             )}
                             {/* qualification */}
-                            {studentsWithMarks?.qualification && (
+                            {student?.qualification && (
                                 <TableRow>
                                     <TableCell>Qualification</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.qualification}
+                                        {student?.qualification}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* State and District */}
-                            {studentsWithMarks?.address && (
+                            {student?.address && (
                                 <TableRow>
                                     <TableCell>State</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.address.state}
+                                        {student?.address.state}
                                     </TableCell>
                                 </TableRow>
                             )}
-                            {studentsWithMarks?.address && (
+                            {student?.address && (
                                 <TableRow>
                                     <TableCell>District</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.address.district}
+                                        {student?.address.district}
                                     </TableCell>
                                 </TableRow>
                             )}
                             {/* Pin code */}
-                            {studentsWithMarks?.address && (
+                            {student?.address && (
                                 <TableRow>
                                     <TableCell>Pin</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.address.pincode}
+                                        {student?.address.pincode}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* Address */}
-                            {studentsWithMarks?.address && (
+                            {student?.address && (
                                 <TableRow>
                                     <TableCell>Address</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.address?.street}
+                                        {student?.address?.street}
                                     </TableCell>
                                 </TableRow>
                             )}
                             {/* Course */}
-                            {studentsWithMarks?.Course && (
+                            {student?.Course && (
                                 <TableRow>
                                     <TableCell>Course</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.Course.name}
+                                        {student?.Course.name}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* Dor */}
-                            {studentsWithMarks?.dor && (
+                            {student?.dor && (
                                 <TableRow>
                                     <TableCell>DOR</TableCell>
                                     <TableCell>
                                         {format(
-                                            new Date(studentsWithMarks?.dor),
+                                            new Date(student?.dor),
                                             DATE_FORMAT,
                                         )}
                                     </TableCell>
@@ -309,48 +296,39 @@ export const IssueCertificateModal = () => {
                             )}
 
                             {/* Practical */}
-                            {studentsWithMarks?.marks?.marks?.practical && (
+                            {student?.marks?.marks?.practical && (
                                 <TableRow>
                                     <TableCell>Practical</TableCell>
                                     <TableCell>
-                                        {
-                                            studentsWithMarks?.marks?.marks
-                                                ?.practical
-                                        }
+                                        {student?.marks?.marks?.practical}
                                     </TableCell>
                                 </TableRow>
                             )}
 
                             {/* Project */}
-                            {studentsWithMarks?.marks?.marks?.project && (
+                            {student?.marks?.marks?.project && (
                                 <TableRow>
                                     <TableCell>Project</TableCell>
                                     <TableCell>
-                                        {
-                                            studentsWithMarks?.marks?.marks
-                                                ?.project
-                                        }
+                                        {student?.marks?.marks?.project}
                                     </TableCell>
                                 </TableRow>
                             )}
 
-                            {studentsWithMarks?.marks?.marks?.viva && (
+                            {student?.marks?.marks?.viva && (
                                 <TableRow>
                                     <TableCell>Viva</TableCell>
                                     <TableCell>
-                                        {studentsWithMarks?.marks?.marks?.viva}
+                                        {student?.marks?.marks?.viva}
                                     </TableCell>
                                 </TableRow>
                             )}
 
-                            {studentsWithMarks?.marks?.marks?.written && (
+                            {student?.marks?.marks?.written && (
                                 <TableRow>
                                     <TableCell>Written</TableCell>
                                     <TableCell>
-                                        {
-                                            studentsWithMarks?.marks?.marks
-                                                ?.written
-                                        }
+                                        {student?.marks?.marks?.written}
                                     </TableCell>
                                 </TableRow>
                             )}
@@ -388,8 +366,7 @@ export const IssueCertificateModal = () => {
                                                 fromYear={2015}
                                                 toYear={currentYear}
                                                 disabled={
-                                                    studentsWithMarks
-                                                        ?.certificate?.issue
+                                                    student?.certificate?.issue
                                                 }
                                             />
                                         </PopoverContent>
@@ -399,11 +376,11 @@ export const IssueCertificateModal = () => {
                         </TableBody>
                     </Table>
 
-                    {studentsWithMarks?.Course?.name !== "COMPUTER TYPING" && (
+                    {student?.Course?.name !== "COMPUTER TYPING" && (
                         <Button
                             type="submit"
                             variant={
-                                studentsWithMarks?.certificate?.issue
+                                student?.certificate?.issue
                                     ? "destructive"
                                     : "primary"
                             }
@@ -412,30 +389,27 @@ export const IssueCertificateModal = () => {
                             onClick={() =>
                                 mutate({
                                     date,
-                                    issue: !studentsWithMarks?.certificate
-                                        ?.issue,
-                                    registration:
-                                        studentsWithMarks?.registration!,
+                                    issue: !student?.certificate?.issue,
+                                    registration: student?.registration!,
                                 })
                             }
                         >
                             {isPending ? (
                                 <Loader className="animate-spin" />
-                            ) : studentsWithMarks?.certificate.issue ? (
+                            ) : student?.certificate.issue ? (
                                 "CANCEL"
                             ) : (
                                 "ISSUE"
                             )}
                         </Button>
                     )}
-                    {studentsWithMarks?.Course?.name === "COMPUTER TYPING" && (
+                    {student?.Course?.name === "COMPUTER TYPING" && (
                         <Form {...form}>
                             <form
                                 onSubmit={form.handleSubmit((values) =>
                                     mutate({
                                         date,
-                                        issue: !studentsWithMarks?.certificate
-                                            ?.issue,
+                                        issue: !student?.certificate?.issue,
                                         ...values,
                                     }),
                                 )}
@@ -455,8 +429,8 @@ export const IssueCertificateModal = () => {
                                                     {...field}
                                                     disabled={
                                                         isPending ||
-                                                        studentsWithMarks
-                                                            ?.certificate?.issue
+                                                        student?.certificate
+                                                            ?.issue
                                                     }
                                                     onChange={(e) =>
                                                         field.onChange(
@@ -493,8 +467,8 @@ export const IssueCertificateModal = () => {
                                                     }
                                                     disabled={
                                                         isPending ||
-                                                        studentsWithMarks
-                                                            ?.certificate?.issue
+                                                        student?.certificate
+                                                            ?.issue
                                                     }
                                                     placeholder="Hindi Typing"
                                                     type="number"
@@ -508,7 +482,7 @@ export const IssueCertificateModal = () => {
                                 <Button
                                     type="submit"
                                     variant={
-                                        studentsWithMarks?.certificate?.issue
+                                        student?.certificate?.issue
                                             ? "destructive"
                                             : "primary"
                                     }
@@ -516,7 +490,7 @@ export const IssueCertificateModal = () => {
                                 >
                                     {isPending ? (
                                         <Loader className="animate-spin" />
-                                    ) : studentsWithMarks?.certificate.issue ? (
+                                    ) : student?.certificate.issue ? (
                                         "CANCEL"
                                     ) : (
                                         "ISSUE"
