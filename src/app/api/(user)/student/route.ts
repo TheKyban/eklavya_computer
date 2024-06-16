@@ -281,7 +281,11 @@ export const PUT = async (req: Request) => {
         /**
          * UPDATE STUDENT
          */
-
+        const course = await Prisma?.course?.findUnique({
+            where: {
+                id: data?.course,
+            },
+        });
         const student = await Prisma.student.update({
             where: {
                 registration: data.registration,
@@ -305,6 +309,16 @@ export const PUT = async (req: Request) => {
                 dor: new Date(data.dor),
                 qualification: data.qualification,
                 course: data.course,
+                marks:
+                    course?.name === "COMPUTER TYPING"
+                        ? {
+                              update: {
+                                  marks: {
+                                      unset: true,
+                                  },
+                              },
+                          }
+                        : {},
             },
             include: {
                 Course: true,

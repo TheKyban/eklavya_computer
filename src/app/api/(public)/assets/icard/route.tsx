@@ -78,10 +78,10 @@ export const GET = async (req: Request) => {
         return new ImageResponse(
             <ICardTemplate image={image} student={student} />,
             {
-                width: 204,
-                height: 324,
-                // width: 404,
-                // height: 645,
+                // width: 204,
+                // height: 324,
+                width: 404,
+                height: 645,
                 fonts: [
                     {
                         name: "NotoSerif",

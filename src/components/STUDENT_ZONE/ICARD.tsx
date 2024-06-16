@@ -13,7 +13,6 @@ const ICard = () => {
     const [isLoading, setIsLoading] = useState(false);
     const ref = useRef<HTMLCanvasElement>(null);
     const [icard, setICard] = useState(false);
-    const registrationRef = useRef<string | null>(null);
 
     const handleSearch = async (e: FormEvent) => {
         e.preventDefault();
@@ -43,7 +42,6 @@ const ICard = () => {
             ctx?.drawImage(image, 0, 0);
             setICard(true);
             setIsLoading(false);
-            registrationRef.current = registration;
             setRegistration("");
         };
     };
@@ -73,10 +71,10 @@ const ICard = () => {
                         onClick={() =>
                             PDF_DOWNLOAD_HANDLER(
                                 ref.current!,
-                                `icard.pdf`,
+                                `icard-${registration}.pdf`,
                                 "p",
-                                DOCUMENT_SIZES.I_CARD.width,
-                                DOCUMENT_SIZES.I_CARD.height,
+                                100,
+                                125,
                             )
                         }
                     >

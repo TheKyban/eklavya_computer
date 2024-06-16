@@ -9,8 +9,10 @@ export const PDF_DOWNLOAD_HANDLER = (
 ) => {
     const doc = new jsPDF({
         orientation: orientation,
-        format: "A4",
-        unit: "px",
+        // format: "A4",
+        unit: "mm",
+        // format: [width!, height!],
+        format: height && width ? [height, width] : undefined,
     });
 
     doc.addImage(

@@ -22,7 +22,7 @@ export const ICardTemplate = ({
     return (
         <div
             style={{
-                fontSize: 10,
+                fontSize: 14,
                 color: "black",
                 background: "white",
                 display: "flex",
@@ -62,10 +62,10 @@ export const ICardTemplate = ({
 
             <span
                 style={{
-                    fontSize: 10,
+                    fontSize: 16,
                     fontWeight: "bolder",
                     position: "absolute",
-                    top: "47vh",
+                    top: "48vh",
                     left: "50%",
                     transform: "translateX(-50%)",
                 }}
@@ -113,12 +113,12 @@ export const ICardTemplate = ({
                 src={MOHAR_IMAGE}
                 alt=""
                 style={{
-                    width: 54,
-                    height: 61,
+                    width: 108,
+                    height: 122,
                     objectFit: "contain",
                     position: "absolute",
-                    top: "74vh",
-                    right: "2%",
+                    top: "32vh",
+                    left: "53%",
                 }}
             />
         </div>

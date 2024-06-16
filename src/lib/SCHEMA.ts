@@ -268,11 +268,11 @@ export const COMPUTER_TYPING_MARKS_SCHEMA = z.object({
         .min(5, { message: "Select registration number" }),
     englishTyping: z
         .number({ required_error: "Enter marks for English" })
-        .min(1, { message: "marks cannot less than 1" })
+        .min(0, { message: "marks cannot less than 0" })
         .max(100, { message: "marks cannot be greater than 100" }),
     hindiTyping: z
         .number({ required_error: "Enter marks for Hindi" })
-        .min(1, { message: "marks cannot less than 1" })
+        .min(0, { message: "marks cannot less than 0" })
         .max(100, { message: "marks cannot be greater than 100" }),
 });
 
