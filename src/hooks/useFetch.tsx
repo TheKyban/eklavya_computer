@@ -1,5 +1,11 @@
 "use client";
-import { Carousel, Course, Marks, Student } from "@prisma/client";
+import {
+    Carousel,
+    Course,
+    Marks,
+    Student,
+    UniversityPrograms,
+} from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import queryString from "query-string";
@@ -250,6 +256,17 @@ export const useAssests = () => {
         queryFn: async () => {
             const { data } = await axios("/api/carousel");
             return data?.carousels;
+        },
+        staleTime: 60 * 1000 * 30,
+    });
+};
+
+export const useUniversityPrograms = () => {
+    return useQuery<UniversityPrograms[]>({
+        queryKey: ["university_programs"],
+        queryFn: async () => {
+            const { data } = await axios("/api/universityPrograms");
+            return data?.images;
         },
         staleTime: 60 * 1000 * 30,
     });

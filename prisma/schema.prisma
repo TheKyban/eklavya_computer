@@ -163,6 +163,12 @@ model Carousel {
     createdAt DateTime @default(now())
 }
 
+model UniversityPrograms {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    url       String
+    createdAt DateTime @default(now())
+}
+
 type Issue {
     issue Boolean   @default(false)
     date  DateTime?

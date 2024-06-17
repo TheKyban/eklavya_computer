@@ -1,10 +1,10 @@
-import { CarouselImageList } from "@/components/Dashboard/carousel-setting/carousel-image-list";
 import { getServerSession } from "next-auth";
 import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { redirect } from "next/navigation";
 import { LargeImageUploader } from "@/lib/IMAGE_UPLOADER_LARGE";
+import { UniversityImageList } from "@/components/Dashboard/university-programs/university-image-list";
 
-export default async function CarouselSettings() {
+export default async function UniversityProgramsSetting() {
     /**
      * VERIFY ROLE
      */
@@ -15,8 +15,11 @@ export default async function CarouselSettings() {
     }
     return (
         <div className="max-w-[1500px] m-auto">
-            <LargeImageUploader apiUrl="/api/carousel" keys={["assets"]} />
-            <CarouselImageList />
+            <LargeImageUploader
+                apiUrl="/api/universityPrograms"
+                keys={["university_programs"]}
+            />
+            <UniversityImageList />
         </div>
     );
 }

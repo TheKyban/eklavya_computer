@@ -6,7 +6,14 @@ import { Label } from "@/components/ui/label";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useCustumQuery } from "@/hooks/use-queries";
 import { toast } from "@/components/ui/use-toast";
-export const CarouselMediaUploader = () => {
+
+export const LargeImageUploader = ({
+    apiUrl,
+    keys,
+}: {
+    apiUrl: string;
+    keys: string[];
+}) => {
     const [isUploading, setIsUploading] = useState(false);
     const { addData } = useCustumQuery();
     const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +21,9 @@ export const CarouselMediaUploader = () => {
         if (file) {
             // 1mb = 1024000
             if (file.size > 1024000 * 5) {
-                toast({ description: "😶 Image Should be greater than 5mb" });
+                toast({
+                    description: "😶 Image Should not be greater than 5mb",
+                });
                 return;
             }
             try {
@@ -22,9 +31,9 @@ export const CarouselMediaUploader = () => {
 
                 const formData = new FormData();
                 formData.append("file", file);
-                const { data } = await axios.post(`/api/carousel`, formData);
+                const { data } = await axios.post(apiUrl, formData);
                 console.log(data);
-                addData(["assets"], data);
+                addData(keys, data);
             } catch (error: any) {
                 console.log(error);
                 toast(error.message);

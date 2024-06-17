@@ -59,6 +59,14 @@ export const links: LinkType[] = [
         role: "ADMIN",
     },
     {
+        title: "university Programs",
+        link: "/dashboard/universityPrograms",
+        icon: (
+            <Album className="w-5 h-5 text-indigo-700 dark:text-indigo-500" />
+        ),
+        role: "ADMIN",
+    },
+    {
         title: "Password",
         icon: <FormInput className="w-5 h-5 text-fuchsia-400" />,
         link: "/dashboard/password",
