@@ -11,10 +11,19 @@ import {
 } from "lucide-react";
 import { Session } from "next-auth";
 import Image from "next/image";
+import { TimeComponent } from "./Time";
 
 const Navbar = ({ session }: { session: Session | null }) => {
     return (
         <>
+            <div className="bg-gradient-to-r from-teal-400 to-yellow-200 w-full flex items-center justify-end py-1 px-3 gap-4">
+                {/* Login  & Dasboard*/}
+                <IsAuth
+                    session={session}
+                    className="lg:text-xs 2xl:text-base text-zinc-800"
+                />
+                <TimeComponent className="text-zinc-800" />
+            </div>
             <div
                 className={`hidden lg:flex items-center justify-between w-full shadow-lg bg-white sticky top-0 left-0 z-50`}
             >
@@ -87,12 +96,6 @@ const Navbar = ({ session }: { session: Session | null }) => {
                             </div>
                         );
                     })}
-
-                    {/* Login  & Dasboard*/}
-                    <IsAuth
-                        session={session}
-                        className="lg:text-xs 2xl:text-base"
-                    />
                 </div>
             </div>
             {/* MOBILE */}
