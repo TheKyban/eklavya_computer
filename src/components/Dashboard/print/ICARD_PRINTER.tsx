@@ -24,6 +24,7 @@ import { poppins } from "@/lib/FONTS";
 import { Layers3, Printer, Shield, Users } from "lucide-react";
 import Link from "next/link";
 import { FC, useState } from "react";
+import { UserBranchList } from "../UserBranchList";
 
 interface pageProps {
     page: string;
@@ -59,34 +60,12 @@ const IcardPrinter: FC<pageProps> = ({ page, registration, branches }) => {
 
             <div className="w-full flex flex-wrap gap-5">
                 {/* Users */}
-                <div className="flex flex-col gap-2">
-                    <div className="flex gap-1 items-center">
-                        <Users className="w-5 h-5 text-teal-500" />
-                        <span>USER ID</span>
-                    </div>
-                    <Select
-                        defaultValue={user}
-                        value={user}
-                        onValueChange={(val) => setUser(val)}
-                        disabled={isLoading}
-                    >
-                        <SelectTrigger className="w-36">
-                            <SelectValue placeholder="Select User" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                {branches?.map((branch) => (
-                                    <SelectItem
-                                        key={branch.userId}
-                                        value={branch.userId}
-                                    >
-                                        {branch.userId}
-                                    </SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div>
+                <UserBranchList
+                    user={user}
+                    setUser={(val) => setUser(val)}
+                    branches={branches}
+                    isLoading={isLoading}
+                />
             </div>
 
             <Table>

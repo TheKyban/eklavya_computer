@@ -318,7 +318,13 @@ export const PUT = async (req: Request) => {
                                   },
                               },
                           }
-                        : {},
+                        : {
+                              update: {
+                                  typingMarks: {
+                                      unset: true,
+                                  },
+                              },
+                          },
             },
             include: {
                 Course: true,

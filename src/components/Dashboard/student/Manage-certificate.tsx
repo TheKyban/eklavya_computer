@@ -2,13 +2,11 @@
 import { LoadingCells } from "@/components/loading/loading";
 import Search from "@/components/search/search";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
     Select,
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
@@ -20,29 +18,19 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { toast } from "@/components/ui/use-toast";
 import { useModal } from "@/hooks/use-modal-store";
-import { useCustumQuery } from "@/hooks/use-queries";
 import { useVerifyCertificate } from "@/hooks/useFetch";
 import { DATE_FORMAT } from "@/lib/CONSTANTS";
 import { poppins } from "@/lib/FONTS";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { format } from "date-fns";
 import { Layers2, Layers3, Shield, Users } from "lucide-react";
 import { FC, useState } from "react";
+import { UserBranchList } from "../UserBranchList";
 
 interface pageProps {
     page: string;
     registration: string;
     branches: { branch: string; userId: string }[];
-}
-
-interface updateType {
-    registration: string;
-    verified: boolean;
-    userId: string;
-    course: string;
 }
 
 type course = "computerTyping" | "other";
@@ -82,34 +70,12 @@ const ManageCertificate: FC<pageProps> = ({ branches, page, registration }) => {
 
             <div className="w-full flex flex-wrap gap-5">
                 {/* Users */}
-                <div className="flex flex-col gap-2">
-                    <div className="flex gap-1 items-center">
-                        <Users className="w-5 h-5 text-teal-500" />
-                        <span>USER ID</span>
-                    </div>
-                    <Select
-                        defaultValue={user}
-                        value={user}
-                        onValueChange={(val) => setUser(val)}
-                        disabled={isLoading}
-                    >
-                        <SelectTrigger className="w-36">
-                            <SelectValue placeholder="Select User" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                {branches?.map((branch) => (
-                                    <SelectItem
-                                        key={branch.userId}
-                                        value={branch.userId}
-                                    >
-                                        {branch.userId}
-                                    </SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div>
+                <UserBranchList
+                    user={user}
+                    setUser={(val) => setUser(val)}
+                    branches={branches}
+                    isLoading={isLoading}
+                />
 
                 {/* Course */}
                 <div className="flex flex-col gap-2">

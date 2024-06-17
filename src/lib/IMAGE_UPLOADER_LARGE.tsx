@@ -32,7 +32,6 @@ export const LargeImageUploader = ({
                 const formData = new FormData();
                 formData.append("file", file);
                 const { data } = await axios.post(apiUrl, formData);
-                console.log(data);
                 addData(keys, data);
             } catch (error: any) {
                 console.log(error);
