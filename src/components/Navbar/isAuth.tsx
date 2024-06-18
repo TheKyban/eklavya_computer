@@ -25,7 +25,7 @@ export const IsAuth = ({
             onClick={setOpen}
             {...props}
         >
-            <Lock className="w-4 h-4 text-orange-800" />
+            <Lock className="w-4 h-4 text-yellow-400" />
             <span>Dashbord</span>
         </Link>
     ) : (
@@ -38,8 +38,8 @@ export const IsAuth = ({
             onClick={setOpen}
             {...props}
         >
-            <Lock className="w-4 h-4 text-orange-800" />
-            <span>Login</span>
+            <Lock className="w-4 h-4 text-yellow-400" />
+            <span>Admin & Centre Login</span>
         </Link>
     );
 };

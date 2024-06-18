@@ -8,21 +8,27 @@ import {
     ArrowRightFromLine,
     ChevronDown,
     ChevronRight,
+    Clock,
 } from "lucide-react";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { TimeComponent } from "./Time";
+import { Separator } from "../ui/separator";
 
 const Navbar = ({ session }: { session: Session | null }) => {
     return (
         <>
-            <div className="bg-indigo-400 w-full flex items-center justify-end py-1 px-3 gap-4">
+            <div className="bg-[#0D3B73] w-full flex items-center justify-end py-1 px-3 gap-4">
                 {/* Login  & Dasboard*/}
                 <IsAuth
                     session={session}
-                    className="lg:text-xs 2xl:text-base text-zinc-800"
+                    className="lg:text-xs 2xl:text-base font-semibold text-yellow-400 capitalize"
                 />
-                <TimeComponent className="text-zinc-800" />
+                <Separator className="w-[2px] h-5 bg-yellow-400" />
+                <div className="flex gap-2 items-center justify-center">
+                    <Clock className="w-4 h-4 text-yellow-400" />
+                    <TimeComponent className="text-yellow-400" />
+                </div>
             </div>
             <div
                 className={`hidden lg:flex items-center justify-between w-full shadow-lg bg-white sticky top-0 left-0 z-50`}
