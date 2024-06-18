@@ -19,7 +19,7 @@ export const IsAuth = ({
         <Link
             href="/dashboard"
             className={cn(
-                "transition hover:text-blue-800 uppercase flex gap-2 items-center",
+                "transition hover:text-blue-800 flex gap-2 items-center",
                 className,
             )}
             onClick={setOpen}
@@ -32,7 +32,7 @@ export const IsAuth = ({
         <Link
             href="/login"
             className={cn(
-                "transition hover:text-blue-800 uppercase flex gap-2 items-center",
+                "transition hover:text-blue-800 flex gap-2 items-center",
                 className,
             )}
             onClick={setOpen}

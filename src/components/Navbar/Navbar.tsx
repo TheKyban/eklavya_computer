@@ -22,7 +22,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                 {/* Login  & Dasboard*/}
                 <IsAuth
                     session={session}
-                    className="lg:text-xs 2xl:text-base font-semibold text-yellow-400 capitalize"
+                    className="lg:text-xs 2xl:text-base font-semibold text-yellow-400 capitalize hover:text-white transition-all duration-300"
                 />
                 <Separator className="w-[2px] h-5 bg-yellow-400" />
                 <div className="flex gap-2 items-center justify-center">
