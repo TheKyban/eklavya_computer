@@ -16,7 +16,7 @@ import { TimeComponent } from "./Time";
 const Navbar = ({ session }: { session: Session | null }) => {
     return (
         <>
-            <div className="bg-gradient-to-r from-teal-400 to-yellow-200 w-full flex items-center justify-end py-1 px-3 gap-4">
+            <div className="bg-indigo-400 w-full flex items-center justify-end py-1 px-3 gap-4">
                 {/* Login  & Dasboard*/}
                 <IsAuth
                     session={session}
