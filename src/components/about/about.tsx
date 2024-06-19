@@ -104,7 +104,7 @@ export default function About() {
                     Our vision serves as the framework for our Roadmap and
                     guides every aspect of our bussiness by describing that we
                     need to accomplish in order to continue achieving sustained
-                    quality to be an academic CENTRE OF EXCELLENCE in the area
+                    quality to be an academic CENTER OF EXCELLENCE in the area
                     of computer education and a well-networked institution
                     committed towards delivering globally competitive computer
                     education, training and research to individuals, corporates

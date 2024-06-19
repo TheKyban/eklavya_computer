@@ -214,7 +214,7 @@ export const FromDeskOf = () => {
                             contribution to the society. EUPL provides generic
                             skills together with flexibility, adaptability and
                             passion for life-long learning. While simultaneously
-                            equipping young people with the best basics for
+                            equipping young people with the best basis for
                             carrers in any area, including industry and
                             unforeseen needs of the future.
                         </p>
