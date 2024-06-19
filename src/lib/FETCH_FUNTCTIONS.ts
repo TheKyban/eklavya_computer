@@ -967,6 +967,9 @@ export const fetchUserDashboardData = async (userId: string) => {
 
 export const fetchFamilies = async () => {
     const users = await Prisma.user.findMany({
+        where: {
+            role: "FRANCHISE",
+        },
         select: {
             img: true,
             name: true,
