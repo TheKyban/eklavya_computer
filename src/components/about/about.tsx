@@ -62,7 +62,7 @@ export default function About() {
                     className={`text-left text-sm text-slate-900/75 px-2 leading-6 ${montserrat.className} flex flex-col gap-5 font-medium w-[80%] lg:w-[60%] px-5`}
                 >
                     Our Roadmap starts with our mission, which is enduring. It
-                    declares our purpose as a company and sevices as the
+                    declares our purpose as a company and services as the
                     standard against which we weight our action and dicisions.
                     To strengthen, sustain and professionalize business
                     knowledge through creative research and teaching,
@@ -104,9 +104,9 @@ export default function About() {
                     Our vision serves as the framework for our Roadmap and
                     guides every aspect of our bussiness by describing that we
                     need to accomplish in order to continue achieving sustained
-                    quality to be an academic CENTER OF EXCELLENCE in the area
+                    quality to be an academic CENTRE OF EXCELLENCE in the area
                     of computer education and a well-networked institution
-                    committed towords delivering globally competitive computer
+                    committed towards delivering globally competitive computer
                     education, training and research to individuals, corporates
                     bodies, government organizations and the society.
                 </p>

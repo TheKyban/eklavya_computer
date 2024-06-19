@@ -191,7 +191,7 @@ export const FromDeskOf = () => {
                         <p>
                             Education is the most powerful weapon which can be
                             used to change the world. This is the only tool to
-                            remove the darkness of ignornce from the society.
+                            remove the darkness of ignorence from the society.
                             Information Technology has become the backbone off
                             all the productive activities today. It is not only
                             the fastest growing industry but it is the most
@@ -214,8 +214,8 @@ export const FromDeskOf = () => {
                             contribution to the society. EUPL provides generic
                             skills together with flexibility, adaptability and
                             passion for life-long learning. While simultaneously
-                            equipping young people with the best basis for
-                            carrers inany area, including industry and
+                            equipping young people with the best basics for
+                            carrers in any area, including industry and
                             unforeseen needs of the future.
                         </p>
                         <p>
@@ -261,10 +261,10 @@ const WhySection = () => {
                 <p
                     className={`w-[90%] md:w-[60%] text-left text-sm text-slate-900/75 px-2 leading-6 ${montserrat.className} font-medium`}
                 >
-                    Our purpose as a company and sevices as the standard against
-                    which we weight our action and dicisions. To strengthen,
-                    sustain and professionalize business knowledge through
-                    creative research and teaching, highlighting the
+                    Our purpose as a company and services as the standard
+                    against which we weight our action and dicisions. To
+                    strengthen, sustain and professionalize business knowledge
+                    through creative research and teaching, highlighting the
                     significance of learning and by collaborating with
                     organizations, institutions and universities both within and
                     well beyond the national boundaries.
