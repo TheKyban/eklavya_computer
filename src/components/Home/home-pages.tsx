@@ -191,7 +191,7 @@ export const FromDeskOf = () => {
                         <p>
                             Education is the most powerful weapon which can be
                             used to change the world. This is the only tool to
-                            remove the darkness of ignorence from the society.
+                            remove the darkness of ignorance from the society.
                             Information Technology has become the backbone off
                             all the productive activities today. It is not only
                             the fastest growing industry but it is the most

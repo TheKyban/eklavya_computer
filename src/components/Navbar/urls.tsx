@@ -1,17 +1,12 @@
 import {
     Album,
     BookUser,
-    Contact,
     GraduationCap,
     LucideIcon,
-    Table,
     Home,
     Users,
     LibraryBig,
-    Computer,
-    Database,
-    Download,
-    Files,
+    IndianRupee,
 } from "lucide-react";
 
 interface linkType {
@@ -62,6 +57,23 @@ const Franchise: linkType[] = [
         icon: Users,
     },
 ];
+const AboutUs: linkType[] = [
+    {
+        title: "About EUPL",
+        link: "/about",
+        icon: Album,
+    },
+    {
+        title: "MSME",
+        link: "/about/msme",
+        icon: Album,
+    },
+    {
+        title: "ISO",
+        link: "/about/iso",
+        icon: IndianRupee,
+    },
+];
 
 export const navbarLinks: linkType[] = [
     {
@@ -71,6 +83,7 @@ export const navbarLinks: linkType[] = [
     },
     { title: "Student Zone", links: StudentzoneLinks, icon: GraduationCap },
     { title: "Franchise", links: Franchise, icon: Users },
+    { title: "About Us", links: AboutUs, icon: Album },
     {
         title: "Course",
         link: "/course",
@@ -82,11 +95,7 @@ export const navbarLinks: linkType[] = [
         link: "/university",
         icon: GraduationCap,
     },
-    {
-        title: "About us",
-        link: "/about",
-        icon: Album,
-    },
+
     {
         title: "Contact us",
         link: "#contact",
