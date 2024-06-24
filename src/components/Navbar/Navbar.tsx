@@ -74,12 +74,12 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                     </span>
                                     <ChevronDown
                                         className={
-                                            "transition group-hover:text-blue-800  font-normal w-3 h-3 group-hover:rotate-180 duration-700"
+                                            "transition group-hover:text-blue-800  font-normal w-3 h-3 group-hover:rotate-180 duration-300"
                                         }
                                     />
                                 </div>
 
-                                <div className="absolute top-full left-1/2 -translate-x-1/2 flex flex-col gap-2 bg-white w-56 rounded-b-lg px-3 pt-2 pb-4 transition-all opacity-0 group-hover:opacity-100 z-0 group-hover:z-10 duration-700 invisible group-hover:visible">
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 flex flex-col gap-2 bg-white w-56 rounded-b-lg px-3 pt-2 pb-4 transition-all opacity-0 group-hover:opacity-100 z-0 group-hover:z-10 invisible group-hover:visible">
                                     {link?.links?.map((link) => (
                                         <Link
                                             key={link.title}
