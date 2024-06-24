@@ -2,14 +2,7 @@ import Link from "next/link";
 import MobileMode from "@/components/Navbar/MobileMode";
 import { navbarLinks } from "@/components/Navbar/urls";
 import { IsAuth } from "./isAuth";
-import {
-    ArrowDown,
-    ArrowRight,
-    ArrowRightFromLine,
-    ChevronDown,
-    ChevronRight,
-    Clock,
-} from "lucide-react";
+import { ChevronDown, ChevronRight, Clock } from "lucide-react";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { TimeComponent } from "./Time";
@@ -18,6 +11,7 @@ import { Separator } from "../ui/separator";
 const Navbar = ({ session }: { session: Session | null }) => {
     return (
         <>
+            {/* FIRST NAVBAR */}
             <div className="bg-[#0D3B73] w-full flex items-center justify-end py-1 px-3 gap-4">
                 {/* Login  & Dasboard*/}
                 <IsAuth
@@ -30,8 +24,10 @@ const Navbar = ({ session }: { session: Session | null }) => {
                     <TimeComponent className="text-yellow-400" />
                 </div>
             </div>
+
+            {/* SECOND NAVBAR */}
             <div
-                className={`hidden lg:flex items-center justify-between w-full shadow-lg bg-white sticky top-0 left-0 z-50`}
+                className={`hidden lg:flex items-center justify-between w-full shadow-lg bg-white sticky top-0 left-0 z-50 py-2`}
             >
                 <Link href={"/"} className="ml-auto">
                     <Image
@@ -39,8 +35,8 @@ const Navbar = ({ session }: { session: Session | null }) => {
                         src={
                             "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
                         }
-                        width={300}
-                        height={100}
+                        width={350}
+                        height={150}
                         alt="logo"
                         className="object-contain"
                     />
