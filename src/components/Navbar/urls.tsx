@@ -64,6 +64,11 @@ const AboutUs: linkType[] = [
         icon: Album,
     },
     {
+        title: "Incorporation",
+        link: "/about/incorporation",
+        icon: Album,
+    },
+    {
         title: "MSME",
         link: "/about/msme",
         icon: Album,
