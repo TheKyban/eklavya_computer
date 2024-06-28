@@ -48,7 +48,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                 key={link.title}
                                 href={link.link}
                                 className={
-                                    "transition hover:text-blue-800 font-normal uppercase h-full flex items-center justify-center gap-2 lg:text-xs py-3 2xl:text-base"
+                                    "transition hover:text-blue-800 font-semibold uppercase h-full flex items-center justify-center gap-2 py-3 text-lg"
                                 }
                             >
                                 {
@@ -64,7 +64,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                 <div className="flex gap-2 justify-center items-center h-full py-3">
                                     <span
                                         className={
-                                            "transition-all group-hover:text-blue-800  duration-300 font-normal uppercase flex justify-center items-center gap-2 lg:text-xs 2xl:text-base"
+                                            "transition-all group-hover:text-blue-800  duration-300 font-semibold uppercase flex justify-center items-center gap-2 text-lg"
                                         }
                                     >
                                         {
@@ -84,7 +84,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                         <Link
                                             key={link.title}
                                             className={
-                                                "flex gap-2 transition-all hover:text-blue-800 hover:translate-x-4 duration-300 font-normal items-center lg:text-xs 2xl:text-base"
+                                                "flex gap-2 transition-all hover:text-blue-800 hover:translate-x-4 duration-300 items-center text-base font-semibold"
                                             }
                                             href={link?.link!}
                                         >

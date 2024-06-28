@@ -57,6 +57,7 @@ const Franchise: linkType[] = [
         icon: Users,
     },
 ];
+
 const AboutUs: linkType[] = [
     {
         title: "About EUPL",
