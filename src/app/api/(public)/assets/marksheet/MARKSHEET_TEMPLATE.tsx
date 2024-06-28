@@ -69,6 +69,20 @@ export const MarksheetTemplate = ({
                 {student?.registration}
             </span>
 
+            {/* Student Image */}
+
+            {/* eslint-disable-next-line */}
+            <img
+                src={student?.img}
+                style={{
+                    position: "absolute",
+                    top: 273,
+                    right: 100,
+                    height: 80,
+                    width: 80,
+                }}
+            />
+
             <span style={{ position: "absolute", top: 273, left: 280 }}>
                 {TO_CAPITALIZE(student?.name)}
             </span>

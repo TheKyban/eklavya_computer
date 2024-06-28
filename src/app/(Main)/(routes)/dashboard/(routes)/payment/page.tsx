@@ -23,13 +23,13 @@ const Payment: FC<pageProps> = ({}) => {
                             <TableCell>00000042912910762</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell>Account Name</TableCell>
+                            <TableCell>Account Holder</TableCell>
                             <TableCell>
                                 EKLAVAYA UNIVERSAL PRIVATE LIMITED
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell>BANK NAME</TableCell>
+                            <TableCell>Bank Name</TableCell>
                             <TableCell>SBI</TableCell>
                         </TableRow>
                         <TableRow>

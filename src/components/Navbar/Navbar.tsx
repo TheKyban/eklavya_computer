@@ -79,7 +79,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                     />
                                 </div>
 
-                                <div className="absolute top-full left-1/2 -translate-x-1/2 flex flex-col gap-2 bg-white w-56 rounded-b-lg px-3 pt-2 pb-4 transition-all opacity-0 group-hover:opacity-100 z-0 group-hover:z-10 invisible group-hover:visible">
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 flex flex-col gap-2 bg-white w-64 rounded-b-lg px-3 pt-2 pb-4 transition-all opacity-0 group-hover:opacity-100 z-0 group-hover:z-10 invisible group-hover:visible">
                                     {link?.links?.map((link) => (
                                         <Link
                                             key={link.title}
