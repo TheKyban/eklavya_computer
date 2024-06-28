@@ -149,7 +149,8 @@ const StudentList = ({
                                                             registration:
                                                                 searchParams.registration
                                                                     ? searchParams.registration
-                                                                    : "none",
+                                                                    : "",
+                                                            userId: "",
                                                         },
                                                     })
                                                 }

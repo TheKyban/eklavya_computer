@@ -82,11 +82,11 @@ const AboutUs: linkType[] = [
 ];
 
 export const navbarLinks: linkType[] = [
-    {
-        title: "Home",
-        link: "/",
-        icon: Home,
-    },
+    // {
+    //     title: "Home",
+    //     link: "/",
+    //     icon: Home,
+    // },
     { title: "Student Zone", links: StudentzoneLinks, icon: GraduationCap },
     { title: "Franchise", links: Franchise, icon: Users },
     { title: "About Us", links: AboutUs, icon: Album },

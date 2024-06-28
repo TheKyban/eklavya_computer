@@ -309,22 +309,6 @@ export const PUT = async (req: Request) => {
                 dor: new Date(data.dor),
                 qualification: data.qualification,
                 course: data.course,
-                marks:
-                    course?.name === "COMPUTER TYPING"
-                        ? {
-                              update: {
-                                  marks: {
-                                      unset: true,
-                                  },
-                              },
-                          }
-                        : {
-                              update: {
-                                  typingMarks: {
-                                      unset: true,
-                                  },
-                              },
-                          },
             },
             include: {
                 Course: true,

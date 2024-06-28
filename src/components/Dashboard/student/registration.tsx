@@ -96,7 +96,7 @@ const StudentRegistration = () => {
                 setState("");
                 form.setValue("branch", session?.user?.userId as string);
                 try {
-                    addStudent(["pending_list", "1", "none"], data?.student);
+                    addStudent(["pending_list", "1", "", ""], data?.student);
                 } catch (error) {
                     console.log("Error in addStudent");
                     toast({ description: data?.message });

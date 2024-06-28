@@ -16,7 +16,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                 {/* Login  & Dasboard*/}
                 <IsAuth
                     session={session}
-                    className="lg:text-xs 2xl:text-base font-semibold text-yellow-400 capitalize hover:text-white transition-all duration-300"
+                    className="text-base font-semibold text-yellow-400 capitalize hover:text-white transition-all duration-300"
                 />
                 <Separator className="w-[2px] h-5 bg-yellow-400" />
                 <div className="flex gap-2 items-center justify-center">
@@ -27,7 +27,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
 
             {/* SECOND NAVBAR */}
             <div
-                className={`hidden lg:flex items-center justify-between w-full shadow-lg bg-white sticky top-0 left-0 z-50 py-2`}
+                className={`hidden lg:flex items-center justify-between w-full shadow-lg bg-white sticky top-0 left-0 z-50 py-2 px-2`}
             >
                 <Link href={"/"} className="ml-auto">
                     <Image
@@ -48,7 +48,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                 key={link.title}
                                 href={link.link}
                                 className={
-                                    "transition hover:text-blue-800 font-semibold uppercase h-full flex items-center justify-center gap-2 py-3 text-lg"
+                                    "transition hover:text-blue-800 font-semibold uppercase h-full flex items-center justify-center gap-2 py-3 text-base lg:text-lg"
                                 }
                             >
                                 {
@@ -64,7 +64,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                 <div className="flex gap-2 justify-center items-center h-full py-3">
                                     <span
                                         className={
-                                            "transition-all group-hover:text-blue-800  duration-300 font-semibold uppercase flex justify-center items-center gap-2 text-lg"
+                                            "transition-all group-hover:text-blue-800  duration-300 font-semibold uppercase flex justify-center items-center gap-2 text-base lg:text-lg"
                                         }
                                     >
                                         {
@@ -84,7 +84,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                                         <Link
                                             key={link.title}
                                             className={
-                                                "flex gap-2 transition-all hover:text-blue-800 hover:translate-x-4 duration-300 items-center text-base font-semibold"
+                                                "flex gap-2 transition-all hover:text-blue-800 hover:translate-x-4 duration-300 items-center text-base lg:text-lg font-semibold"
                                             }
                                             href={link?.link!}
                                         >
