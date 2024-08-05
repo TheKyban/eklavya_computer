@@ -1,8 +1,13 @@
 import { Login } from "@/components/login/Login";
 import { Boxes } from "@/components/ui/background-box";
 import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
+import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+    title: "Login",
+};
 
 export default async function LoginPage() {
     const session = await getServerSession(AUTH_OPTIONS);

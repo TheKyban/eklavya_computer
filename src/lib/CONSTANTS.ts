@@ -41,3 +41,5 @@ export const DOCUMENT_SIZES = {
 };
 
 export const DATE_FORMAT = "dd/MM/yyyy";
+
+export const DOMAIN_NAME = "https://eklavayacomputer.com";
