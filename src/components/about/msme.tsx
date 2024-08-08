@@ -1,4 +1,4 @@
-export const MSME = () => {
+const MSME = () => {
     return (
         <div className="flex items-center justify-center py-24">
             <iframe
@@ -9,3 +9,5 @@ export const MSME = () => {
         </div>
     );
 };
+
+export default MSME;
