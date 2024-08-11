@@ -1,5 +1,4 @@
 import { Login } from "@/components/login/Login";
-import { Boxes } from "@/components/ui/background-box";
 import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -15,11 +14,11 @@ export default async function LoginPage() {
         return redirect("/dashboard");
     }
     return (
-        <div className="w-screen h-screen max-h-screen max-w-[100vw] relative overflow-hidden flex items-center justify-center">
-            <div className="relative z-50">
+        <div className="w-screen h-screen max-h-screen max-w-[100vw]  relative overflow-hidden flex items-center justify-center bg-[url('/bg.jpg')] bg-no-repeat bg-cover bg-right-bottom">
+            <div className="relative z-50 ">
                 <Login />
             </div>
-            <Boxes />
+            {/* <Boxes /> */}
         </div>
     );
 }

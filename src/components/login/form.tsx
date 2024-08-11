@@ -23,7 +23,7 @@ export const LoginForm = () => {
             <div className="w-full">
                 <label
                     htmlFor="userid"
-                    className="block uppercase text-xs font-medium"
+                    className="block uppercase text-xs font-medium text-white mb-1"
                 >
                     User id
                 </label>
@@ -40,7 +40,7 @@ export const LoginForm = () => {
             <div className="w-full">
                 <label
                     htmlFor="password"
-                    className="block uppercase text-xs font-medium"
+                    className="block uppercase text-xs font-medium text-white mb-1"
                 >
                     Password
                 </label>

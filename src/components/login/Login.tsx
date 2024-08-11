@@ -2,11 +2,11 @@ import Image from "next/image";
 import { LoginForm } from "./form";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { BANNER_IMAGE, EKLAVAYA_LOGO } from "@/lib/ASSETS";
+import { EKLAVAYA_LOGO } from "@/lib/ASSETS";
 
 export const Login = () => {
     return (
-        <div className="flex max-w-[300px] flex-col px-8 pt-4 rounded-xl pb-5 shadow-2xl bg-white/50 drop-shadow-md items-center">
+        <div className="flex max-w-[300px] flex-col px-8 pt-4 rounded-xl pb-5 bg-yellow-900  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-gray-100 items-center">
             <Image
                 src={EKLAVAYA_LOGO}
                 width={80}
