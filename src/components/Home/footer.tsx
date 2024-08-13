@@ -1,3 +1,4 @@
+"use client";
 import { BANNER_IMAGE } from "@/lib/ASSETS";
 import { MAX_WIDTH } from "@/lib/STYLES";
 import {
@@ -10,11 +11,27 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export const Footer = () => {
     const year = new Date(Date.now()).getFullYear();
     return (
-        <div className={`flex flex-col items-center w-full`} id="contact">
+        <motion.div
+            initial={{
+                y: 100,
+                opacity: 0,
+            }}
+            whileInView={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{
+                duration: 0.6,
+                ease: "easeInOut",
+            }}
+            className={`flex flex-col items-center w-full`}
+            id="contact"
+        >
             <div className={`w-full h-full bg-[#19352D] py-12`}>
                 <div
                     className={`flex gap-10 flex-col lg:flex-row items-start justify-center lg:items-start lg:justify-between w-fit lg:w-[93%] 2xl:w-full ${MAX_WIDTH} m-auto`}
@@ -128,6 +145,6 @@ export const Footer = () => {
                     <span>Pvt. Ltd.</span>
                 </p>
             </div>
-        </div>
+        </motion.div>
     );
 };

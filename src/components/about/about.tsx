@@ -7,7 +7,7 @@ import { montserrat } from "@/lib/FONTS";
 export default function About() {
     return (
         <div
-            className={`${MIN_HEIGHT} flex flex-col items-center gap-6 bg-orange-50 text-black w-full py-5 overflow-hidden px-3`}
+            className={`${MIN_HEIGHT} flex flex-col items-center gap-6 text-black w-full py-5 overflow-hidden px-3`}
         >
             {/* ABOUT THE ACADEMY */}
 

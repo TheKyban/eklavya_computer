@@ -43,6 +43,8 @@ const ImageCard = ({ link, id }: { link: string; id: string }) => {
                     const allData = old?.filter((img) => img?.id !== id);
                     return allData;
                 });
+            } else {
+                toast({ description: data?.result });
             }
         } catch (error: any) {
             console.log(error);

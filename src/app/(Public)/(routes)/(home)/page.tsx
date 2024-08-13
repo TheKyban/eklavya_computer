@@ -6,7 +6,7 @@ export default async function Home() {
         const data = await fetchCarousels();
         const families = await fetchFamilies();
         return (
-            <div className="min-h-[calc(100vh-63px)] h-full bg-orange-50">
+            <div className="min-h-[calc(100vh-63px)] h-full ">
                 <FirstPage carousel={data} family={families} />
             </div>
         );

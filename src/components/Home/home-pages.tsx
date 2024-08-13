@@ -1,3 +1,4 @@
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import {
@@ -16,10 +17,16 @@ import {
 import { montserrat } from "@/lib/FONTS";
 import { MAX_WIDTH } from "@/lib/STYLES";
 import Image from "next/image";
-import { HomeCarousel } from "@/components/Home/home-carousel";
 import { FC } from "react";
-
+import { motion } from "framer-motion";
 import ReactMarquee from "react-fast-marquee";
+import SparklesText from "../ui/sparkles-text";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 interface familyType {
     img: string;
@@ -54,12 +61,78 @@ export const FirstPage: FC<firstPageProps> = ({ carousel, family }) => {
     );
 };
 
+const HomeCarousel: FC<{
+    carousel?: {
+        url: string;
+    }[];
+}> = ({ carousel }) => {
+    return (
+        <motion.div
+            animate={{
+                y: 0,
+                opacity: 1,
+            }}
+            initial={{
+                opacity: 0,
+                y: 100,
+            }}
+            transition={{
+                duration: 1,
+                ease: "easeInOut",
+            }}
+            className="w-full"
+        >
+            <Carousel
+                className="w-full h-[250px] sm:h-[400px] lg:h-[75vh] lg:max-h-[600px] relative"
+                plugins={[
+                    Autoplay({
+                        delay: 3000,
+                        stopOnInteraction: false,
+                    }),
+                ]}
+            >
+                <CarouselContent>
+                    {carousel?.map((image, idx) => (
+                        <CarouselItem key={idx}>
+                            <div className="relative w-full h-[250px] sm:h-[400px] lg:h-[75vh] lg:max-h-[600px]">
+                                <Image
+                                    src={image.url}
+                                    fill
+                                    alt={image.url}
+                                    className="object-fill w-full h-full"
+                                />
+                            </div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
+        </motion.div>
+    );
+};
+
 const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
     return (
-        <div className="w-full lg:w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 lg:rounded-lg py-7 lg:py-9 px-1 sm:px-5 flex flex-col items-center">
-            <span className="text-2xl sm:text-3xl font-semibold text-green-600 mb-7 uppercase border-b-2 pb-2 border-green-600">
-                Our Family
-            </span>
+        <motion.div
+            initial={{
+                y: 100,
+                opacity: 0,
+            }}
+            whileInView={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{
+                duration: 1.3,
+                ease: "easeInOut",
+            }}
+            className="w-full lg:w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 lg:rounded-lg py-7 lg:py-9 px-1 sm:px-5 flex flex-col items-center"
+        >
+            <SparklesText
+                text="Our Family"
+                className="text-2xl sm:text-3xl font-medium text-green-600 mb-7 uppercase border-b-2 pb-2 border-green-600"
+                sparklesCount={5}
+                colors={{ first: "pink", second: "orange" }}
+            />
             <ReactMarquee autoFill={true} pauseOnHover direction="right">
                 {family?.map(
                     (
@@ -94,95 +167,130 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
                     ),
                 )}
             </ReactMarquee>
-        </div>
+        </motion.div>
     );
 };
 
 const NoticeSection = () => {
     return (
-        <ReactMarquee
-            className="text-base font-semibold bg-black/10 py-3"
-            pauseOnHover
+        <motion.div
+            initial={{
+                y: 100,
+                opacity: 0,
+            }}
+            animate={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{
+                duration: 1.3,
+                ease: "easeInOut",
+            }}
+            className="w-full h-full"
         >
-            <li className="ml-8 flex items-center justify-center gap-2 text-orange-600 border-x border-orange-800 px-3">
-                <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>Admission is Going On...</p>
-            </li>
+            <ReactMarquee
+                className="text-base font-semibold bg-black/10 py-3"
+                pauseOnHover
+            >
+                <li className="ml-8 flex items-center justify-center gap-2 text-orange-600 border-x border-orange-800 px-3">
+                    <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Admission is Going On...</p>
+                </li>
 
-            <li className="ml-8 flex gap-2 items-center justify-center text-orange-600 border-x border-orange-800 px-3">
-                <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>Contact for Franchisee Opening.</p>
-            </li>
+                <li className="ml-8 flex gap-2 items-center justify-center text-orange-600 border-x border-orange-800 px-3">
+                    <Contact className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Contact for Franchisee Opening.</p>
+                </li>
 
-            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
-                <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>Educate Your Dreams</p>
-            </li>
+                <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
+                    <GraduationCap className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Educate Your Dreams</p>
+                </li>
 
-            <li className="ml-8 flex items-center justify-center gap-2 text-orange-600 border-x border-orange-800 px-3">
-                <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>Life+ Academics+ Creativity =Success</p>
-            </li>
+                <li className="ml-8 flex items-center justify-center gap-2 text-orange-600 border-x border-orange-800 px-3">
+                    <Target className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>Life+ Academics+ Creativity =Success</p>
+                </li>
 
-            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
-                <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>
-                    Educating Today&apos;s Learners for Tomorrow&apos;s world.
-                </p>
-            </li>
+                <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
+                    <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        Educating Today&apos;s Learners for Tomorrow&apos;s
+                        world.
+                    </p>
+                </li>
 
-            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
-                <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>You dared to Struggle Yesterday you can dare to win Today</p>
-            </li>
+                <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
+                    <Smile className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        You dared to Struggle Yesterday you can dare to win
+                        Today
+                    </p>
+                </li>
 
-            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
-                <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>
-                    It Is With Great Pleasure That I Congratulate You On Your
-                    Five Year Anniversary. Please Know That You Are Important
-                    Members Of Our Team And Your abilities And Contributions
-                    Will Be An Important Part Of Our Continued Success. People
-                    Are And Will Always Be.
-                </p>
-            </li>
+                <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
+                    <Building className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        It Is With Great Pleasure That I Congratulate You On
+                        Your Five Year Anniversary. Please Know That You Are
+                        Important Members Of Our Team And Your abilities And
+                        Contributions Will Be An Important Part Of Our Continued
+                        Success. People Are And Will Always Be.
+                    </p>
+                </li>
 
-            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
-                <Brain className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>
-                    IDEA--- All achievement, all earned riches, have their
-                    beginning in an idea.
-                </p>
-            </li>
+                <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
+                    <Brain className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        IDEA--- All achievement, all earned riches, have their
+                        beginning in an idea.
+                    </p>
+                </li>
 
-            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
-                <Lock className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>
-                    Balance --- Balance is the key to everything. What we do,
-                    think, say, eat, feel, they all require awareness and
-                    through this awareness we can grow.
-                </p>
-            </li>
+                <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
+                    <Lock className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        Balance --- Balance is the key to everything. What we
+                        do, think, say, eat, feel, they all require awareness
+                        and through this awareness we can grow.
+                    </p>
+                </li>
 
-            <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
-                <Hand className="min-w-[16px] w-4 min-h-[16px] h-4" />
-                <p>
-                    UNITY--- We are each other&apos;s harvest; we are each
-                    other&apos;s business; we are each other&apos;s magnitude
-                    and bond.
-                </p>
-            </li>
-        </ReactMarquee>
+                <li className="ml-8 flex items-center justify-center text-orange-600 gap-2 border-x border-orange-800 px-3">
+                    <Hand className="min-w-[16px] w-4 min-h-[16px] h-4" />
+                    <p>
+                        UNITY--- We are each other&apos;s harvest; we are each
+                        other&apos;s business; we are each other&apos;s
+                        magnitude and bond.
+                    </p>
+                </li>
+            </ReactMarquee>
+        </motion.div>
     );
 };
 
 export const FromDeskOf = () => {
     return (
-        <div className="bg-orange-100 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full">
+        <motion.div
+            initial={{
+                y: 100,
+                opacity: 0,
+            }}
+            whileInView={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{
+                duration: 1.3,
+                ease: "easeInOut",
+            }}
+            className="bg-orange-100 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full"
+        >
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
-                <span className="text-3xl font-semibold uppercase text-zinc-600 border-b-2 border-zinc-500 pb-2 ">
-                    From the Desk of Directors
-                </span>
+                <SparklesText
+                    text="From the Desk of Directors"
+                    className="text-3xl font-normal uppercase text-zinc-600 border-b-2 border-zinc-500 pb-2"
+                />
 
                 <div className="flex flex-col gap-4 w-full px-5 py-3 text-sm  lg:w-[70%] xl:text-lg">
                     <div
@@ -246,13 +354,27 @@ export const FromDeskOf = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
 const WhySection = () => {
     return (
-        <div className="bg-orange-100 rounded-lg w-[93%] 2xl:w-full">
+        <motion.div
+            initial={{
+                y: 100,
+                opacity: 0,
+            }}
+            whileInView={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{
+                duration: 1.3,
+                ease: "easeInOut",
+            }}
+            className="bg-orange-100 rounded-lg w-[93%] 2xl:w-full"
+        >
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                 <span className="text-3xl font-semibold text-zinc-600  border-b-2 border-zinc-600 pb-3 uppercase">
                     Why Eklavaya ?
@@ -270,13 +392,25 @@ const WhySection = () => {
                     well beyond the national boundaries.
                 </p>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
 const OurFeatures = () => {
     return (
-        <div
+        <motion.div
+            initial={{
+                y: 100,
+                opacity: 0,
+            }}
+            whileInView={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{
+                duration: 1.3,
+                ease: "easeInOut",
+            }}
             className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 bg-orange-100 rounded-lg py-10 h-full`}
         >
             <span className="text-3xl font-semibold text-green-600 border-b-2 border-green-600 pb-2 uppercase">
@@ -365,7 +499,7 @@ const OurFeatures = () => {
                     </CardBody>
                 </CardContainer>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
@@ -409,7 +543,20 @@ const OurCourses = () => {
         },
     ];
     return (
-        <div
+        <motion.div
+            initial={{
+                y: 100,
+                opacity: 0,
+            }}
+            whileInView={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{
+                duration: 1.3,
+                ease: "easeInOut",
+                staggerChildren: 1,
+            }}
             className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 bg-orange-100 rounded-lg  py-10 h-full`}
         >
             <span className="text-3xl font-semibold text-green-600 border-b-2 border-green-600 pb-2 uppercase">
@@ -433,6 +580,6 @@ const OurCourses = () => {
                     </CardContainer>
                 ))}
             </div>
-        </div>
+        </motion.div>
     );
 };

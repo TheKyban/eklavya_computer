@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
     const session = await getServerSession(AUTH_OPTIONS);
     return (
-        <div className="w-full h-full min-h-screen bg-orange-50 flex flex-col relative">
+        <div className="w-full h-full min-h-screen bg-orange-50/50 flex flex-col relative">
             <Navbar session={session} />
             {children}
 
