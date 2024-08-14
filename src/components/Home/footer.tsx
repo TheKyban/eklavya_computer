@@ -26,7 +26,7 @@ export const Footer = () => {
                 opacity: 1,
             }}
             transition={{
-                duration: 0.6,
+                duration: 1,
                 ease: "easeInOut",
             }}
             className={`flex flex-col items-center w-full`}
