@@ -38,7 +38,9 @@ interface SparklesTextProps {
      * @description
      * The text to be displayed
      * */
-    text: string;
+    text?: string;
+
+    children?: ReactElement;
 
     /**
      * @default 10
@@ -65,6 +67,7 @@ const SparklesText: React.FC<SparklesTextProps> = ({
     colors = { first: "#9E7AFF", second: "#FE8BBB" },
     className,
     sparklesCount = 10,
+    children,
     ...props
 }) => {
     const [sparkles, setSparkles] = useState<Sparkle[]>([]);
@@ -105,7 +108,7 @@ const SparklesText: React.FC<SparklesTextProps> = ({
         const interval = setInterval(updateStars, 100);
 
         return () => clearInterval(interval);
-    }, [colors.first, colors.second]);
+    }, [colors.first, colors.second, sparklesCount]);
 
     return (
         <div
@@ -122,7 +125,8 @@ const SparklesText: React.FC<SparklesTextProps> = ({
                 {sparkles.map((sparkle) => (
                     <Sparkle key={sparkle.id} {...sparkle} />
                 ))}
-                <strong>{text}</strong>
+                {!!text && <strong>{text}</strong>}
+                {!!children && children}
             </span>
         </div>
     );

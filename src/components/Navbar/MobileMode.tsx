@@ -16,6 +16,7 @@ import { navbarLinks } from "@/components/Navbar/urls";
 import { LinkStyle, LinkStyle2, LinkStyle3 } from "@/lib/STYLES";
 import { Session } from "next-auth";
 import { IsAuth } from "./isAuth";
+import { BANNER_IMAGE } from "@/lib/ASSETS";
 
 const MobileMode = ({ session }: { session: Session | null }) => {
     const [open, setOpen] = useState(false);
@@ -23,14 +24,7 @@ const MobileMode = ({ session }: { session: Session | null }) => {
     return (
         <div className="lg:hidden w-full flex flex-col">
             <div className="relative w-full h-28 mb-2">
-                <Image
-                    priority
-                    src={
-                        "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
-                    }
-                    fill
-                    alt="logo"
-                />
+                <Image priority src={BANNER_IMAGE} fill alt="logo" />
             </div>
             <div className="flex gap-5 items-center justify-end px-3 w-full bg-[#033C73] py-1">
                 <Sheet open={open} onOpenChange={(val) => setOpen(val)}>

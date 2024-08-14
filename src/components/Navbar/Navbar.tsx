@@ -7,6 +7,9 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { TimeComponent } from "./Time";
 import { Separator } from "../ui/separator";
+import SparklesText from "../ui/sparkles-text";
+import Meteors from "../ui/meteors";
+import { BANNER_IMAGE } from "@/lib/ASSETS";
 
 const Navbar = ({ session }: { session: Session | null }) => {
     return (
@@ -27,21 +30,24 @@ const Navbar = ({ session }: { session: Session | null }) => {
 
             {/* SECOND NAVBAR */}
             <div
-                className={`hidden lg:flex items-center justify-between w-full shadow-lg bg-white sticky top-0 left-0 z-50 py-2 px-2`}
+                className={`hidden lg:flex items-center justify-between w-full shadow-lg bg-white sticky top-0 left-0 z-50 py-2 px-2 overflow-x-clip`}
             >
                 <Link href={"/"} className="ml-auto">
-                    <Image
-                        priority
-                        src={
-                            "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715332597/ekavaya_assets/nudl9plxmmvmsejmcqva.jpg"
-                        }
-                        width={350}
-                        height={150}
-                        alt="logo"
-                        className="object-contain"
-                    />
+                    <SparklesText>
+                        <Image
+                            priority
+                            src={BANNER_IMAGE}
+                            width={350}
+                            height={150}
+                            alt="logo"
+                            className="object-contain"
+                        />
+                    </SparklesText>
                 </Link>
-                <div className="ml-auto w-full h-full flex items-center justify-end px-3 gap-x-6 text-zinc-800 text-sm max-w-7xl flex-wrap">
+
+                <Meteors number={10} />
+
+                <div className="relative ml-auto w-full h-full flex items-center justify-end px-3 gap-x-6 text-zinc-800 text-sm max-w-7xl flex-wrap">
                     {navbarLinks.map((link) => {
                         return !!link?.link ? (
                             <Link

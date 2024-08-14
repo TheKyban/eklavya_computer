@@ -27,6 +27,10 @@ import {
     CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import GridPattern from "../ui/grid-pattern";
+import { cn } from "@/lib/utils";
+import DotPattern from "../ui/dot";
+import BoxReveal from "../ui/Box-reveal";
 
 interface familyType {
     img: string;
@@ -110,67 +114,6 @@ const HomeCarousel: FC<{
     );
 };
 
-const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
-    return (
-        <motion.div
-            initial={{
-                y: 100,
-                opacity: 0,
-            }}
-            whileInView={{
-                y: 0,
-                opacity: 1,
-            }}
-            transition={{
-                duration: 1.3,
-                ease: "easeInOut",
-            }}
-            className="w-full lg:w-[93%]  2xl:w-full mx-auto overflow-hidden bg-orange-100 lg:rounded-lg py-7 lg:py-9 px-1 sm:px-5 flex flex-col items-center"
-        >
-            <SparklesText
-                text="Our Family"
-                className="text-2xl sm:text-3xl font-medium text-green-600 mb-7 uppercase border-b-2 pb-2 border-green-600"
-                sparklesCount={5}
-                colors={{ first: "pink", second: "orange" }}
-            />
-            <ReactMarquee autoFill={true} pauseOnHover direction="right">
-                {family?.map(
-                    (
-                        user: {
-                            img: string;
-                            name: string;
-                            branch: string;
-                        },
-                        idx: number,
-                    ) => (
-                        <div
-                            key={idx}
-                            className="flex flex-col gap-2 ml-16 items-center"
-                        >
-                            <Image
-                                src={user.img}
-                                width={100}
-                                height={100}
-                                alt="avatar"
-                                placeholder="empty"
-                                className="rounded-full object-cover min-w-[50px] min-h-[50px] max-w-[50px] max-h-[50px] lg:min-w-[70px] lg:min-h-[70px] lg:max-w-[70px] lg:max-h-[70px]"
-                            />
-                            <div className="flex flex-col gap-1 font-semibold items-center text-xs uppercase">
-                                <span className="text-rose-800">
-                                    {user.name}
-                                </span>
-                                <span className="text-orange-600">
-                                    {user.branch}
-                                </span>
-                            </div>
-                        </div>
-                    ),
-                )}
-            </ReactMarquee>
-        </motion.div>
-    );
-};
-
 const NoticeSection = () => {
     return (
         <motion.div
@@ -186,12 +129,14 @@ const NoticeSection = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
-            className="w-full h-full"
+            className="w-full h-full relative rounded-lg border bg-background md:shadow-xl overflow-hidden"
         >
-            <ReactMarquee
-                className="text-base font-semibold bg-black/10 py-3"
-                pauseOnHover
-            >
+            <DotPattern
+                className={cn(
+                    "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] ",
+                )}
+            />
+            <ReactMarquee className="text-base font-semibold py-3" pauseOnHover>
                 <li className="ml-8 flex items-center justify-center gap-2 text-orange-600 border-x border-orange-800 px-3">
                     <BookText className="min-w-[16px] w-4 min-h-[16px] h-4" />
                     <p>Admission is Going On...</p>
@@ -269,6 +214,75 @@ const NoticeSection = () => {
     );
 };
 
+const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
+    return (
+        <motion.div
+            initial={{
+                y: 100,
+                opacity: 0,
+            }}
+            whileInView={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{
+                duration: 1.3,
+                ease: "easeInOut",
+            }}
+            className="w-full lg:w-[93%]  2xl:w-full mx-auto overflow-hidden lg:rounded-lg py-7 lg:py-9 px-1 sm:px-2 flex flex-col items-center relative rounded-lg border bg-background  md:shadow-xl"
+        >
+            <GridPattern
+                width={30}
+                height={30}
+                x={-1}
+                y={-1}
+                className={cn(
+                    "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] ",
+                )}
+            />
+            <SparklesText
+                text="Our Family"
+                className="text-2xl sm:text-3xl font-medium text-green-600 mb-7 uppercase border-b-2 pb-2 border-green-600"
+                sparklesCount={5}
+            />
+            <ReactMarquee autoFill={true} pauseOnHover direction="right">
+                {family?.map(
+                    (
+                        user: {
+                            img: string;
+                            name: string;
+                            branch: string;
+                        },
+                        idx: number,
+                    ) => (
+                        <div
+                            key={idx}
+                            className="flex flex-col gap-2 ml-16 items-center"
+                        >
+                            <Image
+                                src={user.img}
+                                width={100}
+                                height={100}
+                                alt="avatar"
+                                placeholder="empty"
+                                className="rounded-full object-cover min-w-[50px] min-h-[50px] max-w-[50px] max-h-[50px] lg:min-w-[70px] lg:min-h-[70px] lg:max-w-[70px] lg:max-h-[70px]"
+                            />
+                            <div className="flex flex-col gap-1 font-semibold items-center text-xs uppercase">
+                                <span className="text-rose-800">
+                                    {user.name}
+                                </span>
+                                <span className="text-orange-600">
+                                    {user.branch}
+                                </span>
+                            </div>
+                        </div>
+                    ),
+                )}
+            </ReactMarquee>
+        </motion.div>
+    );
+};
+
 export const FromDeskOf = () => {
     return (
         <motion.div
@@ -284,12 +298,29 @@ export const FromDeskOf = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
-            className="bg-orange-100 lg:rounded-lg w-full lg:w-[93%] 2xl:w-full"
+            className="bg-background rounded-lg border  md:shadow-xl w-full lg:w-[93%] 2xl:w-full relative overflow-hidden"
         >
+            <GridPattern
+                squares={[
+                    [10, 10],
+                    [12, 15],
+                    [15, 10],
+                    [10, 15],
+                    [18, 15],
+                    [15, 20],
+                    [20, 20],
+                    [11, 12],
+                ]}
+                className={cn(
+                    "[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]",
+                    "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12",
+                )}
+            />
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
                 <SparklesText
                     text="From the Desk of Directors"
-                    className="text-3xl font-normal uppercase text-zinc-600 border-b-2 border-zinc-500 pb-2"
+                    className="text-3xl font-normal uppercase text-zinc-900/75 border-b-2 border-zinc-500 pb-2"
+                    colors={{ first: "green", second: "gray" }}
                 />
 
                 <div className="flex flex-col gap-4 w-full px-5 py-3 text-sm  lg:w-[70%] xl:text-lg">
@@ -373,12 +404,24 @@ const WhySection = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
-            className="bg-orange-100 rounded-lg w-[93%] 2xl:w-full"
+            className="w-[93%] 2xl:w-full relative rounded-lg border bg-background md:shadow-xl overflow-hidden"
         >
+            <GridPattern
+                width={30}
+                height={30}
+                x={-1}
+                y={-1}
+                strokeDasharray={"4 2"}
+                className={cn(
+                    "[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]",
+                )}
+            />
             <div className="flex flex-col gap-4 justify-center items-center text-center py-7 px-4 lg:gap-12 lg:py-16">
-                <span className="text-3xl font-semibold text-zinc-600  border-b-2 border-zinc-600 pb-3 uppercase">
-                    Why Eklavaya ?
-                </span>
+                <SparklesText
+                    text="Why Eklavaya ?"
+                    className="text-3xl font-normal uppercase text-zinc-900/75 border-b-2 border-zinc-500 pb-2"
+                    colors={{ first: "green", second: "gray" }}
+                />
 
                 <p
                     className={`w-[90%] md:w-[60%] text-left text-sm text-slate-900/75 px-2 leading-6 ${montserrat.className} font-medium`}
@@ -411,34 +454,57 @@ const OurFeatures = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
-            className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 bg-orange-100 rounded-lg py-10 h-full`}
+            className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 rounded-lg py-10 h-full relative overflow-hidden border bg-background md:shadow-xl`}
         >
-            <span className="text-3xl font-semibold text-green-600 border-b-2 border-green-600 pb-2 uppercase">
-                Our Features
-            </span>
+            <DotPattern className={cn("p-2")} />
+
+            <SparklesText
+                text="Our Features"
+                className="text-3xl font-normal uppercase text-green-900/75 border-b-2 border-zinc-500 pb-2"
+            />
+
             <div className="flex flex-col lg:flex-row justify-around m-auto w-fit gap-8 flex-wrap">
                 {/* CARD ONE */}
 
                 <CardContainer className="w-full h-full">
                     <CardBody className="w-full h-full">
                         <CardItem translateZ="50" className="w-full h-full">
-                            <Card className="max-w-xs bg-orange-300 dark:border-0 dark:text-black h-full">
+                            <Card className="max-w-xs border bg-orange-50/50 dark:border-0 dark:text-black h-full">
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-3 text-black/75">
-                                        <BookText className="w-4 h-4" />
-                                        <span className="text-lg">Books</span>
+                                        <BoxReveal
+                                            boxColor={"orange"}
+                                            duration={1}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <BookText className="w-4 h-4" />
+                                                <p className="text-lg font-semibold">
+                                                    Books
+                                                    <span className="text-[#5046e6]">
+                                                        .
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </BoxReveal>
+
+                                        {/* <span className="text-lg">Books</span> */}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p className="text-sm text-zinc-800/80 font-medium">
-                                        We Provide books, updated with latest
-                                        technology.Our books help students to
-                                        understand the concept of the topic very
-                                        clearly. We revise our book&apos;s
-                                        content time to time to ensure that our
-                                        students get better quality of
-                                        education.
-                                    </p>
+                                    <BoxReveal
+                                        boxColor={"orange"}
+                                        duration={1.5}
+                                    >
+                                        <p className="text-sm text-zinc-800/80 font-medium">
+                                            We Provide books, updated with
+                                            latest technology.Our books help
+                                            students to understand the concept
+                                            of the topic very clearly. We revise
+                                            our book&apos;s content time to time
+                                            to ensure that our students get
+                                            better quality of education.
+                                        </p>
+                                    </BoxReveal>
                                 </CardContent>
                             </Card>
                         </CardItem>
@@ -449,25 +515,41 @@ const OurFeatures = () => {
                 <CardContainer className="w-full h-full">
                     <CardBody className="w-full h-full">
                         <CardItem translateZ="50" className="w-full h-full">
-                            <Card className="max-w-xs bg-indigo-300 dark:border-0 dark:text-black">
+                            <Card className="max-w-xs bg-indigo-300/50 dark:border-0 dark:text-black">
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-3 text-black/75">
-                                        <Folder className="w-4 h-4" />
-                                        <span className="text-lg">
-                                            Facilities
-                                        </span>
+                                        <BoxReveal
+                                            boxColor={"#5046e6"}
+                                            duration={1}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <Folder className="w-4 h-4" />
+                                                <p className="text-lg font-semibold">
+                                                    Facilities
+                                                    <span className="text-[#5046e6]">
+                                                        .
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </BoxReveal>
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p className="text-sm text-zinc-800/80 font-medium">
-                                        We provide unique and very user friendly
-                                        Online facilities like Student
-                                        Verification, I-Card Verification,
-                                        Marksheet Verification, Certificate
-                                        Verification & we also provide complete
-                                        online management system for our
-                                        franchise.
-                                    </p>
+                                    <BoxReveal
+                                        boxColor={"#5046e6"}
+                                        duration={1.5}
+                                    >
+                                        <p className="text-sm text-zinc-800/80 font-medium">
+                                            We provide unique and very user
+                                            friendly Online facilities like
+                                            Student Verification, I-Card
+                                            Verification, Marksheet
+                                            Verification, Certificate
+                                            Verification & we also provide
+                                            complete online management system
+                                            for our franchise.
+                                        </p>
+                                    </BoxReveal>
                                 </CardContent>
                             </Card>
                         </CardItem>
@@ -478,21 +560,37 @@ const OurFeatures = () => {
                 <CardContainer className="w-full h-full">
                     <CardBody className="w-full h-full">
                         <CardItem translateZ="50" className="w-full h-full">
-                            <Card className="max-w-xs h-full bg-amber-300 dark:text-black dark:border-0">
+                            <Card className="max-w-xs h-full bg-amber-300/30 dark:text-black dark:border-0">
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-3 text-black/75">
-                                        <BadgeCheck className="w-4 h-4" />
-                                        <span className="text-lg">
-                                            BETTER SUPPORT
-                                        </span>
+                                        <BoxReveal
+                                            boxColor={"yellow"}
+                                            duration={1}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <BadgeCheck className="w-4 h-4" />
+                                                <p className="text-lg font-semibold">
+                                                    BETTER SUPPORT
+                                                    <span className="text-[#5046e6]">
+                                                        .
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </BoxReveal>
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p className="text-sm text-zinc-800/80 font-medium">
-                                        We provide better support system for our
-                                        franchise , in order to solve any aspect
-                                        of problems regarding the software uses.
-                                    </p>
+                                    <BoxReveal
+                                        boxColor={"orange"}
+                                        duration={1.5}
+                                    >
+                                        <p className="text-sm text-zinc-800/80 font-medium">
+                                            We provide better support system for
+                                            our franchise , in order to solve
+                                            any aspect of problems regarding the
+                                            software uses.
+                                        </p>
+                                    </BoxReveal>
                                 </CardContent>
                             </Card>
                         </CardItem>
@@ -557,11 +655,18 @@ const OurCourses = () => {
                 ease: "easeInOut",
                 staggerChildren: 1,
             }}
-            className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 bg-orange-100 rounded-lg  py-10 h-full`}
+            className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 rounded-lg  py-10 h-full relative overflow-hidden border bg-background md:shadow-xl`}
         >
-            <span className="text-3xl font-semibold text-green-600 border-b-2 border-green-600 pb-2 uppercase">
-                Our Courses
-            </span>
+            <DotPattern
+                className={cn(
+                    "[mask-image:radial-gradient(900px_circle_at_center,white,transparent)]",
+                )}
+            />
+            <SparklesText
+                text="Our Courses"
+                className="text-3xl font-normal uppercase text-green-900/75 border-b-2 border-zinc-500 pb-2"
+                sparklesCount={5}
+            />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-fit gap-4 h-fit">
                 {courses?.map((course, idx) => (
