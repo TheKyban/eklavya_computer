@@ -36,9 +36,6 @@ export const metadata: Metadata = {
             "EKLAVAYA UNIVERSAL PRIVATE LIMITE(EUPL) is built on a foundation to promote greater access to higher quality education.",
         images: [BANNER_IMAGE],
     },
-    verification: {
-        google: "dKF3fmiMClPEgRNa9Mifxmc2kkK5eZVNMruBsYwcNi4",
-    },
 };
 
 export default function RootLayout({
@@ -48,12 +45,6 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            {/* <head>
-                <meta
-                    name="google-site-verification"
-                    content="dKF3fmiMClPEgRNa9Mifxmc2kkK5eZVNMruBsYwcNi4"
-                />
-            </head> */}
             <body className={open_sans.className}>
                 <AuthProvider>
                     <QueryProvider>
