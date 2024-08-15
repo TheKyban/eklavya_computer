@@ -91,12 +91,29 @@ module.exports = {
                         opacity: 0,
                     },
                 },
+                shimmer: {
+                    "0%, 90%, 100%": {
+                        "background-position":
+                            "calc(-100% - var(--shimmer-width)) 0",
+                    },
+                    "30%, 60%": {
+                        "background-position":
+                            "calc(100% + var(--shimmer-width)) 0",
+                    },
+                },
+                gradient: {
+                    to: {
+                        backgroundPosition: "var(--bg-size) 0",
+                    },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
                 "vertical-animation": "vertical-animation 20s linear infinite",
                 meteor: "meteor 5s linear infinite",
+                shimmer: "shimmer 10s infinite",
+                gradient: "gradient 8s linear infinite",
             },
             gridTemplateColumns: {
                 "320_autofit": "repeat(auto-fit, minmax(320px, 1fr))",

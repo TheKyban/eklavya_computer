@@ -15,16 +15,16 @@ const Navbar = ({ session }: { session: Session | null }) => {
     return (
         <>
             {/* FIRST NAVBAR */}
-            <div className="bg-[#0D3B73] w-full flex items-center justify-end py-1 px-3 gap-4">
+            <div className="bg-[#0D3B73] w-full flex items-center justify-end py-2 px-3 gap-4">
                 {/* Login  & Dasboard*/}
                 <IsAuth
                     session={session}
-                    className="text-base font-semibold text-yellow-400 capitalize hover:text-white transition-all duration-300"
+                    className="hidden sm:flex text-yellow-400 hover:text-white transition-all duration-300"
                 />
-                <Separator className="w-[2px] h-5 bg-yellow-400" />
+                <Separator className="hidden sm:block w-[2px] h-5 bg-yellow-400" />
                 <div className="flex gap-2 items-center justify-center">
                     <Clock className="w-4 h-4 text-yellow-400" />
-                    <TimeComponent className="text-yellow-400" />
+                    <TimeComponent className="text-yellow-400 text-sm sm:text-base" />
                 </div>
             </div>
 
