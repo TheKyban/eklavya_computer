@@ -36,6 +36,12 @@ export const metadata: Metadata = {
             "EKLAVAYA UNIVERSAL PRIVATE LIMITE(EUPL) is built on a foundation to promote greater access to higher quality education.",
         images: [BANNER_IMAGE],
     },
+    verification: {
+        google: "7T5TQHad6UkSJEGgzzEkdKTWp1Gfdwk2eIU2U57WpNM",
+        other: {
+            "msvalidate.01": "9A6789029BF89B2CAA2AF3A9653D6E08",
+        },
+    },
 };
 
 export default function RootLayout({
