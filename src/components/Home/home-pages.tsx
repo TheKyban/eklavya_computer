@@ -653,7 +653,6 @@ const OurCourses = () => {
             transition={{
                 duration: 1.3,
                 ease: "easeInOut",
-                staggerChildren: 1,
             }}
             className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 rounded-lg  py-10 h-full relative overflow-hidden border bg-background md:shadow-xl`}
         >
@@ -670,19 +669,36 @@ const OurCourses = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-fit gap-4 h-fit">
                 {courses?.map((course, idx) => (
-                    <CardContainer key={idx}>
-                        <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-72 h-fit rounded-xl p-2 border  ">
-                            <CardItem translateZ="100" className="w-full">
-                                <Image
-                                    src={course.url}
-                                    height="1000"
-                                    width="1000"
-                                    className="h-60 w-full object-contain rounded-xl group-hover/card:shadow-xl"
-                                    alt="thumbnail"
-                                />
-                            </CardItem>
-                        </CardBody>
-                    </CardContainer>
+                    <motion.div
+                        key={idx}
+                        initial={{
+                            transform: "rotate(15deg)",
+                            transformOrigin: "left bottom",
+                            opacity: 0,
+                        }}
+                        whileInView={{
+                            transform: "rotate(0deg)",
+                            opacity: 1,
+                        }}
+                        transition={{
+                            duration: 1.3,
+                            ease: "easeInOut",
+                        }}
+                    >
+                        <CardContainer>
+                            <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-72 h-fit rounded-xl p-2 border  ">
+                                <CardItem translateZ="100" className="w-full">
+                                    <Image
+                                        src={course.url}
+                                        height="1000"
+                                        width="1000"
+                                        className="h-60 w-full object-contain rounded-xl group-hover/card:shadow-xl"
+                                        alt="thumbnail"
+                                    />
+                                </CardItem>
+                            </CardBody>
+                        </CardContainer>
+                    </motion.div>
                 ))}
             </div>
         </motion.div>
