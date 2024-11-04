@@ -2,29 +2,24 @@ import { DELETE_FILE, UPLOAD_TO_CLOUDINARY } from "@/lib/CLOUDINARY";
 import { getServerSession } from "next-auth";
 import { AUTH_OPTIONS } from "@/lib/AUTH_OPTIONS";
 import { STATUS_CODE } from "@/lib/STATUS_CODE";
+import { IMAGE_SIZE } from "@/lib/CONSTANTS";
 
 export async function POST(res: Request): Promise<Response> {
     try {
-        /**
-         * CHECK ADMIN OR FRENCHISE IS LOGIN
-         */
-
-        const session = await getServerSession(AUTH_OPTIONS);
-
-        if (!session?.user || !session.user?.isActive) {
+        const data = await res.formData();
+        const file = data.get("file") as File;
+        if (file.size > IMAGE_SIZE) {
             return Response.json(
                 {
-                    message: "Unauthorized",
+                    message: "Image is too large.",
                     success: false,
                 },
                 {
-                    status: STATUS_CODE?.UNAUTHENTICATE,
+                    status: STATUS_CODE?.CLIENT_ERROR,
                 },
             );
         }
 
-        const data = await res.formData();
-        const file = data.get("file") as File;
         const folder = "eklavaya";
         const results = await UPLOAD_TO_CLOUDINARY(file, folder);
 
