@@ -31,12 +31,12 @@ export const DeleteComputerTypingMarksModal = () => {
             return data;
         },
 
-        onSuccess(data, variables, context) {
-            if (data) {
-                toast({ description: data?.message });
+        onSuccess(res, variables, context) {
+            if (res) {
+                toast({ description: res?.message });
             }
 
-            if (data?.success) {
+            if (res?.success) {
                 onClose();
             }
 
@@ -49,6 +49,8 @@ export const DeleteComputerTypingMarksModal = () => {
                     searchParams?.page || "1",
                     searchParams?.registration || "none",
                     true,
+                    data?.computerTypingMarks?.isAdmin,
+                    data?.computerTypingMarks?.branch,
                 ],
                 computerTypingMarks?.registration as string,
             );
@@ -58,7 +60,12 @@ export const DeleteComputerTypingMarksModal = () => {
              */
 
             addRegistrationNumberToUnMarkedList(
-                ["computer-students-mark", true],
+                [
+                    "computer-students-mark",
+                    true,
+                    data?.computerTypingMarks?.isAdmin,
+                    data?.computerTypingMarks?.branch,
+                ],
                 Number(computerTypingMarks?.registration),
             );
         },

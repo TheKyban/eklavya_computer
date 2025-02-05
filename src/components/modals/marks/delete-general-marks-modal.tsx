@@ -31,12 +31,12 @@ export const DeleteGeneralMarksModal = () => {
             );
             return data;
         },
-        onSuccess(data, variables, context) {
-            if (data) {
-                toast({ description: data?.message });
+        onSuccess(res, variables, context) {
+            if (res) {
+                toast({ description: res?.message });
             }
 
-            if (data?.success) {
+            if (res?.success) {
                 onClose();
             }
 
@@ -49,6 +49,8 @@ export const DeleteGeneralMarksModal = () => {
                     searchParams?.page || "1",
                     searchParams?.registration || "none",
                     false,
+                    data?.generalMarks?.isAdmin,
+                    data?.generalMarks?.branch,
                 ],
                 generalMarks?.registration as string,
             );
@@ -58,7 +60,12 @@ export const DeleteGeneralMarksModal = () => {
              */
 
             addRegistrationNumberToUnMarkedList(
-                ["computer-students-mark", false],
+                [
+                    "computer-students-mark",
+                    false,
+                    data?.generalMarks?.isAdmin,
+                    data?.generalMarks?.branch,
+                ],
                 Number(generalMarks?.registration),
             );
         },

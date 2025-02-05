@@ -236,6 +236,9 @@ export const GET = async (req: NextRequest) => {
             where: {
                 branch: session.user.userId,
             },
+            include: {
+                Course: true,
+            },
             take: per_page,
             skip: per_page * (page - 1),
         });

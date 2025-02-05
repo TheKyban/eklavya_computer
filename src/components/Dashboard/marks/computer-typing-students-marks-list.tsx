@@ -19,15 +19,21 @@ import { Pen, TextCursorInput, Trash } from "lucide-react";
 const ComputerTypingEnteredMarks = ({
     page,
     registration,
+    isAdmin,
+    userId,
 }: {
     registration: string | null;
     page: string | null;
+    isAdmin?: boolean;
+    userId?: string | number;
 }) => {
     const { onOpen } = useModal();
     const { data, isLoading } = useStudentMarkEntered(
         page || "1",
         registration || "",
         true,
+        isAdmin,
+        userId,
     );
 
     return (
@@ -104,6 +110,10 @@ const ComputerTypingEnteredMarks = ({
                                                                     ?.studentRegistrationNumber,
                                                             ...student?.marks
                                                                 ?.typingMarks!,
+                                                            branch: userId as string,
+                                                            isAdmin:
+                                                                isAdmin ||
+                                                                false,
                                                         },
                                                         searchParams: {
                                                             page: page
@@ -135,6 +145,10 @@ const ComputerTypingEnteredMarks = ({
                                                                     ?.studentRegistrationNumber,
                                                             ...student?.marks
                                                                 ?.typingMarks!,
+                                                            branch: userId as string,
+                                                            isAdmin:
+                                                                isAdmin ||
+                                                                false,
                                                         },
                                                         searchParams: {
                                                             page: page

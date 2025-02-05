@@ -11,7 +11,7 @@ import {
 import { useStudentApplications } from "@/hooks/useFetch";
 import { LoadingCells } from "../loading/loading";
 import { poppins } from "@/lib/FONTS";
-import { StudentApplication } from "@prisma/client";
+import { Course, StudentApplication } from "@prisma/client";
 import { format } from "date-fns";
 import { per_page } from "@/lib/CONSTANTS";
 import Pagination from "../pagination/pagination";
@@ -52,7 +52,11 @@ export default function StudentApplicationList({ page }: { page: string }) {
                         {isLoading && <LoadingCells cols={5} />}
                         {!isLoading &&
                             data?.applications?.map(
-                                (student: StudentApplication) => (
+                                (
+                                    student: StudentApplication & {
+                                        Course: Course;
+                                    },
+                                ) => (
                                     <TableRow
                                         key={student.id}
                                         className={`${poppins.className} cursor-pointer`}
@@ -81,7 +85,7 @@ export default function StudentApplicationList({ page }: { page: string }) {
                                             )}
                                         </TableCell>
                                         <TableCell className="text-xs md:text-sm">
-                                            {student.course}
+                                            {student?.Course?.name}
                                         </TableCell>
                                     </TableRow>
                                 ),

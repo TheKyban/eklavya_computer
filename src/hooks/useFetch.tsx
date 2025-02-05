@@ -94,13 +94,23 @@ export const useStudentVerification = (
     });
 };
 
-export const useStudentMark = (typing: boolean = false) => {
+export const useStudentMark = (
+    typing: boolean = false,
+    isAdmin: boolean = false,
+    userId?: string | number,
+) => {
     return useQuery<{ registration: string }[]>({
-        queryKey: ["computer-students-mark", typing],
+        queryKey: ["computer-students-mark", typing, isAdmin, userId],
         queryFn: async () => {
-            const { data } = await axios(
-                `/api/marks?${typing ? "computerTyping=true" : ""}`,
-            );
+            const baseUrl = isAdmin ? "/api/management/marks" : "/api/marks";
+            const url = queryString.stringifyUrl({
+                url: baseUrl,
+                query: {
+                    computerTyping: typing ? "true" : "",
+                    userId,
+                },
+            });
+            const { data } = await axios(url);
             return data;
         },
     });
@@ -110,6 +120,8 @@ export const useStudentMarkEntered = (
     page: string,
     registration: string,
     typing: boolean,
+    isAdmin: boolean = false,
+    userId?: string | number,
 ) => {
     return useQuery<{
         total: number;
@@ -120,13 +132,24 @@ export const useStudentMarkEntered = (
             page,
             registration || "none",
             typing,
+            isAdmin,
+            userId,
         ],
         queryFn: async () => {
-            const { data } = await axios(
-                `/api/marks/entered?&page=${page}${
-                    !!registration ? "&registration=" + registration : ""
-                }${typing ? "&computerTyping=true" : ""}`,
-            );
+            const baseUrl = isAdmin
+                ? "/api/management/marks/entered"
+                : "/api/marks/entered";
+
+            const url = queryString.stringifyUrl({
+                url: baseUrl,
+                query: {
+                    page,
+                    registration,
+                    computerTyping: typing ? "true" : "",
+                    userId,
+                },
+            });
+            const { data } = await axios(url);
 
             return data;
         },

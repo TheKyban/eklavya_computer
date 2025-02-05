@@ -63,11 +63,11 @@ export const EditComputerTypingMarksModal = () => {
             return data;
         },
 
-        onSuccess(data, variables) {
-            if (data) {
-                toast({ description: data.message });
+        onSuccess(res, variables) {
+            if (res) {
+                toast({ description: res.message });
             }
-            if (data.success) {
+            if (res.success) {
                 form.reset();
                 onClose();
             }
@@ -81,8 +81,10 @@ export const EditComputerTypingMarksModal = () => {
                     searchParams?.page || "1",
                     searchParams?.registration || "none",
                     true,
+                    data?.computerTypingMarks?.isAdmin,
+                    data?.computerTypingMarks?.branch,
                 ],
-                { marks: data?.marks },
+                { marks: res?.marks },
             );
         },
     });

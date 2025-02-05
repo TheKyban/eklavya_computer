@@ -4,6 +4,9 @@ import { Prisma } from "../../../../../prisma/prisma";
 export const GET = async (req: Request) => {
     try {
         const branch = await Prisma.user.findMany({
+            where: {
+                role: "FRANCHISE",
+            },
             select: {
                 branch: true,
                 userId: true,

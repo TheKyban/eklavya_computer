@@ -38,8 +38,14 @@ interface ModalData {
         registration?: string;
         type?: string;
     };
-    generalMarks?: z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA>;
-    computerTypingMarks?: z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA>;
+    generalMarks?: z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA> & {
+        branch?: string | null;
+        isAdmin?: boolean;
+    };
+    computerTypingMarks?: z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA> & {
+        branch?: string | null;
+        isAdmin?: boolean;
+    };
     studentApplication?: StudentApplication;
     userApplication?: UserApplication;
     course?: Course;

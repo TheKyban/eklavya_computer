@@ -62,11 +62,11 @@ export const EditGeneralMarks = () => {
             return data;
         },
 
-        onSuccess(data) {
-            if (data) {
-                toast({ description: data.message });
+        onSuccess(res) {
+            if (res) {
+                toast({ description: res.message });
             }
-            if (data.success) {
+            if (res.success) {
                 form.reset();
                 onClose();
             }
@@ -80,9 +80,11 @@ export const EditGeneralMarks = () => {
                     searchParams?.page || "1",
                     searchParams?.registration || "none",
                     false,
+                    data?.generalMarks?.isAdmin,
+                    data?.generalMarks?.branch,
                 ],
                 {
-                    marks: data?.marks,
+                    marks: res?.marks,
                 },
             );
         },

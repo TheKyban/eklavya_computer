@@ -31,7 +31,13 @@ import { FileSpreadsheet, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const GeneralMarksEntry = () => {
+const GeneralMarksEntry = ({
+    isAdmin,
+    userId,
+}: {
+    isAdmin?: boolean;
+    userId?: string | number;
+}) => {
     const form = useForm<z.infer<typeof GENERAL_COURSE_MARKS_SCHEMA>>({
         resolver: zodResolver(GENERAL_COURSE_MARKS_SCHEMA),
         defaultValues: {
@@ -42,7 +48,7 @@ const GeneralMarksEntry = () => {
         },
     });
 
-    const { data, isLoading } = useStudentMark();
+    const { data, isLoading } = useStudentMark(false, isAdmin, userId);
     const { removeRegistrationNumberFromUnMarkedList, addMark } =
         useCustumQuery();
 
@@ -69,16 +75,26 @@ const GeneralMarksEntry = () => {
              * Removing registration number from entry list
              */
             removeRegistrationNumberFromUnMarkedList(
-                ["computer-students-mark", false],
+                ["computer-students-mark", false, isAdmin, userId],
                 Number(data?.marks?.studentRegistrationNumber),
             );
 
             /**
              * Adding registration and marks to entered list
              */
-            addMark(["general-students-entered", "1", "none", false], {
-                marks: data?.marks!,
-            });
+            addMark(
+                [
+                    "general-students-entered",
+                    "1",
+                    "none",
+                    false,
+                    isAdmin,
+                    userId,
+                ],
+                {
+                    marks: data?.marks!,
+                },
+            );
         },
     });
     return (

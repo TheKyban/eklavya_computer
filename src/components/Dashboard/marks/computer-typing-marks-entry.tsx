@@ -30,7 +30,13 @@ import { Loader2, TextCursorInput } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const TypingMarksEntry = () => {
+const TypingMarksEntry = ({
+    isAdmin,
+    userId,
+}: {
+    isAdmin?: boolean;
+    userId?: string | number;
+}) => {
     const form = useForm<z.infer<typeof COMPUTER_TYPING_MARKS_SCHEMA>>({
         resolver: zodResolver(COMPUTER_TYPING_MARKS_SCHEMA),
         defaultValues: {
@@ -38,7 +44,7 @@ const TypingMarksEntry = () => {
             englishTyping: 0,
         },
     });
-    const { data, isLoading } = useStudentMark(true);
+    const { data, isLoading } = useStudentMark(true, isAdmin, userId);
     const { removeRegistrationNumberFromUnMarkedList, addMark } =
         useCustumQuery();
     const { mutate, isPending } = useMutation({
@@ -68,16 +74,26 @@ const TypingMarksEntry = () => {
              */
 
             removeRegistrationNumberFromUnMarkedList(
-                ["computer-students-mark", true],
+                ["computer-students-mark", true, isAdmin, userId],
                 Number(variables.registration),
             );
 
             /**
              * Adding registration number and marks to entered list
              */
-            addMark(["general-students-entered", "1", "none", true], {
-                marks: data?.marks,
-            });
+            addMark(
+                [
+                    "general-students-entered",
+                    "1",
+                    "none",
+                    true,
+                    isAdmin,
+                    userId,
+                ],
+                {
+                    marks: data?.marks,
+                },
+            );
         },
     });
 

@@ -202,6 +202,12 @@ export const accordianLinks: accordianLinks[] = [
                 link: "/dashboard/management/icard",
                 role: "ADMIN",
             },
+            {
+                title: "Marks",
+                icon: <FileSpreadsheet className="w-5 h-5 text-green-400" />,
+                link: "/dashboard/marks",
+                role: "ADMIN",
+            },
         ],
     },
     {

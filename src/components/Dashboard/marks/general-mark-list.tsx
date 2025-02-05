@@ -19,15 +19,21 @@ import { FileSpreadsheet, Pen, Trash } from "lucide-react";
 const GeneralEntredMarks = ({
     page,
     registration,
+    isAdmin = false,
+    userId,
 }: {
     registration: string | null;
     page: string | null;
+    isAdmin?: boolean;
+    userId?: string | number;
 }) => {
     const { onOpen } = useModal();
     const { data, isLoading } = useStudentMarkEntered(
         page || "1",
         registration || "",
         false,
+        isAdmin,
+        userId,
     );
 
     return (
@@ -104,6 +110,11 @@ const GeneralEntredMarks = ({
                                                             marks?.marks
                                                                 .studentRegistrationNumber,
                                                         ...marks?.marks?.marks!,
+                                                        branch:
+                                                            (userId as string) ||
+                                                            null,
+                                                        isAdmin:
+                                                            isAdmin || false,
                                                     },
                                                     searchParams: {
                                                         page: page ? page : "1",
@@ -129,6 +140,9 @@ const GeneralEntredMarks = ({
                                                             marks?.marks
                                                                 .studentRegistrationNumber,
                                                         ...marks?.marks?.marks!,
+                                                        branch: userId as string,
+                                                        isAdmin:
+                                                            isAdmin || false,
                                                     },
                                                     searchParams: {
                                                         page: page ? page : "1",

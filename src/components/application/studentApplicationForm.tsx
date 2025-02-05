@@ -630,7 +630,7 @@ const StudentApplicationForm = () => {
                             />
 
                             {/* DOR */}
-                            <FormField
+                            {/* <FormField
                                 control={form.control}
                                 name="dor"
                                 render={({ field }) => (
@@ -681,7 +681,7 @@ const StudentApplicationForm = () => {
                                         </FormControl>
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
                         </div>
 
                         {/* BTNS */}

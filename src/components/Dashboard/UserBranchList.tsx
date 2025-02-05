@@ -6,21 +6,26 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { Users } from "lucide-react";
+import { HTMLAttributes } from "react";
 
+interface props extends HTMLAttributes<HTMLDivElement> {
+    user: string;
+    setUser: (user: string) => void;
+    isLoading?: boolean;
+    branches: { branch: string; userId: string }[];
+}
 export const UserBranchList = ({
     user,
     setUser,
     isLoading,
     branches,
-}: {
-    user: string;
-    setUser: (user: string) => void;
-    isLoading: boolean;
-    branches: { branch: string; userId: string }[];
-}) => {
+    className,
+    ...more
+}: props) => {
     return (
-        <div className="flex flex-col gap-2">
+        <div className={cn("flex flex-col gap-2", className)} {...more}>
             <div className="flex gap-1 items-center">
                 <Users className="w-5 h-5 text-teal-500" />
                 <span>USER ID</span>
@@ -31,7 +36,7 @@ export const UserBranchList = ({
                 onValueChange={(val) => setUser(val)}
                 disabled={isLoading}
             >
-                <SelectTrigger className="w-48">
+                <SelectTrigger>
                     <SelectValue placeholder="Select User" />
                 </SelectTrigger>
                 <SelectContent>
