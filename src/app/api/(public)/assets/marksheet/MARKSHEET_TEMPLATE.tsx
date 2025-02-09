@@ -32,6 +32,7 @@ export const MarksheetTemplate = ({
                 height: "100%",
                 display: "flex",
                 fontFamily: "NotoSerif",
+                fontWeight: 900,
             }}
         >
             {/* MARKSHEET TEMPLATES */}
@@ -83,7 +84,14 @@ export const MarksheetTemplate = ({
                 }}
             />
 
-            <span style={{ position: "absolute", top: 273, left: 280 }}>
+            <span
+                style={{
+                    position: "absolute",
+                    top: 273,
+                    left: 280,
+                    fontWeight: 900,
+                }}
+            >
                 {TO_CAPITALIZE(student?.name)}
             </span>
             <span style={{ position: "absolute", top: 300, left: 280 }}>
@@ -111,7 +119,7 @@ export const MarksheetTemplate = ({
                     position: "absolute",
                     top: 485,
                     left: 60,
-                    fontSize: 14,
+                    fontSize: 13,
                     // border: "1px solid red",
                     height: 130,
                     width: 700,
