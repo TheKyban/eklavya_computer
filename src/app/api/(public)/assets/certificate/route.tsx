@@ -7,6 +7,7 @@ import { StudentWithAllDetails } from "@/lib/TYPES";
 import { DOCUMENT_SIZES } from "@/lib/CONSTANTS";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export const GET = async (req: Request) => {
     try {
@@ -96,6 +97,7 @@ export const GET = async (req: Request) => {
                         name: "NotoSerif",
                         data: fontData,
                         style: "normal",
+                        weight: 600,
                     },
                 ],
             },

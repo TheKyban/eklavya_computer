@@ -83,7 +83,14 @@ export const MarksheetTemplate = ({
                 }}
             />
 
-            <span style={{ position: "absolute", top: 273, left: 280 }}>
+            <span
+                style={{
+                    position: "absolute",
+                    top: 273,
+                    left: 280,
+                    fontWeight: 900,
+                }}
+            >
                 {TO_CAPITALIZE(student?.name)}
             </span>
             <span style={{ position: "absolute", top: 300, left: 280 }}>

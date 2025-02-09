@@ -6,7 +6,7 @@ import { STATUS_CODE } from "@/lib/STATUS_CODE";
 /**
  * GET STUDENTS WHO DON'T HAVE MARKS
  */
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: Request) => {
     try {
         /**
