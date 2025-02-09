@@ -7,7 +7,6 @@ import { StudentWithAllDetails } from "@/lib/TYPES";
 import { DOCUMENT_SIZES } from "@/lib/CONSTANTS";
 
 export const dynamic = "force-dynamic";
-export const runtime = "edge";
 
 export const GET = async (req: Request) => {
     try {
