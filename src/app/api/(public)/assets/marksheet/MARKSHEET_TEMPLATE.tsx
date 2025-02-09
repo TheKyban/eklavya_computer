@@ -32,6 +32,7 @@ export const MarksheetTemplate = ({
                 height: "100%",
                 display: "flex",
                 fontFamily: "NotoSerif",
+                fontWeight: 900,
             }}
         >
             {/* MARKSHEET TEMPLATES */}
@@ -118,7 +119,7 @@ export const MarksheetTemplate = ({
                     position: "absolute",
                     top: 485,
                     left: 60,
-                    fontSize: 14,
+                    fontSize: 13,
                     // border: "1px solid red",
                     height: 130,
                     width: 700,
