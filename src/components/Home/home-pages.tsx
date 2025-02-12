@@ -31,6 +31,7 @@ import GridPattern from "../ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import DotPattern from "../ui/dot";
 import BoxReveal from "../ui/Box-reveal";
+import fade from "embla-carousel-fade";
 
 interface familyType {
     img: string;
@@ -92,7 +93,9 @@ const HomeCarousel: FC<{
                     Autoplay({
                         delay: 3000,
                         stopOnInteraction: false,
+                        stopOnMouseEnter: true,
                     }),
+                    fade(),
                 ]}
             >
                 <CarouselContent>
