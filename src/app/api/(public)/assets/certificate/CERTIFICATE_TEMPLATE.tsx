@@ -32,7 +32,7 @@ export const CertificateTemplate = ({
     return (
         <div
             style={{
-                fontSize: 23,
+                fontSize: 21,
                 color: "black",
                 background: "white",
                 display: "flex",
@@ -51,6 +51,8 @@ export const CertificateTemplate = ({
                         position: "absolute",
                         top: 0,
                         left: 0,
+                        height: "100%",
+                        width: "100%",
                     }}
                     alt="cert"
                 />
@@ -59,9 +61,9 @@ export const CertificateTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 120,
-                    left: 1000,
-                    fontSize: 20,
+                    top: 127,
+                    left: 870,
+                    fontSize: 16,
                 }}
             >
                 EUPL/{student?.serialNumber}
@@ -69,43 +71,57 @@ export const CertificateTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 178,
-                    left: 1005,
-                    fontSize: 20,
+                    top: 190,
+                    left: 887,
+                    fontSize: 13,
                 }}
             >
                 {student?.registration}
             </span>
-            <span style={{ position: "absolute", top: 353, left: 480 }}>
+            <span style={{ position: "absolute", top: 370, left: 400 }}>
                 {TO_CAPITALIZE(student?.name)}
             </span>
-            <span style={{ position: "absolute", top: 400, left: 460 }}>
+            <span style={{ position: "absolute", top: 420, left: 350 }}>
                 {TO_CAPITALIZE(student?.fatherName)}
             </span>
             <span
                 style={{
                     position: "absolute",
-                    top: 450,
-                    left: 500,
-                    fontSize: 22,
+                    top: 468,
+                    left: 480,
+                    fontSize: 18,
                 }}
             >
                 {student?.Course?.name} ({student?.Course?.fullName})
             </span>
-            <span style={{ position: "absolute", top: 490, left: 480 }}>
+            <span
+                style={{
+                    position: "absolute",
+                    top: 518,
+                    left: 410,
+                    fontSize: 18,
+                }}
+            >
                 {student?.Branch?.branch}
             </span>
 
-            <span style={{ position: "absolute", top: 540, left: 230 }}>
+            <span
+                style={{
+                    position: "absolute",
+                    top: 565,
+                    left: 210,
+                    fontSize: 18,
+                }}
+            >
                 {student?.branch}
             </span>
 
             <span
                 style={{
                     position: "absolute",
-                    top: 540,
-                    left: 560,
-                    fontSize: 22,
+                    top: 565,
+                    left: 500,
+                    fontSize: 16,
                 }}
             >
                 {student?.Course?.duration}
@@ -113,9 +129,9 @@ export const CertificateTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 540,
-                    left: 860,
-                    fontSize: 22,
+                    left: 750,
+                    top: 565,
+                    fontSize: 16,
                 }}
             >
                 {format(new Date(completeDate), "MMM yyyy")}
@@ -124,9 +140,9 @@ export const CertificateTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 590,
-                    left: 500,
-                    fontSize: 22,
+                    top: 615,
+                    left: 410,
+                    fontSize: 20,
                 }}
             >
                 {studentStats?.getGrade()}
@@ -135,9 +151,9 @@ export const CertificateTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 650,
-                    left: 220,
-                    fontSize: 22,
+                    top: 678,
+                    left: 170,
+                    fontSize: 16,
                 }}
             >
                 {format(new Date(student.certificate?.date!), "dd/MM/yyyy")}
@@ -151,8 +167,8 @@ export const CertificateTemplate = ({
                     maxWidth: "80px",
                     maxHeight: "80px",
                     position: "absolute",
-                    top: 670,
-                    right: 430,
+                    top: 680,
+                    right: 350,
                 }}
             />
             {/* eslint-disable-next-line  */}
@@ -164,8 +180,8 @@ export const CertificateTemplate = ({
                     height: 100,
                     objectFit: "contain",
                     position: "absolute",
-                    top: 630,
-                    right: 180,
+                    top: 650,
+                    right: 150,
                 }}
             />
         </div>

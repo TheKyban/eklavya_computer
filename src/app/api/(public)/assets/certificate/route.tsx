@@ -77,7 +77,7 @@ export const GET = async (req: Request) => {
             );
         }
 
-        const fontData = await loadGoogleFont("Noto+Serif");
+        const fontData = await loadGoogleFont();
 
         const qrCodeURl = await GENERATE_QR(student);
 
@@ -91,12 +91,13 @@ export const GET = async (req: Request) => {
             ),
             {
                 height: DOCUMENT_SIZES.CERTIFICATE.height,
+                width: DOCUMENT_SIZES.CERTIFICATE.width,
                 fonts: [
                     {
                         name: "NotoSerif",
                         data: fontData,
                         style: "normal",
-                        weight: 600,
+                        // weight: 200,
                     },
                 ],
             },

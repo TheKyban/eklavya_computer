@@ -17,7 +17,9 @@ export const montserrat = Montserrat({
     display: "auto",
 });
 
-export async function loadGoogleFont(font: string) {
+export async function loadGoogleFont(
+    fonturl: string = "/fonts/NotoSerif-Bold.ttf",
+) {
     // const url = `https://fonts.googleapis.com/css2?family=${font}`;
     // const css = await (
     //     await fetch(url, {
@@ -36,10 +38,7 @@ export async function loadGoogleFont(font: string) {
     //     }
     // }
     try {
-        const fontUrl = new URL(
-            "/fonts/NotoSerif-Bold.ttf",
-            process.env.NEXTAUTH_URL,
-        ); // Adjust domain if needed
+        const fontUrl = new URL(fonturl, process.env.NEXTAUTH_URL); // Adjust domain if needed
         const fontResponse = await fetch(fontUrl, { cache: "force-cache" });
         const fontData = await fontResponse.arrayBuffer(); // Read the font as binary data
         return fontData;

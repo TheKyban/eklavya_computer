@@ -76,7 +76,7 @@ export const GET = async (req: Request) => {
             );
         }
 
-        const fontData = await loadGoogleFont("Noto+Serif");
+        const fontData = await loadGoogleFont();
 
         const qrCodeURl = await GENERATE_QR(student);
 

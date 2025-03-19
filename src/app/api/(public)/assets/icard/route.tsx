@@ -73,7 +73,7 @@ export const GET = async (req: Request) => {
             );
         }
 
-        const fontData = await loadGoogleFont("Noto+Serif");
+        const fontData = await loadGoogleFont();
 
         return new ImageResponse(
             <ICardTemplate image={image} student={student} />,

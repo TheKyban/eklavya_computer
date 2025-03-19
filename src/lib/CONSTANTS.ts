@@ -36,7 +36,8 @@ export const DOCUMENT_SIZES = {
         height: 848,
     },
     CERTIFICATE: {
-        height: 848,
+        height: 875,
+        width: 1062,
     },
 };
 

@@ -130,6 +130,102 @@ export const MarksheetTemplate = ({
                 {`${student?.Course?.modules}`}
             </pre>
 
+            {!image && (
+                <>
+                    {/* Full Marks */}
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 687,
+                            left: 300,
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }}
+                    >
+                        100
+                    </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 719,
+                            left: 300,
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }}
+                    >
+                        100
+                    </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 751,
+                            left: 300,
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }}
+                    >
+                        100
+                    </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 783,
+                            left: 300,
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }}
+                    >
+                        100
+                    </span>
+
+                    {/* Pass Marks */}
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 687,
+                            left: 434,
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }}
+                    >
+                        40
+                    </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 719,
+                            left: 434,
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }}
+                    >
+                        40
+                    </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 751,
+                            left: 434,
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }}
+                    >
+                        40
+                    </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 783,
+                            left: 434,
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }}
+                    >
+                        40
+                    </span>
+                </>
+            )}
+
             {/* Marks */}
             <span
                 style={{
