@@ -3,14 +3,6 @@ import { LoadingCells } from "@/components/loading/loading";
 import Pagination from "@/components/pagination/pagination";
 import Search from "@/components/search/search";
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import {
     Table,
     TableBody,
     TableCell,
@@ -21,7 +13,7 @@ import {
 import { useMarksheet } from "@/hooks/useFetch";
 import { per_page } from "@/lib/CONSTANTS";
 import { poppins } from "@/lib/FONTS";
-import { Layers3, Printer, Users } from "lucide-react";
+import { Layers3, Printer } from "lucide-react";
 import Link from "next/link";
 import { FC, useState } from "react";
 import { UserBranchList } from "../UserBranchList";
@@ -174,7 +166,7 @@ const MarksheetPrinter: FC<pageProps> = ({ page, registration, branches }) => {
                                 )}
                                 <TableCell className="text-center">
                                     <Link
-                                        href={`/api/assets/marksheet?registration=${student?.registration}&no_image=true`}
+                                        href={`/print/marksheet/${student?.registration}`}
                                         className="flex items-center justify-center"
                                         target="_blank"
                                     >
