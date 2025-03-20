@@ -6,6 +6,12 @@ import { format } from "date-fns";
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { redirect } from "next/navigation";
+import { Noto_Serif } from "next/font/google";
+
+const notoSerif = Noto_Serif({
+    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+    subsets: ["latin"],
+});
 
 export default async function MarksheetPrinter({
     params,
@@ -42,9 +48,9 @@ export default async function MarksheetPrinter({
     );
     const qrCodeURl = await GENERATE_QR(student!);
     return (
-        <div id="a4-page">
+        <div id="a4-page" className={notoSerif.className}>
             {/* Serial number */}
-            <span className="absolute top-[170px] left-[118px] font-semibold">
+            <span className="absolute top-[171px] left-[118px] font-semibold text-sm">
                 {`EUPL/${student?.serialNumber}`}
             </span>
 
@@ -61,64 +67,60 @@ export default async function MarksheetPrinter({
                 className="absolute top-[275px] left-[640px] w-20 h-20"
             />
 
-            <span className="absolute top-[268px] left-[245px] font-bold text-lg">
+            <span className="absolute top-[268px] left-[245px] font-bold text-base">
                 {TO_CAPITALIZE(student?.name)}
             </span>
-            <span className="absolute top-[296px] left-[245px] font-bold text-lg">
+            <span className="absolute top-[296px] left-[245px] font-bold text-base">
                 {TO_CAPITALIZE(student?.motherName)}
             </span>
-            <span className="absolute top-[323px] left-[245px] font-bold text-lg">
+            <span className="absolute top-[323px] left-[245px] font-bold text-base">
                 {TO_CAPITALIZE(student?.fatherName)}
             </span>
-            <span className="absolute top-[355px] left-[245px] font-bold text-base">
+            <span className="absolute top-[353px] left-[245px] font-bold text-base">
                 {student?.Course?.name} ( {student?.Course?.fullName} )
             </span>
-            <span className="absolute top-[380px] left-[245px] font-bold text-lg">
+            <span className="absolute top-[380px] left-[245px] font-bold text-base">
                 {student?.Course?.duration}
             </span>
-            <span className="absolute top-[409px] left-[245px] font-bold text-base">
+            <span className="absolute top-[411px] left-[245px] font-bold text-sm">
                 {student?.Branch.branch}
             </span>
-            <span className="absolute top-[437px] left-[245px] font-bold text-base">
+            <span className="absolute top-[439px] left-[245px] font-bold text-sm">
                 {student?.branch}
             </span>
 
             {/* MODULES */}
-            <pre className="absolute top-[496px] left-[60px] font-bold text-sm tracking-normal max-w-[85%] whitespace-pre-line leading-4">
+            <pre className="absolute top-[496px] left-[60px] font-extrabold text-base tracking-tight leading-[18px] max-w-[85%] whitespace-pre-line">
                 {`${student?.Course?.modules}`}
             </pre>
 
-            {true && (
-                <>
-                    {/* Full Marks */}
-                    <span className="absolute top-[681px] left-[298px] font-bold text-base">
-                        100
-                    </span>
-                    <span className="absolute top-[712px] left-[298px] font-bold text-base">
-                        100
-                    </span>
-                    <span className="absolute top-[744px] left-[298px] font-bold text-base">
-                        100
-                    </span>
-                    <span className="absolute top-[776px] left-[298px] font-bold text-base">
-                        100
-                    </span>
+            {/* Full Marks */}
+            <span className="absolute top-[681px] left-[298px] font-bold text-base">
+                100
+            </span>
+            <span className="absolute top-[712px] left-[298px] font-bold text-base">
+                100
+            </span>
+            <span className="absolute top-[744px] left-[298px] font-bold text-base">
+                100
+            </span>
+            <span className="absolute top-[776px] left-[298px] font-bold text-base">
+                100
+            </span>
 
-                    {/* Pass Marks */}
-                    <span className="absolute top-[681px] left-[431px] font-bold text-base">
-                        40
-                    </span>
-                    <span className="absolute top-[712px] left-[431px] font-bold text-base">
-                        40
-                    </span>
-                    <span className="absolute top-[744px] left-[431px] font-bold text-base">
-                        40
-                    </span>
-                    <span className="absolute top-[776px] left-[431px] font-bold text-base">
-                        40
-                    </span>
-                </>
-            )}
+            {/* Pass Marks */}
+            <span className="absolute top-[681px] left-[431px] font-bold text-base">
+                40
+            </span>
+            <span className="absolute top-[712px] left-[431px] font-bold text-base">
+                40
+            </span>
+            <span className="absolute top-[744px] left-[431px] font-bold text-base">
+                40
+            </span>
+            <span className="absolute top-[776px] left-[431px] font-bold text-base">
+                40
+            </span>
 
             {/* Marks */}
             <span className="absolute top-[681px] left-[611px] font-bold text-base">

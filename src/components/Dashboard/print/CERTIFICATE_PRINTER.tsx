@@ -223,7 +223,7 @@ const CertificatePrinter: FC<pageProps> = ({
                                 )}
                                 <TableCell className="text-center">
                                     <Link
-                                        href={`/api/assets/${course === "computerTyping" ? "typingCertificate" : "certificate"}?registration=${student?.registration}&no_image=true`}
+                                        href={`/print/${course === "computerTyping" ? "typingCertificate" : "certificate"}/${student?.registration}`}
                                         className="flex items-center justify-center"
                                         target="_blank"
                                     >
