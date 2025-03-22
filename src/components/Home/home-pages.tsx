@@ -77,6 +77,7 @@ const HomeCarousel: FC<{
                 y: 0,
                 opacity: 1,
             }}
+            viewport={{ once: true }}
             initial={{
                 opacity: 0,
                 y: 100,
@@ -132,6 +133,7 @@ const NoticeSection = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
+            viewport={{ once: true }}
             className="w-full h-full relative rounded-lg border bg-background md:shadow-xl overflow-hidden"
         >
             <DotPattern
@@ -232,6 +234,7 @@ const HomeFamily: FC<{ family?: familyType[] }> = ({ family }) => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
+            viewport={{ once: true }}
             className="w-full lg:w-[93%]  2xl:w-full mx-auto overflow-hidden lg:rounded-lg py-7 lg:py-9 px-1 sm:px-2 flex flex-col items-center relative rounded-lg border bg-background  md:shadow-xl"
         >
             <GridPattern
@@ -301,6 +304,7 @@ export const FromDeskOf = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
+            viewport={{ once: true }}
             className="bg-background rounded-lg border  md:shadow-xl w-full lg:w-[93%] 2xl:w-full relative overflow-hidden"
         >
             <GridPattern
@@ -407,6 +411,7 @@ const WhySection = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
+            viewport={{ once: true }}
             className="w-[93%] 2xl:w-full relative rounded-lg border bg-background md:shadow-xl overflow-hidden"
         >
             <GridPattern
@@ -457,6 +462,7 @@ const OurFeatures = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
+            viewport={{ once: true }}
             className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 rounded-lg py-10 h-full relative overflow-hidden border bg-background md:shadow-xl`}
         >
             <DotPattern className={cn("p-2")} />
@@ -657,6 +663,7 @@ const OurCourses = () => {
                 duration: 1.3,
                 ease: "easeInOut",
             }}
+            viewport={{ once: true }}
             className={`w-[93%] 2xl:w-full flex flex-col justify-center items-center gap-10 rounded-lg  py-10 h-full relative overflow-hidden border bg-background md:shadow-xl`}
         >
             <DotPattern
@@ -683,6 +690,7 @@ const OurCourses = () => {
                             transform: "rotate(0deg)",
                             opacity: 1,
                         }}
+                        viewport={{ once: true }}
                         transition={{
                             duration: 1.3,
                             ease: "easeInOut",

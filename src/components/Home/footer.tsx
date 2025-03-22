@@ -29,6 +29,7 @@ export const Footer = () => {
                 duration: 1,
                 ease: "easeInOut",
             }}
+            viewport={{ once: true }}
             className={`flex flex-col items-center w-full`}
             id="contact"
         >
