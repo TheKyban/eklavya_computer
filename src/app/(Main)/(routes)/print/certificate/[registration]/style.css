@@ -1,11 +1,30 @@
-#a4-page {
-    height: 215.9mm;
-    width: 266.7mm;
+.certificate-container {
     background: url("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg");
-    margin: auto;
-    /* padding: 20mm; */
-    border: 1px solid #ccc;
     background-size: contain;
     background-repeat: no-repeat;
-    position: relative;
+    width: 266.7mm; /* Exact physical width */
+    height: 215.9mm; /* Exact physical height */
+    position: relative; /* For absolute positioning children */
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10mm; /* Safe printing area */
+}
+
+@media print {
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .certificate-container {
+        width: 266.7mm !important;
+        height: 215.9mm !important;
+        padding: 0;
+        page-break-after: always;
+    }
+
+    @page {
+        size: 266.7mm 215.9mm; /* Match physical dimensions */
+        margin: 0;
+    }
 }

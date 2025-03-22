@@ -1,7 +1,7 @@
 import GENERATE_QR from "@/lib/GENERATE_QR";
 import "./style.css";
 import { Prisma } from "../../../../../../../prisma/prisma";
-import { CERTIFICATE_IMAGE, MOHAR_IMAGE } from "@/lib/ASSETS";
+import { MOHAR_IMAGE } from "@/lib/ASSETS";
 import { format } from "date-fns";
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
@@ -52,7 +52,7 @@ export default async function CertificatePrinter({
     const qrCodeURl = await GENERATE_QR(student);
 
     return (
-        <div id="a4-page">
+        <div className="certificate-container">
             <span className="absolute top-[106px] left-[820px] text-xs font-semibold">
                 EUPL/{student?.serialNumber}
             </span>
