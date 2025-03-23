@@ -11,20 +11,25 @@
 }
 
 @media print {
-    body {
+    body,
+    html {
         margin: 0 !important;
         padding: 0 !important;
+        width: 266.7mm !important;
+        height: 215.9mm !important;
     }
 
     .certificate-container {
         width: 266.7mm !important;
         height: 215.9mm !important;
-        padding: 0;
-        page-break-after: always;
+        margin: 0 !important;
+        padding: 0 !important;
+        page-break-after: avoid;
+        page-break-inside: avoid;
     }
 
     @page {
-        size: 266.7mm 215.9mm; /* Match physical dimensions */
+        size: 266.7mm 215.9mm;
         margin: 0;
     }
 }
