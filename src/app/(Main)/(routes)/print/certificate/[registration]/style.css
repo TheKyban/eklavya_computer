@@ -1,35 +1,37 @@
+/* styles/certificate.css */
 .certificate-container {
+    height: 8.5in;
+    width: 10.5in;
     background: url("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 266.7mm; /* Exact physical width */
-    height: 215.9mm; /* Exact physical height */
-    position: relative; /* For absolute positioning children */
+    background-size: cover;
     margin: 0 auto;
+    position: relative;
     box-sizing: border-box;
-    padding: 10mm; /* Safe printing area */
+    /* Add specific styling for your template */
+}
+
+@media screen {
+    .certificate-container {
+        background: url("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg");
+        background-size: cover;
+        margin: 2rem auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 }
 
 @media print {
-    body,
-    html {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 266.7mm !important;
-        height: 215.9mm !important;
-    }
-
-    .certificate-container {
-        width: 266.7mm !important;
-        height: 215.9mm !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        page-break-after: avoid;
-        page-break-inside: avoid;
-    }
-
     @page {
-        size: 266.7mm 215.9mm;
+        size: 10.5in 8.5in;
+        page-orientation: landscape;
+        /* margin-right: 5in; */
+    }
+    body {
         margin: 0;
+        padding: 0;
+    }
+    .certificate-container {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin-right: 0.5in;
     }
 }

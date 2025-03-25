@@ -49,15 +49,15 @@ export default function CertificateCanvas({
         // ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         renderCertificate(ctx);
         // };
-    }, [sizes]);
+    }, [sizes?.height, sizes?.width]);
 
     const renderCertificate = useCallback(
         (ctx: CanvasRenderingContext2D) => {
-            ctx.font = "bold 14px Arial";
+            ctx.font = "normal 14px Arial";
             ctx.fillText(`EUPL/${student?.serialNumber}`, 825, 135);
             ctx.fillText(student.registration, 843, 190);
 
-            ctx.font = "bold 16px Arial";
+            ctx.font = "normal 16px Arial";
             ctx.fillText(student.name.toUpperCase(), 310, 370);
             ctx.fillText(student.fatherName.toUpperCase(), 200, 415);
             ctx.fillText(
@@ -66,15 +66,15 @@ export default function CertificateCanvas({
                 458,
             );
             ctx.fillText(student.Branch.branch, 280, 505);
-            ctx.fillText(student.branch, 186, 554);
-            ctx.fillText(student.Course.duration, 465, 554);
+            ctx.fillText(student.branch, 186, 547);
+            ctx.fillText(student.Course.duration, 468, 549);
             const completeDate = (new Date(student.dor).getTime() +
                 1000 *
                     Duration[
                         student.Course.duration as keyof typeof Duration
                     ]) as number;
 
-            ctx.fillText(format(new Date(completeDate), "MMM yyyy"), 645, 554);
+            ctx.fillText(format(new Date(completeDate), "MMM yyyy"), 650, 549);
 
             // GRADE
             const studentStats = new STUDENT_STATS(
@@ -87,12 +87,12 @@ export default function CertificateCanvas({
                 400,
             );
 
-            ctx.fillText(studentStats.getGrade(), 415, 600);
+            ctx.fillText(studentStats.getGrade(), 415, 595);
 
             const certificateDate = new Date(
                 student?.certificate?.date as Date,
             ).toLocaleDateString("en-GB");
-            ctx.fillText(certificateDate, 160, 655);
+            ctx.fillText(certificateDate, 163, 653);
 
             const qrCode = new Image();
             qrCode.src = qrCodeURL;
@@ -127,7 +127,7 @@ export default function CertificateCanvas({
     }
     return (
         <div>
-            <canvas ref={canvasRef} />;
+            <canvas ref={canvasRef} />
             <Button
                 onClick={() =>
                     PRINT_HANDLER(canvasRef.current as HTMLCanvasElement)
