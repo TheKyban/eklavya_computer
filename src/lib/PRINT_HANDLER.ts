@@ -1,6 +1,9 @@
 import printJS from "print-js";
 
-export const PRINT_HANDLER = (canvas: HTMLCanvasElement) => {
+export const PRINT_HANDLER = (
+    canvas: HTMLCanvasElement,
+    configuration?: printJS.Configuration,
+) => {
     const toImg = canvas.toDataURL();
     printJS({
         printable: `${toImg}`,
@@ -13,5 +16,6 @@ export const PRINT_HANDLER = (canvas: HTMLCanvasElement) => {
         targetStyles: [
             "* { margin: 0; padding: 0; border: none; border-width:0; box-sizing:border-box;}",
         ],
+        ...configuration,
     });
 };
