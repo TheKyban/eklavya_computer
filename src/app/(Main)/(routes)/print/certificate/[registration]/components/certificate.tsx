@@ -107,7 +107,7 @@ export default function CertificateCanvas({
                 ctx.drawImage(seal, 770, 655, 96, 96);
             };
         },
-        [sizes?.height, sizes?.width],
+        [student, sizes?.height, sizes?.width],
     );
 
     function downloadPDF() {
