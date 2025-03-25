@@ -35,42 +35,45 @@ export const NewCertificate = ({
     const ref = useRef<HTMLDivElement>(null);
 
     return (
-        <div ref={ref} className="certificate-container border border-red-600">
-            <span className="absolute top-[106px] left-[820px] text-xs font-semibold">
+        <div
+            ref={ref}
+            className="certificate-container border border-red-600 tracking-widest text-lg font-semibold"
+        >
+            <span className="absolute top-[126px] left-[865px] text-xs font-semibold tracking-normal">
                 EUPL/{student?.serialNumber}
             </span>
-            <span className="absolute top-[152px] left-[842px] text-xs font-semibold">
+            <span className="absolute top-[182px] left-[888px] text-xs font-semibold tracking-normal">
                 {student?.registration}
             </span>
-            <span className="absolute top-[302px] left-[310px] text-base font-semibold">
+            <span className="absolute top-[350px] left-[350px]">
                 {TO_CAPITALIZE(student?.name)}
             </span>
-            <span className="absolute top-[340px] left-[200px] text-base font-semibold">
+            <span className="absolute top-[394px] left-[230px]">
                 {TO_CAPITALIZE(student?.fatherName)}
             </span>
-            <span className="absolute top-[378px] left-[390px] text-base font-semibold">
+            <span className="absolute top-[440px] left-[430px]">
                 {student?.Course?.name} ({student?.Course?.fullName})
             </span>
-            <span className="absolute top-[418px] left-[280px] text-base font-semibold">
+            <span className="absolute top-[483px] left-[300px]">
                 {student?.Branch?.branch}
             </span>
 
-            <span className="absolute top-[455px] left-[186px] text-base font-semibold">
+            <span className="absolute top-[526px] left-[190px]">
                 {student?.branch}
             </span>
 
-            <span className="absolute top-[455px] left-[465px] text-base font-semibold">
+            <span className="absolute top-[526px] left-[495px]">
                 {student?.Course?.duration}
             </span>
-            <span className="absolute top-[455px] left-[690px] text-base font-semibold">
+            <span className="absolute top-[526px] left-[700px]">
                 {format(new Date(completeDate), "MMM yyyy")}
             </span>
 
-            <span className="absolute top-[496px] left-[350px] text-base font-semibold">
+            <span className="absolute top-[574px] left-[420px]">
                 {studentStats?.getGrade()}
             </span>
 
-            <span className="absolute top-[550px] left-[160px] text-sm font-semibold">
+            <span className="absolute top-[635px] left-[190px] text-sm font-semibold">
                 {format(new Date(student.certificate?.date!), "dd/MM/yyyy")}
             </span>
             {/* QR CODE */}
@@ -78,13 +81,13 @@ export const NewCertificate = ({
             <img
                 src={qrCodeURl}
                 alt=""
-                className="absolute top-[570px] left-[550px] text-sm font-semibold w-20 h-20"
+                className="absolute top-[670px] left-[610px] w-20 h-20"
             />
             {/* eslint-disable-next-line  */}
             <img
                 src={MOHAR_IMAGE}
                 alt=""
-                className="absolute top-[550px] left-[770px] w-24 h-24"
+                className="absolute top-[670px] left-[820px] w-24 h-24"
             />
         </div>
     );

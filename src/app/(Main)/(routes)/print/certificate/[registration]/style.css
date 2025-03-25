@@ -1,9 +1,16 @@
 /* styles/certificate.css */
+
+:root {
+    --height: 8.5in;
+    --width: 11in;
+}
 .certificate-container {
-    height: 8.5in;
-    width: 10.5in;
+    height: var(--height);
+    width: var(--width);
     background: url("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg");
-    background-size: cover;
+    background-size: var(--width) var(--height);
+    background-clip: content-box;
+    background-repeat: no-repeat;
     margin: 0 auto;
     position: relative;
     box-sizing: border-box;
@@ -12,8 +19,6 @@
 
 @media screen {
     .certificate-container {
-        background: url("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg");
-        background-size: cover;
         margin: 2rem auto;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -21,7 +26,8 @@
 
 @media print {
     @page {
-        size: 10.5in 8.5in;
+        page: letter;
+        /* size: var(--width) var(--height); */
         page-orientation: landscape;
         /* margin-right: 5in; */
     }
@@ -32,6 +38,6 @@
     .certificate-container {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
-        margin-right: 0.5in;
+        /* margin-right: 0.5in; */
     }
 }
