@@ -37,7 +37,7 @@ export const NewCertificate = ({
     return (
         <div
             ref={ref}
-            className="certificate-container border border-red-600 tracking-widest text-lg font-semibold"
+            className="certificate-container tracking-widest text-lg font-semibold"
         >
             <span className="absolute top-[126px] left-[865px] text-xs font-semibold tracking-normal">
                 EUPL/{student?.serialNumber}
