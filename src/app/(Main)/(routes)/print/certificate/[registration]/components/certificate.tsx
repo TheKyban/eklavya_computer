@@ -49,7 +49,7 @@ export default function CertificateCanvas({
         // ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         renderCertificate(ctx);
         // };
-    }, [student, qrCodeURL, sealURL]);
+    }, [sizes]);
 
     const renderCertificate = useCallback(
         (ctx: CanvasRenderingContext2D) => {
@@ -107,7 +107,7 @@ export default function CertificateCanvas({
                 ctx.drawImage(seal, 770, 655, 96, 96);
             };
         },
-        [student, sizes?.height, sizes?.width],
+        [student, sizes?.height, sizes?.width, student, qrCodeURL, sealURL],
     );
 
     function downloadPDF() {
