@@ -51,61 +51,64 @@ export default function CertificateCanvas({
         // };
     }, [student, qrCodeURL, sealURL]);
 
-    const renderCertificate = useCallback((ctx: CanvasRenderingContext2D) => {
-        ctx.font = "bold 14px Arial";
-        ctx.fillText(`EUPL/${student?.serialNumber}`, 825, 135);
-        ctx.fillText(student.registration, 843, 190);
+    const renderCertificate = useCallback(
+        (ctx: CanvasRenderingContext2D) => {
+            ctx.font = "bold 14px Arial";
+            ctx.fillText(`EUPL/${student?.serialNumber}`, 825, 135);
+            ctx.fillText(student.registration, 843, 190);
 
-        ctx.font = "bold 16px Arial";
-        ctx.fillText(student.name.toUpperCase(), 310, 370);
-        ctx.fillText(student.fatherName.toUpperCase(), 200, 415);
-        ctx.fillText(
-            `${student.Course.name} (${student.Course.fullName})`,
-            390,
-            458,
-        );
-        ctx.fillText(student.Branch.branch, 280, 505);
-        ctx.fillText(student.branch, 186, 554);
-        ctx.fillText(student.Course.duration, 465, 554);
-        const completeDate = (new Date(student.dor).getTime() +
-            1000 *
-                Duration[
-                    student.Course.duration as keyof typeof Duration
-                ]) as number;
+            ctx.font = "bold 16px Arial";
+            ctx.fillText(student.name.toUpperCase(), 310, 370);
+            ctx.fillText(student.fatherName.toUpperCase(), 200, 415);
+            ctx.fillText(
+                `${student.Course.name} (${student.Course.fullName})`,
+                390,
+                458,
+            );
+            ctx.fillText(student.Branch.branch, 280, 505);
+            ctx.fillText(student.branch, 186, 554);
+            ctx.fillText(student.Course.duration, 465, 554);
+            const completeDate = (new Date(student.dor).getTime() +
+                1000 *
+                    Duration[
+                        student.Course.duration as keyof typeof Duration
+                    ]) as number;
 
-        ctx.fillText(format(new Date(completeDate), "MMM yyyy"), 645, 554);
+            ctx.fillText(format(new Date(completeDate), "MMM yyyy"), 645, 554);
 
-        // GRADE
-        const studentStats = new STUDENT_STATS(
-            [
-                student?.marks?.marks?.practical!,
-                student?.marks?.marks?.project!,
-                student?.marks?.marks?.viva!,
-                student?.marks?.marks?.written!,
-            ],
-            400,
-        );
+            // GRADE
+            const studentStats = new STUDENT_STATS(
+                [
+                    student?.marks?.marks?.practical!,
+                    student?.marks?.marks?.project!,
+                    student?.marks?.marks?.viva!,
+                    student?.marks?.marks?.written!,
+                ],
+                400,
+            );
 
-        ctx.fillText(studentStats.getGrade(), 415, 600);
+            ctx.fillText(studentStats.getGrade(), 415, 600);
 
-        const certificateDate = new Date(
-            student?.certificate?.date as Date,
-        ).toLocaleDateString("en-GB");
-        ctx.fillText(certificateDate, 160, 655);
+            const certificateDate = new Date(
+                student?.certificate?.date as Date,
+            ).toLocaleDateString("en-GB");
+            ctx.fillText(certificateDate, 160, 655);
 
-        const qrCode = new Image();
-        qrCode.src = qrCodeURL;
-        qrCode.onload = function () {
-            ctx.drawImage(qrCode, 550, 675, 80, 80);
-        };
+            const qrCode = new Image();
+            qrCode.src = qrCodeURL;
+            qrCode.onload = function () {
+                ctx.drawImage(qrCode, 550, 675, 80, 80);
+            };
 
-        const seal = new Image();
-        seal.crossOrigin = "anonymous";
-        seal.src = sealURL;
-        seal.onload = function () {
-            ctx.drawImage(seal, 770, 655, 96, 96);
-        };
-    }, []);
+            const seal = new Image();
+            seal.crossOrigin = "anonymous";
+            seal.src = sealURL;
+            seal.onload = function () {
+                ctx.drawImage(seal, 770, 655, 96, 96);
+            };
+        },
+        [sizes?.height, sizes?.width],
+    );
 
     function downloadPDF() {
         const canvas = canvasRef.current;
