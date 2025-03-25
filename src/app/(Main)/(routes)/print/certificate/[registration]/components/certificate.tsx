@@ -2,7 +2,7 @@
 
 import { PRINT_HANDLER } from "@/lib/PRINT_HANDLER";
 import { StudentWithAllDetails } from "@/lib/TYPES";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
 import { format } from "date-fns";
@@ -39,18 +39,19 @@ export default function CertificateCanvas({
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        const background = new Image();
-        background.crossOrigin = "anonymous";
+        // const background = new Image();
+        // background.crossOrigin = "anonymous";
         // background.src = "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg";
-        background.src =
-            "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715183433/ekavaya_assets/z37jjeti3t0lasea40sn.jpg";
+        // background.src =
+        ("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715183433/ekavaya_assets/z37jjeti3t0lasea40sn.jpg");
 
-        background.onload = function () {
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-            renderCertificate(ctx);
-        };
+        // background.onload = function () {
+        // ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        renderCertificate(ctx);
+        // };
     }, [student, qrCodeURL, sealURL]);
-    function renderCertificate(ctx: CanvasRenderingContext2D) {
+
+    const renderCertificate = useCallback((ctx: CanvasRenderingContext2D) => {
         ctx.font = "bold 14px Arial";
         ctx.fillText(`EUPL/${student?.serialNumber}`, 825, 135);
         ctx.fillText(student.registration, 843, 190);
@@ -104,7 +105,7 @@ export default function CertificateCanvas({
         seal.onload = function () {
             ctx.drawImage(seal, 770, 655, 96, 96);
         };
-    }
+    }, []);
 
     function downloadPDF() {
         const canvas = canvasRef.current;
