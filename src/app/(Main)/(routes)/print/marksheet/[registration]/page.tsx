@@ -50,12 +50,12 @@ export default async function MarksheetPrinter({
     return (
         <div id="a4-page" className={notoSerif.className}>
             {/* Serial number */}
-            <span className="absolute top-[171px] left-[118px] font-semibold text-sm">
+            <span className="absolute top-[171px] left-[121px] font-semibold text-sm">
                 {`EUPL/${student?.serialNumber}`}
             </span>
 
             {/* registration number */}
-            <span className="absolute top-[170px] left-[590px] text-sm font-bold">
+            <span className="absolute top-[170px] left-[593px] text-sm font-bold">
                 {student?.registration}
             </span>
 
@@ -64,28 +64,28 @@ export default async function MarksheetPrinter({
             {/* eslint-disable-next-line */}
             <img
                 src={student?.img}
-                className="absolute top-[275px] left-[640px] w-20 h-20"
+                className="absolute top-[275px] left-[642px] w-20 h-20"
             />
 
-            <span className="absolute top-[268px] left-[245px] font-bold text-base">
+            <span className="absolute top-[268px] left-[247px] font-bold text-base">
                 {TO_CAPITALIZE(student?.name)}
             </span>
-            <span className="absolute top-[296px] left-[245px] font-bold text-base">
+            <span className="absolute top-[296px] left-[247px] font-bold text-base">
                 {TO_CAPITALIZE(student?.motherName)}
             </span>
-            <span className="absolute top-[323px] left-[245px] font-bold text-base">
+            <span className="absolute top-[323px] left-[247px] font-bold text-base">
                 {TO_CAPITALIZE(student?.fatherName)}
             </span>
-            <span className="absolute top-[353px] left-[245px] font-bold text-base">
+            <span className="absolute top-[353px] left-[247px] font-bold text-base">
                 {student?.Course?.name} ( {student?.Course?.fullName} )
             </span>
-            <span className="absolute top-[380px] left-[245px] font-bold text-base">
+            <span className="absolute top-[380px] left-[247px] font-bold text-base">
                 {student?.Course?.duration}
             </span>
-            <span className="absolute top-[411px] left-[245px] font-bold text-sm">
+            <span className="absolute top-[411px] left-[247px] font-bold text-sm">
                 {student?.Branch.branch}
             </span>
-            <span className="absolute top-[439px] left-[245px] font-bold text-sm">
+            <span className="absolute top-[439px] left-[247px] font-bold text-sm">
                 {student?.branch}
             </span>
 

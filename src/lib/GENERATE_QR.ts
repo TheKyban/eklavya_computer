@@ -3,7 +3,7 @@ import qrcode from "qrcode";
 
 export default async function GENERATE_QR(student: Student) {
     const QR_Buffer = await qrcode.toBuffer(
-        `name: ${student.name}; registration: ${student.registration}; fatherName: ${student.fatherName}; course: ${student.course}`,
+        `registration: ${student.registration};`,
         {
             width: 80,
             margin: 0,
