@@ -39,10 +39,10 @@ export const NewCertificate = ({
             ref={ref}
             className="certificate-container tracking-widest text-lg font-semibold"
         >
-            <span className="absolute top-[137px] left-[865px] text-xs font-semibold tracking-normal">
+            <span className="absolute top-[142px] left-[865px] text-sm font-semibold tracking-normal">
                 EUPL/{student?.serialNumber}
             </span>
-            <span className="absolute top-[195px] left-[878px] text-xs font-semibold tracking-normal">
+            <span className="absolute top-[200px] left-[865px] text-sm font-semibold tracking-normal">
                 {student?.registration}
             </span>
             <span className="absolute top-[370px] left-[350px]">
