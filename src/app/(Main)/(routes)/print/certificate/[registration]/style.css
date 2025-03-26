@@ -7,10 +7,10 @@
 .certificate-container {
     height: var(--height);
     width: var(--width);
-    /* background: url("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg");
+    background: url("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg");
     background-size: var(--width) var(--height);
     background-clip: content-box;
-    background-repeat: no-repeat; */
+    background-repeat: no-repeat;
     margin: 0 auto;
     position: relative;
     box-sizing: border-box;

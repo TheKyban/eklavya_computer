@@ -81,13 +81,13 @@ export const NewCertificate = ({
             <img
                 src={qrCodeURl}
                 alt=""
-                className="absolute top-[690px] left-[610px] w-20 h-20"
+                className="absolute top-[670px] left-[610px] w-24 h-24"
             />
             {/* eslint-disable-next-line  */}
             <img
                 src={MOHAR_IMAGE}
                 alt=""
-                className="absolute top-[690px] left-[820px] w-24 h-24"
+                className="absolute top-[640px] left-[810px] w-32 h-32"
             />
         </div>
     );
