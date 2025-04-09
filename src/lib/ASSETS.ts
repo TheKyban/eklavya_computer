@@ -2,7 +2,7 @@ export const I_CARD_IMAGE =
     "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006473/ekavaya_assets/yqcerlys2abgwllxtub5.jpg";
 
 export const MARKSHEET_IMAGE =
-    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006695/ekavaya_assets/s93zb3tbfq98qgtzivvj.jpg";
+    "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1744118101/ekavaya_assets/utzsqbvpxh4halynfogd.jpg";
 
 export const TYPING_CERTIFICATE_IMAGE =
     "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718007001/ekavaya_assets/zuel2sehvbwqaw1fgmxz.jpg";
