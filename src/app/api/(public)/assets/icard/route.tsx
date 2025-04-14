@@ -3,7 +3,6 @@ import { loadGoogleFont } from "@/lib/FONTS";
 import { Prisma } from "../../../../../../prisma/prisma";
 import { ICardTemplate } from "./ICARD_TEMPLATE";
 
-export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export const GET = async (req: Request) => {

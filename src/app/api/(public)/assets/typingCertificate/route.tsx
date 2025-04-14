@@ -6,7 +6,6 @@ import { TypingCertificateTemplate } from "./TYPING_CERTIFICATE_TEMPLATE";
 import { StudentWithAllDetails } from "@/lib/TYPES";
 import { DOCUMENT_SIZES } from "@/lib/CONSTANTS";
 
-export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export const GET = async (req: Request) => {
