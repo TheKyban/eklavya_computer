@@ -30,27 +30,6 @@ export default function CertificateCanvas({
         height: 215.9 * 3.78,
     };
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        canvas.width = sizes.width; // Convert mm to pixels (1mm ≈ 3.78px)
-        canvas.height = sizes.height;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
-        // const background = new Image();
-        // background.crossOrigin = "anonymous";
-        // background.src = "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg";
-        // background.src =
-        ("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715183433/ekavaya_assets/z37jjeti3t0lasea40sn.jpg");
-
-        // background.onload = function () {
-        // ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        renderCertificate(ctx);
-        // };
-    }, [sizes?.height, sizes?.width]);
-
     const renderCertificate = useCallback(
         (ctx: CanvasRenderingContext2D) => {
             ctx.font = "normal 14px Arial";
@@ -107,8 +86,29 @@ export default function CertificateCanvas({
                 ctx.drawImage(seal, 770, 655, 96, 96);
             };
         },
-        [student, sizes?.height, sizes?.width, student, qrCodeURL, sealURL],
+        [student, student, qrCodeURL, sealURL],
     );
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        canvas.width = sizes.width; // Convert mm to pixels (1mm ≈ 3.78px)
+        canvas.height = sizes.height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        // const background = new Image();
+        // background.crossOrigin = "anonymous";
+        // background.src = "https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg";
+        // background.src =
+        ("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1715183433/ekavaya_assets/z37jjeti3t0lasea40sn.jpg");
+
+        // background.onload = function () {
+        // ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        renderCertificate(ctx);
+        // };
+    }, [sizes?.height, sizes?.width, renderCertificate]);
 
     function downloadPDF() {
         const canvas = canvasRef.current;
