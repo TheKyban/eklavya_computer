@@ -7,18 +7,18 @@ const SECONDS_IN_A_DAY = 60 * 60 * 24;
 const SECONDS_IN_A_MONTH = SECONDS_IN_A_DAY * 30;
 
 export const Duration = {
-    "One Month": SECONDS_IN_A_MONTH,
-    "Two Months": SECONDS_IN_A_MONTH * 2,
-    "Three Months": SECONDS_IN_A_MONTH * 3,
-    "Four Months": SECONDS_IN_A_MONTH * 4,
-    "Five Months": SECONDS_IN_A_MONTH * 5,
-    "Six Months": SECONDS_IN_A_MONTH * 6,
-    "Seven Months": SECONDS_IN_A_MONTH * 7,
-    "Eight Months": SECONDS_IN_A_MONTH * 8,
-    "Nine Months": SECONDS_IN_A_MONTH * 9,
-    "Ten Months": SECONDS_IN_A_MONTH * 10,
-    "Eleven Months": SECONDS_IN_A_MONTH * 11,
-    "Twelve Months": SECONDS_IN_A_MONTH * 12,
+    "1 Month": SECONDS_IN_A_MONTH,
+    "2 Months": SECONDS_IN_A_MONTH * 2,
+    "3 Months": SECONDS_IN_A_MONTH * 3,
+    "4 Months": SECONDS_IN_A_MONTH * 4,
+    "5 Months": SECONDS_IN_A_MONTH * 5,
+    "6 Months": SECONDS_IN_A_MONTH * 6,
+    "7 Months": SECONDS_IN_A_MONTH * 7,
+    "8 Months": SECONDS_IN_A_MONTH * 8,
+    "9 Months": SECONDS_IN_A_MONTH * 9,
+    "10 Months": SECONDS_IN_A_MONTH * 10,
+    "11 Months": SECONDS_IN_A_MONTH * 11,
+    "12 Months": SECONDS_IN_A_MONTH * 12,
 };
 
 export const IMAGE_SIZE = 40000;
