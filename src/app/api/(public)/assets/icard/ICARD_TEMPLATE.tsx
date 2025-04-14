@@ -1,7 +1,7 @@
 import { I_CARD_IMAGE, MOHAR_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { Student } from "@prisma/client";
-import { format } from "date-fns-tz";
+import { formatInTimeZone } from "date-fns-tz";
 
 export const ICardTemplate = ({
     image,
@@ -19,9 +19,6 @@ export const ICardTemplate = ({
         };
     };
 }) => {
-    const istDob = format(student.dob, "dd/MM/yyyy", {
-        timeZone: "Asia/Kolkata",
-    });
     return (
         <div
             style={{
@@ -92,7 +89,7 @@ export const ICardTemplate = ({
                 style={{ position: "absolute", top: "59.9vh", left: "44.5vw" }}
             >
                 {/* {format(new Date(student.dob), "dd/MM/yyyy")} */}
-                {istDob}
+                {formatInTimeZone(student.dob, "Asia/Kolkata", "dd/MM/yyyy")}
             </span>
 
             <span style={{ position: "absolute", top: "64.3vh", left: "40vw" }}>
