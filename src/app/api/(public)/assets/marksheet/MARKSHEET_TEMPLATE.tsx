@@ -130,107 +130,105 @@ export const MarksheetTemplate = ({
                 {`${student?.Course?.modules}`}
             </pre>
 
-            {!image && (
-                <>
-                    {/* Full Marks */}
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 687,
-                            left: 300,
-                            fontSize: 16,
-                            fontWeight: 600,
-                        }}
-                    >
-                        100
-                    </span>
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 719,
-                            left: 300,
-                            fontSize: 16,
-                            fontWeight: 600,
-                        }}
-                    >
-                        100
-                    </span>
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 751,
-                            left: 300,
-                            fontSize: 16,
-                            fontWeight: 600,
-                        }}
-                    >
-                        100
-                    </span>
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 783,
-                            left: 300,
-                            fontSize: 16,
-                            fontWeight: 600,
-                        }}
-                    >
-                        100
-                    </span>
+            <>
+                {/* Full Marks */}
+                <span
+                    style={{
+                        position: "absolute",
+                        top: 692,
+                        left: 300,
+                        fontSize: 16,
+                        fontWeight: 600,
+                    }}
+                >
+                    100
+                </span>
+                <span
+                    style={{
+                        position: "absolute",
+                        top: 724,
+                        left: 300,
+                        fontSize: 16,
+                        fontWeight: 600,
+                    }}
+                >
+                    100
+                </span>
+                <span
+                    style={{
+                        position: "absolute",
+                        top: 756,
+                        left: 300,
+                        fontSize: 16,
+                        fontWeight: 600,
+                    }}
+                >
+                    100
+                </span>
+                <span
+                    style={{
+                        position: "absolute",
+                        top: 788,
+                        left: 300,
+                        fontSize: 16,
+                        fontWeight: 600,
+                    }}
+                >
+                    100
+                </span>
 
-                    {/* Pass Marks */}
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 687,
-                            left: 434,
-                            fontSize: 16,
-                            fontWeight: 600,
-                        }}
-                    >
-                        40
-                    </span>
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 719,
-                            left: 434,
-                            fontSize: 16,
-                            fontWeight: 600,
-                        }}
-                    >
-                        40
-                    </span>
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 751,
-                            left: 434,
-                            fontSize: 16,
-                            fontWeight: 600,
-                        }}
-                    >
-                        40
-                    </span>
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 783,
-                            left: 434,
-                            fontSize: 16,
-                            fontWeight: 600,
-                        }}
-                    >
-                        40
-                    </span>
-                </>
-            )}
+                {/* Pass Marks */}
+                <span
+                    style={{
+                        position: "absolute",
+                        top: 692,
+                        left: 434,
+                        fontSize: 16,
+                        fontWeight: 600,
+                    }}
+                >
+                    40
+                </span>
+                <span
+                    style={{
+                        position: "absolute",
+                        top: 724,
+                        left: 434,
+                        fontSize: 16,
+                        fontWeight: 600,
+                    }}
+                >
+                    40
+                </span>
+                <span
+                    style={{
+                        position: "absolute",
+                        top: 756,
+                        left: 434,
+                        fontSize: 16,
+                        fontWeight: 600,
+                    }}
+                >
+                    40
+                </span>
+                <span
+                    style={{
+                        position: "absolute",
+                        top: 788,
+                        left: 434,
+                        fontSize: 16,
+                        fontWeight: 600,
+                    }}
+                >
+                    40
+                </span>
+            </>
 
             {/* Marks */}
             <span
                 style={{
                     position: "absolute",
-                    top: 687,
+                    top: 692,
                     right: 170,
                     fontSize: 16,
                     fontWeight: 600,
@@ -241,7 +239,7 @@ export const MarksheetTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 720,
+                    top: 724,
                     right: 170,
                     fontSize: 16,
                     fontWeight: 600,
@@ -252,7 +250,7 @@ export const MarksheetTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 752,
+                    top: 758,
                     right: 170,
                     fontSize: 16,
                     fontWeight: 600,
@@ -263,7 +261,7 @@ export const MarksheetTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 783,
+                    top: 788,
                     right: 170,
                     fontSize: 16,
                     fontWeight: 600,
@@ -276,7 +274,7 @@ export const MarksheetTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 830,
+                    top: 835,
                     left: 300,
                 }}
             >
@@ -285,7 +283,7 @@ export const MarksheetTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 830,
+                    top: 835,
                     left: 600,
                 }}
             >
@@ -295,7 +293,7 @@ export const MarksheetTemplate = ({
             <span
                 style={{
                     position: "absolute",
-                    top: 965,
+                    top: 968,
                     left: 180,
                     fontWeight: "bolder",
                     fontSize: 16,
@@ -317,7 +315,7 @@ export const MarksheetTemplate = ({
                     maxWidth: "60px",
                     maxHeight: "60px",
                     position: "absolute",
-                    top: 1005,
+                    top: 1015,
                     right: 300,
                 }}
             />
@@ -331,7 +329,7 @@ export const MarksheetTemplate = ({
                     height: 100,
                     objectFit: "contain",
                     position: "absolute",
-                    top: 950,
+                    top: 960,
                     right: 100,
                 }}
             />
