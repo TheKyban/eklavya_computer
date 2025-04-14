@@ -1,7 +1,7 @@
 import { MOHAR_IMAGE, TYPING_CERTIFICATE_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { StudentWithAllDetails } from "@/lib/TYPES";
-import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 
 export const TypingCertificateTemplate = ({
     student,
@@ -102,7 +102,11 @@ export const TypingCertificateTemplate = ({
                     fontSize: 18,
                 }}
             >
-                {format(new Date(student.certificate?.date!), "dd/MM/yyyy")}
+                {formatInTimeZone(
+                    student.certificate?.date!,
+                    "Asia/Kolkata",
+                    "dd/MM/yyyy",
+                )}
             </span>
 
             {/* QR CODE */}

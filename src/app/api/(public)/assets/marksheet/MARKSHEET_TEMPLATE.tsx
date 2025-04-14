@@ -2,7 +2,7 @@ import { MARKSHEET_IMAGE, MOHAR_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { StudentWithAllDetails } from "@/lib/TYPES";
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
-import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 
 export const MarksheetTemplate = ({
     student,
@@ -301,7 +301,11 @@ export const MarksheetTemplate = ({
                     fontSize: 16,
                 }}
             >
-                {format(new Date(student.marksheet.date!), "dd/MM/yyyy")}
+                {formatInTimeZone(
+                    student?.marksheet?.date!,
+                    "Asia/Kolkata",
+                    "dd/MM/yyyy",
+                )}
             </span>
 
             {/* QR CODE */}
