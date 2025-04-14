@@ -86,7 +86,7 @@ export default function CertificateCanvas({
                 ctx.drawImage(seal, 770, 655, 96, 96);
             };
         },
-        [student, student, qrCodeURL, sealURL],
+        [student, qrCodeURL, sealURL],
     );
 
     useEffect(() => {
