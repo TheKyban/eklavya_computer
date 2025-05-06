@@ -1,11 +1,11 @@
 "use client";
 import { Duration } from "@/lib/CONSTANTS";
 import { StudentWithAllDetails } from "@/lib/TYPES";
-import { format } from "date-fns";
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { MOHAR_IMAGE } from "@/lib/ASSETS";
 import { useRef } from "react";
+import { formatInTimeZone } from "date-fns-tz";
 
 export const NewCertificate = ({
     qrCodeURl,
@@ -66,7 +66,12 @@ export const NewCertificate = ({
                 {student?.Course?.duration}
             </span>
             <span className="absolute top-[546px] left-[700px]">
-                {format(new Date(completeDate), "MMM yyyy")}
+                {formatInTimeZone(
+                    new Date(completeDate),
+                    "Asia/Kolkata",
+                    "MMM yyyy",
+                )}
+                {/* {format(new Date(completeDate), "MMM yyyy")} */}
             </span>
 
             <span className="absolute top-[594px] left-[420px]">
@@ -74,7 +79,12 @@ export const NewCertificate = ({
             </span>
 
             <span className="absolute top-[655px] left-[190px] text-sm font-semibold">
-                {format(new Date(student.certificate?.date!), "dd/MM/yyyy")}
+                {formatInTimeZone(
+                    new Date(student.certificate?.date!),
+                    "Asia/Kolkata",
+                    "dd/MM/yyyy",
+                )}
+                {/* {format(new Date(student.certificate?.date!), "dd/MM/yyyy")} */}
             </span>
             {/* QR CODE */}
             {/* eslint-disable-next-line  */}

@@ -2,11 +2,11 @@ import GENERATE_QR from "@/lib/GENERATE_QR";
 import "./style.css";
 import { Prisma } from "../../../../../../../prisma/prisma";
 import { MOHAR_IMAGE } from "@/lib/ASSETS";
-import { format } from "date-fns";
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { redirect } from "next/navigation";
 import { Noto_Serif } from "next/font/google";
+import { formatInTimeZone } from "date-fns-tz";
 
 const notoSerif = Noto_Serif({
     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -145,7 +145,12 @@ export default async function MarksheetPrinter({
             </span>
 
             <span className="absolute top-[960px] left-[190px] font-bold text-sm">
-                {format(new Date(student.marksheet.date!), "dd/MM/yyyy")}
+                {formatInTimeZone(
+                    new Date(student.marksheet.date!),
+                    "Asia/Kolkata",
+                    "dd/MM/yyyy",
+                )}
+                {/* {format(new Date(student.marksheet.date!), "dd/MM/yyyy")} */}
             </span>
 
             {/* QR CODE */}
