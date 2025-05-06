@@ -1,9 +1,9 @@
 import { CERTIFICATE_IMAGE, MOHAR_IMAGE } from "@/lib/ASSETS";
 import { TO_CAPITALIZE } from "@/lib/STYLES";
 import { StudentWithAllDetails } from "@/lib/TYPES";
-import { format } from "date-fns";
 import STUDENT_STATS from "@/lib/STUDENT_STATS";
 import { Duration } from "@/lib/CONSTANTS";
+import { formatInTimeZone } from "date-fns-tz";
 
 export const CertificateTemplate = ({
     student,
@@ -134,7 +134,12 @@ export const CertificateTemplate = ({
                     fontSize: 16,
                 }}
             >
-                {format(new Date(completeDate), "MMM yyyy")}
+                {formatInTimeZone(
+                    new Date(completeDate),
+                    "Asia/Kolkata",
+                    "MMM yyyy",
+                )}
+                {/* {format(new Date(completeDate), "MMM yyyy")} */}
             </span>
 
             <span
@@ -156,7 +161,12 @@ export const CertificateTemplate = ({
                     fontSize: 16,
                 }}
             >
-                {format(new Date(student.certificate?.date!), "dd/MM/yyyy")}
+                {formatInTimeZone(
+                    student?.certificate?.date!,
+                    "Asia/Kolkata",
+                    "dd/MM/yyyy",
+                )}
+                {/* {format(new Date(student.certificate?.date!), "dd/MM/yyyy")} */}
             </span>
             {/* QR CODE */}
             {/* eslint-disable-next-line  */}
