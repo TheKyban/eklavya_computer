@@ -10,6 +10,6 @@
     margin: auto;
     padding: 20mm;
     border: 1px solid #ccc;
-    background-size: cover;
+    background-size: contain;
     position: relative;
 }

@@ -1,42 +1,18 @@
-/* styles/certificate.css */
-
-:root {
-    --height: 8.5in;
-    --width: 11in;
+@page {
+    size: A4 landscape;
+    margin: 20mm;
 }
+
 .certificate-container {
-    height: var(--height);
-    width: var(--width);
-    /* background: url("https://res.cloudinary.com/ddgjcyk0q/image/upload/v1718006971/ekavaya_assets/tchirwyjsg8sdxgjibsh.jpg");
-    background-size: var(--width) var(--height);
-    background-clip: content-box;
-    background-repeat: no-repeat; */
-    margin: 0 auto;
+    width: 297mm;
+    height: 210mm;
+    background: url("http://localhost:3000/cert1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    margin: auto;
+    padding: 20mm;
+    border: 1px solid #ccc;
     position: relative;
-    box-sizing: border-box;
-    /* Add specific styling for your template */
-}
-
-@media screen {
-    .certificate-container {
-        margin: 2rem auto;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-}
-
-@media print {
-    @page {
-        page: letter;
-        /* size: var(--width) var(--height); */
-        page-orientation: landscape;
-        /* margin-right: 5in; */
-    }
-    body {
-        margin: 0;
-        padding: 0;
-    }
-    .certificate-container {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
 }
